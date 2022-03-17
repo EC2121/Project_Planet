@@ -1,3 +1,4 @@
+using Unity.Mathematics;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.Serialization;
@@ -8,8 +9,9 @@ public class Player_Movement : MonoBehaviour
     [SerializeField] private float playerSpeed = 2.0f;
     [SerializeField] private float jumpHeight = 1.0f;
     [SerializeField] private float gravityValue = -9.81f;
-    [SerializeField] private float rotationSpeed = 5;
+    //[SerializeField] private float rotationSpeed = 5;
     [SerializeField] private float animSmoothTime = 0.1f;
+    [SerializeField] private Transform weapon;
 
     private CharacterController controller;
     private PlayerInput playerInput;
@@ -20,18 +22,28 @@ public class Player_Movement : MonoBehaviour
     private InputAction moveAction;
     private InputAction jumpAction;
     private InputAction switchWeapon;
-    
+
     private Animator anim;
     private Handle_Mesh_Sockets sockets;
     private int velocityHash_X;
     private int velocityHash_Z;
+    private int VelocityHash_Y;
     private int equipHash;
     private int isWalkingHash;
+    private int jumpHash;
+    private float animPlayTransition = 0.15f;
     private Vector2 currentAnimationBlend;
+    private Vector2 ciao;
+
     private Vector2 animationVelocity;
     private bool isWeaponAttached;
     private bool isMovementPressed;
-    public Transform weapon;
+    private float maxJumpHeight = 1.0f;
+    private float maxJumpTime = 0.5f;
+    private float initialJumpVelocity;
+
+    public float animSmoothTimexx;
+
     private void Awake()
     {
         controller = GetComponent<CharacterController>();
@@ -39,10 +51,9 @@ public class Player_Movement : MonoBehaviour
         sockets = GetComponent<Handle_Mesh_Sockets>();
         cameraTransform = Camera.main.transform;
         anim = GetComponent<Animator>();
-        
+
         SetHash();
         isWeaponAttached = false;
-
     }
 
     void SetHash()
@@ -53,7 +64,9 @@ public class Player_Movement : MonoBehaviour
 
         velocityHash_X = Animator.StringToHash("VelocityX");
         velocityHash_Z = Animator.StringToHash("VelocityZ");
+        VelocityHash_Y = Animator.StringToHash("VelocityY");
         equipHash = Animator.StringToHash("Equip");
+        jumpHash = Animator.StringToHash("Jump");
         isWalkingHash = Animator.StringToHash("isWalking");
     }
 
@@ -63,14 +76,13 @@ public class Player_Movement : MonoBehaviour
         if (isMovementPressed && !isWalking)
         {
             anim.SetBool(isWalkingHash, true);
-
         }
         else if (!isMovementPressed && isWalking)
         {
             anim.SetBool(isWalkingHash, false);
         }
-
     }
+
     public void ActivateWeapon()
     {
         if (switchWeapon.triggered && !isWeaponAttached)
@@ -78,17 +90,14 @@ public class Player_Movement : MonoBehaviour
             isWeaponAttached = true;
 
             sockets.Attach(weapon.transform, Handle_Mesh_Sockets.SocketId.Spine);
-            anim.SetBool(equipHash,true);
-
-
+            anim.SetBool(equipHash, true);
         }
         else if (switchWeapon.triggered && isWeaponAttached)
         {
             isWeaponAttached = false;
-            
+
             sockets.Attach(weapon.transform, Handle_Mesh_Sockets.SocketId.RightHand);
-            anim.SetBool(equipHash,false);
-        
+            anim.SetBool(equipHash, false);
         }
     }
 
@@ -101,7 +110,7 @@ public class Player_Movement : MonoBehaviour
 
         if (eventName == "Detach")
         {
-            sockets.Attach(weapon.transform,Handle_Mesh_Sockets.SocketId.Spine);
+            sockets.Attach(weapon.transform, Handle_Mesh_Sockets.SocketId.Spine);
         }
     }
 
@@ -116,33 +125,58 @@ public class Player_Movement : MonoBehaviour
         move.y = 0f;
         controller.Move(move * Time.deltaTime * playerSpeed);
 
+       
         //BlendAnim
         anim.SetFloat(velocityHash_X, currentAnimationBlend.x);
         anim.SetFloat(velocityHash_Z, currentAnimationBlend.y);
-
-        isMovementPressed = move.x != 0 || move.y != 0;
-
+      
+        isMovementPressed = input.x != 0 || input.y != 0;
     }
-    // Update is called once per frame
+    
     void Update()
     {
+        //transform.position = new Vector3(0, 0, 0);
+
         ActivateWeapon();
         OnMovementInput();
         HandleAnimation();
         //GravityHandle
+        //SetJump();
         groundedPlayer = controller.isGrounded;
-        if (jumpAction.triggered && playerVelocity.y < 0)
+
+        if (playerVelocity.y > 0.01f)
+        {
+            groundedPlayer = false;
+        }
+        else
+        {
+            groundedPlayer = true;
+        }
+
+        if (groundedPlayer && playerVelocity.y < 0)
         {
             playerVelocity.y = 0f;
         }
-
-      
+        // float timeToApex = maxJumpTime / 2; 
+        // gravityValue = (-2 * maxJumpHeight) / Mathf.Pow(timeToApex, 2);
+        // initialJumpVelocity = (2 * maxJumpHeight) / timeToApex;
         //JumpDistance
         if (jumpAction.triggered && groundedPlayer)
         {
-            playerVelocity.y += Mathf.Sqrt(jumpHeight * -3.0f * gravityValue);
-        }
+           
+            playerVelocity.y += Mathf.Sqrt(jumpHeight * -3.0f * gravityValue); 
+            
+            ciao = Vector2.SmoothDamp(ciao, playerVelocity, ref animationVelocity, animSmoothTimexx);
+            anim.CrossFade(jumpHash, animPlayTransition, 0);
+            //anim.Play(jumpHash);
+            anim.SetFloat(VelocityHash_Y,ciao.y);
+           // Debug.Log(initialJumpVelocity);
+           Debug.Log(ciao.y);
 
+        }
+       
+        
+        Debug.Log(controller.height);
         playerVelocity.y += gravityValue * Time.deltaTime;
         controller.Move(playerVelocity * Time.deltaTime);
 

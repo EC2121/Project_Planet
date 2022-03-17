@@ -123,6 +123,11 @@ NavMeshSettings:
     debug:
       m_Flags: 0
   m_NavMeshData: {fileID: 0}
+--- !u!4 &207597651 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 400514, guid: a5674d01884853d4e8f2386a171e14d9, type: 3}
+  m_PrefabInstance: {fileID: 860774866}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &274655876
 GameObject:
   m_ObjectHideFlags: 0
@@ -594,7 +599,7 @@ PrefabInstance:
   m_ObjectHideFlags: 0
   serializedVersion: 2
   m_Modification:
-    m_TransformParent: {fileID: 738259110}
+    m_TransformParent: {fileID: 207597651}
     m_Modifications:
     - target: {fileID: 100000, guid: ffae9263bd1a66245bd2bad16f271364, type: 3}
       propertyPath: m_Name
@@ -602,47 +607,47 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 400000, guid: ffae9263bd1a66245bd2bad16f271364, type: 3}
       propertyPath: m_RootOrder
-      value: 1
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 400000, guid: ffae9263bd1a66245bd2bad16f271364, type: 3}
       propertyPath: m_LocalScale.x
-      value: 0.99996907
+      value: 0.99998444
       objectReference: {fileID: 0}
     - target: {fileID: 400000, guid: ffae9263bd1a66245bd2bad16f271364, type: 3}
       propertyPath: m_LocalScale.y
-      value: 0.9999592
+      value: 0.9999798
       objectReference: {fileID: 0}
     - target: {fileID: 400000, guid: ffae9263bd1a66245bd2bad16f271364, type: 3}
       propertyPath: m_LocalScale.z
-      value: 0.999989
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 400000, guid: ffae9263bd1a66245bd2bad16f271364, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 0.092
+      value: 0.025874533
       objectReference: {fileID: 0}
     - target: {fileID: 400000, guid: ffae9263bd1a66245bd2bad16f271364, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0.1022
+      value: 0.1022021
       objectReference: {fileID: 0}
     - target: {fileID: 400000, guid: ffae9263bd1a66245bd2bad16f271364, type: 3}
       propertyPath: m_LocalPosition.z
-      value: -0.1555
+      value: -0.13636613
       objectReference: {fileID: 0}
     - target: {fileID: 400000, guid: ffae9263bd1a66245bd2bad16f271364, type: 3}
       propertyPath: m_LocalRotation.w
-      value: 0.3477313
+      value: 0.29211372
       objectReference: {fileID: 0}
     - target: {fileID: 400000, guid: ffae9263bd1a66245bd2bad16f271364, type: 3}
       propertyPath: m_LocalRotation.x
-      value: -0.35869533
+      value: -0.41390696
       objectReference: {fileID: 0}
     - target: {fileID: 400000, guid: ffae9263bd1a66245bd2bad16f271364, type: 3}
       propertyPath: m_LocalRotation.y
-      value: -0.5986111
+      value: -0.62763196
       objectReference: {fileID: 0}
     - target: {fileID: 400000, guid: ffae9263bd1a66245bd2bad16f271364, type: 3}
       propertyPath: m_LocalRotation.z
-      value: 0.6261672
+      value: 0.59112495
       objectReference: {fileID: 0}
     - target: {fileID: 400000, guid: ffae9263bd1a66245bd2bad16f271364, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
@@ -931,12 +936,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 48a3c0d51a98d5443954830bd5809b39, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerSpeed: 3.5
-  jumpHeight: 1
+  playerSpeed: 2
+  jumpHeight: 3
   gravityValue: -9.81
-  rotationSpeed: 5
-  animSmoothTime: 0.05
+  animSmoothTime: 0.2
   weapon: {fileID: 615795193}
+  animSmoothTimexx: 0.003
 --- !u!114 &1709140428
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -978,13 +983,13 @@ CharacterController:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Height: 1.8
+  m_Height: 2
   m_Radius: 0.5
   m_SlopeLimit: 45
   m_StepOffset: 0.3
   m_SkinWidth: 0.08
-  m_MinMoveDistance: 0
-  m_Center: {x: 0, y: 1, z: 0}
+  m_MinMoveDistance: 0.001
+  m_Center: {x: 0, y: 1.075, z: 0}
 --- !u!114 &1709140430
 MonoBehaviour:
   m_ObjectHideFlags: 0
