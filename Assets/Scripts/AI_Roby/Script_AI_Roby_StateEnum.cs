@@ -50,14 +50,14 @@ public class Script_AI_Roby_StateEnum : MonoBehaviour
     private void Update()
     {
 
-        //Attack();
-        //if (!Battle)
-        //{
+        Attack();
+        if (!Battle)
+        {
             if (Vector3.Distance(transform.position, mai_Player.transform.position) > maiPlayerNormalZone)
                 FollowPlayer();
             else
                 Patrolling();
-        //}
+        }
     }
     private void FollowPlayer()
     {
@@ -125,8 +125,12 @@ public class Script_AI_Roby_StateEnum : MonoBehaviour
     }
     private void Attack()
     {
-        if (enemyOnMyWay.Count == 0) return;
-        if (ReferenceEquals(myEnemy, null))
+        if (enemyOnMyWay.Count == 0)
+        {
+            Battle = false;
+            return;
+        }
+            if (ReferenceEquals(myEnemy, null) || !myEnemy.activeInHierarchy)
         {
             myEnemy = enemyOnMyWay[ChooseTarget()];
         }
