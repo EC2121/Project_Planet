@@ -1,14 +1,17 @@
 using Unity.Mathematics;
 using UnityEngine;
 using UnityEngine.InputSystem;
-using UnityEngine.Serialization;
+using System.Collections;
+using System.Collections.Generic;
 
 [RequireComponent(typeof(CharacterController), typeof(PlayerInput))]
 public class Player_Movement : MonoBehaviour
 {
     [SerializeField] private float playerSpeed = 2.0f;
     [SerializeField] private float jumpHeight = 1.0f;
+
     [SerializeField] private float gravityValue = -9.81f;
+
     //[SerializeField] private float rotationSpeed = 5;
     [SerializeField] private float animSmoothTime = 0.1f;
     [SerializeField] private Transform weapon;
@@ -43,6 +46,8 @@ public class Player_Movement : MonoBehaviour
     private float initialJumpVelocity;
 
     public float animSmoothTimexx;
+    private float groundDistance = 0.2f;
+    private bool isGrounded;
 
     private void Awake()
     {
@@ -125,14 +130,15 @@ public class Player_Movement : MonoBehaviour
         move.y = 0f;
         controller.Move(move * Time.deltaTime * playerSpeed);
 
-       
+
         //BlendAnim
         anim.SetFloat(velocityHash_X, currentAnimationBlend.x);
         anim.SetFloat(velocityHash_Z, currentAnimationBlend.y);
-      
+        anim.SetFloat(VelocityHash_Y, playerVelocity.y);
+
         isMovementPressed = input.x != 0 || input.y != 0;
     }
-    
+
     void Update()
     {
         //transform.position = new Vector3(0, 0, 0);
@@ -143,8 +149,8 @@ public class Player_Movement : MonoBehaviour
         //GravityHandle
         //SetJump();
         groundedPlayer = controller.isGrounded;
-
-        if (playerVelocity.y > 0.01f)
+        //isGrounded = Physics.CheckSphere(,);
+        if (playerVelocity.y > 0)
         {
             groundedPlayer = false;
         }
@@ -157,31 +163,34 @@ public class Player_Movement : MonoBehaviour
         {
             playerVelocity.y = 0f;
         }
+
+        if (jumpAction.triggered && groundedPlayer)
+        {
+            playerVelocity.y += Mathf.Sqrt(jumpHeight * -3.0f * gravityValue);
+            anim.CrossFade(jumpHash, animPlayTransition, 0);
+
+            //anim.Play(jumpHash);
+            // Debug.Log(initialJumpVelocity);
+        }
+        // if (!groundedPlayer)
+        // {
+        //     playerVelocity.y = -5f;
+        //
+        // }
         // float timeToApex = maxJumpTime / 2; 
         // gravityValue = (-2 * maxJumpHeight) / Mathf.Pow(timeToApex, 2);
         // initialJumpVelocity = (2 * maxJumpHeight) / timeToApex;
         //JumpDistance
-        if (jumpAction.triggered && groundedPlayer)
-        {
-           
-            playerVelocity.y += Mathf.Sqrt(jumpHeight * -3.0f * gravityValue); 
-            
-            ciao = Vector2.SmoothDamp(ciao, playerVelocity, ref animationVelocity, animSmoothTimexx);
-            anim.CrossFade(jumpHash, animPlayTransition, 0);
-            //anim.Play(jumpHash);
-            anim.SetFloat(VelocityHash_Y,ciao.y);
-           // Debug.Log(initialJumpVelocity);
-           Debug.Log(ciao.y);
 
-        }
-       
-        
-        Debug.Log(controller.height);
+
         playerVelocity.y += gravityValue * Time.deltaTime;
+
         controller.Move(playerVelocity * Time.deltaTime);
+
 
         // //RotatePlayerToCamera
         // Quaternion targetRotation = Quaternion.Euler(0, cameraTransform.eulerAngles.y, 0);
         // transform.rotation = Quaternion.Lerp(transform.rotation, targetRotation, rotationSpeed * Time.deltaTime);
     }
+    
 }

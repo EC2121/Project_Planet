@@ -46,15 +46,6 @@ public partial class @Player_Controller : IInputActionCollection2, IDisposable
                     ""initialStateCheck"": false
                 },
                 {
-                    ""name"": ""Anto"",
-                    ""type"": ""Button"",
-                    ""id"": ""bce2c649-7daf-4b5a-b30c-848b8bff95f0"",
-                    ""expectedControlType"": ""Button"",
-                    ""processors"": """",
-                    ""interactions"": """",
-                    ""initialStateCheck"": false
-                },
-                {
                     ""name"": ""Jump"",
                     ""type"": ""Button"",
                     ""id"": ""22f4ef3e-22ae-4575-8ac2-00d5bc1742e2"",
@@ -151,17 +142,6 @@ public partial class @Player_Controller : IInputActionCollection2, IDisposable
                 },
                 {
                     ""name"": """",
-                    ""id"": ""4817ef96-3d34-4603-8ba8-7c3d45d9b7de"",
-                    ""path"": ""<Keyboard>/x"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": """",
-                    ""action"": ""Anto"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": """",
                     ""id"": ""9df263c3-7123-4aa4-8434-f09fedc729ef"",
                     ""path"": ""<Keyboard>/space"",
                     ""interactions"": """",
@@ -202,7 +182,6 @@ public partial class @Player_Controller : IInputActionCollection2, IDisposable
         m_Player = asset.FindActionMap("Player", throwIfNotFound: true);
         m_Player_Move = m_Player.FindAction("Move", throwIfNotFound: true);
         m_Player_Run = m_Player.FindAction("Run", throwIfNotFound: true);
-        m_Player_Anto = m_Player.FindAction("Anto", throwIfNotFound: true);
         m_Player_Jump = m_Player.FindAction("Jump", throwIfNotFound: true);
         m_Player_Look = m_Player.FindAction("Look", throwIfNotFound: true);
         m_Player_Switch = m_Player.FindAction("Switch", throwIfNotFound: true);
@@ -267,7 +246,6 @@ public partial class @Player_Controller : IInputActionCollection2, IDisposable
     private IPlayerActions m_PlayerActionsCallbackInterface;
     private readonly InputAction m_Player_Move;
     private readonly InputAction m_Player_Run;
-    private readonly InputAction m_Player_Anto;
     private readonly InputAction m_Player_Jump;
     private readonly InputAction m_Player_Look;
     private readonly InputAction m_Player_Switch;
@@ -277,7 +255,6 @@ public partial class @Player_Controller : IInputActionCollection2, IDisposable
         public PlayerActions(@Player_Controller wrapper) { m_Wrapper = wrapper; }
         public InputAction @Move => m_Wrapper.m_Player_Move;
         public InputAction @Run => m_Wrapper.m_Player_Run;
-        public InputAction @Anto => m_Wrapper.m_Player_Anto;
         public InputAction @Jump => m_Wrapper.m_Player_Jump;
         public InputAction @Look => m_Wrapper.m_Player_Look;
         public InputAction @Switch => m_Wrapper.m_Player_Switch;
@@ -296,9 +273,6 @@ public partial class @Player_Controller : IInputActionCollection2, IDisposable
                 @Run.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnRun;
                 @Run.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnRun;
                 @Run.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnRun;
-                @Anto.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnAnto;
-                @Anto.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnAnto;
-                @Anto.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnAnto;
                 @Jump.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnJump;
                 @Jump.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnJump;
                 @Jump.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnJump;
@@ -318,9 +292,6 @@ public partial class @Player_Controller : IInputActionCollection2, IDisposable
                 @Run.started += instance.OnRun;
                 @Run.performed += instance.OnRun;
                 @Run.canceled += instance.OnRun;
-                @Anto.started += instance.OnAnto;
-                @Anto.performed += instance.OnAnto;
-                @Anto.canceled += instance.OnAnto;
                 @Jump.started += instance.OnJump;
                 @Jump.performed += instance.OnJump;
                 @Jump.canceled += instance.OnJump;
@@ -338,7 +309,6 @@ public partial class @Player_Controller : IInputActionCollection2, IDisposable
     {
         void OnMove(InputAction.CallbackContext context);
         void OnRun(InputAction.CallbackContext context);
-        void OnAnto(InputAction.CallbackContext context);
         void OnJump(InputAction.CallbackContext context);
         void OnLook(InputAction.CallbackContext context);
         void OnSwitch(InputAction.CallbackContext context);

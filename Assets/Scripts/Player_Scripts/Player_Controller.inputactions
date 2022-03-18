@@ -24,15 +24,6 @@
                     "initialStateCheck": false
                 },
                 {
-                    "name": "Anto",
-                    "type": "Button",
-                    "id": "bce2c649-7daf-4b5a-b30c-848b8bff95f0",
-                    "expectedControlType": "Button",
-                    "processors": "",
-                    "interactions": "",
-                    "initialStateCheck": false
-                },
-                {
                     "name": "Jump",
                     "type": "Button",
                     "id": "22f4ef3e-22ae-4575-8ac2-00d5bc1742e2",
@@ -124,17 +115,6 @@
                     "processors": "",
                     "groups": "",
                     "action": "Run",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
-                    "id": "4817ef96-3d34-4603-8ba8-7c3d45d9b7de",
-                    "path": "<Keyboard>/x",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "",
-                    "action": "Anto",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },
