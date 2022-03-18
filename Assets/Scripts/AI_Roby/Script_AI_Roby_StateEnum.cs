@@ -9,17 +9,23 @@ public class Script_AI_Roby_StateEnum : MonoBehaviour
     private Animator roby_Animator;
     private GameObject mai_Player;
     private NavMeshAgent agent;
+    private GameObject myEnemy;
 
     private float distanceFromMai;
     private float maiPlayerNearZone;
     private float maiPlayerNormalZone;
     private float time = 0;
 
-
     private int walkAsh;
     private int walkSpeedAsh;
     private int turnAsh;
     private int turnTriggerAsh;
+    private int enemyIndex;
+
+    private bool Battle;
+
+    private List<GameObject> enemyOnMyWay;
+    private float[] nearEnemys;
 
     private void Awake()
     {
@@ -33,22 +39,25 @@ public class Script_AI_Roby_StateEnum : MonoBehaviour
         maiPlayerNormalZone = 10;
         distanceFromMai = 4;
 
+        enemyOnMyWay = new List<GameObject>();
+        nearEnemys = new float[10];
+
         walkAsh = Animator.StringToHash("InPursuit");
         walkSpeedAsh = Animator.StringToHash("Speed");
         turnAsh = Animator.StringToHash("Angle");
         turnTriggerAsh = Animator.StringToHash("TurnTrigger");
-
     }
     private void Update()
     {
-        if (Vector3.Distance(transform.position, mai_Player.transform.position) > maiPlayerNormalZone)
-        {
-            FollowPlayer();
-        }
-        else
-        {
-            Patrolling();
-        }
+
+        //Attack();
+        //if (!Battle)
+        //{
+            if (Vector3.Distance(transform.position, mai_Player.transform.position) > maiPlayerNormalZone)
+                FollowPlayer();
+            else
+                Patrolling();
+        //}
     }
     private void FollowPlayer()
     {
@@ -96,8 +105,56 @@ public class Script_AI_Roby_StateEnum : MonoBehaviour
             //roby_Animator.SetFloat(turnAsh, Random.Range(-1f,1f));
         }
     }
-    private
-     float InverseClamp(float min, float max, float value)
+    private void OnTriggerEnter(Collider other)
+    {
+        if (other.CompareTag("Chomp"))
+        {
+            print("ecchime");
+            Battle = true;
+            enemyOnMyWay.Add(other.gameObject);
+        }
+    }
+    private void OnTriggerExit(Collider other)
+    {
+        if (other.CompareTag("Chomp"))
+        {
+            print("me ne vo");
+            enemyOnMyWay.Remove(other.gameObject);
+            myEnemy = null;
+        }
+    }
+    private void Attack()
+    {
+        if (enemyOnMyWay.Count == 0) return;
+        if (ReferenceEquals(myEnemy, null))
+        {
+            myEnemy = enemyOnMyWay[ChooseTarget()];
+        }
+
+        agent.SetDestination(myEnemy.transform.position);
+    }
+    private int ChooseTarget()
+    {
+        float lowest = float.MaxValue;
+        for (int i = 0; i < enemyOnMyWay.Count; i++)
+        {
+            nearEnemys[i]=(Vector3.Distance(transform.position, enemyOnMyWay[i].transform.position));
+        }
+        for (int i = 0; i < nearEnemys.Length; i++)
+        {
+            if (nearEnemys[i]!=0 && nearEnemys[i] < lowest)
+            {
+                lowest = nearEnemys[i];
+                enemyIndex = i;
+            }
+        }
+
+        return enemyIndex;
+    }
+
+
+
+    private float InverseClamp(float min, float max, float value)
     {
         if (value > min && value < max)
         {
