@@ -9,12 +9,15 @@ public class Script_AI_Roby_MGR : MonoBehaviour
     [HideInInspector] public Script_AI_Roby_Patroll AiRobyPatroll;
     [HideInInspector] public Script_AI_Roby_FollowState AiRobyFollowState;
     [HideInInspector] public Script_AI_Roby_BattleState AI_Roby_BattleState;
+
     [HideInInspector] public Script_AI_Roby_BaseState currentState;
 
+    [HideInInspector] public bool ignoreEnemys;
     public Script_AI_Roby_MGR(Script_Roby owner)
     {
 
     }
+
 
     private void Awake()
     {
@@ -23,6 +26,9 @@ public class Script_AI_Roby_MGR : MonoBehaviour
         AiRobyFollowState = new Script_AI_Roby_FollowState();
         AI_Roby_BattleState = new Script_AI_Roby_BattleState();
         currentState = AIRobyIdle;
+
+        ignoreEnemys = false;
+
     }
     private void Start()
     {
@@ -39,6 +45,14 @@ public class Script_AI_Roby_MGR : MonoBehaviour
         currentState.OnTriggerEnter(this, other);
     }
 
+    private void OnTriggerStay(Collider other)
+    {
+        currentState.OnTriggerSaty(this, other);
+    }
+    private void OnTriggerExit(Collider other)
+    {
+        currentState.OnTriggerExit(this, other);
+    }
     public void SwitchState(Script_AI_Roby_BaseState state)
     {
         currentState.OnExit(this);

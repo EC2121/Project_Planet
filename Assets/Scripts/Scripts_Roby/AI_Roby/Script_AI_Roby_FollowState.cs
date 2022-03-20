@@ -15,14 +15,25 @@ public class Script_AI_Roby_FollowState : Script_AI_Roby_BaseState
 
     public override void OnTriggerEnter(Script_AI_Roby_MGR AiRoby, Collider collider)
     {
-        AiRoby.Owner.EnemysInArea(collider.gameObject);
-        AiRoby.SwitchState(AiRoby.AI_Roby_BattleState);
+        if (AiRoby.Owner.EnemysInArea(collider.gameObject) && !AiRoby.ignoreEnemys)
+            AiRoby.SwitchState(AiRoby.AI_Roby_BattleState);
+    }
+
+    public override void OnTriggerExit(Script_AI_Roby_MGR AiRoby, Collider collider)
+    {
+    }
+
+    public override void OnTriggerSaty(Script_AI_Roby_MGR AiRoby, Collider collider)
+    {
+        if (AiRoby.Owner.EnemysInArea(collider.gameObject) && !AiRoby.ignoreEnemys)
+            AiRoby.SwitchState(AiRoby.AI_Roby_BattleState);
     }
 
     public override void UpdateState(Script_AI_Roby_MGR AIRoby)
     {
-        if (AIRoby.Owner.CheckRemainingDistance()) AIRoby.SwitchState(AIRoby.AIRobyIdle);
+        print("follow");
 
+        if (AIRoby.Owner.CheckRemainingDistance()) AIRoby.SwitchState(AIRoby.AIRobyIdle);
         AIRoby.Owner.FollowPlayer();
     }
 

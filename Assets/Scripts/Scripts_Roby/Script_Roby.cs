@@ -7,21 +7,25 @@ using UnityEngine.AI;
 public class Script_Roby : MonoBehaviour
 {
     public Animator roby_Animator { get; private set; }
+    public float mai_MinDistance { get; private set; }
+    public float mai_PlayerNearZone { get; private set; }
+    public float mai_PlayerNormalZone { get; private set; }
+    public float mai_PlayerBattleZone { get; private set; }
+
     private GameObject mai_Player;
     private NavMeshAgent agent;
     private GameObject myEnemy;
     private Script_AI_Roby_MGR roby_FSM;
+    private Rigidbody roby_RigidBody;
 
-    private float mai_MinDistance;
-    private float mai_PlayerNearZone;
-    private float mai_PlayerNormalZone;
     private float roby_RobyNearZone;
-
 
     private int animator_walkAsh;
     private int animator_walkSpeedAsh;
     private int animator_turnAsh;
     private int animator_turnTriggerAsh;
+    private int roby_Animator_MeleeAsh;
+    private int roby_Animator_ZoneAsh;
     private int enemyIndex;
 
     private List<GameObject> roby_EnemysInMyArea;
@@ -33,17 +37,22 @@ public class Script_Roby : MonoBehaviour
         agent = GetComponent<NavMeshAgent>();
         roby_Animator = GetComponent<Animator>();
         roby_FSM = GetComponent<Script_AI_Roby_MGR>();
+        roby_RigidBody = GetComponent<Rigidbody>();
     }
 
     private void Init()
     {
         mai_PlayerNearZone = 7;
         mai_PlayerNormalZone = 10;
+        mai_PlayerBattleZone = 15;
         mai_MinDistance = 4;
         roby_RobyNearZone = 5;
+
         roby_EnemysInMyArea = new List<GameObject>();
         nearEnemys = new float[10];
 
+        roby_Animator_ZoneAsh = Animator.StringToHash("Rotate");
+        roby_Animator_MeleeAsh = Animator.StringToHash("MeleeAttack");
         animator_walkAsh = Animator.StringToHash("InPursuit");
         animator_walkSpeedAsh = Animator.StringToHash("Speed");
         animator_turnAsh = Animator.StringToHash("Angle");
@@ -79,9 +88,22 @@ public class Script_Roby : MonoBehaviour
         else return false;
     }
 
-    public bool IsMaITooFar()
+    public void RobyExplosion()
     {
-        if (Vector3.Distance(transform.position, mai_Player.transform.position) > mai_PlayerNormalZone) return true;
+        foreach (GameObject enemys in roby_EnemysInMyArea)
+        {
+            enemys.GetComponent<Rigidbody>().AddExplosionForce(15, transform.position, 5, 1, ForceMode.Impulse);
+        }
+    }
+
+    public void RobyZoneAttackTrigger()
+    {
+        roby_Animator.SetTrigger(roby_Animator_ZoneAsh);
+    }
+
+    public bool IsMaITooFar(float zone)
+    {
+        if (Vector3.Distance(transform.position, mai_Player.transform.position) > zone) return true;
         else return false;
     }
 
@@ -105,15 +127,21 @@ public class Script_Roby : MonoBehaviour
         return value;
     }
 
-    public void Attack()
+    public void RobyMeleeAttack()
     {
-        //if (ReferenceEquals(myEnemy, null) || !myEnemy.activeInHierarchy)
-        //{
-            myEnemy = roby_EnemysInMyArea[enemyIndex];
-        //}
+        roby_Animator.SetTrigger(roby_Animator_MeleeAsh);
+        //roby_RigidBody.AddExplosionForce(10, transform.position, 10,1,ForceMode.Impulse);
+    }
 
+    public void ChaseTarget()
+    {
+        roby_Animator.SetBool(animator_walkAsh, true);
+        if (ReferenceEquals(myEnemy, null) || !myEnemy.activeInHierarchy)
+        {
+            roby_Animator.SetFloat(animator_walkSpeedAsh, 0);
+            myEnemy = roby_EnemysInMyArea[enemyIndex];
+        }
         agent.SetDestination(myEnemy.transform.position);
-        print("Sto attaccando");
     }
 
     public bool EnemyWithinRange()
@@ -136,11 +164,23 @@ public class Script_Roby : MonoBehaviour
         else return false;
     }
 
-    public void EnemysInArea(GameObject enemy)
+    public bool EnemysInArea(GameObject enemy)
     {
         if (enemy.CompareTag("Chomp"))
         {
-            roby_EnemysInMyArea.Add(enemy);
+            if (!roby_EnemysInMyArea.Contains(enemy))
+                roby_EnemysInMyArea.Add(enemy);
+            return true;
+        }
+        return false;
+    }
+
+    public void EnemyOutArea(GameObject enemy)
+    {
+        if (enemy.CompareTag("Chomp"))
+        {
+            if (roby_EnemysInMyArea.Contains(enemy))
+                roby_EnemysInMyArea.Remove(enemy);
         }
     }
 }
