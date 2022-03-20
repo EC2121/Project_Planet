@@ -11,22 +11,30 @@ public class Player_IdleState :  Player_BaseState
     }
     public override void EnterState()
     {
-        throw new System.NotImplementedException();
+        Context.Animator.SetBool(Context.IsWalkingHash,false);
+        Context.Animator.SetBool(Context.IsRunningHash,false);
     }
 
     public override void UpdateState()
     {
-        throw new System.NotImplementedException();
+        CheckSwitchStates();
     }
 
     public override void ExitState()
     {
-        throw new System.NotImplementedException();
+       
     }
 
     public override void CheckSwitchStates()
     {
-        throw new System.NotImplementedException();
+        if (Context.IsMovementPressed && Context.IsRunPressed)
+        {
+            SwitchState(Factory.Run());
+        }
+        else if (Context.IsMovementPressed)
+        {
+            SwitchState(Factory.Walk());
+        }
     }
 
     public override void InitializeSubState()

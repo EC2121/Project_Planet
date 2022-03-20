@@ -22,6 +22,11 @@ public class Player_StateFactory
         return new Player_JumpState(_context,this);
     }
 
+    public Player_BaseState Run()
+    {
+        return new Player_RunState(_context,this);
+    }
+
     public Player_BaseState Grounded()
     {
         return new Player_GroundState(_context,this);

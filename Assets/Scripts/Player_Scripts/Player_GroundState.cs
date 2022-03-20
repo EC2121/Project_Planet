@@ -6,33 +6,49 @@ public class Player_GroundState : Player_BaseState
 {
     public Player_GroundState(Player_State_Machine currentContext, Player_StateFactory playerStateFactory) : base(currentContext,playerStateFactory)
     {
-        
+        IsRootState = true;
+        InitializeSubState();
     }
     public override void EnterState()
     {
-        throw new System.NotImplementedException();
+        Context.CurrentMovementY = Context.GroundGravity;
+        Context.CurrentRunMovementY = Context.GroundGravity;
+        //Context.RequireJumpPress = false;
+        //Context.RequireJumpPress = true;
+
     }
 
     public override void UpdateState()
     {
-        throw new System.NotImplementedException();
+        CheckSwitchStates();
     }
 
     public override void ExitState()
     {
-        throw new System.NotImplementedException();
+      
     }
 
     public override void CheckSwitchStates()
     {
-        if (_ctx.IsJumpPressed)
+        if (Context.IsJumpPressed)
         {
-            SwitchState(_factory.Jump());
+            SwitchState(Factory.Jump());
         }
     }
 
     public override void InitializeSubState()
     {
-        throw new System.NotImplementedException();
+        if (!Context.IsMovementPressed && !Context.IsRunPressed)
+        {
+            SetSubState(Factory.Idle());
+        }
+        else if (Context.IsMovementPressed && !Context.IsRunPressed)
+        {
+            SetSubState(Factory.Walk());
+        }
+        else
+        {
+            SetSubState(Factory.Run());
+        }
     }
 }

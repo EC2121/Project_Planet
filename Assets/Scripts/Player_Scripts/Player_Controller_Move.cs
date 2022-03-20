@@ -1,16 +1,20 @@
+using Cinemachine;
 using UnityEngine;
 using UnityEngine.InputSystem;
-using UnityEngine.InputSystem.LowLevel;
 
 public class Player_Controller_Move : MonoBehaviour
 {
     [SerializeField] private float PlayerSpeed = 3f;
     [SerializeField] private Transform weapon;
+    [SerializeField] private float jumpSpeed = 10f;
+
 
     private Animator anim;
     private int isWalkingHash;
     private int isRunningHash;
     private int equipHash;
+    private int isJumpingHash;
+    private int isLandingHash;
     private Player_Controller input;
     private CharacterController characterController;
 
@@ -20,14 +24,16 @@ public class Player_Controller_Move : MonoBehaviour
 
     private bool isMovementPressed;
     private bool isRunPressed;
+    private bool isJumpPressed;
     private bool switchWeapon = false;
     private float rotationFactor = 15f;
-    private float runSpeed = 1.5f;
+    private float runSpeed = 1.2f;
     private Vector2 currentAnimationBlend;
     private Vector2 animationVelocity;
     private bool isWeaponAttached;
     private Handle_Mesh_Sockets sockets;
-
+    private float speedY = 0;
+    private bool isJumped;
     private void Awake()
     {
         input = new Player_Controller();
@@ -36,6 +42,8 @@ public class Player_Controller_Move : MonoBehaviour
         isWalkingHash = Animator.StringToHash("isWalking");
         isRunningHash = Animator.StringToHash("isRunning");
         equipHash = Animator.StringToHash("Equip");
+        isJumpingHash = Animator.StringToHash("Jump");
+        isLandingHash = Animator.StringToHash("Land");
 
         sockets = GetComponent<Handle_Mesh_Sockets>();
 
@@ -45,14 +53,18 @@ public class Player_Controller_Move : MonoBehaviour
 
         input.Player.Run.started += OnRun;
         input.Player.Run.canceled += OnRun;
-        
+
         input.Player.Switch.started += SwitchWeapon;
         input.Player.Switch.canceled += SwitchWeapon;
-      
 
-        // input.CharacterControls.Run.started += OnRun;
+        input.Player.Jump.started += OnJump;
+        input.Player.Jump.canceled += OnJump;
+        
         isWeaponAttached = false;
-
+        isJumped = false;
+        //characterController.detectCollisions = true;
+        // input.CharacterControls.Run.started += OnRun;
+       
     }
 
     void OnRun(InputAction.CallbackContext context)
@@ -66,30 +78,17 @@ public class Player_Controller_Move : MonoBehaviour
         
     }
 
+    void OnJump(InputAction.CallbackContext context)
+    {
+        isJumpPressed = context.ReadValueAsButton();
+    }
+
     void OnMovementInput(InputAction.CallbackContext context)
     {
         currentMovementInput = context.ReadValue<Vector2>();
-        // currentMovement.x = currentMovementInput.x;
-        // currentMovement.z = currentMovementInput.y;
-
-        //  currentMovement.x = Mathf.SmoothDamp(old, currentMovementInput.x, ref , prova *Time.deltaTime*20 );
-        // currentMovement.z = Mathf.SmoothDamp(meow, currentMovementInput.y, ref ciao, prova *Time.deltaTime*20);
-
-
-        // anim.SetFloat("VelocityX", currentMovement.x);
-        // anim.SetFloat("VelocityZ", currentMovement.z);
-        // velocityX = Mathf.Lerp(velocityX, input.x * currentMaxVelocity, Time.deltaTime * acceleration);
-        //  velocityZ = Mathf.Lerp(velocityZ, input.y * currentMaxVelocity, Time.deltaTime * acceleration);
-        // // currentMovement.x = Mathf.Lerp(currentMovement.x, currentMovementInput.x, prova*Time.deltaTime);
-        // currentMovement.z = Mathf.Lerp(currentMovement.z, currentMovementInput.y, prova*Time.deltaTime);
-
-        //currentMovement = Vector2.SmoothDamp(currentMovement, currentMovementInput, ref ciao, prova);
-
-        // currentRunMovement.x = currentMovementInput.x * runSpeed;
-        // currentRunMovement.z = currentMovementInput.y * runSpeed;
-
         isMovementPressed = currentMovementInput.x != 0 || currentMovementInput.y != 0;
     }
+
     public void ActivateWeapon()
     {
         if (switchWeapon && !isWeaponAttached && !isMovementPressed)
@@ -113,8 +112,6 @@ public class Player_Controller_Move : MonoBehaviour
     {
         if (eventName == "EquipWeapon")
         {
-            Debug.Log("Ciao");
-
             sockets.Attach(weapon.transform, Handle_Mesh_Sockets.SocketId.RightHand);
         }
 
@@ -123,6 +120,7 @@ public class Player_Controller_Move : MonoBehaviour
             sockets.Attach(weapon.transform, Handle_Mesh_Sockets.SocketId.Spine);
         }
     }
+
     void HandleRotation()
     {
         Vector3 positionToLookAt;
@@ -161,55 +159,86 @@ public class Player_Controller_Move : MonoBehaviour
         {
             anim.SetBool(isRunningHash, false);
         }
+        
     }
 
     void HandleGravity()
     {
-        if (characterController.isGrounded)
+
+        if (isJumpPressed && !isJumped)
         {
-            float groundGravity = -0.05f;
-            currentMovement.y = groundGravity;
-            currentRunMovement.y = groundGravity;
+            isJumped = true;
+            anim.SetTrigger(isJumpingHash);
+            speedY += jumpSpeed;
+            currentMovement.y += jumpSpeed;
         }
-        else
+        if (!characterController.isGrounded)
         {
-            float gravity = -9.8f;
-            currentMovement.y += gravity;
+            float gravity = -9.81f;
+            currentMovement.y += gravity * Time.deltaTime;
             currentRunMovement.y += gravity;
         }
+        else if( currentMovement.y < 0)
+        {
+            float groundGravity = -0.05f;
+            currentMovement.y = -0.05f;
+            currentRunMovement.y = groundGravity;
+        }
+        anim.SetFloat("VelocityY", currentMovement.y/jumpSpeed);
+
+       
+        Debug.Log(speedY);
+        if (isJumped &&  currentMovement.y < 0)
+        {
+            Debug.Log("ciaooo");
+
+            RaycastHit hit;
+            if (Physics.Raycast(transform.position, Vector3.down, out hit, 0.5f,LayerMask.GetMask("Default")))
+            {
+                isJumped = false;
+                anim.SetTrigger(isLandingHash);
+            }
+        }
     }
 
-    void HandleMovement()
+    void HandleMovement(Vector3 verticalMovement)
     {
+        Vector3 move = new Vector3(currentAnimationBlend.x,0, currentAnimationBlend.y);
+        currentAnimationBlend =
+            Vector2.SmoothDamp(currentAnimationBlend, currentMovementInput, ref animationVelocity, 0.15f);
+        move.y = verticalMovement.y;
         if (isRunPressed)
         {
-            Vector3 move = new Vector3(currentAnimationBlend.x, 0, currentAnimationBlend.y);
+            characterController.Move(move * Time.deltaTime * PlayerSpeed * runSpeed);
 
-            characterController.Move(move * Time.deltaTime);
+            // //RotatePlayerToCamera
+            // Quaternion targetRotation = Quaternion.Euler(0, cameraTransform.eulerAngles.y, 0);
+            // transform.rotation = Quaternion.Lerp(transform.rotation, targetRotation, rotationSpeed * Time.deltaTime);
         }
         else
         {
-            currentAnimationBlend = Vector2.SmoothDamp(currentAnimationBlend, currentMovementInput, ref animationVelocity, 0.15f);
-
-            Vector3 move2 = new Vector3(currentAnimationBlend.x, 0, currentAnimationBlend.y);
-            characterController.Move(move2 * Time.deltaTime * PlayerSpeed);
-
-            anim.SetFloat("VelocityX", currentAnimationBlend.x);
-            anim.SetFloat("VelocityZ", currentAnimationBlend.y);
+            characterController.Move((   (move * Time.deltaTime * PlayerSpeed)));
         }
+
+        anim.SetFloat("VelocityX", currentAnimationBlend.x);
+        anim.SetFloat("VelocityZ", currentAnimationBlend.y);
     }
+
     // Update is called once per frame
     void Update()
     {
-        ActivateWeapon();
+        Vector3 verticalMovement = Vector3.up *  currentMovement.y;
+
         HandleGravity();
+        ActivateWeapon();
         //HandleRotation();
         HandleAnimation();
-        HandleMovement(); 
-        Debug.Log(switchWeapon);
+        HandleMovement(verticalMovement);
+
+        //Debug.Log(speedY);
 
     }
-    
+
     private void OnEnable()
     {
         input.Player.Enable();

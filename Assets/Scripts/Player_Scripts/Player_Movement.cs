@@ -41,14 +41,7 @@ public class Player_Movement : MonoBehaviour
     private Vector2 animationVelocity;
     private bool isWeaponAttached;
     private bool isMovementPressed;
-    private float maxJumpHeight = 1.0f;
-    private float maxJumpTime = 0.5f;
-    private float initialJumpVelocity;
-
-    public float animSmoothTimexx;
-    private float groundDistance = 0.2f;
-    private bool isGrounded;
-
+    
     private void Awake()
     {
         controller = GetComponent<CharacterController>();
