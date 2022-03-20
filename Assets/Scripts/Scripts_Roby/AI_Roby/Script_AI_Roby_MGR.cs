@@ -13,12 +13,7 @@ public class Script_AI_Roby_MGR : MonoBehaviour
     [HideInInspector] public Script_AI_Roby_BaseState currentState;
 
     [HideInInspector] public bool ignoreEnemys;
-    public Script_AI_Roby_MGR(Script_Roby owner)
-    {
-
-    }
-
-
+  
     private void Awake()
     {
         AIRobyIdle = new Script_AI_Roby_Idle();

@@ -25,6 +25,8 @@ public class Script_AI_Roby_Idle : Script_AI_Roby_BaseState
 
     public override void OnTriggerExit(Script_AI_Roby_MGR AiRoby, Collider collider)
     {
+        AiRoby.Owner.EnemyOutArea(collider.gameObject);
+
     }
 
     public override void OnTriggerSaty(Script_AI_Roby_MGR AiRoby, Collider collider)

@@ -6,6 +6,7 @@ public class Script_AI_Roby_BattleState : Script_AI_Roby_BaseState
 {
     public override void OnEnter(Script_AI_Roby_MGR AIRoby)
     {
+        AIRoby.Owner.ChaseTarget();
     }
 
     public override void OnExit(Script_AI_Roby_MGR AIRoby)
@@ -14,10 +15,12 @@ public class Script_AI_Roby_BattleState : Script_AI_Roby_BaseState
 
     public override void OnTriggerEnter(Script_AI_Roby_MGR AiRoby, Collider collider)
     {
+        AiRoby.Owner.EnemysInArea(collider.gameObject);
     }
 
     public override void OnTriggerExit(Script_AI_Roby_MGR AiRoby, Collider collider)
     {
+        AiRoby.Owner.EnemyOutArea(collider.gameObject);
     }
 
     public override void OnTriggerSaty(Script_AI_Roby_MGR AiRoby, Collider collider)
@@ -28,6 +31,8 @@ public class Script_AI_Roby_BattleState : Script_AI_Roby_BaseState
     public override void UpdateState(Script_AI_Roby_MGR AIRoby)
     {
         print("Battle");
+
+        if(!AIRoby.Owner.AreEnemyNear()) AIRoby.SwitchState(AIRoby.AIRobyIdle);
 
         if (AIRoby.Owner.EnemyWithinRange())
         {
@@ -62,7 +67,7 @@ public class Script_AI_Roby_BattleState : Script_AI_Roby_BaseState
             else
             {
                 AIRoby.Owner.StopRoby();
-                print("longRangeAttack");
+                AIRoby.Owner.RobyRangeAttack();
             }
         }
     }
