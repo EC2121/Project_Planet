@@ -6,7 +6,7 @@ public class Script_AI_Roby_BattleState : Script_AI_Roby_BaseState
 {
     public override void OnEnter(Script_AI_Roby_MGR AIRoby)
     {
-        AIRoby.Owner.ChaseTarget();
+        //AIRoby.Owner.ChaseTarget();
     }
 
     public override void OnExit(Script_AI_Roby_MGR AIRoby)
@@ -38,6 +38,8 @@ public class Script_AI_Roby_BattleState : Script_AI_Roby_BaseState
         {
             if (AIRoby.Owner.IsMaITooFar(AIRoby.Owner.mai_PlayerBattleZone))
             {
+                print("via");
+
                 if (AIRoby.Owner.roby_Animator.GetCurrentAnimatorStateInfo(0).IsName("ZoneAttack")
                     || AIRoby.Owner.roby_Animator.IsInTransition(0)) return;
 
@@ -47,6 +49,8 @@ public class Script_AI_Roby_BattleState : Script_AI_Roby_BaseState
             {
                 if (AIRoby.Owner.roby_Animator.GetCurrentAnimatorStateInfo(0).IsName("GrenadierMeleeAttack")
                     || AIRoby.Owner.roby_Animator.IsInTransition(0)) return;
+
+                print("seguo");
 
                 AIRoby.Owner.ChaseTarget();
 
@@ -67,7 +71,8 @@ public class Script_AI_Roby_BattleState : Script_AI_Roby_BaseState
             else
             {
                 AIRoby.Owner.StopRoby();
-                AIRoby.Owner.RobyRangeAttack();
+                //print("Range Attack");
+                //AIRoby.Owner.RobyRangeAttack();
             }
         }
     }

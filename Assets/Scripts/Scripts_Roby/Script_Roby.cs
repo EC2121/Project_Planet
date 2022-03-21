@@ -21,6 +21,8 @@ public class Script_Roby : MonoBehaviour
     private GameObject myEnemy;
     private Script_AI_Roby_MGR roby_FSM;
     private Rigidbody roby_RigidBody;
+    private ParticleSystem roby_Particle_Shoot;
+    //private 
 
     private float roby_RobyNearZone;
 
@@ -31,6 +33,7 @@ public class Script_Roby : MonoBehaviour
     private int roby_Animator_MeleeAsh;
     private int roby_Animator_ZoneAsh;
     private int roby_Animator_RangeAsh;
+    private int roby_Animator_RangeDoneAsh;
     private int enemyIndex;
 
     private List<GameObject> roby_EnemysInMyArea;
@@ -43,6 +46,7 @@ public class Script_Roby : MonoBehaviour
         roby_Animator = GetComponent<Animator>();
         roby_FSM = GetComponent<Script_AI_Roby_MGR>();
         roby_RigidBody = GetComponent<Rigidbody>();
+        roby_Particle_Shoot = GetComponentInChildren<ParticleSystem>();
     }
 
     private void Init()
@@ -55,7 +59,7 @@ public class Script_Roby : MonoBehaviour
 
         roby_EnemysInMyArea = new List<GameObject>();
         nearEnemys = new float[10];
-
+        roby_Animator_RangeDoneAsh = Animator.StringToHash("ShotDone");
         roby_Animator_RangeAsh = Animator.StringToHash("RangeAttack");
         roby_Animator_ZoneAsh = Animator.StringToHash("Rotate");
         roby_Animator_MeleeAsh = Animator.StringToHash("MeleeAttack");
@@ -99,12 +103,12 @@ public class Script_Roby : MonoBehaviour
     public void RobyRangeAttack()
     {
         roby_Animator.SetTrigger(roby_Animator_RangeAsh);
-        
+        roby_Animator.SetTrigger(roby_Animator_RangeDoneAsh);
     }
 
     public void RobyShoot()
     {
-
+        roby_Particle_Shoot.Play(true);
     }
     public void RobyExplosion()
     {
