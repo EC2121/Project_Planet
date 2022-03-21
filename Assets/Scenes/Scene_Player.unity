@@ -619,6 +619,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Ellen
       objectReference: {fileID: 0}
+    - target: {fileID: 100166, guid: a5674d01884853d4e8f2386a171e14d9, type: 3}
+      propertyPath: m_TagString
+      value: Mai
+      objectReference: {fileID: 0}
     - target: {fileID: 400166, guid: a5674d01884853d4e8f2386a171e14d9, type: 3}
       propertyPath: m_RootOrder
       value: 2
@@ -1626,26 +1630,13 @@ MonoBehaviour:
   SaveData: 1
   LoadData: 0
   CurrentAbilities: 
+  IsEnabled: 0
+  IsVisible: 0
+  IsAlive: 0
   MaxHealth: 100
   CurrentHealth: 100
   CollectedCoins: 0
   Position: {x: 3.7, y: 10.1, z: 2.7}
-  Rotation: {x: 0, y: 0, z: 0, w: 0}
---- !u!114 &1709140434
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1709140424}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ab4a7be8a4634c6fbaf634ecc30965ce, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  MaxHealth: 100
-  CurrentHealth: 100
-  Position: {x: 0, y: 0, z: 0}
   Rotation: {x: 0, y: 0, z: 0, w: 0}
 --- !u!1 &1731985055
 GameObject:

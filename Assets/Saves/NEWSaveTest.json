@@ -1,0 +1,36 @@
+{
+  "IsEnabled": true,
+  "IsVisible": false,
+  "IsAlive": false,
+  "CurrentAbilities": [
+    1,
+    0
+  ],
+  "MaiMaxHealth": 100.0,
+  "MaiCurrentHealth": 100.0,
+  "CollectedCoins": 0,
+  "MaiPosition": [
+    0.017793476581573488,
+    10.088852882385254,
+    3.904977560043335
+  ],
+  "MaiRotation": [
+    0.0,
+    0.001044637756422162,
+    0.0,
+    0.9999995231628418
+  ],
+  "RobyMaxHealth": 0.0,
+  "RobyCurrentHealth": 0.0,
+  "RobyPosition": [
+    0.0,
+    0.0,
+    0.0
+  ],
+  "RobyRotation": [
+    0.0,
+    0.0,
+    0.0,
+    0.0
+  ]
+}
