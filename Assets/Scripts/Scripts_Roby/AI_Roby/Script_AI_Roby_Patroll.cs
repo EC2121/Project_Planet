@@ -20,19 +20,19 @@ public class Script_AI_Roby_Patroll : Script_AI_Roby_BaseState
     {
     }
 
-    public override void OnTriggerEnter(Script_AI_Roby_MGR AiRoby, Collider collider)
+    public override void CustomOnTriggerEnter(Script_AI_Roby_MGR AiRoby, Collider collider)
     {
         if (AiRoby.Owner.EnemysInArea(collider.gameObject))
             AiRoby.SwitchState(AiRoby.AI_Roby_BattleState);
     }
 
-    public override void OnTriggerSaty(Script_AI_Roby_MGR AiRoby, Collider collider)
+    public override void CustomOnTriggerStay(Script_AI_Roby_MGR AiRoby, Collider collider)
     {
         if (AiRoby.Owner.EnemysInArea(collider.gameObject))
             AiRoby.SwitchState(AiRoby.AI_Roby_BattleState);
     }
 
-    public override void OnTriggerExit(Script_AI_Roby_MGR AiRoby, Collider collider)
+    public override void CustomOnTriggerExit(Script_AI_Roby_MGR AiRoby, Collider collider)
     {
         AiRoby.Owner.EnemyOutArea(collider.gameObject);
     }

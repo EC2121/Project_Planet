@@ -2,10 +2,14 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
+using UnityEngine.Animations.Rigging;
+using UnityEngine.Events;
 
 
 public class Script_Roby : MonoBehaviour
 {
+    public static UnityEvent Roby_Event_Die = new UnityEvent();
+
     public Animator roby_Animator { get; private set; }
     public float mai_MinDistance { get; private set; }
     public float mai_PlayerNearZone { get; private set; }
@@ -22,31 +26,47 @@ public class Script_Roby : MonoBehaviour
     private Script_AI_Roby_MGR roby_FSM;
     private Rigidbody roby_RigidBody;
     private ParticleSystem roby_Particle_Shoot;
-    //private 
+    private MultiAimConstraint roby_MultiAimConstraint;
+    private RigBuilder roby_rig;
 
     private float roby_RobyNearZone;
 
     private int animator_walkAsh;
     private int animator_walkSpeedAsh;
-    private int animator_turnAsh;
+    private int roby_Animator_TurnValueAsh;
     private int animator_turnTriggerAsh;
     private int roby_Animator_MeleeAsh;
     private int roby_Animator_ZoneAsh;
     private int roby_Animator_RangeAsh;
     private int roby_Animator_RangeDoneAsh;
+    private int roby_Animator_DeadAsh;
     private int enemyIndex;
 
     private List<GameObject> roby_EnemysInMyArea;
     private float[] nearEnemys;
 
+    private void OnEnable()
+    {
+        Roby_Event_Die.AddListener(OnRobyDie);
+    }
+
+    private void OnDisable()
+    {
+        Roby_Event_Die.RemoveListener(OnRobyDie);
+    }
     private void Awake()
     {
         mai_Player = GameObject.Find("Mai_Player");
+
         agent = GetComponent<NavMeshAgent>();
         roby_Animator = GetComponent<Animator>();
         roby_FSM = GetComponent<Script_AI_Roby_MGR>();
         roby_RigidBody = GetComponent<Rigidbody>();
+        roby_rig = GetComponent<RigBuilder>();
+
         roby_Particle_Shoot = GetComponentInChildren<ParticleSystem>();
+        roby_MultiAimConstraint = GetComponentInChildren<MultiAimConstraint>();
+
     }
 
     private void Init()
@@ -59,13 +79,15 @@ public class Script_Roby : MonoBehaviour
 
         roby_EnemysInMyArea = new List<GameObject>();
         nearEnemys = new float[10];
-        roby_Animator_RangeDoneAsh = Animator.StringToHash("ShotDone");
+
+        roby_Animator_DeadAsh = Animator.StringToHash("Death");
+        roby_Animator_RangeDoneAsh = Animator.StringToHash("NoMoreAttack");
         roby_Animator_RangeAsh = Animator.StringToHash("RangeAttack");
         roby_Animator_ZoneAsh = Animator.StringToHash("Rotate");
         roby_Animator_MeleeAsh = Animator.StringToHash("MeleeAttack");
         animator_walkAsh = Animator.StringToHash("InPursuit");
         animator_walkSpeedAsh = Animator.StringToHash("Speed");
-        animator_turnAsh = Animator.StringToHash("Angle");
+        roby_Animator_TurnValueAsh = Animator.StringToHash("Angle");
         animator_turnTriggerAsh = Animator.StringToHash("TurnTrigger");
     }
 
@@ -98,18 +120,34 @@ public class Script_Roby : MonoBehaviour
     public void RobyMeleeAttack()
     {
         roby_Animator.SetTrigger(roby_Animator_MeleeAsh);
-        //myEnemy.GetComponent<Rigidbody>().GetComponent<Rigidbody>().AddExplosionForce(10, roby_LeftHand.position, 2, 1, ForceMode.Impulse);
     }
     public void RobyRangeAttack()
     {
         roby_Animator.SetTrigger(roby_Animator_RangeAsh);
-        roby_Animator.SetTrigger(roby_Animator_RangeDoneAsh);
+        float angle = AngleCalculator();
+        //float dot = Vector3.Dot(transform.forward, (myEnemy.transform.position - transform.position).normalized);
+        //print(angle);
+        //print(dot);
+
+        if (angle <= 180) roby_Animator.SetFloat("Angle", angle / 180);
+        else roby_Animator.SetFloat("Angle", -(angle / 360));
+        roby_Animator.SetTrigger(animator_turnTriggerAsh);
+
+        agent.SetDestination(myEnemy.transform.position);
+        agent.isStopped = true;
+        //var data = roby_MultiAimConstraint.data.sourceObjects;
+        //data.SetTransform(0, myEnemy.transform);
+        //roby_MultiAimConstraint.data.sourceObjects = data;
+        //roby_rig.Build();
+        //roby_Animator.SetTrigger(roby_Animator_RangeDoneAsh);
     }
 
     public void RobyShoot()
     {
         roby_Particle_Shoot.Play(true);
+        roby_Animator.SetTrigger(roby_Animator_RangeDoneAsh);
     }
+
     public void RobyExplosion()
     {
         foreach (GameObject enemys in roby_EnemysInMyArea)
@@ -126,6 +164,11 @@ public class Script_Roby : MonoBehaviour
     public void ChaseTarget()
     {
         roby_Animator.SetBool(animator_walkAsh, true);
+        agent.SetDestination(myEnemy.transform.position);
+    }
+
+    public void ChooseTarget()
+    {
         if (ReferenceEquals(myEnemy, null) || !myEnemy.activeInHierarchy)
         {
             roby_Animator.SetFloat(animator_walkSpeedAsh, 0);
@@ -141,9 +184,7 @@ public class Script_Roby : MonoBehaviour
             }
             myEnemy = roby_EnemysInMyArea[enemyIndex];
         }
-        agent.SetDestination(myEnemy.transform.position);
     }
-
     public bool EnemyWithinRange()
     {
         if (Vector3.Distance(transform.position, roby_EnemysInMyArea[enemyIndex].transform.position) < roby_RobyNearZone) return true;
@@ -173,10 +214,26 @@ public class Script_Roby : MonoBehaviour
         {
             if (roby_EnemysInMyArea.Contains(enemy))
                 roby_EnemysInMyArea.Remove(enemy);
+            if (enemy == myEnemy)
+            {
+                myEnemy = null;
+            }
+
+            print(roby_EnemysInMyArea.Count);
         }
     }
 
     #endregion
+
+    public void RobyDie()
+    {
+        roby_Animator.SetTrigger(roby_Animator_DeadAsh);
+    }
+
+    public void OnRobyDie()
+    {
+        Roby_Event_Die.Invoke();
+    }
 
     public bool CheckRemainingDistance()
     {
@@ -208,8 +265,16 @@ public class Script_Roby : MonoBehaviour
         return value;
     }
 
-    //private void Update()
-    //{
-    //    //RobyRangeAttack();
-    //}
+    public float AngleCalculator()
+    {
+        Vector3 MyForw = transform.forward;
+        float dot = Vector3.Dot(MyForw, (myEnemy.transform.position - transform.position).normalized);
+        Vector3 Cross = Vector3.Cross(MyForw, (myEnemy.transform.position - transform.position).normalized);
+        float angle = Mathf.Acos(dot) * Mathf.Rad2Deg;
+        if (Mathf.Sign(Cross.y) == -1)
+            return 360 - angle;
+        else
+            return angle;
+    }
+
 }

@@ -13,17 +13,17 @@ public class Script_AI_Roby_BattleState : Script_AI_Roby_BaseState
     {
     }
 
-    public override void OnTriggerEnter(Script_AI_Roby_MGR AiRoby, Collider collider)
+    public override void CustomOnTriggerEnter(Script_AI_Roby_MGR AiRoby, Collider collider)
     {
         AiRoby.Owner.EnemysInArea(collider.gameObject);
     }
 
-    public override void OnTriggerExit(Script_AI_Roby_MGR AiRoby, Collider collider)
+    public override void CustomOnTriggerExit(Script_AI_Roby_MGR AiRoby, Collider collider)
     {
         AiRoby.Owner.EnemyOutArea(collider.gameObject);
     }
 
-    public override void OnTriggerSaty(Script_AI_Roby_MGR AiRoby, Collider collider)
+    public override void CustomOnTriggerStay(Script_AI_Roby_MGR AiRoby, Collider collider)
     {
         AiRoby.Owner.EnemysInArea(collider.gameObject);
     }
@@ -32,26 +32,32 @@ public class Script_AI_Roby_BattleState : Script_AI_Roby_BaseState
     {
         print("Battle");
 
-        if(!AIRoby.Owner.AreEnemyNear()) AIRoby.SwitchState(AIRoby.AIRobyIdle);
+        if (!AIRoby.Owner.AreEnemyNear())
+        {
+            AIRoby.SwitchState(AIRoby.AIRobyIdle);
+            return;
+        }
+
+        AIRoby.Owner.ChooseTarget();
 
         if (AIRoby.Owner.EnemyWithinRange())
         {
             if (AIRoby.Owner.IsMaITooFar(AIRoby.Owner.mai_PlayerBattleZone))
             {
-                print("via");
 
                 if (AIRoby.Owner.roby_Animator.GetCurrentAnimatorStateInfo(0).IsName("ZoneAttack")
                     || AIRoby.Owner.roby_Animator.IsInTransition(0)) return;
+                print("ZoneAttack");
 
                 AIRoby.Owner.RobyZoneAttackTrigger();
             }
             else
             {
+
                 if (AIRoby.Owner.roby_Animator.GetCurrentAnimatorStateInfo(0).IsName("GrenadierMeleeAttack")
                     || AIRoby.Owner.roby_Animator.IsInTransition(0)) return;
 
-                print("seguo");
-
+                print("Melee");
                 AIRoby.Owner.ChaseTarget();
 
                 if (AIRoby.Owner.CheckRemainingDistance())
@@ -65,14 +71,19 @@ public class Script_AI_Roby_BattleState : Script_AI_Roby_BaseState
         {
             if (AIRoby.Owner.IsMaITooFar(AIRoby.Owner.mai_PlayerBattleZone))
             {
+                print("Run");
+
                 AIRoby.SwitchState(AIRoby.AiRobyFollowState);
                 AIRoby.ignoreEnemys = true;
             }
             else
             {
-                AIRoby.Owner.StopRoby();
-                //print("Range Attack");
-                //AIRoby.Owner.RobyRangeAttack();
+                if (AIRoby.Owner.roby_Animator.GetCurrentAnimatorStateInfo(0).IsName("New StateMachine")
+                    || AIRoby.Owner.roby_Animator.IsInTransition(0)) return;
+
+                print("Range");
+
+                AIRoby.Owner.RobyRangeAttack();
             }
         }
     }

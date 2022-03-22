@@ -37,16 +37,16 @@ public class Script_AI_Roby_MGR : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        currentState.OnTriggerEnter(this, other);
+        currentState.CustomOnTriggerEnter(this, other);
     }
 
     private void OnTriggerStay(Collider other)
     {
-        currentState.OnTriggerSaty(this, other);
+        currentState.CustomOnTriggerStay(this, other);
     }
     private void OnTriggerExit(Collider other)
     {
-        currentState.OnTriggerExit(this, other);
+        currentState.CustomOnTriggerExit(this, other);
     }
     public void SwitchState(Script_AI_Roby_BaseState state)
     {
