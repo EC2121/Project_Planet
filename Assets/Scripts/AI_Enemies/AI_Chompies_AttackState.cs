@@ -1,31 +1,49 @@
 using UnityEngine;
 
-public class AI_Chompies_AttackState : AI_Chompies_BaseState
+public class AI_Chompies_AttackState : AI_Enemies_IBaseState
 {
-    public override void OnEnter(AI_Chompies_MGR AI)
+   
+
+    public void OnEnter(Enemy owner)
     {
-        AI.Owner.StopChasingPlayer();
+        owner.Anim.SetBool(owner.InPursuitHash, false);
     }
 
-    public override void OnExit(AI_Chompies_MGR AI)
+   
+    public void OnExit(Enemy owner)
     {
-
     }
-
-    public override void OnTriggerEnter(AI_Chompies_MGR AI, Collider collider)
+    public void UpdateState(Enemy owner)
     {
-
-    }
-
-    public override void UpdateState(AI_Chompies_MGR AI)
-    {
-        if (!AI.Owner.IsAttacking())
+        float distance = Vector3.Distance(owner.transform.position, owner.Target.position);
+        if (distance >= owner.AttackRange + 1)
         {
-            AI.Owner.Attack();
+            owner.SwitchState(EnemyStates.Follow);
+            return;
         }
-        if (!AI.Owner.CanAttackTarget() && !AI.Owner.IsAttacking())
+        if (!owner.Anim.IsInTransition(0) && owner.Anim.GetCurrentAnimatorStateInfo(0).IsName("PrepareAttack"))
         {
-            AI.SwitchState(AI.followState);
+            Attack(owner);
         }
     }
+
+
+    public void Attack(Enemy owner)
+    {
+        owner.AttackTimer += Time.deltaTime;
+        owner.transform.rotation = Quaternion.Slerp(owner.transform.rotation,
+        Quaternion.LookRotation((owner.Target.position - owner.transform.position).normalized, Vector3.up), Time.deltaTime * 5f);
+        if (owner.AttackTimer >= owner.AttackCD)
+        {
+            owner.AttackTimer = 0;
+            owner.Anim.SetTrigger(owner.AttackHash);
+        }
+    }
+
+    public void OnTrigEnter(Enemy owner, Collider other)
+    {
+
+    }
+   
+
 }

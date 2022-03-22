@@ -1,35 +1,84 @@
 using UnityEngine;
 
-public class AI_Chompies_PatrolState : AI_Chompies_BaseState
+public class AI_Chompies_PatrolState : AI_Enemies_IBaseState
 {
-    public override void OnEnter(AI_Chompies_MGR AI)
+    
+
+    public void OnEnter(Enemy owner)
     {
-        AI.Owner.Patrol();
+        owner.Anim.SetBool(owner.NearBaseHash, false);
+        SetRandomPath(owner);
     }
 
-    public override void OnExit(AI_Chompies_MGR AI)
+ 
+
+    public void OnExit(Enemy owner)
     {
-   
     }
 
-    public override void OnTriggerEnter(AI_Chompies_MGR AI,Collider collider)
+    public void UpdateState(Enemy owner)
     {
-
-    }
-
-    public override void UpdateState(AI_Chompies_MGR AI)
-    {
-
-        if (AI.Owner.HasPathFinished())
+        if (owner.Agent.remainingDistance < owner.Agent.stoppingDistance)
         {
-            AI.SwitchState(AI.idleState);
+            owner.SwitchState(EnemyStates.Idle);
             return;
         }
-        if (AI.Owner.CheckForPlayer())
-        {
-            AI.SwitchState(AI.followState);
-        }
+
     }
+
+    public void SetRandomPath(Enemy owner)
+    {
+        owner.Agent.CalculatePath(new Vector3(owner.PatrolCenter.x + Random.insideUnitCircle.x * 10
+         , 0.5f, owner.PatrolCenter.z + Random.insideUnitCircle.y * 10), owner.AgentPath);
+        owner.Agent.path = owner.AgentPath;
+    }
+
+    public void OnTrigEnter(Enemy owner, Collider other)
+    {
+        if (ReferenceEquals(other.gameObject, owner.Player.gameObject))
+        {
+            owner.Target = owner.Player;
+            owner.IsAlerted = true;
+            owner.SwitchState(EnemyStates.Alert);
+            return;
+        }
+        if (ReferenceEquals(other.gameObject, owner.Roby.gameObject))
+        {
+            owner.Target = owner.Roby;
+            owner.IsAlerted = true;
+            owner.SwitchState(EnemyStates.Alert);
+            return;
+        }
+
+    }
+
+    //public bool CheckForTarget(Enemy owner)
+    //{
+
+    //    float distanceFromPlayer = Vector3.Distance(owner.transform.position, owner.Player.position);
+    //    float distanceFromRoby = Vector3.Distance(owner.transform.position, owner.Player.position);
+
+
+    //    if ((distanceFromPlayer <= owner.VisionRange) || (distanceFromPlayer <= owner.VisionAngleRange &&
+    //        Vector3.Angle(owner.transform.forward, owner.Player.position - owner.transform.position) <= owner.VisionAngle))
+    //    {
+    //        owner.Target = owner.Player;
+    //        owner.IsAlerted = true;
+    //        return true;
+    //    }
+
+    //    if ((distanceFromRoby <= owner.VisionRange) || (distanceFromRoby <= owner.VisionAngleRange &&
+    //        Vector3.Angle(owner.transform.forward, owner.Roby.position - owner.transform.position) <= owner.VisionAngle))
+    //    {
+    //        owner.Target = owner.Roby;
+    //        owner.IsAlerted = true;
+    //        return true;
+    //    }
+
+    //    return false;
+    //}
+
+   
 
     
 }
