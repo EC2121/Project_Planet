@@ -4,36 +4,49 @@ using UnityEngine;
 
 public class Script_AI_Roby_Patroll : Script_AI_Roby_BaseState
 {
-    public override void OnEnter(Script_AI_Roby_MGR AIRoby)
+    private Vector3 roby_PatrollingPoint;
+    public void OnEnter(Script_Roby AIRoby)
     {
-        AIRoby.Owner.Patrolling();
+        AIRoby.Roby_Animator.SetFloat(AIRoby.animator_walkSpeedAsh, 0);
+        AIRoby.Roby_Animator.SetBool(AIRoby.animator_walkAsh, true);
+
+        roby_PatrollingPoint = AIRoby.Mai_Player.transform.position +
+            new Vector3(AIRoby.InverseClamp(AIRoby.Mai_Player.transform.position.x - AIRoby.Mai_MinDistance, AIRoby.Mai_Player.transform.position.x + AIRoby.Mai_MinDistance, Random.insideUnitCircle.x * AIRoby.Mai_PlayerNearZone), 0,
+            AIRoby.InverseClamp(AIRoby.Mai_Player.transform.position.z - AIRoby.Mai_MinDistance, AIRoby.Mai_Player.transform.position.z + AIRoby.Mai_MinDistance, Random.insideUnitCircle.y * AIRoby.Mai_PlayerNearZone));
+        
+        AIRoby.SetPath(roby_PatrollingPoint);
     }
 
-    public override void UpdateState(Script_AI_Roby_MGR AIRoby)
+    public void OnExit(Script_Roby AIRoby)
     {
-        if (AIRoby.Owner.IsMaITooFar(AIRoby.Owner.mai_PlayerNormalZone)) AIRoby.SwitchState(AIRoby.AiRobyFollowState);
-
-        if (AIRoby.Owner.CheckRemainingDistance()) AIRoby.SwitchState(AIRoby.AIRobyIdle);
+        AIRoby.Roby_Animator.SetBool(AIRoby.animator_walkAsh, false);
+        AIRoby.Roby_NavAgent.ResetPath();
     }
 
-    public override void OnExit(Script_AI_Roby_MGR AIRoby)
+    public void CustomOnTriggerEnter(Script_Roby AiRoby, Collider collider)
     {
+        if (AiRoby.EnemysInArea(collider.gameObject))
+            AiRoby.SwitchState(RobyStates.Battle);
     }
 
-    public override void CustomOnTriggerEnter(Script_AI_Roby_MGR AiRoby, Collider collider)
+    public void CustomOnTriggerStay(Script_Roby AiRoby, Collider collider)
     {
-        if (AiRoby.Owner.EnemysInArea(collider.gameObject))
-            AiRoby.SwitchState(AiRoby.AI_Roby_BattleState);
+        //if (AiRoby.EnemysInArea(collider.gameObject))
+        //    AiRoby.SwitchState(RobyStates.Battle);
     }
 
-    public override void CustomOnTriggerStay(Script_AI_Roby_MGR AiRoby, Collider collider)
+    public void CustomOnTriggerExit(Script_Roby AiRoby, Collider collider)
     {
-        if (AiRoby.Owner.EnemysInArea(collider.gameObject))
-            AiRoby.SwitchState(AiRoby.AI_Roby_BattleState);
+        AiRoby.EnemyOutArea(collider.gameObject);
     }
-
-    public override void CustomOnTriggerExit(Script_AI_Roby_MGR AiRoby, Collider collider)
+    public void UpdateState(Script_Roby AIRoby)
     {
-        AiRoby.Owner.EnemyOutArea(collider.gameObject);
+        if (AIRoby.IsMaITooFar(AIRoby.Mai_PlayerNormalZone))
+        {
+            AIRoby.SwitchState(RobyStates.Follow);
+            return;
+        }
+
+        if (AIRoby.Roby_NavAgent.remainingDistance < AIRoby.Roby_NavAgent.stoppingDistance) AIRoby.SwitchState(RobyStates.Idle);
     }
 }

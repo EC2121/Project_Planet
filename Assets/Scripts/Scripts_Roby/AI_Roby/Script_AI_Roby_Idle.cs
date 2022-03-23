@@ -6,40 +6,38 @@ public class Script_AI_Roby_Idle : Script_AI_Roby_BaseState
 {
     private float time = 2;
 
-    public override void OnEnter(Script_AI_Roby_MGR AIRoby)
+    public  void OnEnter(Script_Roby AIRoby)
     {
-        AIRoby.Owner.StopRoby();
-        AIRoby.ignoreEnemys = false;
+        //AIRoby.Owner.StopRoby();
+        AIRoby.Roby_IgnoreEnemy = false;
     }
 
-    public override void OnExit(Script_AI_Roby_MGR AIRoby)
+    public  void OnExit(Script_Roby AIRoby)
     {
         time = 2;
     }
 
-    public override void CustomOnTriggerEnter(Script_AI_Roby_MGR AiRoby, Collider collider)
+    public  void CustomOnTriggerEnter(Script_Roby AiRoby, Collider collider)
     {
-        if (AiRoby.Owner.EnemysInArea(collider.gameObject))
-            AiRoby.SwitchState(AiRoby.AI_Roby_BattleState);
+        if (AiRoby.EnemysInArea(collider.gameObject))
+            AiRoby.SwitchState(RobyStates.Battle);
     }
 
-    public override void CustomOnTriggerExit(Script_AI_Roby_MGR AiRoby, Collider collider)
+    public  void CustomOnTriggerExit(Script_Roby AiRoby, Collider collider)
     {
-        AiRoby.Owner.EnemyOutArea(collider.gameObject);
-
+        AiRoby.EnemyOutArea(collider.gameObject);
     }
 
-    public override void CustomOnTriggerStay(Script_AI_Roby_MGR AiRoby, Collider collider)
+    public void CustomOnTriggerStay(Script_Roby AiRoby, Collider collider)
     {
-        if (AiRoby.Owner.EnemysInArea(collider.gameObject))
-            AiRoby.SwitchState(AiRoby.AI_Roby_BattleState);
+        if (AiRoby.EnemysInArea(collider.gameObject))
+            AiRoby.SwitchState(RobyStates.Battle);
     }
 
-    public override void UpdateState(Script_AI_Roby_MGR AIRoby)
+    public  void UpdateState(Script_Roby AIRoby)
     {
-        print("Idle");
 
-        if (AIRoby.Owner.IsMaITooFar(AIRoby.Owner.mai_PlayerNormalZone)) AIRoby.SwitchState(AIRoby.AiRobyFollowState);
+        if (AIRoby.IsMaITooFar(AIRoby.Mai_PlayerNormalZone)) AIRoby.SwitchState(RobyStates.Follow);
 
         time -= Time.deltaTime;
         if (time <= 0)
@@ -48,8 +46,8 @@ public class Script_AI_Roby_Idle : Script_AI_Roby_BaseState
             switch (activity)
             {
                 case 0:
-                    AIRoby.SwitchState(AIRoby.AiRobyPatroll);
-                    break;
+                    AIRoby.SwitchState(RobyStates.Patroll);
+                    return;
                 case 1:
                     time = 3;
                     break;

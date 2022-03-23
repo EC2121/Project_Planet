@@ -1280,8 +1280,8 @@ SkinnedMeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 0798d46f78b8429429617420c156202e, type: 2}
-  - {fileID: 2100000, guid: 18b8b7d8c5a381d488f2f32c8f08f846, type: 2}
+  - {fileID: 2100000, guid: 2e6b5526ecfe0824b97f20ec6d3e2cfb, type: 2}
+  - {fileID: 2100000, guid: 68cff0c6ebba3634ea21021d8e5fa252, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -1404,6 +1404,7 @@ GameObject:
   - component: {fileID: 1148794102391347912}
   - component: {fileID: 7436371073313157951}
   - component: {fileID: 3050959871203318450}
+  - component: {fileID: 7697830146596984808}
   m_Layer: 6
   m_Name: Chomper
   m_TagString: Enemy
@@ -1460,7 +1461,7 @@ Rigidbody:
   m_UseGravity: 1
   m_IsKinematic: 1
   m_Interpolate: 0
-  m_Constraints: 116
+  m_Constraints: 112
   m_CollisionDetection: 3
 --- !u!65 &1148794102391347916
 BoxCollider:
@@ -1517,9 +1518,6 @@ MonoBehaviour:
   AnimatorController: {fileID: 0}
   Avatar: {fileID: 0}
   PatrolCenter: {x: 0, y: 0, z: 0}
-  VisionAngle: 0
-  VisionRange: 0
-  VisionAngleRange: 0
   AttackRange: 0
   AttackCD: 0
   PatrolCD: 0
@@ -1528,6 +1526,7 @@ MonoBehaviour:
   IdleTimer: 0
   Hp: 0
   IsAlerted: 0
+  ChompyRB: {fileID: 1148794102391347917}
   NearBaseHash: -2117890585
   InPursuitHash: 1654002963
   HasTargetHash: -1300016053
@@ -1542,7 +1541,7 @@ NavMeshObstacle:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1148794101669109335}
-  m_Enabled: 1
+  m_Enabled: 0
   serializedVersion: 3
   m_Shape: 1
   m_Extents: {x: 0.5, y: 0.5, z: 0.665}
@@ -1551,6 +1550,19 @@ NavMeshObstacle:
   m_CarveOnlyStationary: 1
   m_Center: {x: 0, y: 0.5, z: 0.12}
   m_TimeToStationary: 0.5
+--- !u!135 &7697830146596984808
+SphereCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1148794101669109335}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 0.5
+  m_Center: {x: 0, y: 0.5, z: 0}
 --- !u!1 &1148794101669109337
 GameObject:
   m_ObjectHideFlags: 0
