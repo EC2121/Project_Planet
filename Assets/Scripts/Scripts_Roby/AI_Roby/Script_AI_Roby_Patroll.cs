@@ -7,8 +7,8 @@ public class Script_AI_Roby_Patroll : Script_AI_Roby_BaseState
     private Vector3 roby_PatrollingPoint;
     public void OnEnter(Script_Roby AIRoby)
     {
-        AIRoby.Roby_Animator.SetFloat(AIRoby.animator_walkSpeedAsh, 0);
-        AIRoby.Roby_Animator.SetBool(AIRoby.animator_walkAsh, true);
+        AIRoby.Roby_Animator.SetFloat(AIRoby.Roby_AshAnimator_walkSpeed, 0);
+        AIRoby.Roby_Animator.SetBool(AIRoby.Roby_AshAnimator_walk, true);
 
         roby_PatrollingPoint = AIRoby.Mai_Player.transform.position +
             new Vector3(AIRoby.InverseClamp(AIRoby.Mai_Player.transform.position.x - AIRoby.Mai_MinDistance, AIRoby.Mai_Player.transform.position.x + AIRoby.Mai_MinDistance, Random.insideUnitCircle.x * AIRoby.Mai_PlayerNearZone), 0,
@@ -19,7 +19,7 @@ public class Script_AI_Roby_Patroll : Script_AI_Roby_BaseState
 
     public void OnExit(Script_Roby AIRoby)
     {
-        AIRoby.Roby_Animator.SetBool(AIRoby.animator_walkAsh, false);
+        AIRoby.Roby_Animator.SetBool(AIRoby.Roby_AshAnimator_walk, false);
         AIRoby.Roby_NavAgent.ResetPath();
     }
 

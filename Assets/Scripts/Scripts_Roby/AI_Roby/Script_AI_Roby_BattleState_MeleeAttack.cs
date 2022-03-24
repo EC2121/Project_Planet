@@ -20,7 +20,7 @@ public class Script_AI_Roby_BattleState_MeleeAttack : Script_AI_Roby_BaseState
     public void OnEnter(Script_Roby AIRoby)
     {
         AIRoby.SetPath(AIRoby.Roby_EnemyTarget.transform.position);
-        AIRoby.Roby_Animator.SetBool(AIRoby.animator_walkAsh, true);
+        AIRoby.Roby_Animator.SetBool(AIRoby.Roby_AshAnimator_walk, true);
         //AIRoby.Roby_NavAgent.SetDestination(AIRoby.Roby_EnemyTarget.transform.position);
     }
 
@@ -40,9 +40,9 @@ public class Script_AI_Roby_BattleState_MeleeAttack : Script_AI_Roby_BaseState
 
         if (AIRoby.Roby_NavAgent.remainingDistance < AIRoby.Roby_NavAgent.stoppingDistance)
         {
-            AIRoby.Roby_Animator.SetBool(AIRoby.animator_walkAsh, false);
+            AIRoby.Roby_Animator.SetBool(AIRoby.Roby_AshAnimator_walk, false);
 
-            AIRoby.Roby_Animator.SetTrigger(AIRoby.roby_Animator_MeleeAsh);
+            AIRoby.Roby_Animator.SetTrigger(AIRoby.Roby_AshAnimator_Melee);
             AIRoby.SwitchState(RobyStates.Battle);
         }
     }

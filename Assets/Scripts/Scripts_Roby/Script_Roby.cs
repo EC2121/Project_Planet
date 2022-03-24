@@ -9,126 +9,56 @@ using UnityEngine.Events;
 public enum RobyStates { Idle, Follow, Patroll, Battle, RangeAttack, MeleeAttack, ZoneAttack, Die, Hit }
 public class Script_Roby : MonoBehaviour
 {
+    public static UnityEvent Roby_Dead = new UnityEvent();
+    public static UnityEvent<float> Roby_Hit = new UnityEvent<float>();
+
+    [HideInInspector] public NavMeshAgent Roby_NavAgent;
+    [HideInInspector] public GameObject Roby_EnemyTarget;
+    [HideInInspector] public List<GameObject> roby_EnemysInMyArea;
+
+    //Public solo per prova!
+    [HideInInspector] public float Roby_Live;
+    public float roby_Life = 20;
+    public bool GetDamage = false;
+
+    [HideInInspector] public int Roby_EnemyIndex;
+    [HideInInspector] public bool Roby_IgnoreEnemy;
+
     public Animator Roby_Animator { get; private set; }
     public GameObject Mai_Player { get; private set; }
+    public Dictionary<RobyStates, Script_AI_Roby_BaseState> Roby_StateDictionary { get; private set; }
     public float Mai_MinDistance { get; private set; }
     public float Mai_PlayerNearZone { get; private set; }
     public float Mai_PlayerNormalZone { get; private set; }
     public float Mai_PlayerBattleZone { get; private set; }
+    public float Roby_RobyNearZone { get; private set; }
+    public int Roby_AshAnimator_walk { get; private set; }
+    public int Roby_AshAnimator_walkSpeed { get; private set; }
+    public int Roby_AshAnimator_TurnValue { get; private set; }
+    public int Roby_AshAnimator_turnTrigger { get; private set; }
+    public int Roby_AshAnimator_Melee { get; private set; }
+    public int Roby_AshAnimator_Zone { get; private set; }
+    public int Roby_AshAnimator_Range { get; private set; }
+    public int Roby_AshAnimator_RangeDone { get; private set; }
+    public int Roby_AshAnimator_Dead { get; private set; }
+    public int Roby_AshAnimator_GetDamage { get; private set; }
 
-
-    [SerializeField] private Transform roby_LeftHandRoot;
-    [SerializeField] private Transform roby_SphereRoot;
-
-
-    public NavMeshAgent Roby_NavAgent;
-    [HideInInspector] public GameObject Roby_EnemyTarget;
-
-    public Dictionary<RobyStates, Script_AI_Roby_BaseState> Roby_StateDictionary;
-    public Script_AI_Roby_BaseState Roby_CurrentState;
-    public Rigidbody roby_RigidBody;
-    public ParticleSystem roby_Particle_Shoot;
-
-    private Script_Roby roby_FSM;
-    private MultiAimConstraint roby_MultiAimConstraint;
-    private RigBuilder roby_rig;
-
-    public float roby_RobyNearZone;
-
-    public int animator_walkAsh;
-    public int animator_walkSpeedAsh;
-    public int roby_Animator_TurnValueAsh;
-    public int animator_turnTriggerAsh;
-    public int roby_Animator_MeleeAsh;
-    public int roby_Animator_ZoneAsh;
-    public int roby_Animator_RangeAsh;
-    public int roby_Animator_RangeDoneAsh;
-    public int roby_Animator_DeadAsh;
-    public int enemyIndex;
-
-    public bool Roby_IgnoreEnemy;
-
-    public List<GameObject> roby_EnemysInMyArea;
-    public float[] nearEnemys;
-
+    private Script_AI_Roby_BaseState Roby_CurrentState;
+    private ParticleSystem roby_Particle_Shoot;
     private NavMeshPath roby_NavMeshPath;
 
     private void OnEnable()
     {
-        //Roby_Event_Die.AddListener(OnRobyDie);
+        Roby_Hit.AddListener(OnRobyAddDamage);
+        Roby_Dead.AddListener(OnRobyDie);
     }
 
     private void OnDisable()
     {
-        //Roby_Event_Die.RemoveListener(OnRobyDie);
-    }
-    private void Awake()
-    {
-        Mai_Player = GameObject.Find("Mai_Player");
-
-        Roby_NavAgent = GetComponent<NavMeshAgent>();
-        Roby_Animator = GetComponent<Animator>();
-        roby_FSM = GetComponent<Script_Roby>();
-        roby_RigidBody = GetComponent<Rigidbody>();
-        roby_rig = GetComponent<RigBuilder>();
-
-        roby_Particle_Shoot = GetComponentInChildren<ParticleSystem>();
-        roby_MultiAimConstraint = GetComponentInChildren<MultiAimConstraint>();
-
+        Roby_Hit.RemoveListener(OnRobyAddDamage);
+        Roby_Dead.RemoveListener(OnRobyDie);
     }
 
-    private void Init()
-    {
-        Mai_PlayerNearZone = 7;
-        Mai_PlayerNormalZone = 10;
-        Mai_PlayerBattleZone = 15;
-        Mai_MinDistance = 4;
-        roby_RobyNearZone = 5;
-
-        roby_NavMeshPath = new NavMeshPath();
-
-        roby_EnemysInMyArea = new List<GameObject>();
-        nearEnemys = new float[10];
-
-        Roby_NavAgent.updatePosition = false;
-        //Roby_NavAgent.updateRotation = false;
-        Roby_Animator.applyRootMotion = true;
-
-
-        roby_Animator_DeadAsh = Animator.StringToHash("Death");
-        roby_Animator_RangeDoneAsh = Animator.StringToHash("NoMoreAttack");
-        roby_Animator_RangeAsh = Animator.StringToHash("RangeAttack");
-        roby_Animator_ZoneAsh = Animator.StringToHash("Rotate");
-        roby_Animator_MeleeAsh = Animator.StringToHash("MeleeAttack");
-        animator_walkAsh = Animator.StringToHash("InPursuit");
-        animator_walkSpeedAsh = Animator.StringToHash("Speed");
-        roby_Animator_TurnValueAsh = Animator.StringToHash("Angle");
-        animator_turnTriggerAsh = Animator.StringToHash("TurnTrigger");
-
-        Roby_StateDictionary = new Dictionary<RobyStates, Script_AI_Roby_BaseState>();
-        Roby_StateDictionary[RobyStates.Idle] = new Script_AI_Roby_Idle();
-        Roby_StateDictionary[RobyStates.Patroll] = new Script_AI_Roby_Patroll();
-        Roby_StateDictionary[RobyStates.Follow] = new Script_AI_Roby_FollowState();
-        Roby_StateDictionary[RobyStates.Battle] = new Script_AI_Roby_BattleState();
-        Roby_StateDictionary[RobyStates.MeleeAttack] = new Script_AI_Roby_BattleState_MeleeAttack();
-        Roby_StateDictionary[RobyStates.RangeAttack] = new Script_AI_Roby_BattleState_RangedAttack();
-        Roby_StateDictionary[RobyStates.ZoneAttack] = new Script_Ai_Roby_BattleState_ZoneAttack();
-
-        //Roby_StateDictionary[RobyStates.Die] = new AI_Chompies_DieState();
-        Roby_CurrentState = Roby_StateDictionary[RobyStates.Idle];
-    }
-
-    void Start()
-    {
-        Init();
-    }
-
-    public virtual void SwitchState(RobyStates state)
-    {
-        Roby_CurrentState.OnExit(this);
-        Roby_CurrentState = Roby_StateDictionary[state];
-        Roby_CurrentState.OnEnter(this);
-    }
     private void OnAnimatorMove()
     {
         Vector3 position = Roby_Animator.rootPosition;
@@ -155,16 +85,95 @@ public class Script_Roby : MonoBehaviour
         Roby_CurrentState.CustomOnTriggerStay(this, other);
         print(roby_EnemysInMyArea.Count);
     }
+
     protected virtual void Update()
     {
-        //AngleCalculator(Roby_NavAgent.desiredVelocity);
+        if (GetDamage)
+        {
+            Roby_Hit.Invoke(10);
+            GetDamage = false;
+        }
         Roby_CurrentState.UpdateState(this);
-        print(Roby_CurrentState);
     }
 
+    private void Awake()
+    {
+        Mai_Player = GameObject.Find("Mai_Player");
 
-    #region MovingMethod
-   public void PrintMe(string msg)
+        Roby_NavAgent = GetComponent<NavMeshAgent>();
+        Roby_Animator = GetComponent<Animator>();
+        //roby_RigidBody = GetComponent<Rigidbody>();
+        roby_Particle_Shoot = GetComponentInChildren<ParticleSystem>();
+    }
+
+    void Start()
+    {
+        Init();
+    }
+
+    private void Init()
+    {
+        Mai_PlayerNearZone = 7;
+        Mai_PlayerNormalZone = 10;
+        Mai_PlayerBattleZone = 15;
+        Mai_MinDistance = 4;
+        Roby_RobyNearZone = 5;
+
+        roby_NavMeshPath = new NavMeshPath();
+
+        roby_EnemysInMyArea = new List<GameObject>();
+
+        Roby_NavAgent.updatePosition = false;
+        //Roby_NavAgent.updateRotation = false;
+        Roby_Animator.applyRootMotion = true;
+
+
+        Roby_AshAnimator_Dead = Animator.StringToHash("Death");
+        Roby_AshAnimator_RangeDone = Animator.StringToHash("NoMoreAttack");
+        Roby_AshAnimator_Range = Animator.StringToHash("RangeAttack");
+        Roby_AshAnimator_Zone = Animator.StringToHash("Rotate");
+        Roby_AshAnimator_Melee = Animator.StringToHash("MeleeAttack");
+        Roby_AshAnimator_walk = Animator.StringToHash("InPursuit");
+        Roby_AshAnimator_walkSpeed = Animator.StringToHash("Speed");
+        Roby_AshAnimator_TurnValue = Animator.StringToHash("Angle");
+        Roby_AshAnimator_turnTrigger = Animator.StringToHash("TurnTrigger");
+        Roby_AshAnimator_GetDamage = Animator.StringToHash("Hit");
+
+        Roby_StateDictionary = new Dictionary<RobyStates, Script_AI_Roby_BaseState>();
+        Roby_StateDictionary[RobyStates.Idle] = new Script_AI_Roby_Idle();
+        Roby_StateDictionary[RobyStates.Patroll] = new Script_AI_Roby_Patroll();
+        Roby_StateDictionary[RobyStates.Follow] = new Script_AI_Roby_FollowState();
+        Roby_StateDictionary[RobyStates.Battle] = new Script_AI_Roby_BattleState();
+        Roby_StateDictionary[RobyStates.MeleeAttack] = new Script_AI_Roby_BattleState_MeleeAttack();
+        Roby_StateDictionary[RobyStates.RangeAttack] = new Script_AI_Roby_BattleState_RangedAttack();
+        Roby_StateDictionary[RobyStates.ZoneAttack] = new Script_Ai_Roby_BattleState_ZoneAttack();
+        Roby_StateDictionary[RobyStates.Die] = new Script_AI_Roby_Dead();
+
+        Roby_CurrentState = Roby_StateDictionary[RobyStates.Idle];
+    }
+
+    public virtual void SwitchState(RobyStates state)
+    {
+        Roby_CurrentState.OnExit(this);
+        Roby_CurrentState = Roby_StateDictionary[state];
+        Roby_CurrentState.OnEnter(this);
+    }
+
+    public void OnRobyAddDamage(float Damage)
+    {
+        roby_Life -= Damage;
+        Roby_Animator.SetTrigger(Roby_AshAnimator_GetDamage);
+
+        if (roby_Life <= 0) Roby_Dead.Invoke();
+    }
+
+    public void OnRobyDie()
+    {
+        roby_Life = 1;
+        SwitchState(RobyStates.Die);
+    }
+
+    public void PrintMe(string msg)
     {
         print(msg);
     }
@@ -173,19 +182,13 @@ public class Script_Roby : MonoBehaviour
     {
         Roby_NavAgent.CalculatePath(roby_targetPath, roby_NavMeshPath);
         Roby_NavAgent.SetPath(roby_NavMeshPath);
-        //AngleCalculator();
     }
-
-   
-    #endregion
-
-    #region AttackMethod
-    
 
     public void RobyShoot()
     {
+        roby_Particle_Shoot.transform.LookAt(Roby_EnemyTarget.transform.position);
         roby_Particle_Shoot.Play(true);
-        Roby_Animator.SetTrigger(roby_Animator_RangeDoneAsh);
+        Roby_Animator.SetTrigger(Roby_AshAnimator_RangeDone);
         SwitchState(RobyStates.Battle);
     }
 
@@ -198,8 +201,6 @@ public class Script_Roby : MonoBehaviour
         Roby_IgnoreEnemy = true;
         SwitchState(RobyStates.Follow);
     }
-
-    
 
     public bool EnemysInArea(GameObject enemy)
     {
@@ -227,15 +228,6 @@ public class Script_Roby : MonoBehaviour
         }
     }
 
-    #endregion
-
-    public void RobyDie()
-    {
-        Roby_Animator.SetTrigger(roby_Animator_DeadAsh);
-    }
-
-   
-
     public bool IsMaITooFar(float zone)
     {
         float distanceFromMai = Vector3.Distance(transform.position, Mai_Player.transform.position);
@@ -243,7 +235,6 @@ public class Script_Roby : MonoBehaviour
         return false;
     }
 
- 
     public float InverseClamp(float min, float max, float value)
     {
         if (value > min && value < max)
@@ -273,121 +264,16 @@ public class Script_Roby : MonoBehaviour
 
         if (angle <= 180)
         {
-            Roby_Animator.SetTrigger(animator_turnTriggerAsh);
+            Roby_Animator.SetTrigger(Roby_AshAnimator_turnTrigger);
             Roby_Animator.SetFloat("Angle", angle / 180);
         }
         else if (angle > 180)
         {
-            Roby_Animator.SetTrigger(animator_turnTriggerAsh);
+            Roby_Animator.SetTrigger(Roby_AshAnimator_turnTrigger);
             Roby_Animator.SetFloat("Angle", -(angle / 360));
         }
         else return;
-        //Vector3 MyForw = transform.forward;
-        //float dot = Vector3.Dot(MyForw, (Roby_NavAgent.nextPosition - transform.position).normalized);
-        //Vector3 Cross = Vector3.Cross(MyForw, (Roby_NavAgent.nextPosition - transform.position).normalized);
-        //float angle = Mathf.Acos(dot) * Mathf.Rad2Deg;
-        //if (Mathf.Sign(Cross.y) == -1)
-        //    angle = 360 - angle;
-        //float angle = Vector3.Angle(transform.forward, direction) * Mathf.Sign(Vector3.Dot(transform.right, direction));
-        //float lastAngle = angle;
-        //if (Mathf.Abs(lastAngle) < 1 && angle != 0)
-        //{
-        //    Roby_Animator.SetTrigger(animator_turnTriggerAsh);
-        //    Roby_Animator.SetFloat(roby_Animator_TurnValueAsh, angle / 90);
-        //}
+
     }
-    //public void FollowPlayer()
-    //{
-    //    Roby_Animator.SetFloat(animator_walkSpeedAsh, 1);
 
-    //    Vector3 nearestPointOnEdge = Mai_Player.transform.position + (Mai_PlayerNearZone) * (Vector3.Normalize(transform.position - Mai_Player.transform.position));
-    //    Roby_NavAgent.SetDestination(nearestPointOnEdge);
-    //}
-    //public void RobyZoneAttackTrigger()
-    //{
-    //    Roby_Animator.SetTrigger(roby_Animator_ZoneAsh);
-    //}
-    //public void StopRoby()
-    //{
-    //    Roby_Animator.SetBool(animator_walkAsh, false);
-    //    Roby_NavAgent.velocity = Vector3.zero;
-    //    Roby_NavAgent.ResetPath();
-    ////}
-    ///
-    //public bool CheckRemainingDistance()
-    //{
-    //    if (Roby_NavAgent.remainingDistance < Roby_NavAgent.stoppingDistance) return true;
-    //    else return false;
-    //}
-    //public void ChaseTarget()
-    //{
-    //    Roby_Animator.SetBool(animator_walkAsh, true);
-    //    Roby_NavAgent.SetDestination(Roby_EnemyTarget.transform.position);
-    //}
-    //public void RobyMeleeAttack()
-    //{
-    //    Roby_Animator.SetTrigger(roby_Animator_MeleeAsh);
-    //}
-    //public void Patrolling()
-    //{
-    //    Roby_Animator.SetFloat(animator_walkSpeedAsh, 0);
-    //    Roby_Animator.SetBool(animator_walkAsh, true);
-
-    //    Roby_NavAgent.SetDestination(Mai_Player.transform.position +
-    //        new Vector3(InverseClamp(Mai_Player.transform.position.x - Mai_MinDistance, Mai_Player.transform.position.x + Mai_MinDistance, Random.insideUnitCircle.x * Mai_PlayerNearZone), 0,
-    //        InverseClamp(Mai_Player.transform.position.z - Mai_MinDistance, Mai_Player.transform.position.z + Mai_MinDistance, Random.insideUnitCircle.y * Mai_PlayerNearZone)));
-    //}
-    //public void RobyRangeAttack()
-    //{
-    //    //Roby_Animator.SetTrigger(roby_Animator_RangeAsh);
-    //    ////float angle = AngleCalculator();
-    //    ////float dot = Vector3.Dot(transform.forward, (myEnemy.transform.position - transform.position).normalized);
-    //    ////print(angle);
-    //    ////print(dot);
-
-    //    //if (angle <= 180) Roby_Animator.SetFloat("Angle", angle / 180);
-    //    //else Roby_Animator.SetFloat("Angle", -(angle / 360));
-    //    //Roby_Animator.SetTrigger(animator_turnTriggerAsh);
-
-    //    //Roby_NavAgent.SetDestination(Roby_EnemyTarget.transform.position);
-    //    //Roby_NavAgent.isStopped = true;
-    //    //var data = roby_MultiAimConstraint.data.sourceObjects;
-    //    //data.SetTransform(0, myEnemy.transform);
-    //    //roby_MultiAimConstraint.data.sourceObjects = data;
-    //    //roby_rig.Build();
-    //    //roby_Animator.SetTrigger(roby_Animator_RangeDoneAsh);
-    //}
-    //public void ChooseTarget()
-    //{
-    //    if (ReferenceEquals(Roby_EnemyTarget, null) || !Roby_EnemyTarget.activeInHierarchy)
-    //    {
-    //        Roby_Animator.SetFloat(animator_walkSpeedAsh, 0);
-    //        float lowest = float.MaxValue;
-    //        for (int i = 0; i < roby_EnemysInMyArea.Count; i++)
-    //        {
-    //            float distanceFromEnemys = (Vector3.Distance(transform.position, roby_EnemysInMyArea[i].transform.position));
-    //            if (distanceFromEnemys != 0 && distanceFromEnemys < lowest)
-    //            {
-    //                lowest = distanceFromEnemys;
-    //                enemyIndex = i;
-    //            }
-    //        }
-    //        Roby_EnemyTarget = roby_EnemysInMyArea[enemyIndex];
-    //    }
-    //}
-    //public void OnRobyDie()
-    //{
-    //    //Roby_Event_Die.Invoke();
-    //}
-    //public bool EnemyWithinRange()
-    //{
-    //    if (Vector3.Distance(transform.position, roby_EnemysInMyArea[enemyIndex].transform.position) < roby_RobyNearZone) return true;
-    //    else return false;
-    //}
-
-    //public bool AreEnemyNear()
-    //{
-    //    if (roby_EnemysInMyArea.Count != 0) return true;
-    //    else return false;
-    //}
 }

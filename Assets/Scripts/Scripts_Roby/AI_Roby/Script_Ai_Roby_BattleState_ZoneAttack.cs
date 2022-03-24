@@ -19,7 +19,7 @@ public class Script_Ai_Roby_BattleState_ZoneAttack : Script_AI_Roby_BaseState
 
     public void OnEnter(Script_Roby AIRoby)
     {
-        AIRoby.Roby_Animator.SetTrigger(AIRoby.roby_Animator_ZoneAsh);
+        AIRoby.Roby_Animator.SetTrigger(AIRoby.Roby_AshAnimator_Zone);
     }
 
     public void OnExit(Script_Roby AIRoby)

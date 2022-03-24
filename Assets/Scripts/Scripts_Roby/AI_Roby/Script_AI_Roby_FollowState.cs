@@ -9,16 +9,16 @@ public class Script_AI_Roby_FollowState : Script_AI_Roby_BaseState
     public void OnEnter(Script_Roby AIRoby)
     {
         roby_NearestpointOnEdge = AIRoby.Mai_Player.transform.position + (AIRoby.Mai_PlayerNearZone) * (Vector3.Normalize(AIRoby.transform.position - AIRoby.Mai_Player.transform.position));
-        AIRoby.Roby_Animator.SetBool(AIRoby.animator_walkAsh, true);
-        AIRoby.Roby_Animator.SetFloat(AIRoby.animator_walkSpeedAsh, 1);
+        AIRoby.Roby_Animator.SetBool(AIRoby.Roby_AshAnimator_walk, true);
+        AIRoby.Roby_Animator.SetFloat(AIRoby.Roby_AshAnimator_walkSpeed, 1);
         AIRoby.SetPath(roby_NearestpointOnEdge);
     }
 
     public void OnExit(Script_Roby AIRoby)
     {
         AIRoby.Roby_IgnoreEnemy = false;
-        AIRoby.Roby_Animator.SetBool(AIRoby.animator_walkAsh, false);
-        AIRoby.Roby_Animator.SetFloat(AIRoby.animator_walkSpeedAsh, 0);
+        AIRoby.Roby_Animator.SetBool(AIRoby.Roby_AshAnimator_walk, false);
+        AIRoby.Roby_Animator.SetFloat(AIRoby.Roby_AshAnimator_walkSpeed, 0);
         AIRoby.Roby_NavAgent.ResetPath();
     }
 

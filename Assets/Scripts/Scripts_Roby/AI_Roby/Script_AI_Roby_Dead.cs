@@ -1,31 +1,31 @@
-//using System.Collections;
-//using System.Collections.Generic;
-//using UnityEngine;
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
 
-//public class Script_AI_Roby_Dead : Script_AI_Roby_BaseState
-//{
-//    public override void CustomOnTriggerEnter(Script_Roby AiRoby, Collider collider)
-//    {
-//    }
+public class Script_AI_Roby_Dead : Script_AI_Roby_BaseState
+{
+    public void CustomOnTriggerEnter(Script_Roby AiRoby, Collider collider)
+    {
+    }
 
-//    public override void CustomOnTriggerExit(Script_Roby AiRoby, Collider collider)
-//    {
-//    }
+    public void CustomOnTriggerExit(Script_Roby AiRoby, Collider collider)
+    {
+    }
 
-//    public override void CustomOnTriggerStay(Script_Roby AiRoby, Collider collider)
-//    {
-//    }
+    public void CustomOnTriggerStay(Script_Roby AiRoby, Collider collider)
+    {
+    }
 
-//    public override void OnEnter(Script_Roby AIRoby)
-//    {
-//        AIRoby.Owner.RobyDie();
-//    }
+    public void OnEnter(Script_Roby AIRoby)
+    {
+        AIRoby.Roby_Animator.SetTrigger(AIRoby.Roby_AshAnimator_Dead);
+    }
 
-//    public override void OnExit(Script_Roby AIRoby)
-//    {
-//    }
+    public void OnExit(Script_Roby AIRoby)
+    {
+    }
 
-//    public override void UpdateState(Script_Roby AIRoby)
-//    {
-//    }
-//}
+    public void UpdateState(Script_Roby AIRoby)
+    {
+    }
+}

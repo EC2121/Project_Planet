@@ -19,30 +19,34 @@ public class Script_AI_Roby_BattleState_RangedAttack : Script_AI_Roby_BaseState
 
     public void OnEnter(Script_Roby AIRoby)
     {
-        AIRoby.PrintMe("rangeAttack");
-        AIRoby.Roby_Animator.SetTrigger(AIRoby.roby_Animator_RangeAsh);
-        AIRoby.SetPath(AIRoby.Roby_EnemyTarget.transform.position);
+        float angle = AngleCalculator(AIRoby);
+        //AIRoby.PrintMe(angle.ToString());
+
+        AIRoby.Roby_Animator.SetTrigger(AIRoby.Roby_AshAnimator_Range);
+
+        if (angle > -10 && angle < 10) return;
+
+        angle = AIRoby.InverseClamp(-10, 10, angle);
+        angle /= 180;
+        AIRoby.Roby_Animator.SetFloat("Angle", angle);
+
+        AIRoby.Roby_Animator.SetTrigger(AIRoby.Roby_AshAnimator_turnTrigger);
     }
 
     public void OnExit(Script_Roby AIRoby)
     {
-        AIRoby.Roby_Animator.ResetTrigger(AIRoby.roby_Animator_RangeAsh);
+        AIRoby.Roby_Animator.ResetTrigger(AIRoby.Roby_AshAnimator_Range);
+        AIRoby.Roby_Animator.SetBool(AIRoby.Roby_AshAnimator_walk, false);
     }
 
     public void UpdateState(Script_Roby AIRoby)
     {
         if (ReferenceEquals(AIRoby.Roby_EnemyTarget, null)) return;
 
-            if (AIRoby.roby_EnemysInMyArea.Count == 0)
-            {
-                AIRoby.SwitchState(RobyStates.Idle);
-                return;
-            }
-        AIRoby.roby_Particle_Shoot.transform.LookAt(AIRoby.Roby_EnemyTarget.transform.position);
-        //float angle = AngleCalculator(AIRoby);
-        //if (angle <= 180) AIRoby.Roby_Animator.SetFloat("Angle", angle / 180);
-        //else AIRoby.Roby_Animator.SetFloat("Angle", -(angle / 360));
-        //AIRoby.Roby_Animator.SetTrigger(AIRoby.animator_turnTriggerAsh);
+        if (AIRoby.roby_EnemysInMyArea.Count == 0)
+        {
+            AIRoby.SwitchState(RobyStates.Idle);
+        }
     }
 
     public float AngleCalculator(Script_Roby AIRoby)
@@ -51,8 +55,9 @@ public class Script_AI_Roby_BattleState_RangedAttack : Script_AI_Roby_BaseState
         float dot = Vector3.Dot(MyForw, (AIRoby.Roby_EnemyTarget.transform.position - AIRoby.transform.position).normalized);
         Vector3 Cross = Vector3.Cross(MyForw, (AIRoby.Roby_EnemyTarget.transform.position - AIRoby.transform.position).normalized);
         float angle = Mathf.Acos(dot) * Mathf.Rad2Deg;
+
         if (Mathf.Sign(Cross.y) == -1)
-            return 360 - angle;
+            return -angle;
         else
             return angle;
     }
