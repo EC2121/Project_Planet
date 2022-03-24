@@ -6,18 +6,19 @@ using UnityEngine;
 using UnityEngine.AI;
 using UnityEngine.Events;
 
-public enum EnemyStates { Idle, Patrol, Attack, Follow, Alert,Die }
+public enum EnemyStates { Idle, Patrol, Attack, Follow, Alert, Die, Hit }
 public class Enemy : MonoBehaviour
 {
-    [HideInInspector] public Transform Player;
-    [HideInInspector] public Transform Roby;
-    [HideInInspector] public Transform Target;
-    [HideInInspector] public NavMeshAgent Agent;
-    [HideInInspector] public Animator Anim;
-    [HideInInspector] public NavMeshPath AgentPath;
+    [HideInInspector] public Transform Player { get; private set; }
+    [HideInInspector] public Transform Roby { get; private set; }
+    [HideInInspector] public NavMeshAgent Agent { get; private set; }
+    [HideInInspector] public Animator Anim { get; private set; }
+
     [HideInInspector] public Dictionary<EnemyStates, AI_Enemies_IBaseState> StatesDictionary;
-    [HideInInspector] public AI_Enemies_IBaseState currentState;
     [HideInInspector] public AnimatorController AnimatorController;
+    [HideInInspector] public NavMeshPath AgentPath;
+    [HideInInspector] public AI_Enemies_IBaseState currentState;
+    [HideInInspector] public Transform Target;
     [HideInInspector] public Avatar Avatar;
     [HideInInspector] public Vector3 PatrolCenter;
     [HideInInspector] public float AttackRange;
@@ -38,24 +39,68 @@ public class Enemy : MonoBehaviour
     [HideInInspector] public int SpottedHash = Animator.StringToHash("Spotted");
     [HideInInspector] public int DieHash = Animator.StringToHash("Die");
 
+    public List<Enemy> nearEnemies;
+
     public bool DebugMode;
 
 
     private void Start()
     {
     }
+    public Vector3 Flocking()
+    {
+        Vector3 alignment = Vector3.zero;
+        Vector3 cohesion = Vector3.zero;
+        Vector3 separation = Vector3.zero;
+
+
+        foreach (var enemy in nearEnemies)
+        {
+            alignment += enemy.Agent.velocity;
+            cohesion += enemy.transform.position;
+            separation += this.transform.position - enemy.transform.position;
+        }
+
+        alignment /= nearEnemies.Count;
+        alignment.Normalize();
+
+        cohesion /= nearEnemies.Count;
+        cohesion.Normalize();
+
+        separation /= nearEnemies.Count;
+        separation.Normalize();
+
+
+        return (alignment + cohesion + (separation * 1.5f)) / 3;
+
+    }
+
+
 
     protected virtual void Update()
     {
-        
+        //Vector3 flockingVec = Flocking();
+        //transform.position = Agent.nextPosition;
+        //Agent.nextPosition = Vector3.Lerp(transform.position, Agent.nextPosition + flockingVec, Time.deltaTime);
         currentState.UpdateState(this);
     }
     private void OnAnimatorMove()
     {
-        Vector3 position = Anim.rootPosition;
+        Vector3 position;
+        //if (ReferenceEquals(currentState, StatesDictionary[EnemyStates.Follow]))
+        //{
+        //    Vector3 flockingVec = Flocking();
+        //    position = Vector3.Lerp(Anim.rootPosition, Agent.nextPosition + flockingVec, Time.deltaTime);    //Anim.rootPosition;
+        //}
+        //else
+        //    position = Anim.rootPosition;
+
+        //Vector3 flockingVec = Flocking();
+        position = Anim.rootPosition;/*Vector3.Lerp(Anim.rootPosition, Agent.nextPosition + flockingVec, Time.deltaTime);*/    //Anim.rootPosition;
         position.y = Agent.nextPosition.y;
         transform.position = position;
         Agent.nextPosition = transform.position;
+
     }
     public void LoadData(EnemyData Data, Transform playerRef, Transform robyRef)
     {
@@ -75,19 +120,20 @@ public class Enemy : MonoBehaviour
         Anim.avatar = Data.Avatar;
         Anim.applyRootMotion = true;
         Agent = GetComponent<NavMeshAgent>();
-        Agent.updatePosition = false;
+        Agent.updatePosition = true;
         AgentPath = new NavMeshPath();
         SphereCollider sphereCollider = GetComponent<SphereCollider>();
         sphereCollider.radius = Data.VisionRange;
+        sphereCollider.isTrigger = true;
         //SetSpawnPoint
         PatrolCenter = transform.position;
-       
+        nearEnemies = new List<Enemy>();
         AttackRange = Data.AttackRange;
         AttackCD = Data.AttackCD;
         PatrolCD = Data.PatrolCD;
         AlertRange = Data.AlertRange;
         AttackTimer = UnityEngine.Random.Range(0, 3);
-        IdleTimer = UnityEngine.Random.Range(0,3);
+        IdleTimer = UnityEngine.Random.Range(0, 3);
         IsAlerted = false;
     }
 
@@ -95,6 +141,10 @@ public class Enemy : MonoBehaviour
     {
         Hp -= amount;
         if (Hp <= 0) SwitchState(EnemyStates.Die);
+        else
+        {
+            SwitchState(EnemyStates.Hit);
+        }
     }
     public virtual void SwitchState(EnemyStates state)
     {
@@ -110,9 +160,32 @@ public class Enemy : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        currentState.OnTrigEnter(this,other);
+        if (other.CompareTag("Enemy"))
+        {
+            Enemy enemy = other.GetComponent<Enemy>();
+            if (!nearEnemies.Contains(enemy))
+            {
+                nearEnemies.Add(enemy);
+            }
+        }
+
+        currentState.OnTrigEnter(this, other);
+    }
+
+    private void OnTriggerExit(Collider other)
+    {
+        if (other.CompareTag("Enemy"))
+        {
+            Enemy enemy = other.GetComponent<Enemy>();
+            if (nearEnemies.Contains(enemy))
+            {
+                nearEnemies.Remove(enemy);
+            }
+        }
+
+
     }
 
 
-    
+
 }

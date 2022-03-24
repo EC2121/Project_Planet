@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: BaseChomperData
   m_EditorClassIdentifier: 
   VisionRange: 5
-  AttackRange: 3
+  AttackRange: 4
   AttackCD: 2
   PatrolCD: 2
   AlertRange: 20

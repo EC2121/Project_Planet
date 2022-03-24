@@ -39,7 +39,7 @@ public class AI_Chompies_FollowState : AI_Enemies_IBaseState
 
     }
 
-    public void FollowPlayer(Enemy owner)
+    private void FollowPlayer(Enemy owner)
     {
         owner.Agent.CalculatePath(owner.Target.position, owner.AgentPath);
         owner.Agent.path = owner.AgentPath;
