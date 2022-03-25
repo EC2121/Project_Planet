@@ -10,6 +10,9 @@ abstract public class AI_Chompies_BaseState
 
     public abstract void OnTriggerEnter(AI_Chompies_MGR AI,Collider collider);
 
-  
+    public void CanSeePlayer()
+    {
+
+    }     
 
 }

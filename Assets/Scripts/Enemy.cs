@@ -1,118 +1,131 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using UnityEditor.Animations;
 using UnityEngine;
 using UnityEngine.AI;
-using UnityEngine.Events;
 
-public enum EnemyStates { Idle, Patrol, Attack, Follow, Alert,Die }
-public class Enemy : MonoBehaviour
+public abstract class Enemy : MonoBehaviour
 {
-    [HideInInspector] public Transform Player;
-    [HideInInspector] public Transform Roby;
-    [HideInInspector] public Transform Target;
-    [HideInInspector] public NavMeshAgent Agent;
-    [HideInInspector] public Animator Anim;
-    [HideInInspector] public NavMeshPath AgentPath;
-    [HideInInspector] public Dictionary<EnemyStates, AI_Enemies_IBaseState> StatesDictionary;
-    [HideInInspector] public AI_Enemies_IBaseState currentState;
-    [HideInInspector] public AnimatorController AnimatorController;
-    [HideInInspector] public Avatar Avatar;
-    [HideInInspector] public Vector3 PatrolCenter;
-    [HideInInspector] public float AttackRange;
-    [HideInInspector] public float AttackCD;
-    [HideInInspector] public float PatrolCD;
-    [HideInInspector] public float AlertRange;
-    [HideInInspector] public float AttackTimer;
-    [HideInInspector] public float IdleTimer;
-    [HideInInspector] public float Hp;
-    [HideInInspector] public bool IsAlerted;
+    protected Transform target;
+    protected Animator anim;
+    protected Transform player;
+    protected NavMeshAgent agent;
+    protected NavMeshPath agentPath;
+    protected Vector3 patrolCenter;
+    protected float visionAngle;
+    protected float visionRange;
+    protected float visionAngleRange;
+    protected float attackRange;
+    protected float attackCD;
+    protected float patrolCD;
+    protected float attackTimer;
+    protected float patrolTimer;
+    protected AI_Chompies_MGR FSM;
 
+    private bool DebugMode;
 
-    //Animation Hashes
-    [HideInInspector] public int NearBaseHash = Animator.StringToHash("NearBase");
-    [HideInInspector] public int InPursuitHash = Animator.StringToHash("InPursuit");
-    [HideInInspector] public int HasTargetHash = Animator.StringToHash("HasTarget");
-    [HideInInspector] public int AttackHash = Animator.StringToHash("Attack");
-    [HideInInspector] public int SpottedHash = Animator.StringToHash("Spotted");
-    [HideInInspector] public int DieHash = Animator.StringToHash("Die");
-
-    public bool DebugMode;
-
-
-    private void Start()
+    public virtual void Patrol()
     {
+        anim.SetBool("NearBase", false);
+        agent.CalculatePath(new Vector3(patrolCenter.x + UnityEngine.Random.insideUnitCircle.x * 10
+            , 0.5f, patrolCenter.z + UnityEngine.Random.insideUnitCircle.y * 10), agentPath);
+        agent.path = agentPath;
+
+    }
+    public virtual bool CheckForPlayer()
+    {
+
+        float distance = Vector3.Distance(transform.position, player.position);
+        if ((distance <= visionRange) || (distance <= visionAngleRange &&
+            Vector3.Angle(transform.forward, player.position - transform.position) <= visionAngle))
+        {
+            target = player;
+            return true;
+        }
+        return false;
     }
 
-    protected virtual void Update()
+    public virtual bool CheckDistance()
     {
-        
-        currentState.UpdateState(this);
-    }
-    private void OnAnimatorMove()
-    {
-        Vector3 position = Anim.rootPosition;
-        position.y = Agent.nextPosition.y;
-        transform.position = position;
-        Agent.nextPosition = transform.position;
-    }
-    public void LoadData(EnemyData Data, Transform playerRef, Transform robyRef)
-    {
-        this.Player = playerRef;
-        this.Roby = robyRef;
-        Hp = Data.MaxHp;
-        StatesDictionary = new Dictionary<EnemyStates, AI_Enemies_IBaseState>();
-        StatesDictionary[EnemyStates.Idle] = new AI_Chompies_IdleState();
-        StatesDictionary[EnemyStates.Patrol] = new AI_Chompies_PatrolState();
-        StatesDictionary[EnemyStates.Follow] = new AI_Chompies_FollowState();
-        StatesDictionary[EnemyStates.Attack] = new AI_Chompies_AttackState();
-        StatesDictionary[EnemyStates.Alert] = new AI_Chompies_AlertState();
-        StatesDictionary[EnemyStates.Die] = new AI_Chompies_DieState();
-        currentState = StatesDictionary[EnemyStates.Idle];
-        Anim = GetComponent<Animator>();
-        Anim.runtimeAnimatorController = Data.AnimatorController;
-        Anim.avatar = Data.Avatar;
-        Anim.applyRootMotion = true;
-        Agent = GetComponent<NavMeshAgent>();
-        Agent.updatePosition = false;
-        AgentPath = new NavMeshPath();
-        SphereCollider sphereCollider = GetComponent<SphereCollider>();
-        sphereCollider.radius = Data.VisionRange;
-        //SetSpawnPoint
-        PatrolCenter = transform.position;
-       
-        AttackRange = Data.AttackRange;
-        AttackCD = Data.AttackCD;
-        PatrolCD = Data.PatrolCD;
-        AlertRange = Data.AlertRange;
-        AttackTimer = UnityEngine.Random.Range(0, 3);
-        IdleTimer = UnityEngine.Random.Range(0,3);
-        IsAlerted = false;
+        return Vector3.Distance(transform.position, target.transform.position) >= 20f;
     }
 
-    public void AddDamage(float amount)
+    public virtual bool FindNewPoint()
     {
-        Hp -= amount;
-        if (Hp <= 0) SwitchState(EnemyStates.Die);
+        patrolTimer += Time.deltaTime;
+        if (patrolTimer >= patrolCD)
+        {
+            patrolTimer = 0;
+            return true;
+        }
+        return false;
     }
-    public virtual void SwitchState(EnemyStates state)
+    public virtual void Res()
     {
-        currentState.OnExit(this);
-        currentState = StatesDictionary[state];
-        currentState.OnEnter(this);
+        target = null;
+        patrolCenter = transform.position;
+        patrolTimer = 0f;
+        attackTimer = 0f;
+        anim.SetBool("InPursuit", false);
+        anim.SetBool("HasTarget", false);
+    }
+    public virtual bool HasPathFinished()
+    {
+
+        return agent.remainingDistance < agent.stoppingDistance;
+    }
+    public virtual void Idle()
+    {
+        anim.SetBool("NearBase", true);
+    }
+    public virtual void FollowPlayer()
+    {
+        agent.CalculatePath(target.position, agentPath);
+        agent.path = agentPath;
+        transform.rotation = Quaternion.Slerp(transform.rotation,
+            Quaternion.LookRotation((target.position - transform.position).normalized, Vector3.up), Time.deltaTime * 5f);
     }
 
-    public void OnAlertEnd()
+    public virtual void StopChasingPlayer()
     {
-        SwitchState(EnemyStates.Follow);
+        anim.SetBool("InPursuit", false);
+        agent.ResetPath();
     }
 
-    private void OnTriggerEnter(Collider other)
+    public virtual bool IsAttacking()
     {
-        currentState.OnTrigEnter(this,other);
+        return anim.GetCurrentAnimatorStateInfo(0).IsName("ChomperAttack") || anim.IsInTransition(0);
+    }
+    public virtual bool CanAttackTarget()
+    {
+        return Vector3.Distance(transform.position, target.position) <= attackRange;
+    }
+    public virtual void Attack()
+    {
+        attackTimer += Time.deltaTime;
+        transform.rotation = Quaternion.Slerp(transform.rotation,
+            Quaternion.LookRotation((target.position - transform.position).normalized, Vector3.up), Time.deltaTime * 5f);
+        if (attackTimer >= attackCD)
+        {
+            anim.SetTrigger("Attack");
+            attackTimer = 0;
+        }
+    }
+    public virtual void SetPathToPlayer()
+    {
+        anim.SetBool("HasTarget", true);
+        anim.SetBool("InPursuit", true);
+        agent.CalculatePath(target.position, agentPath);
+        agent.path = agentPath;
+    }
+    // Start is called before the first frame update
+    void Start()
+    {
+
     }
 
-
-    
+    // Update is called once per frame
+    void Update()
+    {
+    }
 }

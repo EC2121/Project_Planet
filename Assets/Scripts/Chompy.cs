@@ -3,31 +3,29 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 
-
-
 public class Chompy : Enemy
 {
     // Start is called before the first frame update
-    //private void Awake()
-    //{
-    //    //Player = GameObject.FindGameObjectWithTag("Player").transform;
-    //    Anim = GetComponent<Animator>();
-    //    Agent = GetComponent<NavMeshAgent>();
-    //    AgentPath = new NavMeshPath();
-    //    patrolCenter = transform.position;
-    //    Init();
-    //}
-
-    //private void Init()
-    //{
-    //    NearBaseHash = Animator.StringToHash("NearBase");
-    //    StatesDictionary = new Dictionary<EnemyStates, AI_Enemies_IBaseState>();
-    //    StatesDictionary[EnemyStates.Idle] = new AI_Chompies_IdleState();
-    //    StatesDictionary[EnemyStates.Patrol] = new AI_Chompies_PatrolState();
-    //    currentState = StatesDictionary[EnemyStates.Idle];
-    //    Agent.updatePosition = false;
-    //    patrolCenter = transform.position;
-    //}
+    private void Init()
+    {
+        visionAngle = 30;
+        visionRange = 5;
+        visionAngleRange = 10;
+        attackRange = 3;
+        attackCD = 2;
+        patrolCD = 2;
+        attackTimer = 2;
+    }
+    private void Awake()
+    {
+        player = GameObject.FindGameObjectWithTag("Player").transform;
+        anim = GetComponent<Animator>();
+        agent = GetComponent<NavMeshAgent>();
+        agentPath = new NavMeshPath();
+        patrolCenter = transform.position;
+        Init();
+        FSM = GetComponent<AI_Chompies_MGR>();
+    }
 
 
     void Start()
@@ -36,8 +34,9 @@ public class Chompy : Enemy
     }
 
     // Update is called once per frame
-    protected override void Update()
+    void Update()
     {
+
     }
 
 

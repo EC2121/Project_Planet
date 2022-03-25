@@ -1,62 +1,35 @@
 using UnityEngine;
 
-public class AI_Chompies_IdleState : AI_Enemies_IBaseState
+public class AI_Chompies_IdleState : AI_Chompies_BaseState
 {
-    //public override void OnEnter(AI_Chompies_MGR AI)
-    //{
-    //    AI.Owner.Idle();
-    //}
-
-    public void OnEnter(Enemy owner)
+    public override void OnEnter(AI_Chompies_MGR AI)
     {
-        owner.Anim.SetBool(owner.NearBaseHash, true);
+        AI.Owner.Idle();
     }
-    public void OnExit(Enemy owner)
+
+    public override void OnExit(AI_Chompies_MGR AI)
     {
 
     }
-    public void UpdateState(Enemy owner)
+
+    public override void OnTriggerEnter(AI_Chompies_MGR AI, Collider collider)
     {
-        if (IdleTimerExpired(owner))
-        {
-            owner.SwitchState(EnemyStates.Patrol);
-            return;
-        }
+
     }
 
-
-    public bool IdleTimerExpired(Enemy owner)
+    public override void UpdateState(AI_Chompies_MGR AI)
     {
-        owner.IdleTimer += Time.deltaTime;
-        if (owner.IdleTimer >= owner.PatrolCD)
+        if (AI.Owner.CheckForPlayer())
         {
-            owner.IdleTimer = 0;
-            return true;
-        }
-        return false;
-    }
-
-    public void OnTrigEnter(Enemy owner, Collider other)
-    {
-        if (ReferenceEquals(other.gameObject, owner.Player.gameObject))
-        {
-            owner.Target = owner.Player;
-            owner.IsAlerted = true;
-            owner.SwitchState(EnemyStates.Alert);
-            return;
-        }
-        if (ReferenceEquals(other.gameObject, owner.Roby.gameObject))
-        {
-            owner.Target = owner.Roby;
-            owner.IsAlerted = true;
-            owner.SwitchState(EnemyStates.Alert);
+            AI.SwitchState(AI.followState);
             return;
         }
 
+        if (AI.Owner.FindNewPoint())
+        {
+            AI.SwitchState(AI.patrolState);
+        }
+       
+
     }
-
-
-
-
-
 }

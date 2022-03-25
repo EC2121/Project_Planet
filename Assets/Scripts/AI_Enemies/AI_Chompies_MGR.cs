@@ -13,7 +13,6 @@ public class AI_Chompies_MGR : MonoBehaviour
     public AI_Chompies_PatrolState patrolState;
     public AI_Chompies_FollowState followState;
     public AI_Chompies_AttackState attackState;
-    public AI_Chompies_AlertState alertState;
 
 
 
@@ -28,9 +27,8 @@ public class AI_Chompies_MGR : MonoBehaviour
         patrolState = new AI_Chompies_PatrolState();
         followState = new AI_Chompies_FollowState();
         attackState = new AI_Chompies_AttackState();
-        alertState = new AI_Chompies_AlertState();
         Owner = GetComponent<Enemy>();
-        currentState = null;
+        currentState = idleState;
         currentState.OnEnter(this);
     }
 
@@ -38,7 +36,6 @@ public class AI_Chompies_MGR : MonoBehaviour
 
     private void Update()
     {
-        Debug.Log(currentState);
         currentState.UpdateState(this);
     }
 
