@@ -1,9 +1,10 @@
 using UnityEngine;
+using UnityEngine.Events;
 
 public class AI_Chompies_PatrolState : AI_Enemies_IBaseState
 {
-    
 
+    public static UnityEvent unityEvent;
     public void OnEnter(Enemy owner)
     {
         owner.Anim.SetBool(owner.NearBaseHash, false);
