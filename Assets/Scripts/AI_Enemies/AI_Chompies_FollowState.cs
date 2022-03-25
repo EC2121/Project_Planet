@@ -10,6 +10,7 @@ public class AI_Chompies_FollowState : AI_Enemies_IBaseState
     public void OnEnter(Enemy owner)
     {
         owner.Anim.SetBool(owner.InPursuitHash, true);
+        owner.Anim.SetBool(owner.HasTargetHash, true);
     }
 
     //public override void OnExit(AI_Chompies_MGR AI)

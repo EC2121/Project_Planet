@@ -45,7 +45,6 @@ public class Enemy : MonoBehaviour
     public List<Enemy> nearEnemies;
 
     public bool DebugMode;
-
     private void OnEnable()
     {
         OnDamageTaken.AddListener(AddDamage);
@@ -94,6 +93,7 @@ public class Enemy : MonoBehaviour
         //transform.position = Agent.nextPosition;
         //Agent.nextPosition = Vector3.Lerp(transform.position, Agent.nextPosition + flockingVec, Time.deltaTime);
         currentState.UpdateState(this);
+        Debug.Log(currentState);
     }
     private void OnAnimatorMove()
     {
@@ -107,7 +107,7 @@ public class Enemy : MonoBehaviour
         //    position = Anim.rootPosition;
 
         //Vector3 flockingVec = Flocking();
-        position = Anim.rootPosition;/*Vector3.Lerp(Anim.rootPosition, Agent.nextPosition + flockingVec, Time.deltaTime);*/    //Anim.rootPosition;
+        position = Anim.rootPosition;
         position.y = Agent.nextPosition.y;
         transform.position = position;
         Agent.nextPosition = transform.position;
@@ -115,6 +115,7 @@ public class Enemy : MonoBehaviour
     }
     public void LoadData(EnemyData Data, Transform playerRef, Transform robyRef)
     {
+        Target = null;
         this.Player = playerRef;
         this.Roby = robyRef;
         Hp = Data.MaxHp;
@@ -152,8 +153,16 @@ public class Enemy : MonoBehaviour
 
     public void AddDamage(float amount,GameObject source,bool wasThrown)
     {
+        if (Target == null) return;
+        
         Hp -= amount;
-        if (Hp <= 0) SwitchState(EnemyStates.Die);
+
+        if (Hp <= 0)
+        {
+            SwitchState(EnemyStates.Die);
+            return;
+        }
+
         else
         {
             if (wasThrown)
@@ -179,6 +188,7 @@ public class Enemy : MonoBehaviour
 
     public void OnHitEnd()
     {
+        Debug.Log("CIUA");
         SwitchState(EnemyStates.Follow);
     }
 
