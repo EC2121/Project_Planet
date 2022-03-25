@@ -6,9 +6,11 @@ using UnityEngine;
 using UnityEngine.AI;
 using UnityEngine.Events;
 
-public enum EnemyStates { Idle, Patrol, Attack, Follow, Alert, Die, Hit }
+public enum EnemyStates { Idle, Patrol, Attack, Follow, Alert, Die, Hit, Thrown}
 public class Enemy : MonoBehaviour
 {
+
+    public static UnityEvent<float, GameObject,bool> OnDamageTaken = new UnityEvent<float, GameObject,bool>();
     [HideInInspector] public Transform Player { get; private set; }
     [HideInInspector] public Transform Roby { get; private set; }
     [HideInInspector] public NavMeshAgent Agent { get; private set; }
@@ -28,6 +30,7 @@ public class Enemy : MonoBehaviour
     [HideInInspector] public float AttackTimer;
     [HideInInspector] public float IdleTimer;
     [HideInInspector] public float Hp;
+    [HideInInspector] public float HorizontalDot;
     [HideInInspector] public bool IsAlerted;
 
 
@@ -43,7 +46,15 @@ public class Enemy : MonoBehaviour
 
     public bool DebugMode;
 
+    private void OnEnable()
+    {
+        OnDamageTaken.AddListener(AddDamage);
+    }
 
+    private void OnDisable()
+    {
+        OnDamageTaken.RemoveListener(AddDamage);
+    }
     private void Start()
     {
     }
@@ -114,6 +125,8 @@ public class Enemy : MonoBehaviour
         StatesDictionary[EnemyStates.Attack] = new AI_Chompies_AttackState();
         StatesDictionary[EnemyStates.Alert] = new AI_Chompies_AlertState();
         StatesDictionary[EnemyStates.Die] = new AI_Chompies_DieState();
+        StatesDictionary[EnemyStates.Hit] = new AI_Chompies_HitState();
+        StatesDictionary[EnemyStates.Thrown] = new AI_Chompies_ThrownState();
         currentState = StatesDictionary[EnemyStates.Idle];
         Anim = GetComponent<Animator>();
         Anim.runtimeAnimatorController = Data.AnimatorController;
@@ -137,12 +150,18 @@ public class Enemy : MonoBehaviour
         IsAlerted = false;
     }
 
-    public void AddDamage(float amount)
+    public void AddDamage(float amount,GameObject source,bool wasThrown)
     {
         Hp -= amount;
         if (Hp <= 0) SwitchState(EnemyStates.Die);
         else
         {
+            if (wasThrown)
+            {
+                SwitchState(EnemyStates.Thrown);
+                return;
+            }
+            HorizontalDot = Vector3.Dot(transform.forward, source.transform.forward);
             SwitchState(EnemyStates.Hit);
         }
     }
@@ -154,6 +173,11 @@ public class Enemy : MonoBehaviour
     }
 
     public void OnAlertEnd()
+    {
+        SwitchState(EnemyStates.Follow);
+    }
+
+    public void OnHitEnd()
     {
         SwitchState(EnemyStates.Follow);
     }
