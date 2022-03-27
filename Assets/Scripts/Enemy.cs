@@ -93,11 +93,10 @@ public class Enemy : MonoBehaviour
         //transform.position = Agent.nextPosition;
         //Agent.nextPosition = Vector3.Lerp(transform.position, Agent.nextPosition + flockingVec, Time.deltaTime);
         currentState.UpdateState(this);
-        Debug.Log(currentState);
+        Debug.Log(Agent.remainingDistance);
     }
     private void OnAnimatorMove()
     {
-        Vector3 position;
         //if (ReferenceEquals(currentState, StatesDictionary[EnemyStates.Follow]))
         //{
         //    Vector3 flockingVec = Flocking();
@@ -107,10 +106,11 @@ public class Enemy : MonoBehaviour
         //    position = Anim.rootPosition;
 
         //Vector3 flockingVec = Flocking();
-        position = Anim.rootPosition;
+        Vector3 position;
+        position =  Anim.rootPosition;
         position.y = Agent.nextPosition.y;
         transform.position = position;
-        Agent.nextPosition = transform.position;
+
 
     }
     public void LoadData(EnemyData Data, Transform playerRef, Transform robyRef)
@@ -134,7 +134,6 @@ public class Enemy : MonoBehaviour
         Anim.avatar = Data.Avatar;
         Anim.applyRootMotion = true;
         Agent = GetComponent<NavMeshAgent>();
-        Agent.updatePosition = true;
         AgentPath = new NavMeshPath();
         SphereCollider sphereCollider = GetComponent<SphereCollider>();
         sphereCollider.radius = Data.VisionRange;

@@ -8,6 +8,7 @@ public class AI_Chompies_AttackState : AI_Enemies_IBaseState
     public void OnEnter(Enemy owner)
     {
         owner.Anim.SetBool(owner.InPursuitHash, false);
+        owner.Agent.ResetPath();
     }
    
     public void OnExit(Enemy owner)
