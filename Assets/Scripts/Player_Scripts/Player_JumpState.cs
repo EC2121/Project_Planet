@@ -17,14 +17,14 @@ public class Player_JumpState : Player_BaseState
     public override void EnterState()
     {
         isFalling = false;
+        Context.Animator.SetBool(Context.IsRunningHash,false);
+
     }
 
     public override void UpdateState()
     {
         CheckSwitchStates();
         HandleJump();
-        HandleGravity();
-        Debug.Log("ciao");
     }
 
     public override void ExitState()
@@ -35,7 +35,7 @@ public class Player_JumpState : Player_BaseState
 
     public override void CheckSwitchStates()
     {
-        if (Context.CharacterController.isGrounded)
+        if (Context.CharacterController.isGrounded && !isFalling)
         {
             SwitchState(Factory.Grounded());
         }
@@ -59,18 +59,14 @@ public class Player_JumpState : Player_BaseState
         if (isFalling && Context.CurrentMovementY < 0)
         {
             RaycastHit hit;
-            if (Physics.Raycast(Context.PlayerPos, Vector3.down, out hit, 0.5f, LayerMask.GetMask("Default")))
+            if (Physics.Raycast(Context.PlayerPos, Vector3.down, out hit, 0.7f, LayerMask.GetMask("Default")))
             {
                 isFalling = false;
                 Context.Animator.SetBool(Context.IsLandingHash, true);
-                Context.RequireJumpPress = true;
+                Context.RequireNewWeaponSwitch = true;
             }
         }
     }
 
-    void HandleGravity()
-    {
-        float gravity = -9.81f;
-        Context.CurrentMovementY += gravity * Time.deltaTime;
-    }
+   
 }
