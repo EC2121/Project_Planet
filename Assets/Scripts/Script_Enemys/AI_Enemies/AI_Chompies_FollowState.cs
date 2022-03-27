@@ -10,6 +10,7 @@ public class AI_Chompies_FollowState : AI_Enemies_IBaseState
     public void OnEnter(Enemy owner)
     {
         owner.Anim.SetBool(owner.InPursuitHash, true);
+        owner.Anim.SetBool(owner.HasTargetHash, true);
     }
 
     //public override void OnExit(AI_Chompies_MGR AI)
@@ -39,12 +40,12 @@ public class AI_Chompies_FollowState : AI_Enemies_IBaseState
 
     }
 
-    public void FollowPlayer(Enemy owner)
+    private void FollowPlayer(Enemy owner)
     {
         owner.Agent.CalculatePath(owner.Target.position, owner.AgentPath);
         owner.Agent.path = owner.AgentPath;
-        owner.transform.rotation = Quaternion.Slerp(owner.transform.rotation,
-            Quaternion.LookRotation((owner.Target.position - owner.transform.position).normalized, Vector3.up), Time.deltaTime * 5f);
+        //owner.transform.rotation = Quaternion.Slerp(owner.transform.rotation,
+        //    Quaternion.LookRotation((owner.Target.position - owner.transform.position).normalized, Vector3.up), Time.deltaTime * 5f);
     }
 
     public void OnTrigEnter(Enemy owner, Collider other)

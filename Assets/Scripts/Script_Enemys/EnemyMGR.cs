@@ -16,9 +16,15 @@ public class EnemyMGR : MonoBehaviour
         Transform Player = GameObject.FindGameObjectWithTag("Player").transform;
         Transform Roby = GameObject.FindGameObjectWithTag("Roby").transform;
         GameObject ChomperPrefab = Resources.Load<GameObject>("Enemies/ChomperBase/Chomper");
+        GameObject ChomperAlpha = Resources.Load<GameObject>("Enemies/ChomperAlpha/AlphaChomper");
         EnemyData ChomperBaseData = Resources.Load<EnemyData>("Enemies/ChomperBase/BaseChomperData");
+        EnemyData ChomperAlphaData = Resources.Load<EnemyData>("Enemies/ChomperAlpha/AlphaChomperData");
         for (int i = 0; i < SpawnPoint.Count; i++)
         {
+
+            GameObject go = Instantiate(ChomperAlpha, null);
+            PrepareEnemy(go, SpawnPoint[i].position, ChomperAlphaData, Player, Roby);
+            enemies.Add(go); 
             for (int j = 0; j < NumberOfBaseChompy; j++)
             {
                 GameObject Go = Instantiate(ChomperPrefab, null);

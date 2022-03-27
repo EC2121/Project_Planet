@@ -26,7 +26,7 @@ public class AI_Chompies_PatrolState : AI_Enemies_IBaseState
 
     }
 
-    public void SetRandomPath(Enemy owner)
+    private void SetRandomPath(Enemy owner)
     {
         owner.Agent.CalculatePath(new Vector3(owner.PatrolCenter.x + Random.insideUnitCircle.x * 10
          , 0.5f, owner.PatrolCenter.z + Random.insideUnitCircle.y * 10), owner.AgentPath);

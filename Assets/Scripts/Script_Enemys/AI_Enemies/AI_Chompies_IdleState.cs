@@ -10,6 +10,7 @@ public class AI_Chompies_IdleState : AI_Enemies_IBaseState
     public void OnEnter(Enemy owner)
     {
         owner.Anim.SetBool(owner.NearBaseHash, true);
+        owner.Agent.ResetPath();
     }
     public void OnExit(Enemy owner)
     {
@@ -25,7 +26,7 @@ public class AI_Chompies_IdleState : AI_Enemies_IBaseState
     }
 
 
-    public bool IdleTimerExpired(Enemy owner)
+    private bool IdleTimerExpired(Enemy owner)
     {
         owner.IdleTimer += Time.deltaTime;
         if (owner.IdleTimer >= owner.PatrolCD)

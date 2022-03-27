@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 
 public class AI_Chompies_AttackState : AI_Enemies_IBaseState
@@ -7,8 +8,8 @@ public class AI_Chompies_AttackState : AI_Enemies_IBaseState
     public void OnEnter(Enemy owner)
     {
         owner.Anim.SetBool(owner.InPursuitHash, false);
+        owner.Agent.ResetPath();
     }
-
    
     public void OnExit(Enemy owner)
     {
@@ -28,7 +29,7 @@ public class AI_Chompies_AttackState : AI_Enemies_IBaseState
     }
 
 
-    public void Attack(Enemy owner)
+    private void Attack(Enemy owner)
     {
         owner.AttackTimer += Time.deltaTime;
         owner.transform.rotation = Quaternion.Slerp(owner.transform.rotation,
@@ -37,13 +38,24 @@ public class AI_Chompies_AttackState : AI_Enemies_IBaseState
         {
             owner.AttackTimer = 0;
             owner.Anim.SetTrigger(owner.AttackHash);
+            //FindNewPoint(owner);
         }
     }
 
+    //private void FindNewPoint(Enemy owner)
+    //{
+    //    Vector3 random = UnityEngine.Random.insideUnitSphere;
+    //    random.y = owner.transform.position.y;
+    //    owner.Agent.CalculatePath(owner.Target.position + random * 3,owner.AgentPath);
+    //    owner.Agent.path = owner.AgentPath;
+    //}
+
     public void OnTrigEnter(Enemy owner, Collider other)
     {
-
+        
     }
-   
+
+
+    
 
 }

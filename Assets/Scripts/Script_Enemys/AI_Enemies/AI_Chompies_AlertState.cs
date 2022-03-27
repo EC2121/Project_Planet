@@ -26,7 +26,7 @@ public class AI_Chompies_AlertState : AI_Enemies_IBaseState
        
     }
 
-    public void AlertOthers(Enemy owner,bool isSource)
+    private void AlertOthers(Enemy owner,bool isSource)
     {
         if (!isSource) return;
 
