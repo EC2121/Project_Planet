@@ -10,6 +10,7 @@ public class OnClick : MonoBehaviour
     private Button myButton;
     private Image myImage;
     private Sprite highlighteSprite;
+    /*
     private void Awake()
     {
         myButton = GetComponent<Button>();
@@ -25,12 +26,12 @@ public class OnClick : MonoBehaviour
         atlas = Resources.Load<SpriteAtlas>("Sprites/UI/Menu/Start_Menu.png");
             highlighteSprite = atlas.GetSprite("StartMenu_ButtonHighlighted");
     }
-
+*/
     public void OnClicked()
     {
         Debug.Log("Button clicked!");
 
-        myImage.sprite = highlighteSprite;
+       // myImage.sprite = highlighteSprite;
 
     }
     
