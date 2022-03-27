@@ -54,7 +54,6 @@ public abstract class Player_BaseState
         {
             _currentSuperState.SetSubState(newState);
         }
-        
     }
 
     protected void SetSuperState(Player_BaseState newSuperState)
