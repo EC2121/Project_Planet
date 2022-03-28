@@ -20,3 +20,5 @@ MonoBehaviour:
   MaxHp: 100
   AnimatorController: {fileID: 9100000, guid: eee661ff082b004488dea60aa9839a1c, type: 2}
   Avatar: {fileID: 9000000, guid: 2732fe64dd2799f439fb845921df626b, type: 3}
+  AgentSpeed: 1
+  AgentStoppingDistance: 2

@@ -39,6 +39,8 @@ public class AI_Chompies_IdleState : AI_Enemies_IBaseState
 
     public void OnTrigEnter(Enemy owner, Collider other)
     {
+        if (owner.Target != null) return;
+
         if (ReferenceEquals(other.gameObject, owner.Player.gameObject))
         {
             owner.Target = owner.Player;
@@ -53,6 +55,7 @@ public class AI_Chompies_IdleState : AI_Enemies_IBaseState
             owner.SwitchState(EnemyStates.Alert);
             return;
         }
+
 
     }
 

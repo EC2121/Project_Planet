@@ -36,6 +36,8 @@ public class AI_Chompies_PatrolState : AI_Enemies_IBaseState
 
     public void OnTrigEnter(Enemy owner, Collider other)
     {
+        if (owner.Target != null) return;
+
         if (ReferenceEquals(other.gameObject, owner.Player.gameObject))
         {
             owner.Target = owner.Player;

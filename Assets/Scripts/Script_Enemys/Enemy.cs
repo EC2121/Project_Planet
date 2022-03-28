@@ -32,7 +32,6 @@ public class Enemy : MonoBehaviour
     [HideInInspector] public float Hp;
     [HideInInspector] public float HorizontalDot;
     [HideInInspector] public bool IsAlerted;
-    public Rigidbody ChompyRB;
 
     //Animation Hashes
     [HideInInspector] public int NearBaseHash = Animator.StringToHash("NearBase");
@@ -107,10 +106,9 @@ public class Enemy : MonoBehaviour
 
         //Vector3 flockingVec = Flocking();
         Vector3 position;
-        position =  Anim.rootPosition;
+        position = Anim.rootPosition;
         position.y = Agent.nextPosition.y;
         transform.position = position;
-
 
     }
     public void LoadData(EnemyData Data, Transform playerRef, Transform robyRef)
@@ -133,7 +131,9 @@ public class Enemy : MonoBehaviour
         Anim.runtimeAnimatorController = Data.AnimatorController;
         Anim.avatar = Data.Avatar;
         Anim.applyRootMotion = true;
-        Agent = GetComponent<NavMeshAgent>();
+        Agent =  gameObject.AddComponent<NavMeshAgent>();
+        Agent.speed = Data.AgentSpeed;
+        Agent.stoppingDistance = Data.AgentStoppingDistance;
         AgentPath = new NavMeshPath();
         SphereCollider sphereCollider = GetComponent<SphereCollider>();
         sphereCollider.radius = Data.VisionRange;
@@ -187,7 +187,6 @@ public class Enemy : MonoBehaviour
 
     public void OnHitEnd()
     {
-        Debug.Log("CIUA");
         SwitchState(EnemyStates.Follow);
     }
 

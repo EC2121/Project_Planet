@@ -17,6 +17,8 @@ public class EnemyData : ScriptableObject
     public float MaxHp;
     public AnimatorController AnimatorController;
     public Avatar Avatar;
+    public float AgentSpeed;
+    public float AgentStoppingDistance;
   
 
  
