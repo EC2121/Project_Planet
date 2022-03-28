@@ -1,3 +1,6 @@
+using System;
+using System.Collections.Generic;
+using System.Timers;
 using Unity.Mathematics;
 using UnityEngine;
 using UnityEngine.InputSystem;
@@ -17,6 +20,7 @@ public class Player_State_Machine : MonoBehaviour
     private int velocityHash_X;
     private int velocityHash_Y;
     private int velocityHash_Z;
+    private int attackIndexHash;
     private int fallingSpeedHash;
 
     private Player_Controller input;
@@ -26,6 +30,7 @@ public class Player_State_Machine : MonoBehaviour
     private Vector3 currentRunMovement;
     private bool isMovementPressed;
     private bool isRunPressed;
+    private bool isMousePressed;
     private bool isJumpPressed;
     private bool switchWeapon = false;
     private float runSpeed = 1.2f;
@@ -37,9 +42,17 @@ public class Player_State_Machine : MonoBehaviour
     private Vector3 playerPos;
     private Player_BaseState _currentState;
     private Player_StateFactory _states;
-    private bool requireNewjumpPress = false;
+    private bool requireNewWeaponSwitch = false;
+    private bool requireNewAttack = false;
     private float groundGravity = -0.05f;
     private float fallingSpeed;
+    private AnimatorStateInfo stateInfo;
+    private int attackId = 0;
+    private Vector3 move;
+    private bool isInteract = false;
+
+    //public Transform prova;
+
     //getters and setters
     public Player_BaseState CurrentState { get { return _currentState;} set { _currentState = value;}}
     public CharacterController CharacterController { get { return characterController;} set { characterController = value;}}
@@ -48,19 +61,30 @@ public class Player_State_Machine : MonoBehaviour
     public float JumpSpeed  { get { return jumpSpeed;}}
     public bool IsJumping  { set { isJumped = value;}}
     public bool IsJumpPressed  { get { return isJumpPressed;} set {isJumped = value;}}
-    public bool RequireJumpPress { get { return requireNewjumpPress;} set { requireNewjumpPress = value;}}
+    public bool RequireNewWeaponSwitch { get { return requireNewWeaponSwitch;} set { requireNewWeaponSwitch = value;}}
+    public bool RequireNewAttack { get { return requireNewAttack;} set { requireNewAttack = value;}}
     public float CurrentMovementY { get { return currentMovement.y;} set { currentMovement.y = value;}}
     public float CurrentRunMovementY { get { return currentRunMovement.y;} set { currentRunMovement.y = value;}}
     public int VelocityHash_X  { get { return velocityHash_X;}}
     public int VelocityHash_Y  { get { return velocityHash_Y;}}
     public int VelocityHash_Z { get { return velocityHash_Z;}}
+    public int AttackIndexHash { get { return attackIndexHash;} set{ attackIndexHash = value;}}
     public Vector3 PlayerPos { get { return transform.position;}}
     public int IsLandingHash { get { return isLandingHash;}}
+    public int EquipHash { get { return equipHash;}}
     public bool IsMovementPressed  { get { return isMovementPressed;}}
+    public bool IsMousePressed  { get { return isMousePressed;}}
     public bool IsRunPressed  { get { return isRunPressed;}}
     public int IsWalkingHash { get { return isWalkingHash;}}
     public int IsRunningHash { get { return isRunningHash;}}
     public float GroundGravity  { get { return groundGravity;}}
+    public bool IsSwitchPressed  { get { return switchWeapon;} set {switchWeapon = value;}}
+    public bool IsWeaponAttached  { get { return isWeaponAttached;} set {isWeaponAttached = value;}}
+    public Handle_Mesh_Sockets Sockets  { get { return sockets;}}
+    public Transform Weapon {get {return weapon;}}
+    public AnimatorStateInfo AnimStateInfo{ get {return stateInfo;}}
+    public int AttackId  { get { return attackId;} set {attackId = value;}}
+    public Vector3 Move { get { return move; } set { move = value;}}
 
 
     void Awake()
@@ -77,7 +101,7 @@ public class Player_State_Machine : MonoBehaviour
         velocityHash_Y = Animator.StringToHash("VelocityY");
         velocityHash_Z = Animator.StringToHash("VelocityZ");
         fallingSpeedHash = Animator.StringToHash("FallingSpeed");
-
+        attackIndexHash = Animator.StringToHash("AttackIndex");
         sockets = GetComponent<Handle_Mesh_Sockets>();
 
         _states = new Player_StateFactory(this);
@@ -91,13 +115,19 @@ public class Player_State_Machine : MonoBehaviour
         input.Player.Run.started += OnRun;
         input.Player.Run.canceled += OnRun;
 
-        input.Player.Switch.started += SwitchWeapon;
-        input.Player.Switch.canceled += SwitchWeapon;
+        input.Player.Switch.started += OnSwitchWeapon;
+        input.Player.Switch.canceled += OnSwitchWeapon;
 
         input.Player.Jump.started += OnJump;
         input.Player.Jump.canceled += OnJump;
         input.Player.Jump.performed += OnJump;
-
+        
+        input.Player.L_MouseClick.started += OnMousePressed;
+        input.Player.L_MouseClick.performed += OnMousePressed;
+        input.Player.L_MouseClick.canceled += OnMousePressed;
+        
+        input.Player.F_Interact.started += OnInteract;
+        input.Player.F_Interact.canceled += OnInteract;
         
         isWeaponAttached = false;
         isJumped = false;
@@ -106,17 +136,26 @@ public class Player_State_Machine : MonoBehaviour
     {
         isRunPressed = context.ReadValueAsButton();
     }
-
-    void SwitchWeapon(InputAction.CallbackContext context)
+    
+    void OnMousePressed(InputAction.CallbackContext context)
     {
-        switchWeapon = context.ReadValueAsButton();
+        isMousePressed = context.ReadValueAsButton();
+        requireNewAttack = false;
     }
 
+    void OnSwitchWeapon(InputAction.CallbackContext context)
+    {
+        switchWeapon = context.ReadValueAsButton();
+        requireNewWeaponSwitch = false;
+    }
+    void OnInteract(InputAction.CallbackContext context)
+    {
+        isInteract = context.ReadValueAsButton();
+        requireNewWeaponSwitch = false;
+    }
     void OnJump(InputAction.CallbackContext context)
     {
         isJumpPressed = context.ReadValueAsButton();
-        requireNewjumpPress = false;
-       // Debug.Log(requireNewjumpPress);
     }
     void OnMovementInput(InputAction.CallbackContext context)
     {
@@ -125,65 +164,106 @@ public class Player_State_Machine : MonoBehaviour
     }
     void Update()
     {
-        ActivateWeapon();
         HandleMovement();
-        _currentState.UpdateStates();
+       // HandleRotation();
+       HandleGravity();
+       _currentState.UpdateStates();
+      // ActivateWeapon();
     }
-    void HandleMovement( )
+
+    // private void OnControllerColliderHit(ControllerColliderHit hit)
+    // {
+    //     if (hit.gameObject.tag =="Player")
+    //     {
+    //         Debug.Log("CIAoasdasdasd");
+    //
+    //     }
+    // }
+
+    void HandleMovement()
     {
         Vector3 verticalMovement = Vector3.up *  currentMovement.y;
-
-        Vector3 move = new Vector3(currentAnimationBlend.x,0, currentAnimationBlend.y);
         currentAnimationBlend =
             Vector2.SmoothDamp(currentAnimationBlend, currentMovementInput, ref animationVelocity, 0.15f);
+        move = new Vector3(currentAnimationBlend.x,0, currentAnimationBlend.y);
+      
         move.y = verticalMovement.y;
-        if (isRunPressed)
-        {
-            characterController.Move(move * Time.deltaTime * PlayerSpeed * runSpeed);
-        }
-        else
-        {
-            characterController.Move( (move * Time.deltaTime * PlayerSpeed));
-        }
+        characterController.Move( (move * PlayerSpeed* (isRunPressed ? runSpeed : 1)* Time.deltaTime));
+        fallingSpeed = Mathf.Clamp( Mathf.Abs(currentAnimationBlend.x + currentAnimationBlend.y), 0,1) * (isRunPressed ? runSpeed : 1);
         
-        fallingSpeed =Mathf.Clamp( Mathf.Abs(currentAnimationBlend.x + currentAnimationBlend.y), 0,1) * (isRunPressed ? runSpeed : 1);
-        
-        anim.SetFloat(velocityHash_X, currentAnimationBlend.x);
-        anim.SetFloat(velocityHash_Z, currentAnimationBlend.y);
+        anim.SetFloat(velocityHash_X, move.x);
+        anim.SetFloat(velocityHash_Z, move.z);
         anim.SetFloat(fallingSpeedHash,fallingSpeed);
     }
+    void HandleGravity()
+    {
+        float gravity = -9.81f;
+        currentMovement.y += gravity * Time.deltaTime;
+    }
+    private void OnAnimatorMove()
+    {
+       
+        //transform.Rotate(0,currentMovementInput.x,0);
+        //transform.rotation = anim.rootRotation;
+        //transform.Translate(0, 0, move.z *0.05f);
+        //transform.position = anim.rootPosition;
+    }
+
+    void HandleRotation()
+    {
+        Vector3 positionTolookAt;
+        positionTolookAt.x = move.x;
+        positionTolookAt.y = 0;
+        positionTolookAt.z =  move.z;
+
+        Quaternion currentRotation = transform.rotation;
+        if (isMovementPressed)
+        {
+           
+           // Vector3 move = new Vector3(currentAnimationBlend.x,0, currentAnimationBlend.y);
+
+            //transform.forward = move;
+          Quaternion targetRotation = Quaternion.LookRotation(positionTolookAt);
+          transform.rotation = Quaternion.Slerp(currentRotation, targetRotation, 2*Time.deltaTime);
+        }
+     
+    }
+    // public void ActivateWeapon()
+    // {
+    //     if (!isInteract && !isMovementPressed)
+    //     {
+    //         isInteract = true;
+    //        // Context.IsSwitchPressed = false;
+    //         sockets.Attach(prova, Handle_Mesh_Sockets.SocketId.Spine);
+    //         //anim.SetBool(Context.EquipHash, true);
+    //     }
+    //     else if (isInteract && !isMovementPressed)
+    //     {
+    //         isInteract = false;
+    //        // Context.IsSwitchPressed = false;
+    //
+    //         sockets.Attach(prova, Handle_Mesh_Sockets.SocketId.RightHand);
+    //       // Context.Animator.SetBool(Context.EquipHash, false);
+    //     }
+    // }
     public void ActivateWeapon()
     {
-        if (switchWeapon && !isWeaponAttached && !isMovementPressed)
+        if (isInteract && !isWeaponAttached && !isMovementPressed)
         {
             isWeaponAttached = true;
-            switchWeapon = false;
-            sockets.Attach(weapon.transform, Handle_Mesh_Sockets.SocketId.Spine);
-            anim.SetBool(equipHash, true);
+            isInteract = false;
+           // sockets.Attach(prova, Handle_Mesh_Sockets.SocketId.Spine);
+           // anim.SetBool(equipHash, true);
         }
-        else if (switchWeapon && isWeaponAttached && !isMovementPressed)
+        else if (isInteract && isWeaponAttached && !isMovementPressed)
         {
             isWeaponAttached = false;
-            switchWeapon = false;
+            isInteract = false;
 
-            sockets.Attach(weapon.transform, Handle_Mesh_Sockets.SocketId.RightHand);
-            anim.SetBool(equipHash, false);
+            //prova.parent = null;
+            //anim.SetBool(equipHash, false);
         }
     }
-
-    public void OnAnimationEvent(string eventName)
-    {
-        if (eventName == "EquipWeapon")
-        {
-            sockets.Attach(weapon.transform, Handle_Mesh_Sockets.SocketId.RightHand);
-        }
-
-        if (eventName == "Detach")
-        {
-            sockets.Attach(weapon.transform, Handle_Mesh_Sockets.SocketId.Spine);
-        }
-    }
-   
     private void OnEnable()
     {
         input.Player.Enable();
