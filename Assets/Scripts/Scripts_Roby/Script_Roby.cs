@@ -98,7 +98,7 @@ public class Script_Roby : MonoBehaviour
 
     private void Awake()
     {
-        Mai_Player = GameObject.Find("Mai_Player");
+        Mai_Player = GameObject.Find("Mai");
 
         Roby_NavAgent = GetComponent<NavMeshAgent>();
         Roby_Animator = GetComponent<Animator>();

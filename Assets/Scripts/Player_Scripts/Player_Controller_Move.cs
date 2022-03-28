@@ -6,7 +6,7 @@ public class Player_Controller_Move : MonoBehaviour
 {
     [SerializeField] private float PlayerSpeed = 3f;
     [SerializeField] private Transform weapon;
-    [SerializeField] private float jumpSpeed = 10f;
+    [SerializeField] private float jumpSpeed = 1f;
 
 
     private Animator anim;

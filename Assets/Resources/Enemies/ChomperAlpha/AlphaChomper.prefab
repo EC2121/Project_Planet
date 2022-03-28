@@ -3171,6 +3171,7 @@ MonoBehaviour:
   Hp: 0
   HorizontalDot: 0
   IsAlerted: 0
+  ChompyRB: {fileID: 0}
   NearBaseHash: -2117890585
   InPursuitHash: 1654002963
   HasTargetHash: -1300016053
@@ -3258,8 +3259,8 @@ SkinnedMeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 5bf78c5001aa28141bf1894d1677708a, type: 2}
-  - {fileID: 2100000, guid: fefb44f0410724849b99fffdeababceb, type: 2}
+  - {fileID: 2100000, guid: 5aff759886aa7d849976bad12e337690, type: 2}
+  - {fileID: 0}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0

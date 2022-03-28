@@ -151,7 +151,7 @@ public class Player_State_Machine : MonoBehaviour
     void OnInteract(InputAction.CallbackContext context)
     {
         isInteract = context.ReadValueAsButton();
-        requireNewWeaponSwitch = false;
+        //requireNewWeaponSwitch = false;
     }
     void OnJump(InputAction.CallbackContext context)
     {
@@ -170,7 +170,18 @@ public class Player_State_Machine : MonoBehaviour
        _currentState.UpdateStates();
       // ActivateWeapon();
     }
+    public void OnAnimationEvent(string eventName)
+    {
+        if (eventName == "EquipWeapon")
+        {
+            sockets.Attach(weapon.transform, Handle_Mesh_Sockets.SocketId.RightHand);
+        }
 
+        if (eventName == "Detach")
+        {
+            sockets.Attach(weapon.transform, Handle_Mesh_Sockets.SocketId.Spine);
+        }
+    }
     // private void OnControllerColliderHit(ControllerColliderHit hit)
     // {
     //     if (hit.gameObject.tag =="Player")
@@ -246,24 +257,24 @@ public class Player_State_Machine : MonoBehaviour
     //       // Context.Animator.SetBool(Context.EquipHash, false);
     //     }
     // }
-    public void ActivateWeapon()
-    {
-        if (isInteract && !isWeaponAttached && !isMovementPressed)
-        {
-            isWeaponAttached = true;
-            isInteract = false;
-           // sockets.Attach(prova, Handle_Mesh_Sockets.SocketId.Spine);
-           // anim.SetBool(equipHash, true);
-        }
-        else if (isInteract && isWeaponAttached && !isMovementPressed)
-        {
-            isWeaponAttached = false;
-            isInteract = false;
+    //public void ActivateWeapon()
+    //{
+    //    if (isInteract && !isWeaponAttached && !isMovementPressed)
+    //    {
+    //        isWeaponAttached = true;
+    //        isInteract = false;
+    //       // sockets.Attach(prova, Handle_Mesh_Sockets.SocketId.Spine);
+    //       // anim.SetBool(equipHash, true);
+    //    }
+    //    else if (isInteract && isWeaponAttached && !isMovementPressed)
+    //    {
+    //        isWeaponAttached = false;
+    //        isInteract = false;
 
-            //prova.parent = null;
-            //anim.SetBool(equipHash, false);
-        }
-    }
+    //        //prova.parent = null;
+    //        //anim.SetBool(equipHash, false);
+    //    }
+    //}
     private void OnEnable()
     {
         input.Player.Enable();

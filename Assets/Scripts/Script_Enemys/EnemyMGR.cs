@@ -21,14 +21,17 @@ public class EnemyMGR : MonoBehaviour
         EnemyData ChomperAlphaData = Resources.Load<EnemyData>("Enemies/ChomperAlpha/AlphaChomperData");
         for (int i = 0; i < SpawnPoint.Count; i++)
         {
-
+            //Chompy Alpha
             GameObject go = Instantiate(ChomperAlpha, null);
             PrepareEnemy(go, SpawnPoint[i].position, ChomperAlphaData, Player, Roby);
-            enemies.Add(go); 
+            enemies.Add(go);
+
+            //Chompys Beta
             for (int j = 0; j < NumberOfBaseChompy; j++)
             {
                 GameObject Go = Instantiate(ChomperPrefab, null);
                 PrepareEnemy(Go,SpawnPoint[i].position,ChomperBaseData,Player,Roby);
+                print(SpawnPoint[i].position);
                 enemies.Add(Go);
             }
             
