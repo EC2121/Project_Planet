@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
 public class TabGroup : MonoBehaviour
@@ -69,7 +70,9 @@ public class TabGroup : MonoBehaviour
     {
         foreach (TabButton_Custom button in tabButtons)
         {
-            if (SelectedTab != null && SelectedTab == button)
+            
+            if (EventSystem.current.currentSelectedGameObject == button && 
+                SelectedTab != null && SelectedTab == button)
             {
                 continue;
             }
