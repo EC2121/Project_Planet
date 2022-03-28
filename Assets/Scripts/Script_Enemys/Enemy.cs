@@ -92,7 +92,6 @@ public class Enemy : MonoBehaviour
         //transform.position = Agent.nextPosition;
         //Agent.nextPosition = Vector3.Lerp(transform.position, Agent.nextPosition + flockingVec, Time.deltaTime);
         currentState.UpdateState(this);
-        Debug.Log(Agent.remainingDistance);
     }
     private void OnAnimatorMove()
     {
