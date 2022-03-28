@@ -51,7 +51,7 @@ public partial class @Player_Controller : IInputActionCollection2, IDisposable
                     ""id"": ""22f4ef3e-22ae-4575-8ac2-00d5bc1742e2"",
                     ""expectedControlType"": ""Button"",
                     ""processors"": """",
-                    ""interactions"": """",
+                    ""interactions"": ""Tap"",
                     ""initialStateCheck"": false
                 },
                 {
@@ -67,24 +67,6 @@ public partial class @Player_Controller : IInputActionCollection2, IDisposable
                     ""name"": ""Switch"",
                     ""type"": ""Button"",
                     ""id"": ""5e7bc7cf-059b-4c22-9927-cc0d4446b55b"",
-                    ""expectedControlType"": ""Button"",
-                    ""processors"": """",
-                    ""interactions"": """",
-                    ""initialStateCheck"": false
-                },
-                {
-                    ""name"": ""L_MouseClick"",
-                    ""type"": ""Button"",
-                    ""id"": ""3bde327c-b78e-437f-8679-479e1f5cbd6a"",
-                    ""expectedControlType"": ""Button"",
-                    ""processors"": """",
-                    ""interactions"": """",
-                    ""initialStateCheck"": false
-                },
-                {
-                    ""name"": ""F_Interact"",
-                    ""type"": ""Button"",
-                    ""id"": ""cf0c1170-d8e6-4ab5-9229-0b02358152b7"",
                     ""expectedControlType"": ""Button"",
                     ""processors"": """",
                     ""interactions"": """",
@@ -162,7 +144,7 @@ public partial class @Player_Controller : IInputActionCollection2, IDisposable
                     ""name"": """",
                     ""id"": ""9df263c3-7123-4aa4-8434-f09fedc729ef"",
                     ""path"": ""<Keyboard>/space"",
-                    ""interactions"": ""Tap"",
+                    ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
                     ""action"": ""Jump"",
@@ -190,28 +172,6 @@ public partial class @Player_Controller : IInputActionCollection2, IDisposable
                     ""action"": ""Switch"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": """",
-                    ""id"": ""450c3bc5-85a5-4446-908b-ec52ca46d16a"",
-                    ""path"": ""<Mouse>/leftButton"",
-                    ""interactions"": ""Tap(duration=0.0035,pressPoint=0.02)"",
-                    ""processors"": """",
-                    ""groups"": """",
-                    ""action"": ""L_MouseClick"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": """",
-                    ""id"": ""25fa9424-2628-4baa-bde3-94ec04d9e76b"",
-                    ""path"": ""<Keyboard>/t"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": """",
-                    ""action"": ""F_Interact"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
                 }
             ]
         }
@@ -225,8 +185,6 @@ public partial class @Player_Controller : IInputActionCollection2, IDisposable
         m_Player_Jump = m_Player.FindAction("Jump", throwIfNotFound: true);
         m_Player_Look = m_Player.FindAction("Look", throwIfNotFound: true);
         m_Player_Switch = m_Player.FindAction("Switch", throwIfNotFound: true);
-        m_Player_L_MouseClick = m_Player.FindAction("L_MouseClick", throwIfNotFound: true);
-        m_Player_F_Interact = m_Player.FindAction("F_Interact", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -291,8 +249,6 @@ public partial class @Player_Controller : IInputActionCollection2, IDisposable
     private readonly InputAction m_Player_Jump;
     private readonly InputAction m_Player_Look;
     private readonly InputAction m_Player_Switch;
-    private readonly InputAction m_Player_L_MouseClick;
-    private readonly InputAction m_Player_F_Interact;
     public struct PlayerActions
     {
         private @Player_Controller m_Wrapper;
@@ -302,8 +258,6 @@ public partial class @Player_Controller : IInputActionCollection2, IDisposable
         public InputAction @Jump => m_Wrapper.m_Player_Jump;
         public InputAction @Look => m_Wrapper.m_Player_Look;
         public InputAction @Switch => m_Wrapper.m_Player_Switch;
-        public InputAction @L_MouseClick => m_Wrapper.m_Player_L_MouseClick;
-        public InputAction @F_Interact => m_Wrapper.m_Player_F_Interact;
         public InputActionMap Get() { return m_Wrapper.m_Player; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -328,12 +282,6 @@ public partial class @Player_Controller : IInputActionCollection2, IDisposable
                 @Switch.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnSwitch;
                 @Switch.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnSwitch;
                 @Switch.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnSwitch;
-                @L_MouseClick.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnL_MouseClick;
-                @L_MouseClick.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnL_MouseClick;
-                @L_MouseClick.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnL_MouseClick;
-                @F_Interact.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnF_Interact;
-                @F_Interact.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnF_Interact;
-                @F_Interact.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnF_Interact;
             }
             m_Wrapper.m_PlayerActionsCallbackInterface = instance;
             if (instance != null)
@@ -353,12 +301,6 @@ public partial class @Player_Controller : IInputActionCollection2, IDisposable
                 @Switch.started += instance.OnSwitch;
                 @Switch.performed += instance.OnSwitch;
                 @Switch.canceled += instance.OnSwitch;
-                @L_MouseClick.started += instance.OnL_MouseClick;
-                @L_MouseClick.performed += instance.OnL_MouseClick;
-                @L_MouseClick.canceled += instance.OnL_MouseClick;
-                @F_Interact.started += instance.OnF_Interact;
-                @F_Interact.performed += instance.OnF_Interact;
-                @F_Interact.canceled += instance.OnF_Interact;
             }
         }
     }
@@ -370,7 +312,5 @@ public partial class @Player_Controller : IInputActionCollection2, IDisposable
         void OnJump(InputAction.CallbackContext context);
         void OnLook(InputAction.CallbackContext context);
         void OnSwitch(InputAction.CallbackContext context);
-        void OnL_MouseClick(InputAction.CallbackContext context);
-        void OnF_Interact(InputAction.CallbackContext context);
     }
 }

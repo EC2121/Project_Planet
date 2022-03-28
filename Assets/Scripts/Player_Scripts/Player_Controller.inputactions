@@ -29,7 +29,7 @@
                     "id": "22f4ef3e-22ae-4575-8ac2-00d5bc1742e2",
                     "expectedControlType": "Button",
                     "processors": "",
-                    "interactions": "",
+                    "interactions": "Tap",
                     "initialStateCheck": false
                 },
                 {
@@ -45,24 +45,6 @@
                     "name": "Switch",
                     "type": "Button",
                     "id": "5e7bc7cf-059b-4c22-9927-cc0d4446b55b",
-                    "expectedControlType": "Button",
-                    "processors": "",
-                    "interactions": "",
-                    "initialStateCheck": false
-                },
-                {
-                    "name": "L_MouseClick",
-                    "type": "Button",
-                    "id": "3bde327c-b78e-437f-8679-479e1f5cbd6a",
-                    "expectedControlType": "Button",
-                    "processors": "",
-                    "interactions": "",
-                    "initialStateCheck": false
-                },
-                {
-                    "name": "F_Interact",
-                    "type": "Button",
-                    "id": "cf0c1170-d8e6-4ab5-9229-0b02358152b7",
                     "expectedControlType": "Button",
                     "processors": "",
                     "interactions": "",
@@ -140,7 +122,7 @@
                     "name": "",
                     "id": "9df263c3-7123-4aa4-8434-f09fedc729ef",
                     "path": "<Keyboard>/space",
-                    "interactions": "Tap",
+                    "interactions": "",
                     "processors": "",
                     "groups": "",
                     "action": "Jump",
@@ -166,28 +148,6 @@
                     "processors": "",
                     "groups": "",
                     "action": "Switch",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
-                    "id": "450c3bc5-85a5-4446-908b-ec52ca46d16a",
-                    "path": "<Mouse>/leftButton",
-                    "interactions": "Tap(duration=0.0035,pressPoint=0.02)",
-                    "processors": "",
-                    "groups": "",
-                    "action": "L_MouseClick",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
-                    "id": "25fa9424-2628-4baa-bde3-94ec04d9e76b",
-                    "path": "<Keyboard>/t",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "",
-                    "action": "F_Interact",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }
