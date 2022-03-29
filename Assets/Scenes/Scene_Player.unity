@@ -821,6 +821,13 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 699349530754121692, guid: 59e9f4601471f0349b1dc940e49350f7, type: 3}
+      propertyPath: m_WarningMessage
+      value: "\nBinding warning: Some generic clip(s) animate transforms that are
+        already bound by a Humanoid avatar. These transforms can only be changed
+        by Humanoid clips.\n\tTransform 'Ellen_Left_Hand'\n\tFrom animation clip
+        'Equip_Staff'\n\tFrom animation clip 'UnEquip_Staff'"
+      objectReference: {fileID: 0}
     - target: {fileID: 699349530763170202, guid: 59e9f4601471f0349b1dc940e49350f7, type: 3}
       propertyPath: m_RootOrder
       value: 2

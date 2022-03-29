@@ -37,8 +37,12 @@ public class AI_Chompies_AlertState : AI_Enemies_IBaseState
             if (enemy.gameObject == owner.gameObject) continue;
 
             Enemy enemyComponent = enemy.GetComponent<Enemy>();
-            enemyComponent.SwitchState(EnemyStates.Alert);
-            enemyComponent.Target = owner.Target;
+            if (ReferenceEquals(enemyComponent.Target,null))
+            {
+                enemyComponent.SwitchState(EnemyStates.Alert);
+                enemyComponent.Target = owner.Target;
+            }
+            
         }
 
     }

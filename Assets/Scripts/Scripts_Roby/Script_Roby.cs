@@ -88,6 +88,8 @@ public class Script_Roby : MonoBehaviour
 
     protected virtual void Update()
     {
+
+        print(roby_EnemysInMyArea.Count);
         if (GetDamage)
         {
             Roby_Hit.Invoke(10);
@@ -186,6 +188,8 @@ public class Script_Roby : MonoBehaviour
 
     public void RobyShoot()
     {
+        if (ReferenceEquals(Roby_EnemyTarget, null)) return;
+      
         roby_Particle_Shoot.transform.LookAt(Roby_EnemyTarget.transform.position);
         roby_Particle_Shoot.Play(true);
         Roby_Animator.SetTrigger(Roby_AshAnimator_RangeDone);

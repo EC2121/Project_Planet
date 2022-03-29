@@ -3078,13 +3078,12 @@ GameObject:
   m_Component:
   - component: {fileID: 6028328631548020459}
   - component: {fileID: 6028328631538444559}
-  - component: {fileID: 3303476356958259195}
   - component: {fileID: 8305644410217140229}
   - component: {fileID: -4751222857866262397}
   - component: {fileID: 804005501546284690}
   m_Layer: 0
   m_Name: AlphaChomper
-  m_TagString: Untagged
+  m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -3124,28 +3123,6 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
---- !u!195 &3303476356958259195
-NavMeshAgent:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6028328631547927243}
-  m_Enabled: 1
-  m_AgentTypeID: 0
-  m_Radius: 1
-  m_Speed: 1
-  m_Acceleration: 8
-  avoidancePriority: 50
-  m_AngularSpeed: 120
-  m_StoppingDistance: 3
-  m_AutoTraverseOffMeshLink: 1
-  m_AutoBraking: 0
-  m_AutoRepath: 1
-  m_Height: 2
-  m_BaseOffset: 0
-  m_WalkableMask: 4294967295
-  m_ObstacleAvoidanceType: 4
 --- !u!114 &8305644410217140229
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3171,7 +3148,6 @@ MonoBehaviour:
   Hp: 0
   HorizontalDot: 0
   IsAlerted: 0
-  ChompyRB: {fileID: 0}
   NearBaseHash: -2117890585
   InPursuitHash: 1654002963
   HasTargetHash: -1300016053
@@ -3205,7 +3181,7 @@ Rigidbody:
   m_Drag: 0
   m_AngularDrag: 0.05
   m_UseGravity: 1
-  m_IsKinematic: 0
+  m_IsKinematic: 1
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
