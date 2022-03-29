@@ -10,6 +10,7 @@ public class Script_Chest : MonoBehaviour
     public GameObject Box_GuiInteractWrite;
     public bool TakeMe;
     public Transform Player_Chest;
+    private Vector3 OldPos;
 
     private SphereCollider chest_InteractableCollider;
     private void OnEnable()
@@ -24,8 +25,16 @@ public class Script_Chest : MonoBehaviour
     private void OnInteraction()
     {
         //chest_InteractableCollider.enabled = !chest_InteractableCollider.enabled;
-        Box_GuiInteractWrite.SetActive(!Box_GuiInteractWrite.activeInHierarchy);
+       // Box_GuiInteractWrite.SetActive(!Box_GuiInteractWrite.activeInHierarchy);
+       Box_GuiInteractWrite.SetActive(false);
+       OldPos = transform.position;
         transform.position = Player_Chest.position;
+        transform.rotation = Player_Chest.rotation;
+    }
+
+    private void OnDetach()
+    {
+        gameObject.GetComponent<Rigidbody>().isKinematic = false;
     }
     private void OnTriggerEnter(Collider other)
     {
@@ -57,6 +66,11 @@ public class Script_Chest : MonoBehaviour
         if (TakeMe)
         {
             OnInteraction();
+        }
+
+        if (!TakeMe)
+        {
+            OnDetach();
         }
     }
 }

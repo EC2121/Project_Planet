@@ -206,7 +206,7 @@ public partial class @Player_Controller : IInputActionCollection2, IDisposable
                     ""name"": """",
                     ""id"": ""25fa9424-2628-4baa-bde3-94ec04d9e76b"",
                     ""path"": ""<Keyboard>/f"",
-                    ""interactions"": """",
+                    ""interactions"": ""Tap(duration=0.03)"",
                     ""processors"": """",
                     ""groups"": """",
                     ""action"": ""F_Interact"",

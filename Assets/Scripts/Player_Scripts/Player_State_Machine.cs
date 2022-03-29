@@ -55,7 +55,7 @@ public class Player_State_Machine : MonoBehaviour
     private int attackId = 0;
     private Vector3 move;
     private bool isInteract = false;
-
+    private bool hasBox = false;
     //public Transform prova;
 
     //getters and setters
@@ -90,7 +90,7 @@ public class Player_State_Machine : MonoBehaviour
     public AnimatorStateInfo AnimStateInfo { get { return stateInfo; } }
     public int AttackId { get { return attackId; } set { attackId = value; } }
     public Vector3 Move { get { return move; } set { move = value; } }
-
+    
     void Awake()
     {
         input = new Player_Controller();
@@ -193,12 +193,22 @@ public class Player_State_Machine : MonoBehaviour
         fallingSpeed = Mathf.Clamp(Mathf.Abs(currentMovementInput.x + currentMovementInput.y), 0, 1) * (isRunPressed ? runSpeed : 1);
 
         anim.SetFloat(velocityHash_X, currentMovement.x);
-        anim.SetFloat(velocityHash_Z, currentMovement.y);
+        anim.SetFloat(velocityHash_Z, currentMovement.z);
         anim.SetFloat(fallingSpeedHash, fallingSpeed);
 
-        if (isInteract && !anim.GetBool("HasBox"))
+        if (isInteract && !hasBox)
         {
+           // isInteract = false;
+         
+            hasBox = true;
             anim.SetBool("HasBox", true);
+            TakeTheBox.Invoke();
+        }
+        else if (isInteract && hasBox)
+        {
+           
+            hasBox = false;
+            anim.SetBool("HasBox", false);
             TakeTheBox.Invoke();
         }
     }
@@ -235,7 +245,7 @@ public class Player_State_Machine : MonoBehaviour
         characterController.Move((move * PlayerSpeed * (isRunPressed ? runSpeed : 1) * Time.deltaTime));
 
         anim.SetFloat(velocityHash_X, move.x);
-        anim.SetFloat(velocityHash_Z, move.z);
+        anim.SetFloat(velocityHash_Z, move.y);
         anim.SetFloat(fallingSpeedHash, fallingSpeed);
     }
     void HandleGravity()
