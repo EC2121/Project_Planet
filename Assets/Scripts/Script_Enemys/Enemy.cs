@@ -148,6 +148,8 @@ public class Enemy : MonoBehaviour
         AttackTimer = UnityEngine.Random.Range(0, 3);
         IdleTimer = UnityEngine.Random.Range(0, 3);
         IsAlerted = false;
+
+        Agent.Warp(PatrolCenter);
     }
 
     public void AddDamage(float amount,GameObject source,bool wasThrown)
