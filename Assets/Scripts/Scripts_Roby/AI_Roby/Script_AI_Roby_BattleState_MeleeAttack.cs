@@ -7,11 +7,11 @@ public class Script_AI_Roby_BattleState_MeleeAttack : Script_AI_Roby_BaseState
     public void CustomCollisionEnter(Script_Roby AiRoby, Collision other)
     {
 
-        AiRoby.transform.LookAt(AiRoby.Roby_EnemyTarget.transform);
-        if (other.gameObject.CompareTag("Enemy") && AiRoby.IsAttacking)
-        {
-            other.gameObject.GetComponent<Enemy>().AddDamage(50,AiRoby.gameObject,false);
-        }
+        //AiRoby.transform.LookAt(AiRoby.Roby_EnemyTarget.transform);
+        //if (other.gameObject.CompareTag("Enemy") && AiRoby.IsAttacking)
+        //{
+        //    other.gameObject.GetComponent<Enemy>().AddDamage(50,AiRoby.gameObject,false);
+        //}
     }
 
     public void CustomOnTriggerEnter(Script_Roby AiRoby, Collider collider)

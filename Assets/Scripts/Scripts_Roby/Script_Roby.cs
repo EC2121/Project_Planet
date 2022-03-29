@@ -16,10 +16,12 @@ public class Script_Roby : MonoBehaviour
     [HideInInspector] public GameObject Roby_EnemyTarget;
     [HideInInspector] public List<GameObject> roby_EnemysInMyArea;
 
+
     //Public solo per prova!
     [HideInInspector] public float Roby_Live;
     public float roby_Life;
     public bool GetDamage = false;
+    public Transform Roby_Hand;
 
     [HideInInspector] public int Roby_EnemyIndex;
     [HideInInspector] public bool Roby_IgnoreEnemy;
@@ -49,7 +51,6 @@ public class Script_Roby : MonoBehaviour
     private Script_AI_Roby_BaseState Roby_CurrentState;
     private ParticleSystem roby_Particle_Shoot;
     private NavMeshPath roby_NavMeshPath;
-
     private void OnEnable()
     {
         Roby_Hit.AddListener(OnRobyAddDamage);
@@ -155,7 +156,6 @@ public class Script_Roby : MonoBehaviour
         Roby_StateDictionary[RobyStates.RangeAttack] = new Script_AI_Roby_BattleState_RangedAttack();
         Roby_StateDictionary[RobyStates.ZoneAttack] = new Script_Ai_Roby_BattleState_ZoneAttack();
         Roby_StateDictionary[RobyStates.Die] = new Script_AI_Roby_Dead();
-
         Roby_CurrentState = Roby_StateDictionary[RobyStates.Idle];
     }
 
@@ -171,18 +171,26 @@ public class Script_Roby : MonoBehaviour
         if (roby_Life > 1)
         {
             roby_Life -= Damage;
-            Roby_Animator.SetTrigger(Roby_AshAnimator_GetDamage);
+            if (!Roby_Animator.GetCurrentAnimatorStateInfo(0).IsName("GrenadierMeleeAttack"))
+                Roby_Animator.SetTrigger(Roby_AshAnimator_GetDamage);
 
             if (roby_Life <= 0) Roby_Dead.Invoke();
         }
-        
-       
+
+
     }
 
     public void OnAttackStart()
     {
         IsAttacking = true;
         AttackCollider.enabled = true;
+
+        Collider[] chompys_Collider = Physics.OverlapSphere(Roby_Hand.position, 1, 1 << 6);
+
+        if (chompys_Collider.Length == 0) return;
+
+        foreach (Collider item in chompys_Collider)
+            item.gameObject.GetComponentInParent<Enemy>().AddDamage(20, this.gameObject, false);
     }
 
     public void OnAttackEnd()
@@ -212,7 +220,7 @@ public class Script_Roby : MonoBehaviour
     public void RobyShoot()
     {
         if (ReferenceEquals(Roby_EnemyTarget, null)) return;
-      
+
         roby_Particle_Shoot.transform.LookAt(Roby_EnemyTarget.transform.position);
         roby_Particle_Shoot.Play(true);
         Roby_Animator.SetTrigger(Roby_AshAnimator_RangeDone);

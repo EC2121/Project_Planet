@@ -1403,7 +1403,7 @@ GameObject:
   - component: {fileID: 8713632335386814688}
   - component: {fileID: -4824280049273290621}
   - component: {fileID: 104743955518897181}
-  m_Layer: 8
+  m_Layer: 0
   m_Name: Chomper
   m_TagString: Enemy
   m_Icon: {fileID: 0}
@@ -1470,6 +1470,7 @@ MonoBehaviour:
   Hp: 0
   HorizontalDot: 0
   IsAlerted: 0
+  IsAttacking: 0
   NearBaseHash: -2117890585
   InPursuitHash: 1654002963
   HasTargetHash: -1300016053
@@ -1632,7 +1633,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1148794101668938367}
   - component: {fileID: 4431705127419828429}
-  m_Layer: 9
+  m_Layer: 6
   m_Name: Skeleton
   m_TagString: Untagged
   m_Icon: {fileID: 0}
