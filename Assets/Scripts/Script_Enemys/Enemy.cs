@@ -12,6 +12,7 @@ public class Enemy : MonoBehaviour
 
     public static UnityEvent<float, GameObject, bool> OnDamageTaken = new UnityEvent<float, GameObject, bool>();
     public static UnityEvent<GameObject> OnActorDeath = new UnityEvent<GameObject>();
+    public static UnityEvent<GameObject> OnEnemyDeath = new UnityEvent<GameObject>();
     [HideInInspector] public Transform Player { get; private set; }
     [HideInInspector] public Transform Roby { get; private set; }
     [HideInInspector] public NavMeshAgent Agent { get; private set; }
@@ -44,8 +45,7 @@ public class Enemy : MonoBehaviour
     [HideInInspector] public int DieHash = Animator.StringToHash("Die");
 
     public List<Enemy> nearEnemies;
-
-    public BoxCollider AttackCollider;
+    public Transform Tounge;
     public bool DebugMode;
     private void OnEnable()
     {
@@ -61,7 +61,7 @@ public class Enemy : MonoBehaviour
     }
     private void Start()
     {
-       
+
     }
 
     public void SwitchTarget(GameObject actor)
@@ -164,38 +164,61 @@ public class Enemy : MonoBehaviour
     public void OnAttackStart()
     {
         IsAttacking = true;
-        AttackCollider.enabled = true;
+
+        Collider[] colliders = Physics.OverlapSphere(Tounge.position, 0.5f, 1 << 10);
+
+        foreach (var item in colliders)
+        {
+            if (item.gameObject.CompareTag("Roby"))
+            {
+                Script_Roby.Roby_Hit.Invoke(20);
+                return;
+            }
+
+            if (item.gameObject.CompareTag("Player"))
+            {
+                Debug.Log("hitted Player");
+            }
+
+
+        }
+
+
     }
 
     public void OnAttackEnd()
     {
         IsAttacking = false;
-        AttackCollider.enabled = false;
     }
 
+    public void Vanish()
+    {
+        this.gameObject.SetActive(false);
+    }
     public void AddDamage(float amount, GameObject source, bool wasThrown)
     {
-
-        Debug.Log("been Hitted");
-
-        Hp -= amount;
-
-        if (Hp <= 0)
+        if (Hp > 0)
         {
-            SwitchState(EnemyStates.Die);
-            return;
-        }
-
-        else
-        {
-            if (wasThrown)
+            Hp -= amount;
+            if (Hp <= 0)
             {
-                SwitchState(EnemyStates.Thrown);
+                Invoke("Vanish", 3f);
+                OnEnemyDeath.Invoke(this.gameObject);
+                SwitchState(EnemyStates.Die);
                 return;
             }
-            HorizontalDot = Vector3.Dot(transform.forward, source.transform.forward);
-            SwitchState(EnemyStates.Hit);
+            else
+            {
+                if (wasThrown)
+                {
+                    SwitchState(EnemyStates.Thrown);
+                    return;
+                }
+                HorizontalDot = Vector3.Dot(transform.forward, source.transform.forward);
+                SwitchState(EnemyStates.Hit);
+            }
         }
+        
     }
     public virtual void SwitchState(EnemyStates state)
     {

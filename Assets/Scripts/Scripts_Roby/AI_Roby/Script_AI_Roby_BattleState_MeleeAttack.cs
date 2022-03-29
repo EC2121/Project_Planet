@@ -61,13 +61,27 @@ public class Script_AI_Roby_BattleState_MeleeAttack : Script_AI_Roby_BaseState
 
         if (AIRoby.Roby_NavAgent.remainingDistance < AIRoby.Roby_NavAgent.stoppingDistance)
         {
+
             AIRoby.Roby_Animator.SetBool(AIRoby.Roby_AshAnimator_walk, false);
+            TurnTowardsEnemy(AIRoby);
 
             AIRoby.Roby_Animator.SetTrigger(AIRoby.Roby_AshAnimator_Melee);
             AIRoby.SwitchState(RobyStates.Battle);
         }
     }
 
+    public void TurnTowardsEnemy(Script_Roby AIRoby)
+    {
+        float angle = AngleCalculator(AIRoby);
+
+        if (angle > -10 && angle < 10) return;
+
+        angle = AIRoby.InverseClamp(-10, 10, angle);
+        angle /= 180;
+        AIRoby.Roby_Animator.SetFloat("Angle", angle);
+
+        AIRoby.Roby_Animator.SetTrigger(AIRoby.Roby_AshAnimator_turnTrigger);
+    }
     public float AngleCalculator(Script_Roby AIRoby)
     {
         Vector3 MyForw = AIRoby.transform.forward;

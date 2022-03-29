@@ -123,11 +123,6 @@ NavMeshSettings:
     debug:
       m_Flags: 0
   m_NavMeshData: {fileID: 23800000, guid: 42db6564b70a0c24a99776bcb5ed76c4, type: 2}
---- !u!4 &211859051 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 6248447185349945732, guid: d5cee17333934644ea8d1cf3084c700f, type: 3}
-  m_PrefabInstance: {fileID: 639035406}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &212719409
 GameObject:
   m_ObjectHideFlags: 0
@@ -668,17 +663,13 @@ PrefabInstance:
     m_TransformParent: {fileID: 0}
     m_Modifications:
     - target: {fileID: 3047293750476214866, guid: d5cee17333934644ea8d1cf3084c700f, type: 3}
-      propertyPath: Roby_Hand
-      value: 
-      objectReference: {fileID: 211859051}
-    - target: {fileID: 3047293750476214866, guid: d5cee17333934644ea8d1cf3084c700f, type: 3}
       propertyPath: roby_Life
-      value: 100000
+      value: 50000
       objectReference: {fileID: 0}
-    - target: {fileID: 4945102422558946236, guid: d5cee17333934644ea8d1cf3084c700f, type: 3}
-      propertyPath: m_Enabled
-      value: 0
-      objectReference: {fileID: 0}
+    - target: {fileID: 3047293750476214866, guid: d5cee17333934644ea8d1cf3084c700f, type: 3}
+      propertyPath: RobyHpSlider
+      value: 
+      objectReference: {fileID: 792389540}
     - target: {fileID: 6248447185349945836, guid: d5cee17333934644ea8d1cf3084c700f, type: 3}
       propertyPath: m_RootOrder
       value: 5
@@ -724,20 +715,12 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6248447185350112300, guid: d5cee17333934644ea8d1cf3084c700f, type: 3}
-      propertyPath: m_Layer
-      value: 9
-      objectReference: {fileID: 0}
-    - target: {fileID: 6248447185350112356, guid: d5cee17333934644ea8d1cf3084c700f, type: 3}
-      propertyPath: m_Layer
-      value: 8
+      propertyPath: m_TagString
+      value: Roby
       objectReference: {fileID: 0}
     - target: {fileID: 6248447185350112716, guid: d5cee17333934644ea8d1cf3084c700f, type: 3}
       propertyPath: m_Name
       value: Grenadier
-      objectReference: {fileID: 0}
-    - target: {fileID: 7655594417593319392, guid: d5cee17333934644ea8d1cf3084c700f, type: 3}
-      propertyPath: m_Enabled
-      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: d5cee17333934644ea8d1cf3084c700f, type: 3}
@@ -798,6 +781,17 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: ef14cefc3b167e1498deb696c2feb28a, type: 3}
+--- !u!114 &792389540 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 2029871264781155333, guid: 66067fd29c47b54409f49dcad60b6ec8, type: 3}
+  m_PrefabInstance: {fileID: 1675482133}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 67db9e8f0e2ae9c40bc1e2b64352a6b4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!850595691 &853144433
 LightingSettings:
   m_ObjectHideFlags: 0

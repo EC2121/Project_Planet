@@ -1402,7 +1402,6 @@ GameObject:
   - component: {fileID: 7436371073313157951}
   - component: {fileID: 8713632335386814688}
   - component: {fileID: -4824280049273290621}
-  - component: {fileID: 104743955518897181}
   m_Layer: 0
   m_Name: Chomper
   m_TagString: Enemy
@@ -1478,7 +1477,7 @@ MonoBehaviour:
   SpottedHash: -1300016053
   DieHash: 20298039
   nearEnemies: []
-  AttackCollider: {fileID: 104743955518897181}
+  Tounge: {fileID: 1148794101668938685}
   DebugMode: 0
 --- !u!135 &8713632335386814688
 SphereCollider:
@@ -1509,19 +1508,6 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 126
   m_CollisionDetection: 0
---- !u!65 &104743955518897181
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1148794101669109335}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 0
-  serializedVersion: 2
-  m_Size: {x: 0.8581689, y: 0.79665613, z: 0.2692569}
-  m_Center: {x: -0.0027070343, y: 0.6662463, z: 0.61774075}
 --- !u!1 &1148794101669109337
 GameObject:
   m_ObjectHideFlags: 0

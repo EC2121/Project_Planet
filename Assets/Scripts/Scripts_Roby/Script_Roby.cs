@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.AI;
 using UnityEngine.Animations.Rigging;
 using UnityEngine.Events;
-
+using UnityEngine.UI;
 
 public enum RobyStates { Idle, Follow, Patroll, Battle, RangeAttack, MeleeAttack, ZoneAttack, Die, Hit }
 public class Script_Roby : MonoBehaviour
@@ -46,19 +46,20 @@ public class Script_Roby : MonoBehaviour
     public int Roby_AshAnimator_Dead { get; private set; }
     public int Roby_AshAnimator_GetDamage { get; private set; }
 
-
-    public BoxCollider AttackCollider;
+    public Slider RobyHpSlider;
     private Script_AI_Roby_BaseState Roby_CurrentState;
     private ParticleSystem roby_Particle_Shoot;
     private NavMeshPath roby_NavMeshPath;
     private void OnEnable()
     {
+        Enemy.OnEnemyDeath.AddListener(SwitchTarget);
         Roby_Hit.AddListener(OnRobyAddDamage);
         Roby_Dead.AddListener(OnRobyDie);
     }
 
     private void OnDisable()
     {
+        Enemy.OnEnemyDeath.RemoveListener(SwitchTarget);
         Roby_Hit.RemoveListener(OnRobyAddDamage);
         Roby_Dead.RemoveListener(OnRobyDie);
     }
@@ -95,7 +96,6 @@ public class Script_Roby : MonoBehaviour
     protected virtual void Update()
     {
 
-        print(roby_EnemysInMyArea.Count);
         if (GetDamage)
         {
             Roby_Hit.Invoke(10);
@@ -121,12 +121,14 @@ public class Script_Roby : MonoBehaviour
 
     private void Init()
     {
+        
         Mai_PlayerNearZone = 7;
         Mai_PlayerNormalZone = 10;
         Mai_PlayerBattleZone = 15;
         Mai_MinDistance = 4;
         Roby_RobyNearZone = 5;
-
+        RobyHpSlider.maxValue = roby_Life;
+        RobyHpSlider.value = roby_Life;
         roby_NavMeshPath = new NavMeshPath();
 
         roby_EnemysInMyArea = new List<GameObject>();
@@ -135,7 +137,6 @@ public class Script_Roby : MonoBehaviour
         //Roby_NavAgent.updateRotation = false;
         Roby_Animator.applyRootMotion = true;
 
-        roby_Life = 100000;
         Roby_AshAnimator_Dead = Animator.StringToHash("Death");
         Roby_AshAnimator_RangeDone = Animator.StringToHash("NoMoreAttack");
         Roby_AshAnimator_Range = Animator.StringToHash("RangeAttack");
@@ -166,6 +167,18 @@ public class Script_Roby : MonoBehaviour
         Roby_CurrentState.OnEnter(this);
     }
 
+
+    public void SwitchTarget(GameObject enemy)
+    {
+        if (roby_EnemysInMyArea.Contains(enemy))
+        {
+            roby_EnemysInMyArea.Remove(enemy);
+            if(roby_EnemysInMyArea.Count > 0)
+            {
+                Roby_EnemyTarget = roby_EnemysInMyArea[0];
+            }
+        }
+    }
     public void OnRobyAddDamage(float Damage)
     {
         if (roby_Life > 1)
@@ -173,7 +186,7 @@ public class Script_Roby : MonoBehaviour
             roby_Life -= Damage;
             if (!Roby_Animator.GetCurrentAnimatorStateInfo(0).IsName("GrenadierMeleeAttack"))
                 Roby_Animator.SetTrigger(Roby_AshAnimator_GetDamage);
-
+            RobyHpSlider.value = roby_Life;
             if (roby_Life <= 0) Roby_Dead.Invoke();
         }
 
@@ -183,9 +196,8 @@ public class Script_Roby : MonoBehaviour
     public void OnAttackStart()
     {
         IsAttacking = true;
-        AttackCollider.enabled = true;
 
-        Collider[] chompys_Collider = Physics.OverlapSphere(Roby_Hand.position, 1, 1 << 6);
+        Collider[] chompys_Collider = Physics.OverlapSphere(Roby_Hand.position, 0.5f, 1 << 6);
 
         if (chompys_Collider.Length == 0) return;
 
@@ -196,7 +208,6 @@ public class Script_Roby : MonoBehaviour
     public void OnAttackEnd()
     {
         IsAttacking = false;
-        AttackCollider.enabled = false;
     }
 
     public void OnRobyDie()
