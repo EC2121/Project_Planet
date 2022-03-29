@@ -720,7 +720,16 @@ ModelImporter:
     rigImportErrors: 
     rigImportWarnings: 
     animationImportErrors: 
-    animationImportWarnings: 
+    animationImportWarnings: "\nClip 'Take 001' has import animation warnings that
+      might lower retargeting quality:\nNote: Activate translation DOF on avatar
+      to improve retargeting quality.\n\t'Ellen_Spine' has translation animation
+      that will be discarded.\n\t'Ellen_Right_UpperArm' has scale animation that
+      will be discarded.\n\t'Ellen_Right_Arm' has scale animation that will be discarded.\n\t'Ellen_Left_UpperArm'
+      has scale animation that will be discarded.\n\t'Ellen_Left_Arm' has scale animation
+      that will be discarded.\n\t'Ellen_Left_UpperLeg' has scale animation that will
+      be discarded.\n\t'Ellen_Left_LowerLeg' has scale animation that will be discarded.\n\t'Ellen_Right_UpperLeg'
+      has scale animation that will be discarded.\n\t'Ellen_Right_LowerLeg' has scale
+      animation that will be discarded.\n"
     animationRetargetingWarnings: 
     animationDoRetargetingWarnings: 0
     importAnimatedCustomProperties: 0
@@ -759,18 +768,11 @@ ModelImporter:
       curves: []
       events:
       - time: 0.25870737
-        functionName: MeleeAttackStart
+        functionName: OnAttackStart
         data: 
-        objectReferenceParameter: {instanceID: 0}
+        objectReferenceParameter: {fileID: 7873018163916560823, guid: c691a68c1cccb30458ccacc5e4556b41, type: 3}
         floatParameter: 0
         intParameter: 1
-        messageOptions: 0
-      - time: 0.36225522
-        functionName: MeleeAttackEnd
-        data: 
-        objectReferenceParameter: {instanceID: 0}
-        floatParameter: 0
-        intParameter: 0
         messageOptions: 0
       transformMask:
       - path: 

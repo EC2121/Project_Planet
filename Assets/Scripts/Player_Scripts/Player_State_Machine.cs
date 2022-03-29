@@ -11,6 +11,7 @@ public class Player_State_Machine : MonoBehaviour
 {
     public static UnityEvent TakeTheBox = new UnityEvent();
 
+    public Transform StaffJoint;
     [SerializeField] private float PlayerSpeed = 3f;
     [SerializeField] private Transform weapon;
     [SerializeField] private float jumpSpeed = 10f;
@@ -280,7 +281,14 @@ public class Player_State_Machine : MonoBehaviour
 
     }
 
-
+    public void OnAttackStart()
+    {
+        Collider[] collidersHitted = Physics.OverlapSphere(StaffJoint.position, 0.5f, 1 << 6);
+        foreach (var item in collidersHitted)
+        {
+            item.GetComponentInParent<Enemy>().AddDamage(40,this.gameObject,false);
+        }
+    }
     // public void ActivateWeapon()
     // {
     //     if (!isInteract && !isMovementPressed)
