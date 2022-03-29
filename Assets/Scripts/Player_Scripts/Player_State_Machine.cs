@@ -10,7 +10,9 @@ public class Player_State_Machine : MonoBehaviour
     [SerializeField] private float PlayerSpeed = 3f;
     [SerializeField] private Transform weapon;
     [SerializeField] private float jumpSpeed = 10f;
-    
+    [SerializeField] private float runSpeed = 2.65f;
+    [SerializeField] private float rotationFactor = 10f;
+
     private Animator anim;
     private int isWalkingHash;
     private int isRunningHash;
@@ -33,7 +35,6 @@ public class Player_State_Machine : MonoBehaviour
     private bool isMousePressed;
     private bool isJumpPressed;
     private bool switchWeapon = false;
-    private float runSpeed = 1.2f;
     private Vector2 currentAnimationBlend;
     private Vector2 animationVelocity;
     private bool isWeaponAttached;
@@ -60,7 +61,7 @@ public class Player_State_Machine : MonoBehaviour
     public int IsJumpingHash  { get { return isJumpingHash;}}
     public float JumpSpeed  { get { return jumpSpeed;}}
     public bool IsJumping  { set { isJumped = value;}}
-    public bool IsJumpPressed  { get { return isJumpPressed;} set {isJumped = value;}}
+    public bool IsJumpPressed  { get { return isJumpPressed;} set {isJumpPressed = value;}}
     public bool RequireNewWeaponSwitch { get { return requireNewWeaponSwitch;} set { requireNewWeaponSwitch = value;}}
     public bool RequireNewAttack { get { return requireNewAttack;} set { requireNewAttack = value;}}
     public float CurrentMovementY { get { return currentMovement.y;} set { currentMovement.y = value;}}
@@ -85,8 +86,7 @@ public class Player_State_Machine : MonoBehaviour
     public AnimatorStateInfo AnimStateInfo{ get {return stateInfo;}}
     public int AttackId  { get { return attackId;} set {attackId = value;}}
     public Vector3 Move { get { return move; } set { move = value;}}
-
-
+    
     void Awake()
     {
         input = new Player_Controller();
@@ -114,7 +114,8 @@ public class Player_State_Machine : MonoBehaviour
 
         input.Player.Run.started += OnRun;
         input.Player.Run.canceled += OnRun;
-
+        input.Player.Run.performed += OnRun;
+        
         input.Player.Switch.started += OnSwitchWeapon;
         input.Player.Switch.canceled += OnSwitchWeapon;
 
@@ -160,15 +161,38 @@ public class Player_State_Machine : MonoBehaviour
     void OnMovementInput(InputAction.CallbackContext context)
     {
         currentMovementInput = context.ReadValue<Vector2>();
+        currentMovementInput = context.ReadValue<Vector2>(); 
+        currentMovement.x = currentMovementInput.x; 
+        currentMovement.z = currentMovementInput.y;
+        currentRunMovement.x = currentMovementInput.x * runSpeed;
+        currentRunMovement.z = currentMovementInput.y * runSpeed;
+        
+     
         isMovementPressed = currentMovementInput.x != 0 || currentMovementInput.y != 0;
     }
     void Update()
     {
-        HandleMovement();
-       // HandleRotation();
+       // HandleMovement();
+       HandleRotation();
        HandleGravity();
        _currentState.UpdateStates();
       // ActivateWeapon();
+      
+      if (isRunPressed)
+      {
+          characterController.Move(currentRunMovement * Time.deltaTime);
+      }
+      else
+      {
+          characterController.Move(currentMovement * Time.deltaTime);
+      }
+      fallingSpeed = Mathf.Clamp( Mathf.Abs(currentMovementInput.x + currentMovementInput.y), 0,1) * (isRunPressed ? runSpeed : 1);
+
+      anim.GetBool(velocityHash_X);
+      //anim.SetFloat(velocityHash_X, currentMovement.x);
+      anim.GetBool(velocityHash_Z);
+      anim.SetFloat(fallingSpeedHash,fallingSpeed);
+
     }
     public void OnAnimationEvent(string eventName)
     {
@@ -199,9 +223,9 @@ public class Player_State_Machine : MonoBehaviour
         move = new Vector3(currentAnimationBlend.x,0, currentAnimationBlend.y);
       
         move.y = verticalMovement.y;
-        characterController.Move( (move * PlayerSpeed* (isRunPressed ? runSpeed : 1)* Time.deltaTime));
         fallingSpeed = Mathf.Clamp( Mathf.Abs(currentAnimationBlend.x + currentAnimationBlend.y), 0,1) * (isRunPressed ? runSpeed : 1);
-        
+        characterController.Move( (move * PlayerSpeed* (isRunPressed ? runSpeed : 1)* Time.deltaTime));
+
         anim.SetFloat(velocityHash_X, move.x);
         anim.SetFloat(velocityHash_Z, move.z);
         anim.SetFloat(fallingSpeedHash,fallingSpeed);
@@ -210,6 +234,7 @@ public class Player_State_Machine : MonoBehaviour
     {
         float gravity = -9.81f;
         currentMovement.y += gravity * Time.deltaTime;
+        currentRunMovement.y += gravity * Time.deltaTime;
     }
     private void OnAnimatorMove()
     {
@@ -222,20 +247,17 @@ public class Player_State_Machine : MonoBehaviour
 
     void HandleRotation()
     {
-        Vector3 positionTolookAt;
-        positionTolookAt.x = move.x;
-        positionTolookAt.y = 0;
-        positionTolookAt.z =  move.z;
+      
+        Vector3 positionToLookAt;
+        positionToLookAt.x = currentMovement.x;
+        positionToLookAt.y = 0f;
+        positionToLookAt.z = currentMovement.z;
 
-        Quaternion currentRotation = transform.rotation;
+        Quaternion currRotation = transform.rotation;
         if (isMovementPressed)
         {
-           
-           // Vector3 move = new Vector3(currentAnimationBlend.x,0, currentAnimationBlend.y);
-
-            //transform.forward = move;
-          Quaternion targetRotation = Quaternion.LookRotation(positionTolookAt);
-          transform.rotation = Quaternion.Slerp(currentRotation, targetRotation, 2*Time.deltaTime);
+            Quaternion targetRotation = Quaternion.LookRotation(positionToLookAt);
+            transform.rotation = Quaternion.Slerp(currRotation, targetRotation, rotationFactor * Time.deltaTime);
         }
      
     }

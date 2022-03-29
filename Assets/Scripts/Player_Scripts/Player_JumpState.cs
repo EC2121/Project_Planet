@@ -52,6 +52,7 @@ public class Player_JumpState : Player_BaseState
             isFalling = true;
             Context.Animator.SetBool(Context.IsJumpingHash, true);
             Context.CurrentMovementY += Context.JumpSpeed;
+            Context.CurrentRunMovementY += Context.JumpSpeed;
         }
 
         Context.Animator.SetFloat(Context.VelocityHash_Y, Context.CurrentMovementY / Context.JumpSpeed);
