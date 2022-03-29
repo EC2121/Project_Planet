@@ -9,13 +9,23 @@ public class Script_Chest : MonoBehaviour
 {
     public GameObject Box_GuiInteractWrite;
     public bool TakeMe;
+    public Transform Player_Chest;
 
     private SphereCollider chest_InteractableCollider;
+    private void OnEnable()
+    {
+        Player_State_Machine.TakeTheBox.AddListener(() => TakeMe = !TakeMe);
+    }
+    private void OnDisable()
+    {
+        Player_State_Machine.TakeTheBox.RemoveListener(() => TakeMe = !TakeMe);
+    }
 
     private void OnInteraction()
     {
         //chest_InteractableCollider.enabled = !chest_InteractableCollider.enabled;
         Box_GuiInteractWrite.SetActive(!Box_GuiInteractWrite.activeInHierarchy);
+        transform.position = Player_Chest.position;
     }
     private void OnTriggerEnter(Collider other)
     {
@@ -47,7 +57,6 @@ public class Script_Chest : MonoBehaviour
         if (TakeMe)
         {
             OnInteraction();
-            TakeMe = false;
         }
     }
 }
