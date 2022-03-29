@@ -1403,7 +1403,7 @@ GameObject:
   - component: {fileID: 8713632335386814688}
   - component: {fileID: -4824280049273290621}
   - component: {fileID: 104743955518897181}
-  m_Layer: 6
+  m_Layer: 8
   m_Name: Chomper
   m_TagString: Enemy
   m_Icon: {fileID: 0}
@@ -1519,8 +1519,8 @@ BoxCollider:
   m_IsTrigger: 0
   m_Enabled: 0
   serializedVersion: 2
-  m_Size: {x: 0.8581689, y: 0.79665613, z: 0.44399983}
-  m_Center: {x: -0.0027070343, y: 0.6662463, z: 0.4934453}
+  m_Size: {x: 0.8581689, y: 0.79665613, z: 0.2692569}
+  m_Center: {x: -0.0027070343, y: 0.6662463, z: 0.61774075}
 --- !u!1 &1148794101669109337
 GameObject:
   m_ObjectHideFlags: 0
@@ -1631,7 +1631,8 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1148794101668938367}
-  m_Layer: 6
+  - component: {fileID: 4431705127419828429}
+  m_Layer: 9
   m_Name: Skeleton
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1653,6 +1654,19 @@ Transform:
   m_Father: {fileID: 1148794101668938359}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!65 &4431705127419828429
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1148794101669109343}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 1, y: 1.0206306, z: 1.0295088}
+  m_Center: {x: 0, y: 0.5709721, z: 0.014754504}
 --- !u!1 &1148794101669109649
 GameObject:
   m_ObjectHideFlags: 0

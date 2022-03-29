@@ -16,8 +16,8 @@ TagManager:
   - UI
   - Enemy
   - Roby_Layer
-  - 
-  - 
+  - AttackColliders
+  - ReciverColliders
   - 
   - 
   - 

@@ -8,7 +8,7 @@ public class Script_AI_Roby_BattleState_MeleeAttack : Script_AI_Roby_BaseState
     {
 
         AiRoby.transform.LookAt(AiRoby.Roby_EnemyTarget.transform);
-        if (other.gameObject.CompareTag("Enemy"))
+        if (other.gameObject.CompareTag("Enemy") && AiRoby.IsAttacking)
         {
             other.gameObject.GetComponent<Enemy>().AddDamage(50,AiRoby.gameObject,false);
         }

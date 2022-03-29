@@ -833,6 +833,14 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 3047293750476214866, guid: d5cee17333934644ea8d1cf3084c700f, type: 3}
+      propertyPath: roby_Life
+      value: 100000
+      objectReference: {fileID: 0}
+    - target: {fileID: 4945102422558946236, guid: d5cee17333934644ea8d1cf3084c700f, type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 6248447185349945836, guid: d5cee17333934644ea8d1cf3084c700f, type: 3}
       propertyPath: m_RootOrder
       value: 9
@@ -877,9 +885,21 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 6248447185350112300, guid: d5cee17333934644ea8d1cf3084c700f, type: 3}
+      propertyPath: m_Layer
+      value: 9
+      objectReference: {fileID: 0}
+    - target: {fileID: 6248447185350112356, guid: d5cee17333934644ea8d1cf3084c700f, type: 3}
+      propertyPath: m_Layer
+      value: 8
+      objectReference: {fileID: 0}
     - target: {fileID: 6248447185350112716, guid: d5cee17333934644ea8d1cf3084c700f, type: 3}
       propertyPath: m_Name
       value: Grenadier
+      objectReference: {fileID: 0}
+    - target: {fileID: 7655594417593319392, guid: d5cee17333934644ea8d1cf3084c700f, type: 3}
+      propertyPath: m_Enabled
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: d5cee17333934644ea8d1cf3084c700f, type: 3}

@@ -23,6 +23,7 @@ public class Script_Roby : MonoBehaviour
 
     [HideInInspector] public int Roby_EnemyIndex;
     [HideInInspector] public bool Roby_IgnoreEnemy;
+    [HideInInspector] public bool IsAttacking;
 
     public Animator Roby_Animator { get; private set; }
     public GameObject Mai_Player { get; private set; }
@@ -133,7 +134,7 @@ public class Script_Roby : MonoBehaviour
         //Roby_NavAgent.updateRotation = false;
         Roby_Animator.applyRootMotion = true;
 
-        roby_Life = 100;
+        roby_Life = 100000;
         Roby_AshAnimator_Dead = Animator.StringToHash("Death");
         Roby_AshAnimator_RangeDone = Animator.StringToHash("NoMoreAttack");
         Roby_AshAnimator_Range = Animator.StringToHash("RangeAttack");
@@ -180,11 +181,13 @@ public class Script_Roby : MonoBehaviour
 
     public void OnAttackStart()
     {
+        IsAttacking = true;
         AttackCollider.enabled = true;
     }
 
     public void OnAttackEnd()
     {
+        IsAttacking = false;
         AttackCollider.enabled = false;
     }
 

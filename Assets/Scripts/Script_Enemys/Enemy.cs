@@ -33,6 +33,7 @@ public class Enemy : MonoBehaviour
     [HideInInspector] public float Hp;
     [HideInInspector] public float HorizontalDot;
     [HideInInspector] public bool IsAlerted;
+    [HideInInspector] public bool IsAttacking;
 
     //Animation Hashes
     [HideInInspector] public int NearBaseHash = Animator.StringToHash("NearBase");
@@ -60,6 +61,7 @@ public class Enemy : MonoBehaviour
     }
     private void Start()
     {
+       
     }
 
     public void SwitchTarget(GameObject actor)
@@ -161,11 +163,13 @@ public class Enemy : MonoBehaviour
 
     public void OnAttackStart()
     {
+        IsAttacking = true;
         AttackCollider.enabled = true;
     }
 
     public void OnAttackEnd()
     {
+        IsAttacking = false;
         AttackCollider.enabled = false;
     }
 
@@ -226,6 +230,7 @@ public class Enemy : MonoBehaviour
 
     private void OnCollisionEnter(Collision collision)
     {
+        Debug.Log("CIAO");
         currentState.OnCollEnter(this, collision);
     }
 
