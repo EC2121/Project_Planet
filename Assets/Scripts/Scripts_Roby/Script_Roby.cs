@@ -88,7 +88,6 @@ public class Script_Roby : MonoBehaviour
 
     protected virtual void Update()
     {
-
         print(roby_EnemysInMyArea.Count);
         if (GetDamage)
         {

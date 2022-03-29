@@ -8,11 +8,12 @@ using UnityEditor.Events;
 public class Script_Chest : MonoBehaviour
 {
     public GameObject Box_GuiInteractWrite;
-    public bool TakeMe;
     public Transform Player_Chest;
     private Vector3 OldPos;
 
     private SphereCollider chest_InteractableCollider;
+
+    public bool TakeMe;
     private void OnEnable()
     {
         Player_State_Machine.TakeTheBox.AddListener(() => TakeMe = !TakeMe);
@@ -21,15 +22,12 @@ public class Script_Chest : MonoBehaviour
     {
         Player_State_Machine.TakeTheBox.RemoveListener(() => TakeMe = !TakeMe);
     }
-
     private void OnInteraction()
     {
-        //chest_InteractableCollider.enabled = !chest_InteractableCollider.enabled;
-       // Box_GuiInteractWrite.SetActive(!Box_GuiInteractWrite.activeInHierarchy);
        Box_GuiInteractWrite.SetActive(false);
        OldPos = transform.position;
-        transform.position = Player_Chest.position;
-        transform.rotation = Player_Chest.rotation;
+       transform.position = Player_Chest.position;
+       transform.rotation = Player_Chest.rotation;
     }
 
     private void OnDetach()
@@ -40,8 +38,6 @@ public class Script_Chest : MonoBehaviour
     {
         if (other.CompareTag("Player"))
             Box_GuiInteractWrite.SetActive(true);
-
-        //if(other.CompareTag("SpaceShip"))
 
     }
     private void OnTriggerExit(Collider other)
