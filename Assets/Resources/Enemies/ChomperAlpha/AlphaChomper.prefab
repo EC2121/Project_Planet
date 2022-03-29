@@ -3081,6 +3081,7 @@ GameObject:
   - component: {fileID: 8305644410217140229}
   - component: {fileID: -4751222857866262397}
   - component: {fileID: 804005501546284690}
+  - component: {fileID: 9033155928525916845}
   m_Layer: 0
   m_Name: AlphaChomper
   m_TagString: Enemy
@@ -3155,6 +3156,7 @@ MonoBehaviour:
   SpottedHash: 2061569261
   DieHash: 20298039
   nearEnemies: []
+  AttackCollider: {fileID: 9033155928525916845}
   DebugMode: 0
 --- !u!135 &-4751222857866262397
 SphereCollider:
@@ -3185,6 +3187,19 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
+--- !u!65 &9033155928525916845
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6028328631547927243}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 0.6347781, y: 0.7443328, z: 0.30142665}
+  m_Center: {x: 0.012556315, y: 0.51384324, z: 0.47400728}
 --- !u!1 &6028328631547927299
 GameObject:
   m_ObjectHideFlags: 0

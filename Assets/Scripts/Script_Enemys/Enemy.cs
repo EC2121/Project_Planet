@@ -6,11 +6,12 @@ using UnityEngine;
 using UnityEngine.AI;
 using UnityEngine.Events;
 
-public enum EnemyStates { Idle, Patrol, Attack, Follow, Alert, Die, Hit, Thrown}
+public enum EnemyStates { Idle, Patrol, Attack, Follow, Alert, Die, Hit, Thrown }
 public class Enemy : MonoBehaviour
 {
 
-    public static UnityEvent<float, GameObject,bool> OnDamageTaken = new UnityEvent<float, GameObject,bool>();
+    public static UnityEvent<float, GameObject, bool> OnDamageTaken = new UnityEvent<float, GameObject, bool>();
+    public static UnityEvent<GameObject> OnActorDeath = new UnityEvent<GameObject>();
     [HideInInspector] public Transform Player { get; private set; }
     [HideInInspector] public Transform Roby { get; private set; }
     [HideInInspector] public NavMeshAgent Agent { get; private set; }
@@ -43,18 +44,27 @@ public class Enemy : MonoBehaviour
 
     public List<Enemy> nearEnemies;
 
+    public BoxCollider AttackCollider;
     public bool DebugMode;
     private void OnEnable()
     {
+        OnActorDeath.AddListener(SwitchTarget);
         OnDamageTaken.AddListener(AddDamage);
     }
 
     private void OnDisable()
     {
         OnDamageTaken.RemoveListener(AddDamage);
+        OnActorDeath.RemoveListener(SwitchTarget);
+
     }
     private void Start()
     {
+    }
+
+    public void SwitchTarget(GameObject actor)
+    {
+        Target = Player;
     }
     public Vector3 Flocking()
     {
@@ -130,7 +140,7 @@ public class Enemy : MonoBehaviour
         Anim.runtimeAnimatorController = Data.AnimatorController;
         Anim.avatar = Data.Avatar;
         Anim.applyRootMotion = true;
-        Agent =  gameObject.AddComponent<NavMeshAgent>();
+        Agent = gameObject.AddComponent<NavMeshAgent>();
         Agent.speed = Data.AgentSpeed;
         Agent.stoppingDistance = Data.AgentStoppingDistance;
         AgentPath = new NavMeshPath();
@@ -149,10 +159,21 @@ public class Enemy : MonoBehaviour
         IsAlerted = false;
     }
 
-    public void AddDamage(float amount,GameObject source,bool wasThrown)
+    public void OnAttackStart()
     {
-        if (Target == null) return;
-        
+        AttackCollider.enabled = true;
+    }
+
+    public void OnAttackEnd()
+    {
+        AttackCollider.enabled = false;
+    }
+
+    public void AddDamage(float amount, GameObject source, bool wasThrown)
+    {
+
+        Debug.Log("been Hitted");
+
         Hp -= amount;
 
         if (Hp <= 0)
@@ -201,6 +222,11 @@ public class Enemy : MonoBehaviour
         }
 
         currentState.OnTrigEnter(this, other);
+    }
+
+    private void OnCollisionEnter(Collision collision)
+    {
+        currentState.OnCollEnter(this, collision);
     }
 
     private void OnTriggerExit(Collider other)

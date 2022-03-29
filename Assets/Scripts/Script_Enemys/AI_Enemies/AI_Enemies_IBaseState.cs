@@ -9,4 +9,6 @@ public interface AI_Enemies_IBaseState
     public void OnEnter(Enemy owner);
     public void OnTrigEnter(Enemy owner,Collider other);
 
+    public void OnCollEnter(Enemy owner, Collision other);
+
 }

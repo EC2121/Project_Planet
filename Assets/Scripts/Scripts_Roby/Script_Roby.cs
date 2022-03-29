@@ -18,7 +18,7 @@ public class Script_Roby : MonoBehaviour
 
     //Public solo per prova!
     [HideInInspector] public float Roby_Live;
-    public float roby_Life = 20;
+    public float roby_Life;
     public bool GetDamage = false;
 
     [HideInInspector] public int Roby_EnemyIndex;
@@ -43,6 +43,8 @@ public class Script_Roby : MonoBehaviour
     public int Roby_AshAnimator_Dead { get; private set; }
     public int Roby_AshAnimator_GetDamage { get; private set; }
 
+
+    public BoxCollider AttackCollider;
     private Script_AI_Roby_BaseState Roby_CurrentState;
     private ParticleSystem roby_Particle_Shoot;
     private NavMeshPath roby_NavMeshPath;
@@ -83,9 +85,11 @@ public class Script_Roby : MonoBehaviour
     private void OnTriggerStay(Collider other)
     {
         Roby_CurrentState.CustomOnTriggerStay(this, other);
-        print(roby_EnemysInMyArea.Count);
     }
-
+    private void OnCollisionEnter(Collision collision)
+    {
+        Roby_CurrentState.CustomCollisionEnter(this, collision);
+    }
     protected virtual void Update()
     {
 
@@ -129,7 +133,7 @@ public class Script_Roby : MonoBehaviour
         //Roby_NavAgent.updateRotation = false;
         Roby_Animator.applyRootMotion = true;
 
-
+        roby_Life = 100;
         Roby_AshAnimator_Dead = Animator.StringToHash("Death");
         Roby_AshAnimator_RangeDone = Animator.StringToHash("NoMoreAttack");
         Roby_AshAnimator_Range = Animator.StringToHash("RangeAttack");
@@ -163,14 +167,30 @@ public class Script_Roby : MonoBehaviour
 
     public void OnRobyAddDamage(float Damage)
     {
-        roby_Life -= Damage;
-        Roby_Animator.SetTrigger(Roby_AshAnimator_GetDamage);
+        if (roby_Life > 1)
+        {
+            roby_Life -= Damage;
+            Roby_Animator.SetTrigger(Roby_AshAnimator_GetDamage);
 
-        if (roby_Life <= 0) Roby_Dead.Invoke();
+            if (roby_Life <= 0) Roby_Dead.Invoke();
+        }
+        
+       
+    }
+
+    public void OnAttackStart()
+    {
+        AttackCollider.enabled = true;
+    }
+
+    public void OnAttackEnd()
+    {
+        AttackCollider.enabled = false;
     }
 
     public void OnRobyDie()
     {
+        Enemy.OnActorDeath.Invoke(this.gameObject);
         roby_Life = 1;
         SwitchState(RobyStates.Die);
     }

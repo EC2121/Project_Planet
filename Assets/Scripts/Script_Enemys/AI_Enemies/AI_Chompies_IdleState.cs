@@ -59,8 +59,7 @@ public class AI_Chompies_IdleState : AI_Enemies_IBaseState
 
     }
 
-
-
-
-
+    public void OnCollEnter(Enemy owner, Collision other)
+    {
+    }
 }

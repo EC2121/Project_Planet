@@ -49,4 +49,8 @@ public class Script_AI_Roby_Patroll : Script_AI_Roby_BaseState
 
         if (AIRoby.Roby_NavAgent.remainingDistance < AIRoby.Roby_NavAgent.stoppingDistance) AIRoby.SwitchState(RobyStates.Idle);
     }
+
+    public void CustomCollisionEnter(Script_Roby AiRoby, Collision other)
+    {
+    }
 }

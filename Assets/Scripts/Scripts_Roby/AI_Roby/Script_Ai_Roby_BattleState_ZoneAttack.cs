@@ -4,6 +4,10 @@ using UnityEngine;
 
 public class Script_Ai_Roby_BattleState_ZoneAttack : Script_AI_Roby_BaseState
 {
+    public void CustomCollisionEnter(Script_Roby AiRoby, Collision other)
+    {
+    }
+
     public void CustomOnTriggerEnter(Script_Roby AiRoby, Collider collider)
     {
     }
