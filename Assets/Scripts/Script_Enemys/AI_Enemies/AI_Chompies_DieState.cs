@@ -2,6 +2,9 @@ using UnityEngine;
 
 public class AI_Chompies_DieState : AI_Enemies_IBaseState
 {
+    public void OnCollEnter(Enemy owner, Collision other)
+    {
+    }
 
     public void OnEnter(Enemy owner)
     {

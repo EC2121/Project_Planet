@@ -22,8 +22,7 @@ public class AI_Chompies_ThrownState : AI_Enemies_IBaseState
 
     }
 
-
-
-
-
+    public void OnCollEnter(Enemy owner, Collision other)
+    {
+    }
 }

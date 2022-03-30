@@ -55,6 +55,10 @@ public class AI_Chompies_PatrolState : AI_Enemies_IBaseState
 
     }
 
+    public void OnCollEnter(Enemy owner, Collision other)
+    {
+    }
+
     //public bool CheckForTarget(Enemy owner)
     //{
 
@@ -81,7 +85,7 @@ public class AI_Chompies_PatrolState : AI_Enemies_IBaseState
     //    return false;
     //}
 
-   
 
-    
+
+
 }

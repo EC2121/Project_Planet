@@ -6,11 +6,13 @@ using UnityEngine;
 using UnityEngine.AI;
 using UnityEngine.Events;
 
-public enum EnemyStates { Idle, Patrol, Attack, Follow, Alert, Die, Hit, Thrown}
+public enum EnemyStates { Idle, Patrol, Attack, Follow, Alert, Die, Hit, Thrown }
 public class Enemy : MonoBehaviour
 {
 
-    public static UnityEvent<float, GameObject,bool> OnDamageTaken = new UnityEvent<float, GameObject,bool>();
+    public static UnityEvent<float, GameObject, bool> OnDamageTaken = new UnityEvent<float, GameObject, bool>();
+    public static UnityEvent<GameObject> OnActorDeath = new UnityEvent<GameObject>();
+    public static UnityEvent<GameObject> OnEnemyDeath = new UnityEvent<GameObject>();
     [HideInInspector] public Transform Player { get; private set; }
     [HideInInspector] public Transform Roby { get; private set; }
     [HideInInspector] public NavMeshAgent Agent { get; private set; }
@@ -32,6 +34,7 @@ public class Enemy : MonoBehaviour
     [HideInInspector] public float Hp;
     [HideInInspector] public float HorizontalDot;
     [HideInInspector] public bool IsAlerted;
+    [HideInInspector] public bool IsAttacking;
 
     //Animation Hashes
     [HideInInspector] public int NearBaseHash = Animator.StringToHash("NearBase");
@@ -42,19 +45,28 @@ public class Enemy : MonoBehaviour
     [HideInInspector] public int DieHash = Animator.StringToHash("Die");
 
     public List<Enemy> nearEnemies;
-
+    public Transform Tounge;
     public bool DebugMode;
     private void OnEnable()
     {
+        OnActorDeath.AddListener(SwitchTarget);
         OnDamageTaken.AddListener(AddDamage);
     }
 
     private void OnDisable()
     {
         OnDamageTaken.RemoveListener(AddDamage);
+        OnActorDeath.RemoveListener(SwitchTarget);
+
     }
     private void Start()
     {
+
+    }
+
+    public void SwitchTarget(GameObject actor)
+    {
+        Target = Player;
     }
     public Vector3 Flocking()
     {
@@ -130,7 +142,7 @@ public class Enemy : MonoBehaviour
         Anim.runtimeAnimatorController = Data.AnimatorController;
         Anim.avatar = Data.Avatar;
         Anim.applyRootMotion = true;
-        Agent =  gameObject.AddComponent<NavMeshAgent>();
+        Agent = gameObject.AddComponent<NavMeshAgent>();
         Agent.speed = Data.AgentSpeed;
         Agent.stoppingDistance = Data.AgentStoppingDistance;
         AgentPath = new NavMeshPath();
@@ -151,28 +163,64 @@ public class Enemy : MonoBehaviour
         Agent.Warp(PatrolCenter);
     }
 
-    public void AddDamage(float amount,GameObject source,bool wasThrown)
+    public void OnAttackStart()
     {
-        if (Target == null) return;
-        
-        Hp -= amount;
+        IsAttacking = true;
 
-        if (Hp <= 0)
-        {
-            SwitchState(EnemyStates.Die);
-            return;
-        }
+        Collider[] colliders = Physics.OverlapSphere(Tounge.position, 0.5f, 1 << 10);
 
-        else
+        foreach (var item in colliders)
         {
-            if (wasThrown)
+            if (item.gameObject.CompareTag("Roby"))
             {
-                SwitchState(EnemyStates.Thrown);
+                Script_Roby.Roby_Hit.Invoke(20);
                 return;
             }
-            HorizontalDot = Vector3.Dot(transform.forward, source.transform.forward);
-            SwitchState(EnemyStates.Hit);
+
+            if (item.gameObject.CompareTag("Player"))
+            {
+                Debug.Log("hitted Player");
+            }
+
+
         }
+
+
+    }
+
+    public void OnAttackEnd()
+    {
+        IsAttacking = false;
+    }
+
+    public void Vanish()
+    {
+        this.gameObject.SetActive(false);
+    }
+    public void AddDamage(float amount, GameObject source, bool wasThrown)
+    {
+        if (Hp > 0)
+        {
+            Hp -= amount;
+            if (Hp <= 0)
+            {
+                Invoke("Vanish", 3f);
+                OnEnemyDeath.Invoke(this.gameObject);
+                SwitchState(EnemyStates.Die);
+                return;
+            }
+            else
+            {
+                if (wasThrown)
+                {
+                    SwitchState(EnemyStates.Thrown);
+                    return;
+                }
+                HorizontalDot = Vector3.Dot(transform.forward, source.transform.forward);
+                SwitchState(EnemyStates.Hit);
+            }
+        }
+        
     }
     public virtual void SwitchState(EnemyStates state)
     {
@@ -203,6 +251,12 @@ public class Enemy : MonoBehaviour
         }
 
         currentState.OnTrigEnter(this, other);
+    }
+
+    private void OnCollisionEnter(Collision collision)
+    {
+        Debug.Log("CIAO");
+        currentState.OnCollEnter(this, collision);
     }
 
     private void OnTriggerExit(Collider other)

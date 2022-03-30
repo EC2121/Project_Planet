@@ -90,4 +90,8 @@ public class Script_AI_Roby_BattleState : Script_AI_Roby_BaseState
 
 
     }
+
+    public void CustomCollisionEnter(Script_Roby AiRoby, Collision other)
+    {
+    }
 }

@@ -61,4 +61,8 @@ public class Script_AI_Roby_BattleState_RangedAttack : Script_AI_Roby_BaseState
         else
             return angle;
     }
+
+    public void CustomCollisionEnter(Script_Roby AiRoby, Collision other)
+    {
+    }
 }
