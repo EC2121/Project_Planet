@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
-using UnityEditor.Events;
 
 public class Script_Chest : MonoBehaviour
 {
@@ -57,7 +56,7 @@ public class Script_Chest : MonoBehaviour
     void Update()
     {
         if (Box_GuiInteractWrite.activeInHierarchy)
-            Box_GuiInteractWrite.transform.position = Camera.main.WorldToScreenPoint(transform.position + new Vector3(0, 1f, 0));
+            Box_GuiInteractWrite.transform.position = Camera.main.WorldToScreenPoint(transform.position + new Vector3(0, 0.6f, 0));
 
         if (TakeMe)
         {

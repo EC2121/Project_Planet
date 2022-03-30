@@ -1,8 +1,8 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using UnityEditor.Animations;
 using UnityEngine;
+//using UnityEditor.Animations;
 using UnityEngine.AI;
 using UnityEngine.Events;
 
@@ -19,7 +19,7 @@ public class Enemy : MonoBehaviour
     [HideInInspector] public Animator Anim { get; private set; }
 
     [HideInInspector] public Dictionary<EnemyStates, AI_Enemies_IBaseState> StatesDictionary;
-    [HideInInspector] public AnimatorController AnimatorController;
+    [HideInInspector] public /*AnimatorController*/AnimatorOverrideController AnimatorController;
     [HideInInspector] public NavMeshPath AgentPath;
     [HideInInspector] public AI_Enemies_IBaseState currentState;
     [HideInInspector] public Transform Target;

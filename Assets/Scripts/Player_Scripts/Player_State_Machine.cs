@@ -91,7 +91,7 @@ public class Player_State_Machine : MonoBehaviour
     public AnimatorStateInfo AnimStateInfo { get { return stateInfo; } }
     public int AttackId { get { return attackId; } set { attackId = value; } }
     public Vector3 Move { get { return move; } set { move = value; } }
-    
+
     void Awake()
     {
         input = new Player_Controller();
@@ -199,15 +199,15 @@ public class Player_State_Machine : MonoBehaviour
 
         if (isInteract && !hasBox)
         {
-           // isInteract = false;
-         
+            // isInteract = false;
+
             hasBox = true;
             anim.SetBool("HasBox", true);
             TakeTheBox.Invoke();
         }
         else if (isInteract && hasBox)
         {
-           
+
             hasBox = false;
             anim.SetBool("HasBox", false);
             TakeTheBox.Invoke();
@@ -286,7 +286,7 @@ public class Player_State_Machine : MonoBehaviour
         Collider[] collidersHitted = Physics.OverlapSphere(StaffJoint.position, 0.5f, 1 << 6);
         foreach (var item in collidersHitted)
         {
-            item.GetComponentInParent<Enemy>().AddDamage(40,this.gameObject,false);
+            item.GetComponentInParent<Enemy>().AddDamage(40, this.gameObject, false);
         }
     }
     // public void ActivateWeapon()

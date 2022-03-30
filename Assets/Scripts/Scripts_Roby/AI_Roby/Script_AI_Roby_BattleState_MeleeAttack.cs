@@ -29,26 +29,13 @@ public class Script_AI_Roby_BattleState_MeleeAttack : Script_AI_Roby_BaseState
 
     public void OnEnter(Script_Roby AIRoby)
     {
-        //float angle = AngleCalculator(AIRoby);
-        ////AIRoby.PrintMe(angle.ToString());
-
-        //if (angle > -10 && angle < 10) return;
-
-        //angle = AIRoby.InverseClamp(-10, 10, angle);
-        //angle /= 180;
-        //AIRoby.Roby_Animator.SetFloat("Angle", angle);
-
-        //AIRoby.Roby_Animator.SetTrigger(AIRoby.Roby_AshAnimator_turnTrigger);
-
         AIRoby.SetPath(AIRoby.Roby_EnemyTarget.transform.position);
         AIRoby.Roby_Animator.SetBool(AIRoby.Roby_AshAnimator_walk, true);
-        //AIRoby.Roby_NavAgent.SetDestination(AIRoby.Roby_EnemyTarget.transform.position);
     }
 
     public void OnExit(Script_Roby AIRoby)
     {
         AIRoby.Roby_NavAgent.ResetPath();
-        //AIRoby.Roby_Animator.ResetTrigger(AIRoby.roby_Animator_MeleeAsh);
     }
 
     public void UpdateState(Script_Roby AIRoby)

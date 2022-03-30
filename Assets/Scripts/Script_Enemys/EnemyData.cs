@@ -1,7 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
-using UnityEditor.Animations;
 using UnityEngine;
+//using UnityEditor.Animations;
 using UnityEngine.AI;
 
 [CreateAssetMenu]
@@ -15,7 +15,7 @@ public class EnemyData : ScriptableObject
     public float PatrolCD;
     public float AlertRange;
     public float MaxHp;
-    public AnimatorController AnimatorController;
+    public /*AnimatorController*/AnimatorOverrideController AnimatorController;
     public Avatar Avatar;
     public float AgentSpeed;
     public float AgentStoppingDistance;

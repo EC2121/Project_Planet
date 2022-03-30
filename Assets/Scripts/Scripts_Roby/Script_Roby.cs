@@ -95,7 +95,6 @@ public class Script_Roby : MonoBehaviour
     }
     protected virtual void Update()
     {
-
         if (GetDamage)
         {
             Roby_Hit.Invoke(10);
@@ -118,6 +117,8 @@ public class Script_Roby : MonoBehaviour
     {
         Init();
     }
+    
+    
 
     private void Init()
     {
