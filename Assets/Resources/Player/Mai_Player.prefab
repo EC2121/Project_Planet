@@ -462,7 +462,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 7873018163916560823, guid: c691a68c1cccb30458ccacc5e4556b41, type: 3}
       propertyPath: m_Name
-      value: Ellen (1)
+      value: Mai
       objectReference: {fileID: 0}
     - target: {fileID: 7873018163916850647, guid: c691a68c1cccb30458ccacc5e4556b41, type: 3}
       propertyPath: m_RootOrder
@@ -508,6 +508,14 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 7873018163923823505, guid: c691a68c1cccb30458ccacc5e4556b41, type: 3}
+      propertyPath: m_Controller
+      value: 
+      objectReference: {fileID: 9100000, guid: ecf67dff1de9f8948ae891df7d55ccb2, type: 2}
+    - target: {fileID: 7873018164762728168, guid: c691a68c1cccb30458ccacc5e4556b41, type: 3}
+      propertyPath: StaffJoint
+      value: 
+      objectReference: {fileID: 5642937540283889771}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: c691a68c1cccb30458ccacc5e4556b41, type: 3}
 --- !u!4 &5642937541812765327 stripped
@@ -518,5 +526,10 @@ Transform:
 --- !u!4 &5642937541812765853 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 7873018163916850117, guid: c691a68c1cccb30458ccacc5e4556b41, type: 3}
+  m_PrefabInstance: {fileID: 2525720619094443864}
+  m_PrefabAsset: {fileID: 0}
+--- !u!4 &5642937540283889771 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 7873018165441560371, guid: c691a68c1cccb30458ccacc5e4556b41, type: 3}
   m_PrefabInstance: {fileID: 2525720619094443864}
   m_PrefabAsset: {fileID: 0}

@@ -4979,7 +4979,7 @@ GameObject:
   - component: {fileID: 7655594417593319392}
   m_Layer: 10
   m_Name: Grenadier
-  m_TagString: Untagged
+  m_TagString: Roby
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -6373,12 +6373,13 @@ MonoBehaviour:
   Roby_EnemyTarget: {fileID: 0}
   roby_EnemysInMyArea: []
   Roby_Live: 0
-  roby_Life: 100000
+  roby_Life: 50000
   GetDamage: 0
   Roby_Hand: {fileID: 6248447185349945732}
   Roby_EnemyIndex: 0
   Roby_IgnoreEnemy: 0
   IsAttacking: 0
+  RobyHpSlider: {fileID: 0}
 --- !u!114 &1159518113781105222
 MonoBehaviour:
   m_ObjectHideFlags: 0
