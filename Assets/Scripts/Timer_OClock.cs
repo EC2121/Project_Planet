@@ -46,7 +46,7 @@ public class Timer_OClock : MonoBehaviour
             if (currentTime == 0)
             {
                 //TimeEnd.Invoke();
-                SceneManager.LoadScene("");
+                SceneManager.LoadScene("UI_MenuScene");
             }
         }
     }

@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.SceneManagement;
 
 public class GameUIMGR : MonoBehaviour
 {
@@ -65,7 +66,7 @@ public class GameUIMGR : MonoBehaviour
 
     public void OnQuit()
     {
-        //Application.Quit();
+        SceneManager.LoadScene("UI_MenuScene");
     }
     public void OnBackPressed()
     {

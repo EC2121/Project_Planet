@@ -5,14 +5,11 @@ EditorBuildSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 2
   m_Scenes:
-  - enabled: 0
-    path: 
-    guid: 00000000000000000000000000000000
   - enabled: 1
     path: Assets/Scenes/UI_MenuScene.unity
     guid: f94fd03aaecc92e46b8b351807484292
   - enabled: 1
-    path: Assets/Scenes/Scene_AI_Enemy_Test.unity
-    guid: d5386f620be8d164da4516e91b17b894
+    path: Assets/Scenes/Gameplay_Scene.unity
+    guid: ed81816562d1a43448281e839b7e2d86
   m_configObjects:
     com.unity.input.settings: {fileID: 11400000, guid: 70762d5ad88e254458448831d7340417, type: 2}
