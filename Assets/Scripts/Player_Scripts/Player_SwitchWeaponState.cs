@@ -4,22 +4,29 @@ using UnityEngine;
 
 public class Player_SwitchWeaponState : Player_BaseState
 {
+    private float timer = 1.2f;
+
     public Player_SwitchWeaponState(Player_State_Machine currentContext, Player_StateFactory playerStateFactory) : base(
         currentContext, playerStateFactory)
     {
-        IsRootState = true;
+        // IsRootState = true;
 
-        InitializeSubState();
+        //  InitializeSubState();
     }
 
     public override void EnterState()
     {
+        ActivateWeapon();
+        Context.Animator.SetBool(Context.IsWalkingHash, false);
+        Context.Animator.SetBool(Context.IsRunningHash, false);
+        Context.AppliedMovementX = 0;
+        Context.AppliedMovementZ = 0;
     }
 
     public override void UpdateState()
     {
+        timer -= Time.deltaTime;
         CheckSwitchStates();
-        ActivateWeapon();
     }
 
     public override void ExitState()
@@ -32,9 +39,18 @@ public class Player_SwitchWeaponState : Player_BaseState
 
     public override void CheckSwitchStates()
     {
-        if (!Context.RequireNewWeaponSwitch)
+       
+        if (!Context.IsMovementPressed && !Context.IsRunPressed && timer <= 0)
         {
-            SwitchState(Factory.Grounded());
+            SwitchState(Factory.Idle());
+        }
+        else if (Context.IsMovementPressed && !Context.IsRunPressed && timer <= 0)
+        {
+            SwitchState(Factory.Walk());
+        }
+        else if (Context.IsRunPressed && timer <= 0)
+        {
+            SwitchState(Factory.Run());
         }
     }
 
@@ -47,30 +63,15 @@ public class Player_SwitchWeaponState : Player_BaseState
         if (!Context.IsWeaponAttached && !Context.IsMovementPressed)
         {
             Context.IsWeaponAttached = true;
-            Context.IsSwitchPressed = false;
             Context.Sockets.Attach(Context.Weapon, Handle_Mesh_Sockets.SocketId.Spine);
             Context.Animator.SetBool(Context.EquipHash, true);
         }
         else if (Context.IsWeaponAttached && !Context.IsMovementPressed)
         {
             Context.IsWeaponAttached = false;
-            Context.IsSwitchPressed = false;
 
             Context.Sockets.Attach(Context.Weapon, Handle_Mesh_Sockets.SocketId.RightHand);
             Context.Animator.SetBool(Context.EquipHash, false);
         }
     }
-
-    // public void OnAnimationEvent(string eventName)
-    // {
-    //     if (eventName == "EquipWeapon")
-    //     {
-    //         Context.Sockets.Attach(Context.Weapon, Handle_Mesh_Sockets.SocketId.RightHand);
-    //     }
-    //
-    //     if (eventName == "Detach")
-    //     {
-    //         Context.Sockets.Attach(Context.Weapon, Handle_Mesh_Sockets.SocketId.Spine);
-    //     }
-    // }
 }

@@ -15,11 +15,11 @@ public class Script_Chest : MonoBehaviour
     public bool TakeMe;
     private void OnEnable()
     {
-        Player_State_Machine.TakeTheBox.AddListener(() => TakeMe = !TakeMe);
+        Player_State_Machine.takeTheBox.AddListener(() => TakeMe = !TakeMe);
     }
     private void OnDisable()
     {
-        Player_State_Machine.TakeTheBox.RemoveListener(() => TakeMe = !TakeMe);
+        Player_State_Machine.takeTheBox.RemoveListener(() => TakeMe = !TakeMe);
     }
     private void OnInteraction()
     {

@@ -255,7 +255,6 @@ public class Enemy : MonoBehaviour
 
     private void OnCollisionEnter(Collision collision)
     {
-        Debug.Log("CIAO");
         currentState.OnCollEnter(this, collision);
     }
 

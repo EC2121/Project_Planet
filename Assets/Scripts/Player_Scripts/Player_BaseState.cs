@@ -32,20 +32,19 @@ public abstract class Player_BaseState
             _currentSubState.UpdateStates();
         }
     }
-    // public void ExitStates()
-    // {
-    //     ExitState();
-    //     if (_currentSubState != null)
-    //     {
-    //         _currentSubState.ExitState();
-    //     }
-    // }
+    public void ExitStates()
+    {
+        ExitState();
+        if (_currentSubState != null)
+        {
+            _currentSubState.ExitState();
+        }
+    }
     protected void SwitchState(Player_BaseState newState)
     {
         ExitState();
 
         newState.EnterState();
-
         if (_isRootState)
         {
             _ctx.CurrentState = newState;

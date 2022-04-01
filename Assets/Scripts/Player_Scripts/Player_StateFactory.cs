@@ -32,17 +32,22 @@ public class Player_StateFactory
         return new Player_GroundState(_context,this);
     }
 
-    public Player_SwitchWeaponState SwitchWeapon()
+    public Player_BaseState SwitchWeapon()
     {
         return new Player_SwitchWeaponState(_context,this);
     }
-    public Player_StaffAttack StaffAttack()
+    public Player_BaseState StaffAttack()
     {
         return new Player_StaffAttack(_context,this);
     }
 
-    public Player_HittedState Hitted()
+    public Player_BaseState Hitted()
     {
         return new Player_HittedState(_context, this);
+    }
+    
+    public Player_Interactable Interactable()
+    {
+        return new Player_Interactable(_context, this);
     }
 }

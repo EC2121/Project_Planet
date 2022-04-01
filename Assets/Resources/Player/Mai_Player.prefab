@@ -511,7 +511,7 @@ PrefabInstance:
     - target: {fileID: 7873018163923823505, guid: c691a68c1cccb30458ccacc5e4556b41, type: 3}
       propertyPath: m_Controller
       value: 
-      objectReference: {fileID: 9100000, guid: ecf67dff1de9f8948ae891df7d55ccb2, type: 2}
+      objectReference: {fileID: 9100000, guid: e1f2492971cd3c842913bd27bb1cbc25, type: 2}
     - target: {fileID: 7873018164762728168, guid: c691a68c1cccb30458ccacc5e4556b41, type: 3}
       propertyPath: StaffJoint
       value: 

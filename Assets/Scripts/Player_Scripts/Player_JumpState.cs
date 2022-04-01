@@ -4,8 +4,6 @@ using UnityEngine;
 
 public class Player_JumpState : Player_BaseState
 {
-    private bool isFalling;
-
     public Player_JumpState(Player_State_Machine currentContext, Player_StateFactory playerStateFactory) : base(
         currentContext, playerStateFactory)
     {
@@ -16,26 +14,51 @@ public class Player_JumpState : Player_BaseState
 
     public override void EnterState()
     {
-        isFalling = false;
-        Context.Animator.SetBool(Context.IsRunningHash,false);
+        Context.Animator.SetBool(Context.IsAttacking,false);
 
+        HandleJump();
     }
 
     public override void UpdateState()
     {
         CheckSwitchStates();
-        HandleJump();
+        HandleGravity();
     }
 
     public override void ExitState()
     {
         Context.Animator.SetBool(Context.IsJumpingHash, false);
-        Context.Animator.SetBool(Context.IsLandingHash, false);
+        if (!Context.IsRunPressed)
+        {
+            Context.Animator.SetBool(Context.IsRunningHash, false);
+
+            Context.AppliedMovementX = 0;
+            Context.AppliedMovementZ = 0;
+        }
+
+        if (!Context.IsMovementPressed)
+        {
+            Context.Animator.SetBool(Context.IsWalkingHash, false);
+            Context.AppliedMovementX = 0;
+            Context.AppliedMovementZ = 0;
+        }
+
+        if (Context.IsJumpPressed)
+        {
+            Context.RequireNewJump = true;
+        }
+
+        Context.CurrentJumpResetRoutine = Context.StartCoroutine(IJumpResetRoutine());
+        if (Context.JumpCount == 3)
+        {
+            Context.JumpCount = 0;
+            Context.Animator.SetInteger(Context.JumpCountHash, Context.JumpCount);
+        }
     }
 
     public override void CheckSwitchStates()
     {
-        if (Context.CharacterController.isGrounded && !isFalling)
+        if (Context.CharacterController.isGrounded)
         {
             SwitchState(Factory.Grounded());
         }
@@ -47,27 +70,42 @@ public class Player_JumpState : Player_BaseState
 
     void HandleJump()
     {
-        if (!isFalling && Context.IsJumpPressed)
+        if (Context.JumpCount < 3 && Context.CurrentJumpResetRoutine != null)
         {
-            isFalling = true;
-            Context.Animator.SetBool(Context.IsJumpingHash, true);
-            Context.CurrentMovementY += Context.JumpSpeed;
-            Context.CurrentRunMovementY += Context.JumpSpeed;
+            Context.StopCoroutine(Context.CurrentJumpResetRoutine);
         }
+        Context.Animator.SetBool(Context.IsJumpingHash, true);
+        Context.IsJumping = true;
+        Context.JumpCount += 1;
+        Context.Animator.SetInteger(Context.JumpCountHash, Context.JumpCount);
+        Context.CurrentMovementY = Context.InitialJumpVelocities[Context.JumpCount];
+        Context.AppliedMovementY = Context.InitialJumpVelocities[Context.JumpCount];
+    }
 
-        Context.Animator.SetFloat(Context.VelocityHash_Y, Context.CurrentMovementY / Context.JumpSpeed);
+    void HandleGravity()
+    {
+        bool isFalling = Context.CurrentMovementY <= 0.0f || !Context.IsJumpPressed;
+        float fallMultiplier = 2.0f;
 
-        if (isFalling && Context.CurrentMovementY < 0)
+        if (isFalling)
         {
-            RaycastHit hit;
-            if (Physics.Raycast(Context.PlayerPos, Vector3.down, out hit, 0.7f, LayerMask.GetMask("Default")))
-            {
-                isFalling = false;
-                Context.Animator.SetBool(Context.IsLandingHash, true);
-                Context.RequireNewWeaponSwitch = true;
-            }
+            float previousY_Velocity = Context.CurrentMovementY;
+            Context.CurrentMovementY = Context.CurrentMovementY +
+                                       (Context.JumpGravities[Context.JumpCount] * fallMultiplier * Time.deltaTime);
+            Context.AppliedMovementY = Mathf.Max((previousY_Velocity + Context.CurrentMovementY) * 0.5f, -20.0f);
+        }
+        else
+        {
+            float previousY_Velocity = Context.CurrentMovementY;
+            Context.CurrentMovementY =
+                Context.CurrentMovementY + (Context.JumpGravities[Context.JumpCount] * Time.deltaTime);
+            Context.AppliedMovementY = (previousY_Velocity + Context.CurrentMovementY) * 0.5f;
         }
     }
 
-   
+    IEnumerator IJumpResetRoutine()
+    {
+        yield return new WaitForSeconds(0.5f);
+        Context.JumpCount = 0;
+    }
 }

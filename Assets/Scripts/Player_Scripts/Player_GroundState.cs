@@ -13,7 +13,7 @@ public class Player_GroundState : Player_BaseState
     public override void EnterState()
     {
         Context.CurrentMovementY = Context.GroundGravity;
-        Context.CurrentRunMovementY = Context.GroundGravity;
+        Context.AppliedMovementY = Context.GroundGravity;
     }
 
     public override void UpdateState()
@@ -28,19 +28,15 @@ public class Player_GroundState : Player_BaseState
 
     public override void CheckSwitchStates()
     {
-        if (Context.IsJumpPressed)
+        if (Context.IsJumpPressed && !Context.RequireNewJump && !Context.HasBox)
         {
             SwitchState(Factory.Jump());
         }
-
-        if (Context.IsSwitchPressed && !Context.RequireNewWeaponSwitch)
-        {
-            SwitchState(Factory.SwitchWeapon());
-        }
         
-        if (Context.IsMousePressed && Context.IsWeaponAttached)
+        if (Context.IsInteract && (!Context.IsWeaponAttached && 
+                                   !Context.Animator.GetCurrentAnimatorStateInfo(1).IsName("Un_Equip")) && !Context.RequireNewWeaponSwitch )
         {
-            SwitchState(Factory.StaffAttack());
+            SwitchState(Factory.Interactable());
         }
         
     }
@@ -56,14 +52,10 @@ public class Player_GroundState : Player_BaseState
         {
             SetSubState(Factory.Walk());
         }
-        else
+        else if(!Context.HasBox)
         {
             SetSubState(Factory.Run());
         }
     }
-    IEnumerator AttackTimer()
-    {
-        yield return new WaitForSeconds(2f);
-        Context.AttackId = 0;
-    }
+   
 }

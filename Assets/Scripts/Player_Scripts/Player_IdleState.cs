@@ -21,18 +21,27 @@ public class Player_IdleState :  Player_BaseState
 
     public override void ExitState()
     {
-       
+        Context.AppliedMovementX = 0;
+        Context.AppliedMovementZ = 0;
     }
 
     public override void CheckSwitchStates()
     {
-        if (Context.IsMovementPressed && Context.IsRunPressed)
+        if (Context.IsMousePressed && Context.IsWeaponAttached && !Context.RequireNewAttack)
+        {
+            SwitchState(Factory.StaffAttack());
+        }
+        if (Context.IsMovementPressed && Context.IsRunPressed  && !Context.HasBox)
         {
             SwitchState(Factory.Run());
         }
         else if (Context.IsMovementPressed)
         {
             SwitchState(Factory.Walk());
+        }
+        if (Context.IsSwitchPressed && !Context.RequireNewWeaponSwitch && !Context.HasBox )
+        {
+            SwitchState(Factory.SwitchWeapon());
         }
     }
 

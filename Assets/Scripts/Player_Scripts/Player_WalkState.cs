@@ -17,20 +17,26 @@ public class Player_WalkState :  Player_BaseState
     public override void UpdateState()
     {
         CheckSwitchStates();
+        Context.AppliedMovementX = Context.CurrentMovementInput.x;
+        Context.AppliedMovementZ = Context.CurrentMovementInput.y;
     }
 
     public override void ExitState()
     {
-       
+  
     }
 
     public override void CheckSwitchStates()
     {
+        if (Context.IsMousePressed && Context.IsWeaponAttached && !Context.RequireNewAttack)
+        {
+            SwitchState(Factory.StaffAttack());
+        }
         if (!Context.IsMovementPressed)
         {
             SwitchState(Factory.Idle());
         }
-        else if (Context.IsMovementPressed && Context.IsRunPressed)
+        else if (Context.IsMovementPressed && Context.IsRunPressed && !Context.HasBox)
         {
             SwitchState(Factory.Run());
         }
@@ -40,4 +46,5 @@ public class Player_WalkState :  Player_BaseState
     {
         throw new System.NotImplementedException();
     }
+    
 }
