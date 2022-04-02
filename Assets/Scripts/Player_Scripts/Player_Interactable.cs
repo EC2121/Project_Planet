@@ -29,6 +29,10 @@ public class Player_Interactable : Player_BaseState
     public override void ExitState()
     {
         canExit = false;
+        if (Context.IsInteract)
+        {
+            Context.RequireNewInteraction = true;
+        }
     }
 
     public override void CheckSwitchStates()

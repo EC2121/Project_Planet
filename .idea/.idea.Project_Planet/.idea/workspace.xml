@@ -3,29 +3,11 @@
   <component name="ChangeListManager">
     <list default="true" id="602c179c-419d-446c-b8ea-27c52ae9895b" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/.idea.Project_Planet/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.Project_Planet/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Art/Animations/AnimationClips/Characters/Ellen/@EllenJump.fbx.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Art/Animations/AnimationClips/Characters/Ellen/@EllenJump.fbx.meta" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/Art/Animations/Animators/Characters/Ellen_Controller.controller" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Art/Animations/Animators/Characters/Ellen_Controller.controller" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Resources/Player/Mai_Player.prefab" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Resources/Player/Mai_Player.prefab" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/Scenes/Gameplay_Scene.unity" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scenes/Gameplay_Scene.unity" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scenes/Scene_Player.unity" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scenes/Scene_Player.unity" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/GamePlay Phases/Script_WaitTheShip.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/GamePlay Phases/Script_WaitTheShip.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Interactable/Script_Chest.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Interactable/Script_Chest.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Player_Scripts/Player_BaseState.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Player_Scripts/Player_BaseState.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Player_Scripts/Player_Combo.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Player_Scripts/Player_Combo.cs.meta" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/Scripts/Player_Scripts/Player_Controller.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Player_Scripts/Player_Controller.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/Scripts/Player_Scripts/Player_Controller.inputactions" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Player_Scripts/Player_Controller.inputactions" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Player_Scripts/Player_GroundState.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Player_Scripts/Player_GroundState.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Player_Scripts/Player_IdleState.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Player_Scripts/Player_IdleState.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Player_Scripts/Player_JumpState.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Player_Scripts/Player_JumpState.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Player_Scripts/Player_RunState.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Player_Scripts/Player_RunState.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Player_Scripts/Player_StaffAttack.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Player_Scripts/Player_StaffAttack.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Player_Scripts/Player_StateFactory.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Player_Scripts/Player_StateFactory.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/Scripts/Player_Scripts/Player_State_Machine.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Player_Scripts/Player_State_Machine.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Player_Scripts/Player_SwitchWeaponState.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Player_Scripts/Player_SwitchWeaponState.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Player_Scripts/Player_WalkState.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Player_Scripts/Player_WalkState.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Script_Enemys/Enemy.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Script_Enemys/Enemy.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ProjectSettings/EditorBuildSettings.asset" beforeDir="false" afterPath="$PROJECT_DIR$/ProjectSettings/EditorBuildSettings.asset" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -37,6 +19,7 @@
     <setting file="file://$PROJECT_DIR$/Library/PackageCache/com.unity.inputsystem@1.3.0/InputSystem/Plugins/UI/InputSystemUIInputModule.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Library/PackageCache/com.unity.inputsystem@1.3.0/InputSystem/Unity.InputSystem.asmdef" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Library/PackageCache/com.unity.ugui@1.0.0/Runtime/EventSystem/UIBehaviour.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Library/PackageCache/com.unity.cinemachine@2.6.11/Runtime/Core/CinemachineExtension.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Library/PackageCache/com.unity.inputsystem@1.3.0/InputSystem/Plugins/OnScreen/OnScreenButton.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Library/PackageCache/com.unity.ugui@1.0.0/Runtime/EventSystem/InputModules/BaseInput.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Library/PackageCache/com.unity.ugui@1.0.0/Runtime/EventSystem/EventSystem.cs" root0="SKIP_HIGHLIGHTING" />
@@ -107,7 +90,8 @@
       <workItem from="1648733088935" duration="20949000" />
       <workItem from="1648799962291" duration="15538000" />
       <workItem from="1648818707633" duration="4264000" />
-      <workItem from="1648827106172" duration="2901000" />
+      <workItem from="1648827106172" duration="3706000" />
+      <workItem from="1648904177687" duration="10069000" />
     </task>
     <servers />
   </component>

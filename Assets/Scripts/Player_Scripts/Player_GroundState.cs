@@ -34,7 +34,8 @@ public class Player_GroundState : Player_BaseState
         }
         
         if (Context.IsInteract && (!Context.IsWeaponAttached && 
-                                   !Context.Animator.GetCurrentAnimatorStateInfo(1).IsName("Un_Equip")) && !Context.RequireNewWeaponSwitch )
+                                   !Context.Animator.GetCurrentAnimatorStateInfo(1).IsName("Un_Equip")) && 
+                                    !Context.RequireNewWeaponSwitch && !Context.RequireNewInteraction)
         {
             SwitchState(Factory.Interactable());
         }
