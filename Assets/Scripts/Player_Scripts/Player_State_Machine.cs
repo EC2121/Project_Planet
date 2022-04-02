@@ -67,7 +67,9 @@ public class Player_State_Machine : MonoBehaviour
     private Dictionary<int, float> jumpGravities = new Dictionary<int, float>();
     private Coroutine currentJumpResetRoutine = null;
     private Coroutine currentAttackResetRoutine = null;
-
+    private Transform cameraMainTransform;
+    private float currentvelocity = 0f;
+    private bool requireNewInteraction = false;
     //getters and setters
     public Player_BaseState CurrentState { get { return _currentState; } set { _currentState = value; } }
     public CharacterController CharacterController { get { return characterController; } set { characterController = value; } }
@@ -84,6 +86,7 @@ public class Player_State_Machine : MonoBehaviour
     public bool IsJumpPressed { get { return isJumpPressed;}}
     public bool RequireNewWeaponSwitch { get { return requireNewWeaponSwitch; } set { requireNewWeaponSwitch = value; } }
     public bool RequireNewAttack { get { return requireNewAttack; } set { requireNewAttack = value; } }
+    public bool RequireNewInteraction { get { return requireNewInteraction; } set { requireNewInteraction = value; } }
     public int AttackIndexHash { get { return attackIndexHash; } set { attackIndexHash = value; } }
     public Vector3 PlayerPos { get { return transform.position; } }
     public int IsLandingHash { get { return isLandingHash; } }
@@ -115,7 +118,7 @@ public class Player_State_Machine : MonoBehaviour
     public float CurrentMovementX { get { return currentMovement.x;} set { currentMovement.x = value;}}
     public float CurrentMovementZ { get { return currentMovement.z;} set { currentMovement.z = value;}}
     public  Vector2 CurrentMovementInput { get { return currentMovementInput;} set {currentMovementInput = value;}}
-    
+    Vector3 positionToLookAt = Vector3.zero;
     void Awake()
     {
         input = new Player_Controller();
@@ -133,7 +136,7 @@ public class Player_State_Machine : MonoBehaviour
         isAttacking = Animator.StringToHash("IsAttacking");
         
         sockets = GetComponent<Handle_Mesh_Sockets>();
-
+        cameraMainTransform = Camera.main.transform;
         _states = new Player_StateFactory(this);
         _currentState = _states.Grounded();
         _currentState.EnterState();
@@ -180,7 +183,7 @@ public class Player_State_Machine : MonoBehaviour
     void OnInteract(InputAction.CallbackContext context)
     {
         isInteract = context.ReadValueAsButton();
-        //requireNewWeaponSwitch = false;
+        requireNewInteraction = false;
     }
     void OnJump(InputAction.CallbackContext context)
     {
@@ -190,7 +193,6 @@ public class Player_State_Machine : MonoBehaviour
     }
     void OnMovementInput(InputAction.CallbackContext context)
     {
-        currentMovementInput = context.ReadValue<Vector2>();
         currentMovementInput = context.ReadValue<Vector2>();
         currentMovement.x = currentMovementInput.x;
         currentMovement.z = currentMovementInput.y;
@@ -203,6 +205,9 @@ public class Player_State_Machine : MonoBehaviour
     {
         HandleRotation();
         _currentState.UpdateStates();
+        // currentMovement = cameraMainTransform.forward * currentMovement.z + cameraMainTransform.right *
+        //     currentMovement.x;
+        //appliedMovement += cameraMainTransform.forward;
         characterController.Move(appliedMovement * Time.deltaTime);
     }
     public void OnAnimationEvent(string eventName)
@@ -248,19 +253,39 @@ public class Player_State_Machine : MonoBehaviour
     
     void HandleRotation()
     {
-
-        Vector3 positionToLookAt;
+        
+        
         positionToLookAt.x = currentMovement.x;
-        positionToLookAt.y = 0f;
+        positionToLookAt.y = 0;
         positionToLookAt.z = currentMovement.z;
 
-        Quaternion currRotation = transform.rotation;
+       //  float targetAngle = Mathf.Atan2(positionToLookAt.x, positionToLookAt.z) * Mathf.Rad2Deg;
+       //  Quaternion rotation = quaternion.Euler(0,targetAngle,0);
+       // // positionToLookAt + ;
+      // positionToLookAt += cameraMainTransform.forward;
+        Quaternion currRotation = transform.rotation ;
         if (isMovementPressed)
         {
-            Quaternion targetRotation = Quaternion.LookRotation(positionToLookAt);
+            float rotation = Mathf.Atan2(positionToLookAt.x, positionToLookAt.y) * Mathf.Rad2Deg +
+                                                  cameraMainTransform.eulerAngles.y;
+                             Quaternion targetRotation = Quaternion.LookRotation(positionToLookAt);
             transform.rotation = Quaternion.Slerp(currRotation, targetRotation, rotationFactor * Time.deltaTime);
         }
-
+        else
+        {
+            transform.forward = cameraMainTransform.forward;
+        }
+        // else
+        // {
+        //     transform.forward = cameraMainTransform.forward;
+        //
+        // }
+        // if (currentMovementInput != Vector2.zero)
+        // {
+        //     float rotation = Mathf.Atan2(positionToLookAt.x, positionToLookAt.y) * Mathf.Rad2Deg +
+        //                      Mathf.Abs(cameraMainTransform.eulerAngles.y);
+        //     transform.eulerAngles = Vector3.up * Mathf.SmoothDampAngle(transform.eulerAngles.y, rotation, ref currentvelocity, 5 *Time.deltaTime);
+        // }
     }
     
     public void OnAttackStart()
