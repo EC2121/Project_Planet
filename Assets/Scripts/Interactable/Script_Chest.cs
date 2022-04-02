@@ -1,71 +1,62 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UI;
-using TMPro;
 
 public class Script_Chest : MonoBehaviour
 {
     public GameObject Box_GuiInteractWrite;
     public Transform Player_Chest;
-    private Vector3 OldPos;
 
-    private SphereCollider chest_InteractableCollider;
-
-    public bool TakeMe;
+    private bool box_IsTaken;
+    private Rigidbody box_RigidBody;
+    private BoxCollider box_Collider;
     private void OnEnable()
     {
-        Player_State_Machine.takeTheBox.AddListener(() => TakeMe = !TakeMe);
+        Player_State_Machine.takeTheBox.AddListener(() => box_IsTaken = !box_IsTaken);
     }
     private void OnDisable()
     {
-        Player_State_Machine.takeTheBox.RemoveListener(() => TakeMe = !TakeMe);
-    }
-    private void OnInteraction()
-    {
-       Box_GuiInteractWrite.SetActive(false);
-       OldPos = transform.position;
-       transform.position = Player_Chest.position;
-       transform.rotation = Player_Chest.rotation;
+        Player_State_Machine.takeTheBox.RemoveListener(() => box_IsTaken = !box_IsTaken);
     }
 
-    private void OnDetach()
-    {
-        gameObject.GetComponent<Rigidbody>().isKinematic = false;
-    }
     private void OnTriggerEnter(Collider other)
     {
         if (other.CompareTag("Player"))
             Box_GuiInteractWrite.SetActive(true);
-
     }
+
     private void OnTriggerExit(Collider other)
     {
-        Box_GuiInteractWrite.SetActive(false);
+        if (other.CompareTag("Player"))
+            Box_GuiInteractWrite.SetActive(false);
+    }
+
+    private void OnTriggerStay(Collider other)
+    {
+        if (other.CompareTag("Player") && !Box_GuiInteractWrite.activeInHierarchy) Box_GuiInteractWrite.SetActive(true);
     }
 
     private void Awake()
     {
-        chest_InteractableCollider = GetComponent<SphereCollider>();
+        box_RigidBody = GetComponent<Rigidbody>();
+        box_Collider = GetComponent<BoxCollider>();
     }
-    void Start()
+
+    private void Start()
     {
         Box_GuiInteractWrite.SetActive(false);
     }
 
-    void Update()
+    private void Update()
     {
         if (Box_GuiInteractWrite.activeInHierarchy)
-            Box_GuiInteractWrite.transform.position = Camera.main.WorldToScreenPoint(transform.position + new Vector3(0, 0.6f, 0));
+            Box_GuiInteractWrite.transform.position = Camera.main.WorldToScreenPoint(box_Collider.bounds.center + ( Vector3.up * 0.5f ));
 
-        if (TakeMe)
-        {
+        if (box_IsTaken)
             OnInteraction();
-        }
+    }
 
-        if (!TakeMe)
-        {
-            OnDetach();
-        }
+    private void OnInteraction()
+    {
+        Box_GuiInteractWrite.SetActive(false);
+        transform.SetPositionAndRotation(Player_Chest.position, Player_Chest.rotation);
     }
 }

@@ -1,23 +1,19 @@
-using System;
-using System.Collections;
 using System.Collections.Generic;
-using System.Timers;
-using Unity.Mathematics;
-using UnityEditor.Experimental.GraphView;
 using UnityEngine;
-using UnityEngine.InputSystem;
 using UnityEngine.Events;
+using UnityEngine.InputSystem;
 
 
 public class Player_State_Machine : MonoBehaviour
 {
     public static UnityEvent takeTheBox = new UnityEvent();
-    
+
     [SerializeField] private Transform weapon;
     [SerializeField] private float jumpSpeed = 10f;
     [SerializeField] private float runSpeed = 2.65f;
     [SerializeField] private float rotationFactor = 10f;
 
+    [HideInInspector] public bool Mai_BoxIsTakable;
     private Animator anim;
     private int isWalkingHash;
     private int isRunningHash;
@@ -49,8 +45,8 @@ public class Player_State_Machine : MonoBehaviour
     private Player_StateFactory _states;
     private bool requireNewWeaponSwitch = false;
     private bool requireNewAttack = false;
-    private float groundGravity = -1.10f;
-    private float fallingSpeed;
+    private readonly float groundGravity = -1.10f;
+    private readonly float fallingSpeed;
     private AnimatorStateInfo stateInfo;
     private int attackId = 0;
     private bool isInteract = false;
@@ -59,8 +55,8 @@ public class Player_State_Machine : MonoBehaviour
     private float initialJumpVelocity;
     private bool isJumping = false;
     private bool isAttack = false;
-    private float maxJumpHeight = 2f;
-    private float maxJumpTIme = 0.75f;
+    private readonly float maxJumpHeight = 2f;
+    private readonly float maxJumpTIme = 0.75f;
     private float gravity = -9.81f;
     private int jumpCount = 0;
     private Dictionary<int, float> initialJumpVelocities = new Dictionary<int, float>();
@@ -71,17 +67,17 @@ public class Player_State_Machine : MonoBehaviour
     //getters and setters
     public Player_BaseState CurrentState { get { return _currentState; } set { _currentState = value; } }
     public CharacterController CharacterController { get { return characterController; } set { characterController = value; } }
-    public UnityEvent TakeTheBox { get { return takeTheBox ;}}
-    public Coroutine CurrentJumpResetRoutine { get { return currentJumpResetRoutine;} set { currentJumpResetRoutine = value;}}
-    public Coroutine CurrentAttackResetRoutine { get { return currentAttackResetRoutine;} set { currentAttackResetRoutine = value;}}
-    public Dictionary<int,float> InitialJumpVelocities { get { return initialJumpVelocities;} set { initialJumpVelocities = value;}}
-    public Dictionary<int,float> JumpGravities { get { return jumpGravities;} set { jumpGravities = value;}}
+    public UnityEvent TakeTheBox { get { return takeTheBox; } }
+    public Coroutine CurrentJumpResetRoutine { get { return currentJumpResetRoutine; } set { currentJumpResetRoutine = value; } }
+    public Coroutine CurrentAttackResetRoutine { get { return currentAttackResetRoutine; } set { currentAttackResetRoutine = value; } }
+    public Dictionary<int, float> InitialJumpVelocities { get { return initialJumpVelocities; } set { initialJumpVelocities = value; } }
+    public Dictionary<int, float> JumpGravities { get { return jumpGravities; } set { jumpGravities = value; } }
     public Animator Animator { get { return anim; } }
     public int IsJumpingHash { get { return isJumpingHash; } }
     public float JumpSpeed { get { return jumpSpeed; } }
     public bool IsJumping { set { isJumping = value; } }
     public bool IsAttack { set { isAttack = value; } }
-    public bool IsJumpPressed { get { return isJumpPressed;}}
+    public bool IsJumpPressed { get { return isJumpPressed; } }
     public bool RequireNewWeaponSwitch { get { return requireNewWeaponSwitch; } set { requireNewWeaponSwitch = value; } }
     public bool RequireNewAttack { get { return requireNewAttack; } set { requireNewAttack = value; } }
     public int AttackIndexHash { get { return attackIndexHash; } set { attackIndexHash = value; } }
@@ -93,30 +89,30 @@ public class Player_State_Machine : MonoBehaviour
     public bool IsInteract { get { return isInteract; } }
     public bool IsMousePressed { get { return isMousePressed; } }
     public bool IsRunPressed { get { return isRunPressed; } }
-    public bool RequireNewJump { get { return requireNewJump; } set { requireNewJump = value;}}
+    public bool RequireNewJump { get { return requireNewJump; } set { requireNewJump = value; } }
     public int IsWalkingHash { get { return isWalkingHash; } }
     public int IsAttacking { get { return isAttacking; } }
     public int IsRunningHash { get { return isRunningHash; } }
     public int JumpCountHash { get { return jumpCountHash; } }
     public float GroundGravity { get { return groundGravity; } }
     public float RunMultiplier { get { return runSpeed; } }
-    public bool HasBox { get { return hasBox; } set{ hasBox = value;}}
-    public bool IsSwitchPressed { get { return switchWeapon; }}
+    public bool HasBox { get { return hasBox; } set { hasBox = value; } }
+    public bool IsSwitchPressed { get { return switchWeapon; } }
     public bool IsWeaponAttached { get { return isWeaponAttached; } set { isWeaponAttached = value; } }
     public Handle_Mesh_Sockets Sockets { get { return sockets; } }
     public Transform Weapon { get { return weapon; } }
     public AnimatorStateInfo AnimStateInfo { get { return stateInfo; } }
     public int AttackCount { get { return attackId; } set { attackId = value; } }
     public int JumpCount { get { return jumpCount; } set { jumpCount = value; } }
-    public float CurrentMovementY { get { return currentMovement.y;} set { currentMovement.y = value;}}
-    public float AppliedMovementY { get { return appliedMovement.y;} set { appliedMovement.y = value;}}
-    public float AppliedMovementX { get { return appliedMovement.x;} set { appliedMovement.x = value;}}
-    public float AppliedMovementZ { get { return appliedMovement.z;} set { appliedMovement.z = value;}}
-    public float CurrentMovementX { get { return currentMovement.x;} set { currentMovement.x = value;}}
-    public float CurrentMovementZ { get { return currentMovement.z;} set { currentMovement.z = value;}}
-    public  Vector2 CurrentMovementInput { get { return currentMovementInput;} set {currentMovementInput = value;}}
-    
-    void Awake()
+    public float CurrentMovementY { get { return currentMovement.y; } set { currentMovement.y = value; } }
+    public float AppliedMovementY { get { return appliedMovement.y; } set { appliedMovement.y = value; } }
+    public float AppliedMovementX { get { return appliedMovement.x; } set { appliedMovement.x = value; } }
+    public float AppliedMovementZ { get { return appliedMovement.z; } set { appliedMovement.z = value; } }
+    public float CurrentMovementX { get { return currentMovement.x; } set { currentMovement.x = value; } }
+    public float CurrentMovementZ { get { return currentMovement.z; } set { currentMovement.z = value; } }
+    public Vector2 CurrentMovementInput { get { return currentMovementInput; } set { currentMovementInput = value; } }
+
+    private void Awake()
     {
         input = new Player_Controller();
         characterController = GetComponent<CharacterController>();
@@ -131,7 +127,7 @@ public class Player_State_Machine : MonoBehaviour
         hasBoxHash = Animator.StringToHash("HasBox");
         jumpCountHash = Animator.StringToHash("JumpCount");
         isAttacking = Animator.StringToHash("IsAttacking");
-        
+
         sockets = GetComponent<Handle_Mesh_Sockets>();
 
         _states = new Player_StateFactory(this);
@@ -144,7 +140,7 @@ public class Player_State_Machine : MonoBehaviour
 
         input.Player.Run.started += OnRun;
         input.Player.Run.canceled += OnRun;
-        
+
         input.Player.Switch.started += OnSwitchWeapon;
         input.Player.Switch.canceled += OnSwitchWeapon;
 
@@ -161,34 +157,48 @@ public class Player_State_Machine : MonoBehaviour
         isWeaponAttached = false;
         SetUpJumpVariables();
     }
-    void OnRun(InputAction.CallbackContext context)
+
+    private void OnTriggerEnter(Collider other)
+    {
+        if (other.CompareTag("Box")) Mai_BoxIsTakable = true;
+    }
+    private void OnTriggerExit(Collider other)
+    {
+        if (other.CompareTag("Box")) Mai_BoxIsTakable = false;
+    }
+
+    private void OnRun(InputAction.CallbackContext context)
     {
         isRunPressed = context.ReadValueAsButton();
     }
 
-    void OnMousePressed(InputAction.CallbackContext context)
+    private void OnMousePressed(InputAction.CallbackContext context)
     {
         isMousePressed = context.ReadValueAsButton();
         requireNewAttack = false;
     }
 
-    void OnSwitchWeapon(InputAction.CallbackContext context)
+    private void OnSwitchWeapon(InputAction.CallbackContext context)
     {
         switchWeapon = context.ReadValueAsButton();
         requireNewWeaponSwitch = false;
     }
-    void OnInteract(InputAction.CallbackContext context)
+
+    private void OnInteract(InputAction.CallbackContext context)
     {
-        isInteract = context.ReadValueAsButton();
+        if (Mai_BoxIsTakable)
+            isInteract = context.ReadValueAsButton();
         //requireNewWeaponSwitch = false;
     }
-    void OnJump(InputAction.CallbackContext context)
+
+    private void OnJump(InputAction.CallbackContext context)
     {
         isJumpPressed = context.ReadValueAsButton();
         requireNewJump = false;
 
     }
-    void OnMovementInput(InputAction.CallbackContext context)
+
+    private void OnMovementInput(InputAction.CallbackContext context)
     {
         currentMovementInput = context.ReadValue<Vector2>();
         currentMovementInput = context.ReadValue<Vector2>();
@@ -196,10 +206,11 @@ public class Player_State_Machine : MonoBehaviour
         currentMovement.z = currentMovementInput.y;
         currentRunMovement.x = currentMovementInput.x * runSpeed;
         currentRunMovement.z = currentMovementInput.y * runSpeed;
-        
+
         isMovementPressed = currentMovementInput.x != 0 || currentMovementInput.y != 0;
     }
-    void Update()
+
+    private void Update()
     {
         HandleRotation();
         _currentState.UpdateStates();
@@ -217,6 +228,7 @@ public class Player_State_Machine : MonoBehaviour
             sockets.Attach(weapon.transform, Handle_Mesh_Sockets.SocketId.Spine);
         }
     }
+
     // private void OnControllerColliderHit(ControllerColliderHit hit)
     // {
     //     if (hit.gameObject.tag =="Player")
@@ -226,27 +238,27 @@ public class Player_State_Machine : MonoBehaviour
     //     }
     // }
 
-    void SetUpJumpVariables()
+    private void SetUpJumpVariables()
     {
         float timeToApex = maxJumpTIme / 2f;
-        gravity = (-2 * maxJumpHeight) / Mathf.Pow(timeToApex, 2);
-        initialJumpVelocity = (2 * maxJumpHeight) / timeToApex;
-        float secondJumpGravity = (-2 * (maxJumpHeight + 2)) / Mathf.Pow((timeToApex * 1.25f), 2);
-        float secondJumpInitialVelocity =  (2 * (maxJumpHeight + 2)) / (timeToApex * 1.25f);
-        float thirdJumpGravity = (-2 * (maxJumpHeight + 4)) / Mathf.Pow((timeToApex * 1.5f), 2);
-        float thirdJumpInitialVelocity =  (2 * (maxJumpHeight + 4)) / (timeToApex * 1.5f);
-        
-        initialJumpVelocities.Add(1,initialJumpVelocity);
-        initialJumpVelocities.Add(2,secondJumpInitialVelocity);
-        initialJumpVelocities.Add(3,thirdJumpInitialVelocity);
-        
-        jumpGravities.Add(0,gravity);
-        jumpGravities.Add(1,gravity);
-        jumpGravities.Add(2,secondJumpGravity);
-        jumpGravities.Add(3,thirdJumpGravity);
+        gravity = ( -2 * maxJumpHeight ) / Mathf.Pow(timeToApex, 2);
+        initialJumpVelocity = ( 2 * maxJumpHeight ) / timeToApex;
+        float secondJumpGravity = ( -2 * ( maxJumpHeight + 2 ) ) / Mathf.Pow(( timeToApex * 1.25f ), 2);
+        float secondJumpInitialVelocity = ( 2 * ( maxJumpHeight + 2 ) ) / ( timeToApex * 1.25f );
+        float thirdJumpGravity = ( -2 * ( maxJumpHeight + 4 ) ) / Mathf.Pow(( timeToApex * 1.5f ), 2);
+        float thirdJumpInitialVelocity = ( 2 * ( maxJumpHeight + 4 ) ) / ( timeToApex * 1.5f );
+
+        initialJumpVelocities.Add(1, initialJumpVelocity);
+        initialJumpVelocities.Add(2, secondJumpInitialVelocity);
+        initialJumpVelocities.Add(3, thirdJumpInitialVelocity);
+
+        jumpGravities.Add(0, gravity);
+        jumpGravities.Add(1, gravity);
+        jumpGravities.Add(2, secondJumpGravity);
+        jumpGravities.Add(3, thirdJumpGravity);
     }
-    
-    void HandleRotation()
+
+    private void HandleRotation()
     {
 
         Vector3 positionToLookAt;
@@ -262,16 +274,16 @@ public class Player_State_Machine : MonoBehaviour
         }
 
     }
-    
+
     public void OnAttackStart()
     {
         Collider[] collidersHitted = Physics.OverlapSphere(weapon.position, 0.5f, 1 << 6);
         foreach (var item in collidersHitted)
         {
-            item.GetComponentInParent<Enemy>().AddDamage(40, this.gameObject, false);
+            item.GetComponentInParent<Enemy>().AddDamage(40, gameObject, false);
         }
     }
-  
+
     private void OnEnable()
     {
         input.Player.Enable();

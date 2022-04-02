@@ -14,8 +14,9 @@ public class Player_Interactable : Player_BaseState
 
     public override void EnterState()
     {
-        Context.Animator.SetBool(Context.IsRunningHash,false);
-       // Context.Animator.SetBool(Context.IsWalkingHash,false);
+        if (Context.Mai_BoxIsTakable)
+            Context.Animator.SetBool(Context.IsRunningHash, false);
+        // Context.Animator.SetBool(Context.IsWalkingHash,false);
 
     }
 
