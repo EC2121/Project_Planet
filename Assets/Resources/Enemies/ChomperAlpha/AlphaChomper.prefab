@@ -3095,6 +3095,7 @@ GameObject:
   - component: {fileID: 8305644410217140229}
   - component: {fileID: -4751222857866262397}
   - component: {fileID: 804005501546284690}
+  - component: {fileID: -2978747043478147930}
   m_Layer: 0
   m_Name: AlphaChomper
   m_TagString: Enemy
@@ -3201,6 +3202,64 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
+--- !u!114 &-2978747043478147930
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6028328631547927243}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: df169864eeb65274ba4b4edc4337d9da, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  soundReferences:
+  - fontName: Walk
+    SoundType: 0
+    AudioClipEvent:
+      Guid:
+        Data1: 1190560268
+        Data2: 1206856997
+        Data3: -627050344
+        Data4: -1037268460
+      Path: event:/Sfx/Chompies/ChompiesWalk
+  - fontName: Run
+    SoundType: 1
+    AudioClipEvent:
+      Guid:
+        Data1: -1486026585
+        Data2: 1124811904
+        Data3: -687243347
+        Data4: -678376818
+      Path: event:/Sfx/Chompies/ChompiesRun
+  - fontName: Attack
+    SoundType: 4
+    AudioClipEvent:
+      Guid:
+        Data1: 393426666
+        Data2: 1162281114
+        Data3: -620126050
+        Data4: 713192232
+      Path: event:/Sfx/Chompies/AlphaChomperAttack
+  - fontName: Idle
+    SoundType: 5
+    AudioClipEvent:
+      Guid:
+        Data1: 24175562
+        Data2: 1156804914
+        Data3: 137247403
+        Data4: -197600087
+      Path: event:/Sfx/Chompies/ChompiesIdle
+  - fontName: Hitted
+    SoundType: 6
+    AudioClipEvent:
+      Guid:
+        Data1: 878727324
+        Data2: 1268974032
+        Data3: 308157092
+        Data4: 1365079113
+      Path: event:/Sfx/Chompies/ChompiesHit
 --- !u!1 &6028328631547927299
 GameObject:
   m_ObjectHideFlags: 0

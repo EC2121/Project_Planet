@@ -10,10 +10,10 @@ GameObject:
   m_Component:
   - component: {fileID: 2525720617998125792}
   - component: {fileID: 2525720617998125597}
-  - component: {fileID: 2525720617998125596}
   - component: {fileID: 2525720617998125599}
   - component: {fileID: 2525720617998125598}
   - component: {fileID: 2525720617998125793}
+  - component: {fileID: 4746302252376432309}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -78,14 +78,6 @@ Camera:
   m_OcclusionCulling: 1
   m_StereoConvergence: 10
   m_StereoSeparation: 0.022
---- !u!81 &2525720617998125596
-AudioListener:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2525720617998125795}
-  m_Enabled: 1
 --- !u!114 &2525720617998125599
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -172,6 +164,20 @@ PositionConstraint:
   m_Sources:
   - sourceTransform: {fileID: 5642937541812765327}
     weight: 1
+--- !u!114 &4746302252376432309
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2525720617998125795}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 86c6556701af9e04380698b89f691b6e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  attenuationObject: {fileID: 0}
+  ListenerNumber: -1
 --- !u!1 &2525720618202528464
 GameObject:
   m_ObjectHideFlags: 0
@@ -518,6 +524,11 @@ PrefabInstance:
       objectReference: {fileID: 5642937540283889771}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: c691a68c1cccb30458ccacc5e4556b41, type: 3}
+--- !u!1 &5642937541812346607 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 7873018163916560823, guid: c691a68c1cccb30458ccacc5e4556b41, type: 3}
+  m_PrefabInstance: {fileID: 2525720619094443864}
+  m_PrefabAsset: {fileID: 0}
 --- !u!4 &5642937541812765327 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 7873018163916850647, guid: c691a68c1cccb30458ccacc5e4556b41, type: 3}
@@ -533,3 +544,61 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 7873018165441560371, guid: c691a68c1cccb30458ccacc5e4556b41, type: 3}
   m_PrefabInstance: {fileID: 2525720619094443864}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &3660857701338893174
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5642937541812346607}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: df169864eeb65274ba4b4edc4337d9da, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  soundReferences:
+  - fontName: Walk
+    SoundType: 0
+    AudioClipEvent:
+      Guid:
+        Data1: 760777357
+        Data2: 1143055839
+        Data3: 2103405484
+        Data4: -79910158
+      Path: event:/Sfx/Mai/MaiWalk
+  - fontName: Run
+    SoundType: 1
+    AudioClipEvent:
+      Guid:
+        Data1: -1547459902
+        Data2: 1306757644
+        Data3: -193654878
+        Data4: 936893690
+      Path: event:/Sfx/Mai/MaiRun
+  - fontName: Jump
+    SoundType: 2
+    AudioClipEvent:
+      Guid:
+        Data1: -940271259
+        Data2: 1076008384
+        Data3: -1941681491
+        Data4: -1138491331
+      Path: event:/Sfx/Mai/MaiJump
+  - fontName: Land
+    SoundType: 3
+    AudioClipEvent:
+      Guid:
+        Data1: -307361278
+        Data2: 1156784325
+        Data3: 778784429
+        Data4: 589569189
+      Path: event:/Sfx/Mai/MaiLand
+  - fontName: Attack
+    SoundType: 4
+    AudioClipEvent:
+      Guid:
+        Data1: -1844275618
+        Data2: 1268577218
+        Data3: -831606853
+        Data4: 1671267598
+      Path: event:/Sfx/Mai/MaiAttack

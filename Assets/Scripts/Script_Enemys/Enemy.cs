@@ -17,7 +17,6 @@ public class Enemy : MonoBehaviour
     [HideInInspector] public Transform Roby { get; private set; }
     [HideInInspector] public NavMeshAgent Agent { get; private set; }
     [HideInInspector] public Animator Anim { get; private set; }
-
     [HideInInspector] public Dictionary<EnemyStates, AI_Enemies_IBaseState> StatesDictionary;
     [HideInInspector] public /*AnimatorController*/AnimatorOverrideController AnimatorController;
     [HideInInspector] public NavMeshPath AgentPath;
@@ -255,7 +254,6 @@ public class Enemy : MonoBehaviour
 
     private void OnCollisionEnter(Collision collision)
     {
-        Debug.Log("CIAO");
         currentState.OnCollEnter(this, collision);
     }
 

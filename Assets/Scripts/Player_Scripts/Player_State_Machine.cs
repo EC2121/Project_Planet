@@ -189,6 +189,7 @@ public class Player_State_Machine : MonoBehaviour
         }
         else
         {
+            
             characterController.Move(currentMovement * Time.deltaTime);
         }
         fallingSpeed = Mathf.Clamp(Mathf.Abs(currentMovementInput.x + currentMovementInput.y), 0, 1) * (isRunPressed ? runSpeed : 1);
