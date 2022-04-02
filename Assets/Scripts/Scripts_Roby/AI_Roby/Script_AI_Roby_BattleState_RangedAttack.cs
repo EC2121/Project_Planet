@@ -17,11 +17,6 @@ public class Script_AI_Roby_BattleState_RangedAttack : Script_AI_Roby_BaseState
     public void OnEnter(Script_Roby AIRoby)
     {
         float roby_AttackAngle = AngleCalculator(AIRoby);
-
-        //if (angle > -10 && angle < 10)
-        //{
-        //    return;
-        //}
         AIRoby.PrintMe(roby_AttackAngle.ToString());
         if (roby_AttackAngle < -10 || roby_AttackAngle > 10)
         {
@@ -31,7 +26,7 @@ public class Script_AI_Roby_BattleState_RangedAttack : Script_AI_Roby_BaseState
         }
         //else if (roby_AttackAngle > -10 && roby_AttackAngle < 10)
         //{
-        //    //AIRoby.Roby_Particle_Shoot.transform.LookAt(AIRoby.Roby_EnemyTarget.transform.position + new Vector3(0, AIRoby.Roby_EnemyTarget.transform.localScale.y * 0.5f, 0));
+        //AIRoby.Roby_Particle_Shoot.transform.LookAt(AIRoby.Roby_EnemyTarget.transform.position + new Vector3(0, AIRoby.Roby_EnemyTarget.transform.localScale.y * 0.5f, 0));
         //}
         //roby_AttackAngle = AIRoby.InverseClamp(-10, 10, roby_AttackAngle);
         AIRoby.Roby_Animator.SetTrigger(AIRoby.Roby_AshAnimator_Range);

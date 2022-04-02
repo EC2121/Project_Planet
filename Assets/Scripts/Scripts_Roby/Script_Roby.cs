@@ -199,14 +199,6 @@ public class Script_Roby : MonoBehaviour
             item.gameObject.GetComponentInParent<Enemy>().AddDamage(20, gameObject, false);
     }
 
-    public void OnParticleCollision(GameObject other)
-    {
-        //Roby_Particle_Shoot.GetCollisionEvents();
-
-        other.gameObject.GetComponentInParent<Enemy>().AddDamage(20, gameObject, false);
-
-        Roby_Particle_Shoot.Clear();
-    }
     public void OnAttackEnd()
     {
         IsAttacking = false;
@@ -270,8 +262,11 @@ public class Script_Roby : MonoBehaviour
     public void RobyShoot()
     {
         if (ReferenceEquals(Roby_EnemyTarget, null)) return;
+        print(Vector3.Angle(transform.localPosition, transform.localPosition - Roby_EnemyTarget.transform.position));
+        if (Vector3.Angle(transform.localPosition, transform.localPosition - Roby_EnemyTarget.transform.position) < 15)
+            Roby_Particle_Shoot.transform.LookAt(Roby_EnemyTarget.transform.position + new Vector3(0, Roby_EnemyTarget.transform.localScale.y * 0.5f, 0));
 
-        Roby_Particle_Shoot.transform.LookAt(Roby_EnemyTarget.transform.position + new Vector3(0, Roby_EnemyTarget.transform.localScale.y * 0.5f, 0));
+
         Roby_Particle_Shoot.Play(true);
         Roby_Animator.SetTrigger(Roby_AshAnimator_RangeDone);
         SwitchState(RobyStates.Battle);
