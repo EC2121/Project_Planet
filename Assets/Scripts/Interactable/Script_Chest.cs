@@ -6,7 +6,6 @@ public class Script_Chest : MonoBehaviour
     public Transform Player_Chest;
 
     private bool box_IsTaken;
-    private Rigidbody box_RigidBody;
     private BoxCollider box_Collider;
     private void OnEnable()
     {
@@ -36,7 +35,6 @@ public class Script_Chest : MonoBehaviour
 
     private void Awake()
     {
-        box_RigidBody = GetComponent<Rigidbody>();
         box_Collider = GetComponent<BoxCollider>();
     }
 
