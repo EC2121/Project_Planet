@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class Script_AI_Roby_BattleState : Script_AI_Roby_BaseState
@@ -16,7 +14,7 @@ public class Script_AI_Roby_BattleState : Script_AI_Roby_BaseState
             {
                 if (ReferenceEquals(AIRoby.roby_EnemysInMyArea[i], null)) continue;
 
-                float distanceFromEnemys = (Vector3.Distance(AIRoby.transform.position, AIRoby.roby_EnemysInMyArea[i].transform.position));
+                float distanceFromEnemys = ( Vector3.Distance(AIRoby.transform.position, AIRoby.roby_EnemysInMyArea[i].transform.position) );
                 if (distanceFromEnemys != 0 && distanceFromEnemys < lowest)
                 {
                     lowest = distanceFromEnemys;

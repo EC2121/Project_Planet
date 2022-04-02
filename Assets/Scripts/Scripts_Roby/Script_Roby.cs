@@ -1,8 +1,6 @@
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
-using UnityEngine.Animations.Rigging;
 using UnityEngine.Events;
 using UnityEngine.UI;
 
@@ -20,12 +18,12 @@ public class Script_Roby : MonoBehaviour
     //Public solo per prova!
     [HideInInspector] public float Roby_Live;
     public float roby_Life;
-    public bool GetDamage = false;
     public Transform Roby_Hand;
 
     [HideInInspector] public int Roby_EnemyIndex;
     [HideInInspector] public bool Roby_IgnoreEnemy;
     [HideInInspector] public bool IsAttacking;
+    [HideInInspector] public ParticleSystem Roby_Particle_Shoot;
 
     public Animator Roby_Animator { get; private set; }
     public GameObject Mai_Player { get; private set; }
@@ -48,7 +46,6 @@ public class Script_Roby : MonoBehaviour
 
     public Slider RobyHpSlider;
     private Script_AI_Roby_BaseState Roby_CurrentState;
-    private ParticleSystem roby_Particle_Shoot;
     private NavMeshPath roby_NavMeshPath;
     private void OnEnable()
     {
@@ -89,17 +86,15 @@ public class Script_Roby : MonoBehaviour
     {
         Roby_CurrentState.CustomOnTriggerStay(this, other);
     }
+
     private void OnCollisionEnter(Collision collision)
     {
         Roby_CurrentState.CustomCollisionEnter(this, collision);
     }
+
     protected virtual void Update()
     {
-        if (GetDamage)
-        {
-            Roby_Hit.Invoke(10);
-            GetDamage = false;
-        }
+        print(Roby_CurrentState);
         Roby_CurrentState.UpdateState(this);
     }
 
@@ -110,19 +105,19 @@ public class Script_Roby : MonoBehaviour
         Roby_NavAgent = GetComponent<NavMeshAgent>();
         Roby_Animator = GetComponent<Animator>();
         //roby_RigidBody = GetComponent<Rigidbody>();
-        roby_Particle_Shoot = GetComponentInChildren<ParticleSystem>();
+        Roby_Particle_Shoot = GetComponentInChildren<ParticleSystem>();
     }
 
-    void Start()
+    private void Start()
     {
         Init();
     }
-    
-    
+
+
 
     private void Init()
     {
-        
+
         Mai_PlayerNearZone = 7;
         Mai_PlayerNormalZone = 10;
         Mai_PlayerBattleZone = 15;
@@ -174,7 +169,7 @@ public class Script_Roby : MonoBehaviour
         if (roby_EnemysInMyArea.Contains(enemy))
         {
             roby_EnemysInMyArea.Remove(enemy);
-            if(roby_EnemysInMyArea.Count > 0)
+            if (roby_EnemysInMyArea.Count > 0)
             {
                 Roby_EnemyTarget = roby_EnemysInMyArea[0];
             }
@@ -190,8 +185,6 @@ public class Script_Roby : MonoBehaviour
             RobyHpSlider.value = roby_Life;
             if (roby_Life <= 0) Roby_Dead.Invoke();
         }
-
-
     }
 
     public void OnAttackStart()
@@ -203,9 +196,17 @@ public class Script_Roby : MonoBehaviour
         if (chompys_Collider.Length == 0) return;
 
         foreach (Collider item in chompys_Collider)
-            item.gameObject.GetComponentInParent<Enemy>().AddDamage(20, this.gameObject, false);
+            item.gameObject.GetComponentInParent<Enemy>().AddDamage(20, gameObject, false);
     }
 
+    public void OnParticleCollision(GameObject other)
+    {
+        //Roby_Particle_Shoot.GetCollisionEvents();
+
+        other.gameObject.GetComponentInParent<Enemy>().AddDamage(20, gameObject, false);
+
+        Roby_Particle_Shoot.Clear();
+    }
     public void OnAttackEnd()
     {
         IsAttacking = false;
@@ -213,7 +214,7 @@ public class Script_Roby : MonoBehaviour
 
     public void OnRobyDie()
     {
-        Enemy.OnActorDeath.Invoke(this.gameObject);
+        Enemy.OnActorDeath.Invoke(gameObject);
         roby_Life = 1;
         SwitchState(RobyStates.Die);
     }
@@ -229,15 +230,7 @@ public class Script_Roby : MonoBehaviour
         Roby_NavAgent.SetPath(roby_NavMeshPath);
     }
 
-    public void RobyShoot()
-    {
-        if (ReferenceEquals(Roby_EnemyTarget, null)) return;
 
-        roby_Particle_Shoot.transform.LookAt(Roby_EnemyTarget.transform.position);
-        roby_Particle_Shoot.Play(true);
-        Roby_Animator.SetTrigger(Roby_AshAnimator_RangeDone);
-        SwitchState(RobyStates.Battle);
-    }
 
     public void RobyExplosion()
     {
@@ -274,6 +267,15 @@ public class Script_Roby : MonoBehaviour
             print(roby_EnemysInMyArea.Count);
         }
     }
+    public void RobyShoot()
+    {
+        if (ReferenceEquals(Roby_EnemyTarget, null)) return;
+
+        Roby_Particle_Shoot.transform.LookAt(Roby_EnemyTarget.transform.position + new Vector3(0, Roby_EnemyTarget.transform.localScale.y * 0.5f, 0));
+        Roby_Particle_Shoot.Play(true);
+        Roby_Animator.SetTrigger(Roby_AshAnimator_RangeDone);
+        SwitchState(RobyStates.Battle);
+    }
 
     public bool IsMaITooFar(float zone)
     {
@@ -299,8 +301,8 @@ public class Script_Roby : MonoBehaviour
     {
 
         Vector3 MyForw = transform.forward;
-        float dot = Vector3.Dot(MyForw, (Roby_NavAgent.destination - transform.position).normalized);
-        Vector3 Cross = Vector3.Cross(MyForw, (Roby_NavAgent.destination - transform.position).normalized);
+        float dot = Vector3.Dot(MyForw, ( Roby_NavAgent.destination - transform.position ).normalized);
+        Vector3 Cross = Vector3.Cross(MyForw, ( Roby_NavAgent.destination - transform.position ).normalized);
         float angle = Mathf.Acos(dot) * Mathf.Rad2Deg;
         if (Mathf.Sign(Cross.y) == -1)
             angle = 360 - angle;
@@ -317,10 +319,12 @@ public class Script_Roby : MonoBehaviour
         else if (angle > 180)
         {
             Roby_Animator.SetTrigger(Roby_AshAnimator_turnTrigger);
-            Roby_Animator.SetFloat("Angle", -(angle / 360));
+            Roby_Animator.SetFloat("Angle", -( angle / 360 ));
         }
-        else return;
-
+        else
+        {
+            return;
+        }
     }
 
 }
