@@ -73,6 +73,24 @@ public class Player_State_Machine : MonoBehaviour
     private bool requireNewInteraction = false;
    // private Vector3 forwardCam;
     //getters and setters
+    public bool HasBox
+    {
+        get
+        {
+            return hasBox;
+        }
+        set
+        {
+            hasBox = value;
+            anim.SetBool("HasBox", hasBox);
+            if (hasBox && isInteract)
+            {
+                TakeTheBox.Invoke();    
+            }
+            //TakeTheBox.Invoke();  DA CONTROLLARE
+        }
+    }
+
     public Player_BaseState CurrentState { get { return _currentState; } set { _currentState = value; } }
     public CharacterController CharacterController { get { return characterController; } set { characterController = value; } }
     public UnityEvent TakeTheBox { get { return takeTheBox ;}}

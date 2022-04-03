@@ -3,6 +3,9 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
+using System;
+using UnityEngine;
+using UnityTemplateProjects.Saves_Scripts;
 
 public class Script_Chest : MonoBehaviour
 {
@@ -16,10 +19,29 @@ public class Script_Chest : MonoBehaviour
     private void OnEnable()
     {
         Player_State_Machine.takeTheBox.AddListener(() => TakeMe = !TakeMe);
+        SaveSystem.OnSave += SaveSystemOnOnSave;
+        SaveSystem.OnLoad += SaveSystemOnOnLoad;
     }
+
+    private void SaveSystemOnOnLoad(object sender, EventArgs e)
+    {
+        GameData data = SaveSystem.LoadPlayer(true);
+        transform.position = new Vector3(data.CratePosition[0], data.CratePosition[1], data.CratePosition[2]);
+        transform.rotation = new Quaternion(data.CrateRotation[0], data.CrateRotation[1], 
+                                            data.CrateRotation[2], data.CrateRotation[3]);
+    }
+
+    private void SaveSystemOnOnSave(object sender, EventArgs e)
+    {
+        SaveSystem.SaveData(gameObject, true);
+    }
+
     private void OnDisable()
     {
         Player_State_Machine.takeTheBox.RemoveListener(() => TakeMe = !TakeMe);
+        
+        SaveSystem.OnSave -= SaveSystemOnOnSave;
+        SaveSystem.OnLoad -= SaveSystemOnOnLoad;
     }
     private void OnInteraction()
     {

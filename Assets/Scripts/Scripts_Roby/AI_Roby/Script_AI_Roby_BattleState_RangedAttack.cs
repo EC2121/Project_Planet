@@ -1,11 +1,10 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class Script_AI_Roby_BattleState_RangedAttack : Script_AI_Roby_BaseState
 {
     public void CustomOnTriggerEnter(Script_Roby AiRoby, Collider collider)
     {
+        AiRoby.EnemysInArea(collider.gameObject);
     }
 
     public void CustomOnTriggerExit(Script_Roby AiRoby, Collider collider)
@@ -13,24 +12,29 @@ public class Script_AI_Roby_BattleState_RangedAttack : Script_AI_Roby_BaseState
         AiRoby.EnemyOutArea(collider.gameObject);
     }
 
-    public void CustomOnTriggerStay(Script_Roby AiRoby, Collider collider)
-    {
-    }
+    public void CustomOnTriggerStay(Script_Roby AiRoby, Collider collider) { }
 
     public void OnEnter(Script_Roby AIRoby)
     {
-        float angle = AngleCalculator(AIRoby);
-        //AIRoby.PrintMe(angle.ToString());
+        float roby_AttackAngle = AngleCalculator(AIRoby);
 
+        //if (angle > -10 && angle < 10)
+        //{
+        //    return;
+        //}
+        AIRoby.PrintMe(roby_AttackAngle.ToString());
+        if (roby_AttackAngle < -10 || roby_AttackAngle > 10)
+        {
+            roby_AttackAngle /= 180;
+            AIRoby.Roby_Animator.SetFloat("Angle", roby_AttackAngle);
+            AIRoby.Roby_Animator.SetTrigger(AIRoby.Roby_AshAnimator_turnTrigger);
+        }
+        //else if (roby_AttackAngle > -10 && roby_AttackAngle < 10)
+        //{
+        //    //AIRoby.Roby_Particle_Shoot.transform.LookAt(AIRoby.Roby_EnemyTarget.transform.position + new Vector3(0, AIRoby.Roby_EnemyTarget.transform.localScale.y * 0.5f, 0));
+        //}
+        //roby_AttackAngle = AIRoby.InverseClamp(-10, 10, roby_AttackAngle);
         AIRoby.Roby_Animator.SetTrigger(AIRoby.Roby_AshAnimator_Range);
-
-        if (angle > -10 && angle < 10) return;
-
-        angle = AIRoby.InverseClamp(-10, 10, angle);
-        angle /= 180;
-        AIRoby.Roby_Animator.SetFloat("Angle", angle);
-
-        AIRoby.Roby_Animator.SetTrigger(AIRoby.Roby_AshAnimator_turnTrigger);
     }
 
     public void OnExit(Script_Roby AIRoby)
@@ -49,11 +53,13 @@ public class Script_AI_Roby_BattleState_RangedAttack : Script_AI_Roby_BaseState
         }
     }
 
+
+
     public float AngleCalculator(Script_Roby AIRoby)
     {
         Vector3 MyForw = AIRoby.transform.forward;
-        float dot = Vector3.Dot(MyForw, (AIRoby.Roby_EnemyTarget.transform.position - AIRoby.transform.position).normalized);
-        Vector3 Cross = Vector3.Cross(MyForw, (AIRoby.Roby_EnemyTarget.transform.position - AIRoby.transform.position).normalized);
+        float dot = Vector3.Dot(MyForw, ( AIRoby.Roby_EnemyTarget.transform.position - AIRoby.transform.position ).normalized);
+        Vector3 Cross = Vector3.Cross(MyForw, ( AIRoby.Roby_EnemyTarget.transform.position - AIRoby.transform.position ).normalized);
         float angle = Mathf.Acos(dot) * Mathf.Rad2Deg;
 
         if (Mathf.Sign(Cross.y) == -1)

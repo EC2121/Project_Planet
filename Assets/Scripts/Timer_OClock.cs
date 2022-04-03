@@ -43,7 +43,7 @@ public class Timer_OClock : MonoBehaviour
             currentTime -= Time.deltaTime;
             TimeSpan time = TimeSpan.FromSeconds(currentTime);
             timer.SetText($"{time.ToString(@"mm\:ss\:fff")}");
-            if (currentTime == 0)
+            if (currentTime <= 0) //<= altrimenti riparte
             {
                 //TimeEnd.Invoke();
                 SceneManager.LoadScene("UI_MenuScene");
