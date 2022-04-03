@@ -1,22 +1,26 @@
+using System;
+using System.Collections;
+using System.Collections.Generic;
+using UnityEditor;
 using UnityEngine;
 using UnityEngine.AI;
 
 public class AI_Chompies : MonoBehaviour
 {
-    private Transform target;
-    private Transform player;
-    private NavMeshAgent agent;
-    private NavMeshPath agentPath;
-    private Vector3 patrolCenter;
-    private Animator anim;
-    private readonly float visionAngle;
-    private readonly float visionRange;
-    private readonly float visionAngleRange;
-    private readonly float attackRange = 1;
-    private readonly float attackCD = 2f;
+    Transform target;
+    Transform player;
+    NavMeshAgent agent;
+    NavMeshPath agentPath;
+    Vector3 patrolCenter;
+    Animator anim;
+    private float visionAngle;
+    private float visionRange;
+    private float visionAngleRange;
+    private float attackRange = 1;
+    private float attackCD = 2f;
     private float attackTimer = 2f;
     private float patrolTimer = 0f;
-    private readonly float patrolCD = 2f;
+    private float patrolCD = 2f;
     public bool DebugMode;
 
 
@@ -26,7 +30,7 @@ public class AI_Chompies : MonoBehaviour
         agent = GetComponent<NavMeshAgent>();
         agentPath = new NavMeshPath();
         anim = GetComponent<Animator>();
-        patrolCenter = transform.position;
+        patrolCenter = this.transform.position;
         anim.SetBool("Grounded", true);
     }
 
@@ -34,8 +38,8 @@ public class AI_Chompies : MonoBehaviour
     {
 
         float distance = Vector3.Distance(transform.position, player.position);
-        if (( distance <= visionRange ) || ( distance <= visionAngleRange &&
-            Vector3.Angle(transform.forward, player.position - transform.position) <= visionAngle ))
+        if ((distance <= visionRange) || (distance <= visionAngleRange &&
+            Vector3.Angle(transform.forward, player.position - transform.position) <= visionAngle))
         {
             anim.SetBool("HasTarget", true);
             anim.SetBool("InPursuit", true);
@@ -50,7 +54,7 @@ public class AI_Chompies : MonoBehaviour
     {
 
         if (agent.remainingDistance > agent.stoppingDistance) return;
-        if (( patrolTimer += Time.deltaTime ) < patrolCD)
+        if ((patrolTimer += Time.deltaTime) < patrolCD)
         {
             anim.SetBool("NearBase", true);
             return;
@@ -110,11 +114,8 @@ public class AI_Chompies : MonoBehaviour
         if (!targetNull && CanAttackTarget()) Attack();
         if (targetNull) Patrol();
         if (!targetNull && Vector3.Distance(transform.position, target.transform.position) >= 20f) Reset();
-        if (!targetNull && !isAttacking)
-        {
-            transform.rotation = Quaternion.Slerp(transform.rotation,
-            Quaternion.LookRotation(( target.position - transform.position ).normalized, Vector3.up), Time.deltaTime * 5f);
-        }
+        if (!targetNull && !isAttacking) transform.rotation = Quaternion.Slerp(transform.rotation,
+            Quaternion.LookRotation((target.position - transform.position).normalized, Vector3.up), Time.deltaTime * 5f);
 
         Debug.Log(ReferenceEquals(target, null));
 
