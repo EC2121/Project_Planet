@@ -5,7 +5,7 @@ using UnityEngine;
 using UnityEngine.InputSystem;
 public class Player_GroundState : Player_BaseState
 {
-    public Player_GroundState(Player_State_Machine currentContext, Player_StateFactory playerStateFactory) : base(currentContext, playerStateFactory)
+    public Player_GroundState(Player_State_Machine currentContext, Player_StateFactory playerStateFactory) : base(currentContext,playerStateFactory)
     {
         IsRootState = true;
         InitializeSubState();
@@ -23,7 +23,7 @@ public class Player_GroundState : Player_BaseState
 
     public override void ExitState()
     {
-
+      
     }
 
     public override void CheckSwitchStates()
@@ -32,21 +32,19 @@ public class Player_GroundState : Player_BaseState
         {
             SwitchState(Factory.Jump());
         }
-
-        if (Context.IsInteract && ( !Context.IsWeaponAttached &&
-                                   !Context.Animator.GetCurrentAnimatorStateInfo(1).IsName("Un_Equip") ) &&
-                                    !Context.RequireNewWeaponSwitch && !Context.RequireNewInteraction &&
-                                     Context.Mai_BoxIsTakable)
-
+        
+        if (Context.IsInteract && (!Context.IsWeaponAttached && 
+                                   !Context.Animator.GetCurrentAnimatorStateInfo(1).IsName("Un_Equip")) && 
+                                    !Context.RequireNewWeaponSwitch && !Context.RequireNewInteraction)
         {
             SwitchState(Factory.Interactable());
         }
-
+        
     }
 
     public override void InitializeSubState()
-    {
-
+    { 
+        
         if (!Context.IsMovementPressed && !Context.IsRunPressed)
         {
             SetSubState(Factory.Idle());
@@ -55,10 +53,10 @@ public class Player_GroundState : Player_BaseState
         {
             SetSubState(Factory.Walk());
         }
-        else if (!Context.HasBox)
+        else if(!Context.HasBox)
         {
             SetSubState(Factory.Run());
         }
     }
-
+   
 }
