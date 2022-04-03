@@ -264,7 +264,6 @@ public class Player_State_Machine : MonoBehaviour
 
     void HandleRotation()
     {
-<<<<<<< HEAD
         
         Vector3 positionToLookAt;
         positionToLookAt.x = appliedMovement.x;
@@ -288,7 +287,6 @@ public class Player_State_Machine : MonoBehaviour
             item.GetComponentInParent<Enemy>().AddDamage(40, this.gameObject, false);
         }
     }
-<<<<<<< HEAD
     private void OnEnable()
     {
         input.Player.Enable();
