@@ -149,15 +149,17 @@ public class Script_Roby : MonoBehaviour
         Roby_AshAnimator_turnTrigger = Animator.StringToHash("TurnTrigger");
         Roby_AshAnimator_GetDamage = Animator.StringToHash("Hit");
 
-        Roby_StateDictionary = new Dictionary<RobyStates, Script_AI_Roby_BaseState>();
-        Roby_StateDictionary[RobyStates.Idle] = new Script_AI_Roby_Idle();
-        Roby_StateDictionary[RobyStates.Patroll] = new Script_AI_Roby_Patroll();
-        Roby_StateDictionary[RobyStates.Follow] = new Script_AI_Roby_FollowState();
-        Roby_StateDictionary[RobyStates.Battle] = new Script_AI_Roby_BattleState();
-        Roby_StateDictionary[RobyStates.MeleeAttack] = new Script_AI_Roby_BattleState_MeleeAttack();
-        Roby_StateDictionary[RobyStates.RangeAttack] = new Script_AI_Roby_BattleState_RangedAttack();
-        Roby_StateDictionary[RobyStates.ZoneAttack] = new Script_Ai_Roby_BattleState_ZoneAttack();
-        Roby_StateDictionary[RobyStates.Die] = new Script_AI_Roby_Dead();
+        Roby_StateDictionary = new Dictionary<RobyStates, Script_AI_Roby_BaseState>
+        {
+            [RobyStates.Idle] = new Script_AI_Roby_Idle(),
+            [RobyStates.Patroll] = new Script_AI_Roby_Patroll(),
+            [RobyStates.Follow] = new Script_AI_Roby_FollowState(),
+            [RobyStates.Battle] = new Script_AI_Roby_BattleState(),
+            [RobyStates.MeleeAttack] = new Script_AI_Roby_BattleState_MeleeAttack(),
+            [RobyStates.RangeAttack] = new Script_AI_Roby_BattleState_RangedAttack(),
+            [RobyStates.ZoneAttack] = new Script_Ai_Roby_BattleState_ZoneAttack(),
+            [RobyStates.Die] = new Script_AI_Roby_Dead()
+        };
         Roby_CurrentState = Roby_StateDictionary[RobyStates.Idle];
     }
 
