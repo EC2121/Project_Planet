@@ -1,0 +1,30 @@
+{
+  "CurrentAbilities": [],
+  "MaiMaxHealth": 100.0,
+  "MaiCurrentHealth": 100.0,
+  "CollectedCoins": 0,
+  "MaiPosition": [
+    -0.17310534417629243,
+    10.088852882385254,
+    5.295441150665283
+  ],
+  "MaiRotation": [
+    0.0,
+    -0.002593749202787876,
+    0.0,
+    0.9999966621398926
+  ],
+  "RobyMaxHealth": 100.0,
+  "RobyCurrentHealth": 100.0,
+  "RobyPosition": [
+    0.0,
+    0.0,
+    0.0
+  ],
+  "RobyRotation": [
+    0.0,
+    0.0,
+    0.0,
+    0.0
+  ]
+}
