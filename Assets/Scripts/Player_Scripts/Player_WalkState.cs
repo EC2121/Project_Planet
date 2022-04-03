@@ -2,16 +2,16 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Player_WalkState : Player_BaseState
+public class Player_WalkState :  Player_BaseState
 {
-    public Player_WalkState(Player_State_Machine currentContext, Player_StateFactory playerStateFactory) : base(currentContext, playerStateFactory)
+    public Player_WalkState(Player_State_Machine currentContext, Player_StateFactory playerStateFactory) : base(currentContext,playerStateFactory)
     {
-
+        
     }
     public override void EnterState()
     {
-        Context.Animator.SetBool(Context.IsWalkingHash, true);
-        Context.Animator.SetBool(Context.IsRunningHash, false);
+        Context.Animator.SetBool(Context.IsWalkingHash,true);
+        Context.Animator.SetBool(Context.IsRunningHash,false);
     }
 
     public override void UpdateState()
@@ -23,7 +23,7 @@ public class Player_WalkState : Player_BaseState
 
     public override void ExitState()
     {
-
+  
     }
 
     public override void CheckSwitchStates()
@@ -46,5 +46,5 @@ public class Player_WalkState : Player_BaseState
     {
         throw new System.NotImplementedException();
     }
-
+    
 }

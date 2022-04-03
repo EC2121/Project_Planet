@@ -19,7 +19,6 @@ public class Player_State_Machine : MonoBehaviour
     [SerializeField] private float runSpeed = 2.65f;
     [SerializeField] private float rotationFactor = 10f;
 
-    private bool mai_BoxIsTakable;
     private Animator anim;
     private int isWalkingHash;
     private int isRunningHash;
@@ -106,22 +105,15 @@ public class Player_State_Machine : MonoBehaviour
     public int JumpCountHash { get { return jumpCountHash; } }
     public float GroundGravity { get { return groundGravity; } }
     public float RunMultiplier { get { return runSpeed; } }
-<<<<<<< HEAD
     public bool HasBox { get { return hasBox; } set{ hasBox = value;}}
     public float RotationFactor { get { return rotationFactor; } set{ rotationFactor = value;}}
     public bool IsSwitchPressed { get { return switchWeapon; }}
-=======
-    public bool HasBox { get { return hasBox; } set { hasBox = value; } }
-    public bool IsSwitchPressed { get { return switchWeapon; } }
-    public bool Mai_BoxIsTakable { get { return mai_BoxIsTakable; } }
->>>>>>> origin/Chest_BugFix
     public bool IsWeaponAttached { get { return isWeaponAttached; } set { isWeaponAttached = value; } }
     public Handle_Mesh_Sockets Sockets { get { return sockets; } }
     public Transform Weapon { get { return weapon; } }
     public AnimatorStateInfo AnimStateInfo { get { return stateInfo; } }
     public int AttackCount { get { return attackId; } set { attackId = value; } }
     public int JumpCount { get { return jumpCount; } set { jumpCount = value; } }
-<<<<<<< HEAD
     public float CurrentMovementY { get { return currentMovement.y;} set { currentMovement.y = value;}}
     public float AppliedMovementY { get { return appliedMovement.y;} set { appliedMovement.y = value;}}
     public float AppliedMovementX { get { return appliedMovement.x;} set { appliedMovement.x = value;}}
@@ -145,7 +137,7 @@ public class Player_State_Machine : MonoBehaviour
         hasBoxHash = Animator.StringToHash("HasBox");
         jumpCountHash = Animator.StringToHash("JumpCount");
         isAttacking = Animator.StringToHash("IsAttacking");
-
+        
         sockets = GetComponent<Handle_Mesh_Sockets>();
         cameraMainTransform = Camera.main.transform;
         _states = new Player_StateFactory(this);
@@ -158,7 +150,7 @@ public class Player_State_Machine : MonoBehaviour
 
         input.Player.Run.started += OnRun;
         input.Player.Run.canceled += OnRun;
-
+        
         input.Player.Switch.started += OnSwitchWeapon;
         input.Player.Switch.canceled += OnSwitchWeapon;
 
@@ -210,12 +202,8 @@ public class Player_State_Machine : MonoBehaviour
         currentMovement.z = currentMovementInput.y;
         currentRunMovement.x = currentMovementInput.x * runSpeed;
         currentRunMovement.z = currentMovementInput.y * runSpeed;
-<<<<<<< HEAD
         
         
-=======
-
->>>>>>> origin/Chest_BugFix
         isMovementPressed = currentMovementInput.x != 0 || currentMovementInput.y != 0;
     }
     void Update()
@@ -272,10 +260,9 @@ public class Player_State_Machine : MonoBehaviour
         jumpGravities.Add(2,secondJumpGravity);
         jumpGravities.Add(3,thirdJumpGravity);
     }
-
+    
     void HandleRotation()
     {
-<<<<<<< HEAD
         
         Vector3 positionToLookAt;
         positionToLookAt.x = appliedMovement.x;
@@ -290,7 +277,7 @@ public class Player_State_Machine : MonoBehaviour
             transform.rotation = Quaternion.Slerp(currRotation, targetRotation, Damper.Damp(1, rotationFactor, Time.deltaTime));
         }
     }
-
+    
     public void OnAttackStart()
     {
         Collider[] collidersHitted = Physics.OverlapSphere(weapon.position, 0.5f, 1 << 6);
@@ -299,10 +286,6 @@ public class Player_State_Machine : MonoBehaviour
             item.GetComponentInParent<Enemy>().AddDamage(40, this.gameObject, false);
         }
     }
-<<<<<<< HEAD
-=======
-
->>>>>>> origin/Chest_BugFix
     private void OnEnable()
     {
         input.Player.Enable();
@@ -311,13 +294,5 @@ public class Player_State_Machine : MonoBehaviour
     private void OnDisable()
     {
         input.Player.Disable();
-    }
-    private void OnTriggerEnter(Collider other)
-    {
-        if (other.CompareTag("Box")) mai_BoxIsTakable = true;
-    }
-    private void OnTriggerExit(Collider other)
-    {
-        if (other.CompareTag("Box")) mai_BoxIsTakable = false;
     }
 }
