@@ -73,23 +73,7 @@ public class Player_State_Machine : MonoBehaviour
     private bool requireNewInteraction = false;
    // private Vector3 forwardCam;
     //getters and setters
-    public bool HasBox
-    {
-        get
-        {
-            return hasBox;
-        }
-        set
-        {
-            hasBox = value;
-            anim.SetBool("HasBox", hasBox);
-            if (hasBox && isInteract)
-            {
-                TakeTheBox.Invoke();    
-            }
-            //TakeTheBox.Invoke();  DA CONTROLLARE
-        }
-    }
+
 
     public Player_BaseState CurrentState { get { return _currentState; } set { _currentState = value; } }
     public CharacterController CharacterController { get { return characterController; } set { characterController = value; } }
@@ -123,7 +107,23 @@ public class Player_State_Machine : MonoBehaviour
     public int JumpCountHash { get { return jumpCountHash; } }
     public float GroundGravity { get { return groundGravity; } }
     public float RunMultiplier { get { return runSpeed; } }
-    public bool HasBox { get { return hasBox; } set{ hasBox = value;}}
+    public bool HasBox
+    {
+        get
+        {
+            return hasBox;
+        }
+        set
+        {
+            hasBox = value;
+            anim.SetBool("HasBox", hasBox);
+            if (hasBox && isInteract)
+            {
+                TakeTheBox.Invoke();    
+            }
+            //TakeTheBox.Invoke();  DA CONTROLLARE
+        }
+    }
     public float RotationFactor { get { return rotationFactor; } set{ rotationFactor = value;}}
     public bool IsSwitchPressed { get { return switchWeapon; }}
     public bool IsWeaponAttached { get { return isWeaponAttached; } set { isWeaponAttached = value; } }

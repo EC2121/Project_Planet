@@ -1,10 +1,13 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
+using Unity.Mathematics;
 using UnityEngine;
 //using UnityEditor.Animations;
 using UnityEngine.AI;
 using UnityEngine.Events;
+using UnityTemplateProjects.Saves_Scripts;
 
 public enum EnemyStates { Idle, Patrol, Attack, Follow, Alert, Die, Hit, Thrown }
 public class Enemy : MonoBehaviour
@@ -35,6 +38,7 @@ public class Enemy : MonoBehaviour
     [HideInInspector] public float HorizontalDot;
     [HideInInspector] public bool IsAlerted;
     [HideInInspector] public bool IsAttacking;
+    [HideInInspector] public bool IsDisabled; //Da tenere?
 
     //Animation Hashes
     [HideInInspector] public int NearBaseHash = Animator.StringToHash("NearBase");
@@ -51,13 +55,41 @@ public class Enemy : MonoBehaviour
     {
         OnActorDeath.AddListener(SwitchTarget);
         OnDamageTaken.AddListener(AddDamage);
+        SaveSystem.OnSave += SaveSystemOnOnSave;
+        SaveSystem.OnLoad += SaveSystemOnOnLoad;
+    }
+
+    private void SaveSystemOnOnLoad(object sender, EventArgs e)
+    {
+        GameData data = SaveSystem.LoadPlayer(true);
+        //EnemyStats enemy = data.Enemies.FirstOrDefault(x => x.GUID == GetInstanceID());
+        foreach (var enemy in data.Enemies)
+        {
+            //creare una lista di GUID contentnte i vary EnemyStats
+            int tempGUID = transform.GetInstanceID();
+            if (enemy.GUID == transform.GetInstanceID() && !IsDisabled) //??
+            {
+                Hp = enemy.hp;
+                transform.position = new Vector3(enemy.EnemyPosition[0], enemy.EnemyPosition[1], enemy.EnemyPosition[2]);
+                transform.rotation = new quaternion(enemy.EnemyRotation[0], enemy.EnemyRotation[1], 
+                    enemy.EnemyRotation[2], enemy.EnemyRotation[3]);    
+                return;
+            }
+        }
+    }
+
+    private void SaveSystemOnOnSave(object sender, EventArgs e)
+    {
+        SaveSystem.SaveData(this.gameObject, true);
     }
 
     private void OnDisable()
     {
         OnDamageTaken.RemoveListener(AddDamage);
         OnActorDeath.RemoveListener(SwitchTarget);
-
+        SaveSystem.OnSave -= SaveSystemOnOnSave;
+        SaveSystem.OnLoad -= SaveSystemOnOnLoad;
+        IsDisabled = true;
     }
     private void Start()
     {

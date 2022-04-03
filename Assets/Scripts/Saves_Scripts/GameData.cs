@@ -1,7 +1,19 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Runtime.CompilerServices;
 using UnityEngine;
 using UnityTemplateProjects.Saves_Scripts;
+
+[System.Serializable]
+public class EnemyStats
+{
+    //enum enemytype
+    public bool isAlpha;
+    public float hp;
+    public int GUID;
+    public float[] EnemyPosition = new float[3]; 
+    public float[] EnemyRotation = new float[4];
+}
 
 
 [System.Serializable]
@@ -28,13 +40,16 @@ public class GameData
     public float[] CratePosition = new float[3]; 
     public float[] CrateRotation = new float[4];
 
+    //Enemies
+    public List<EnemyStats> Enemies = new List<EnemyStats>();
+
     public GameData(GameObject self)
     {
         Append_GameData(self);
     }
-    
+
     //chiamo questo metodo se non devo creare da zero la struttura
-    public void Append_GameData(GameObject self)
+    public void Append_GameData(GameObject self) //OVERRIDE PER LE LISTE DI ENEMY?
     {
         //Ora mettere tutto dentro una lista :)
         //IsEnabled = self.activeSelf;
@@ -87,9 +102,28 @@ public class GameData
             CrateRotation[2] = self.transform.rotation.z;
             CrateRotation[3] = self.transform.rotation.w;    
         }
-        //Stats per nemici
-        //if tag == enemy
-        //aggiungi alla lista dei nemici     
+        else if (self.CompareTag("Enemy"))
+        {
+            //Enemies.Clear();
+            Enemy selfEnemy = self.GetComponent<Enemy>();
+            EnemyStats stats = new EnemyStats();
+
+            stats.GUID = self.transform.GetInstanceID(); //KEY
+            stats.hp = selfEnemy.Hp;
+            //stats.isAlpha = selfEnemy.
+            stats.EnemyPosition[0] = self.transform.position.x;
+            stats.EnemyPosition[1] = self.transform.position.y;
+            stats.EnemyPosition[2] = self.transform.position.z;
+            
+            stats.EnemyRotation[0] = self.transform.rotation.x;
+            stats.EnemyRotation[1] = self.transform.rotation.y;
+            stats.EnemyRotation[2] = self.transform.rotation.z;
+            stats.EnemyRotation[3] = self.transform.rotation.w;
+            
+            Enemies.Add(stats);
+            
+        }
+        //GUID DI ENEMYSTATS?  
     }
 
     //Environment data

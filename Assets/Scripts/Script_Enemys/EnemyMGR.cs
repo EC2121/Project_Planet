@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
+using UnityTemplateProjects.Saves_Scripts;
 
 public class EnemyMGR : MonoBehaviour
 {
@@ -22,19 +23,22 @@ public class EnemyMGR : MonoBehaviour
         for (int i = 0; i < SpawnPoint.Count; i++)
         {
             //Chompy Alpha
-            GameObject go = Instantiate(ChomperAlpha, null);
+            GameObject go = Instantiate(ChomperAlpha, SpawnPoint[i]);
+            go.tag = "Enemy";
             PrepareEnemy(go, SpawnPoint[i].position, ChomperAlphaData, Player, Roby);
             enemies.Add(go);
 
             //Chompys Beta
             for (int j = 0; j < NumberOfBaseChompy; j++)
             {
-                GameObject Go = Instantiate(ChomperPrefab, null);
+                GameObject Go = Instantiate(ChomperPrefab, SpawnPoint[i]);
+                Go.tag = "Enemy";
                 PrepareEnemy(Go,SpawnPoint[i].position,ChomperBaseData,Player,Roby);
                 print(SpawnPoint[i].position);
                 enemies.Add(Go);
             }
-            
+            //Debug.Log("ID: "+go.GetInstanceID());
+           
         }
     }
 

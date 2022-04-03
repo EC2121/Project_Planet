@@ -54,7 +54,7 @@ namespace UnityTemplateProjects.Saves_Scripts
                 Saves.Add(new GameData(sender));
             }
         }
-        
+
         public static void SaveData(GameObject self, bool JSON)
         {
             try

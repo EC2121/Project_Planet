@@ -13,7 +13,7 @@ public class Player_JumpState : Player_BaseState
     }
 
     public override void EnterState()
-    {
+     {
         Context.Animator.SetBool(Context.IsAttacking,false);
         HandleJump();
     }
