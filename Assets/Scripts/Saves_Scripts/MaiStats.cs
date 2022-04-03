@@ -8,8 +8,7 @@ namespace UnityTemplateProjects.Saves_Scripts
 
     public class MaiStats : MonoBehaviour
     {
-        //test bools
-        public bool SaveData = false, LoadData = false;
+        
         
         public enum Abilities { Hologram, PhotonCannon, ForceField }
 
@@ -26,49 +25,11 @@ namespace UnityTemplateProjects.Saves_Scripts
         private void Start()
         {
             IsEnabled = IsAlive = IsVisible =  true;
+            SaveSystem.OnSave += SaveSystemOnOnSave;
+            SaveSystem.OnLoad += SaveSystemOnOnLoad;
         }
 
-        private void Update()
-        {
-            if (SaveData)
-            {
-                SavePlayer(); //locale
-                SaveData = false;
-            }
-            if (LoadData)
-            {
-                LoadPlayer(); //locale
-                LoadData = false;
-            }
-        }
-
-        public void UpdateStats()
-        {
-            
-            Position = transform.position;
-            Rotation = transform.rotation;
-            //??
-        }
-        
-        //savemgr?
-        public void SavePlayer()
-        {
-            Debug.Log("Entered in Save");
-            try
-            {
-                //UPDATE PLAYER STATS
-                UpdateStats();
-                SaveSystem.SaveData(this.gameObject, true);
-            }
-            catch (Exception e)
-            {
-                Debug.Log(e.ToString());
-            }
-            Debug.Log("Game Saved");
-            
-        }
-
-        public void LoadPlayer()
+        private void SaveSystemOnOnLoad(object sender, EventArgs e)
         {
             //DISABILITARE IL CHARACTER CONTROLLER DURANTE IL RIPOSIZIONAMENTO
             transform.GetComponent<CharacterController>().enabled = false;
@@ -79,25 +40,59 @@ namespace UnityTemplateProjects.Saves_Scripts
             //gameObject.SetActive(data.IsEnabled); //NON STA FUNZIONANDO
             //IsAlive =
             //IsVisible = 
-                
+            transform.GetComponent<Player_State_Machine>().HasBox = data.HasBox;
+            
             transform.position = new Vector3(Position.x, Position.y, Position.z);
             transform.rotation = new Quaternion(Rotation.x, Rotation.y, Rotation.z, Rotation.w);
             #endregion
             
             #region Apply loaded data to MonoBehaviour
-                CurrentAbilities = data.CurrentAbilities;
-                MaxHealth = data.MaiMaxHealth;
-                CurrentHealth = data.MaiCurrentHealth;
-                CollectedCoins = data.CollectedCoins;
+            CurrentAbilities = data.CurrentAbilities;
+            MaxHealth = data.MaiMaxHealth;
+            CurrentHealth = data.MaiCurrentHealth;
+            CollectedCoins = data.CollectedCoins;
                 
-                UpdateStats(); //Aggiorna la struttura
+            UpdateStats(); //Aggiorna la struttura
             #endregion
             
             //ABILITARE IL CHARACTER CONTROLLER DURANTE IL RIPOSIZIONAMENTO
             transform.GetComponent<CharacterController>().enabled = true;
 
-            Debug.Log("Game Loaded");
+            Debug.Log("Game Loaded FROM EVENT");
         }
+
+        private void SaveSystemOnOnSave(object sender, EventArgs e)
+        {
+            Debug.Log("Entered in Save FROM EVENT");
+            try
+            {
+                //UPDATE PLAYER STATS
+                UpdateStats();
+                SaveSystem.SaveData(this.gameObject, true);
+            }
+            catch (Exception ex)
+            {
+                Debug.Log(e.ToString());
+            }
+            Debug.Log("Game Saved FROM EVENT");
+        }
+        
+
+        public void UpdateStats()
+        {
+            
+            Position = transform.position;
+            Rotation = transform.rotation;
+            //??
+        }
+
+        //Add OnDisable - OnEnable ?
+        private void OnDestroy()
+        {
+            SaveSystem.OnSave -= SaveSystemOnOnSave;
+            SaveSystem.OnLoad -= SaveSystemOnOnLoad;
+        }
+
         //Fine  SaveMgr
     }
 }

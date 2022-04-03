@@ -1,36 +1,45 @@
 {
-  "IsEnabled": true,
+  "IsEnabled": false,
   "IsVisible": false,
   "IsAlive": false,
-  "CurrentAbilities": [
-    1,
-    0
-  ],
+  "CurrentAbilities": [],
   "MaiMaxHealth": 100.0,
   "MaiCurrentHealth": 100.0,
   "CollectedCoins": 0,
   "MaiPosition": [
-    0.017793476581573488,
-    10.088852882385254,
-    3.904977560043335
+    109.88998413085938,
+    0.353801429271698,
+    100.64266967773438
   ],
   "MaiRotation": [
     0.0,
-    0.001044637756422162,
+    0.7071065902709961,
     0.0,
-    0.9999995231628418
+    0.7071070671081543
   ],
-  "RobyMaxHealth": 0.0,
-  "RobyCurrentHealth": 0.0,
+  "HasBox": true,
+  "RobyMaxHealth": 100.0,
+  "RobyCurrentHealth": 100.0,
   "RobyPosition": [
-    0.0,
-    0.0,
-    0.0
+    102.41999816894531,
+    0.43244948983192446,
+    96.25
   ],
   "RobyRotation": [
     0.0,
     0.0,
     0.0,
-    0.0
+    1.0
+  ],
+  "CratePosition": [
+    110.14265441894531,
+    1.276012659072876,
+    100.83287048339844
+  ],
+  "CrateRotation": [
+    -0.0008544422453269362,
+    0.5952469110488892,
+    0.013806373812258244,
+    0.8034238815307617
   ]
 }
