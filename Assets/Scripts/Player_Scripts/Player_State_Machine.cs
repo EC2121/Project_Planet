@@ -106,15 +106,22 @@ public class Player_State_Machine : MonoBehaviour
     public int JumpCountHash { get { return jumpCountHash; } }
     public float GroundGravity { get { return groundGravity; } }
     public float RunMultiplier { get { return runSpeed; } }
+<<<<<<< HEAD
+    public bool HasBox { get { return hasBox; } set{ hasBox = value;}}
+    public float RotationFactor { get { return rotationFactor; } set{ rotationFactor = value;}}
+    public bool IsSwitchPressed { get { return switchWeapon; }}
+=======
     public bool HasBox { get { return hasBox; } set { hasBox = value; } }
     public bool IsSwitchPressed { get { return switchWeapon; } }
     public bool Mai_BoxIsTakable { get { return mai_BoxIsTakable; } }
+>>>>>>> origin/Chest_BugFix
     public bool IsWeaponAttached { get { return isWeaponAttached; } set { isWeaponAttached = value; } }
     public Handle_Mesh_Sockets Sockets { get { return sockets; } }
     public Transform Weapon { get { return weapon; } }
     public AnimatorStateInfo AnimStateInfo { get { return stateInfo; } }
     public int AttackCount { get { return attackId; } set { attackId = value; } }
     public int JumpCount { get { return jumpCount; } set { jumpCount = value; } }
+<<<<<<< HEAD
     public float CurrentMovementY { get { return currentMovement.y;} set { currentMovement.y = value;}}
     public float AppliedMovementY { get { return appliedMovement.y;} set { appliedMovement.y = value;}}
     public float AppliedMovementX { get { return appliedMovement.x;} set { appliedMovement.x = value;}}
@@ -203,8 +210,12 @@ public class Player_State_Machine : MonoBehaviour
         currentMovement.z = currentMovementInput.y;
         currentRunMovement.x = currentMovementInput.x * runSpeed;
         currentRunMovement.z = currentMovementInput.y * runSpeed;
+<<<<<<< HEAD
         
         
+=======
+
+>>>>>>> origin/Chest_BugFix
         isMovementPressed = currentMovementInput.x != 0 || currentMovementInput.y != 0;
     }
     void Update()
@@ -289,6 +300,9 @@ public class Player_State_Machine : MonoBehaviour
         }
     }
 <<<<<<< HEAD
+=======
+
+>>>>>>> origin/Chest_BugFix
     private void OnEnable()
     {
         input.Player.Enable();
