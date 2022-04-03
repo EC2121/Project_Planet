@@ -3,10 +3,13 @@
   <component name="ChangeListManager">
     <list default="true" id="602c179c-419d-446c-b8ea-27c52ae9895b" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/.idea.Project_Planet/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.Project_Planet/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Animations/Mai_Player/Ellen@Female Dynamic Pose.fbx.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Animations/Mai_Player/Ellen@Female Dynamic Pose.fbx.meta" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Animations/Mai_Player/Ellen@Jumping Up.fbx.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Animations/Mai_Player/Ellen@Jumping Up.fbx.meta" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Animations/Mai_Player/Ellen@Male Dynamic Pose.fbx.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Animations/Mai_Player/Ellen@Male Dynamic Pose.fbx.meta" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Art/Animations/AnimationClips/Characters/Ellen/@EllenJump.fbx.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Art/Animations/AnimationClips/Characters/Ellen/@EllenJump.fbx.meta" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/Art/Animations/Animators/Characters/Ellen_Controller.controller" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Art/Animations/Animators/Characters/Ellen_Controller.controller" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/Scenes/Gameplay_Scene.unity" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scenes/Gameplay_Scene.unity" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Player_Scripts/Player_Controller.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Player_Scripts/Player_Controller.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Player_Scripts/Player_Controller.inputactions" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Player_Scripts/Player_Controller.inputactions" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Player_Scripts/Player_JumpState.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Player_Scripts/Player_JumpState.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/Scripts/Player_Scripts/Player_State_Machine.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Player_Scripts/Player_State_Machine.cs" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -91,7 +94,9 @@
       <workItem from="1648799962291" duration="15538000" />
       <workItem from="1648818707633" duration="4264000" />
       <workItem from="1648827106172" duration="3706000" />
-      <workItem from="1648904177687" duration="10069000" />
+      <workItem from="1648904177687" duration="11103000" />
+      <workItem from="1648919092310" duration="507000" />
+      <workItem from="1648974378531" duration="17400000" />
     </task>
     <servers />
   </component>
@@ -119,6 +124,19 @@
             </endOffsets>
           </properties>
           <option name="timeStamp" value="3" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="DotNet Breakpoints">
+          <url>file://$PROJECT_DIR$/Assets/Scripts/Player_Scripts/Player_State_Machine.cs</url>
+          <line>219</line>
+          <properties documentPath="C:\Users\ismai\OneDrive\Desktop\Project_Planet\Assets\Scripts\Player_Scripts\Player_State_Machine.cs" initialLine="220" containingFunctionPresentation="method 'Update'">
+            <startOffsets>
+              <option value="10284" />
+            </startOffsets>
+            <endOffsets>
+              <option value="10343" />
+            </endOffsets>
+          </properties>
+          <option name="timeStamp" value="4" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>
