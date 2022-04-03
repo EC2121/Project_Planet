@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Timers;
+using Cinemachine.Utility;
 using Unity.Mathematics;
 using UnityEditor.Experimental.GraphView;
 using UnityEngine;
@@ -12,13 +13,12 @@ using UnityEngine.Events;
 public class Player_State_Machine : MonoBehaviour
 {
     public static UnityEvent takeTheBox = new UnityEvent();
-
+    
     [SerializeField] private Transform weapon;
     [SerializeField] private float jumpSpeed = 10f;
     [SerializeField] private float runSpeed = 2.65f;
     [SerializeField] private float rotationFactor = 10f;
 
-    private bool mai_BoxIsTakable;
     private Animator anim;
     private int isWalkingHash;
     private int isRunningHash;
@@ -71,20 +71,21 @@ public class Player_State_Machine : MonoBehaviour
     private Transform cameraMainTransform;
     private float currentvelocity = 0f;
     private bool requireNewInteraction = false;
+   // private Vector3 forwardCam;
     //getters and setters
     public Player_BaseState CurrentState { get { return _currentState; } set { _currentState = value; } }
     public CharacterController CharacterController { get { return characterController; } set { characterController = value; } }
-    public UnityEvent TakeTheBox { get { return takeTheBox; } }
-    public Coroutine CurrentJumpResetRoutine { get { return currentJumpResetRoutine; } set { currentJumpResetRoutine = value; } }
-    public Coroutine CurrentAttackResetRoutine { get { return currentAttackResetRoutine; } set { currentAttackResetRoutine = value; } }
-    public Dictionary<int, float> InitialJumpVelocities { get { return initialJumpVelocities; } set { initialJumpVelocities = value; } }
-    public Dictionary<int, float> JumpGravities { get { return jumpGravities; } set { jumpGravities = value; } }
+    public UnityEvent TakeTheBox { get { return takeTheBox ;}}
+    public Coroutine CurrentJumpResetRoutine { get { return currentJumpResetRoutine;} set { currentJumpResetRoutine = value;}}
+    public Coroutine CurrentAttackResetRoutine { get { return currentAttackResetRoutine;} set { currentAttackResetRoutine = value;}}
+    public Dictionary<int,float> InitialJumpVelocities { get { return initialJumpVelocities;} set { initialJumpVelocities = value;}}
+    public Dictionary<int,float> JumpGravities { get { return jumpGravities;} set { jumpGravities = value;}}
     public Animator Animator { get { return anim; } }
     public int IsJumpingHash { get { return isJumpingHash; } }
     public float JumpSpeed { get { return jumpSpeed; } }
     public bool IsJumping { set { isJumping = value; } }
     public bool IsAttack { set { isAttack = value; } }
-    public bool IsJumpPressed { get { return isJumpPressed; } }
+    public bool IsJumpPressed { get { return isJumpPressed;}}
     public bool RequireNewWeaponSwitch { get { return requireNewWeaponSwitch; } set { requireNewWeaponSwitch = value; } }
     public bool RequireNewAttack { get { return requireNewAttack; } set { requireNewAttack = value; } }
     public bool RequireNewInteraction { get { return requireNewInteraction; } set { requireNewInteraction = value; } }
@@ -97,30 +98,30 @@ public class Player_State_Machine : MonoBehaviour
     public bool IsInteract { get { return isInteract; } }
     public bool IsMousePressed { get { return isMousePressed; } }
     public bool IsRunPressed { get { return isRunPressed; } }
-    public bool RequireNewJump { get { return requireNewJump; } set { requireNewJump = value; } }
+    public bool RequireNewJump { get { return requireNewJump; } set { requireNewJump = value;}}
     public int IsWalkingHash { get { return isWalkingHash; } }
     public int IsAttacking { get { return isAttacking; } }
     public int IsRunningHash { get { return isRunningHash; } }
     public int JumpCountHash { get { return jumpCountHash; } }
     public float GroundGravity { get { return groundGravity; } }
     public float RunMultiplier { get { return runSpeed; } }
-    public bool HasBox { get { return hasBox; } set { hasBox = value; } }
-    public bool IsSwitchPressed { get { return switchWeapon; } }
-    public bool Mai_BoxIsTakable { get { return mai_BoxIsTakable; } }
+    public bool HasBox { get { return hasBox; } set{ hasBox = value;}}
+    public float RotationFactor { get { return rotationFactor; } set{ rotationFactor = value;}}
+    public bool IsSwitchPressed { get { return switchWeapon; }}
     public bool IsWeaponAttached { get { return isWeaponAttached; } set { isWeaponAttached = value; } }
     public Handle_Mesh_Sockets Sockets { get { return sockets; } }
     public Transform Weapon { get { return weapon; } }
     public AnimatorStateInfo AnimStateInfo { get { return stateInfo; } }
     public int AttackCount { get { return attackId; } set { attackId = value; } }
     public int JumpCount { get { return jumpCount; } set { jumpCount = value; } }
-    public float CurrentMovementY { get { return currentMovement.y; } set { currentMovement.y = value; } }
-    public float AppliedMovementY { get { return appliedMovement.y; } set { appliedMovement.y = value; } }
-    public float AppliedMovementX { get { return appliedMovement.x; } set { appliedMovement.x = value; } }
-    public float AppliedMovementZ { get { return appliedMovement.z; } set { appliedMovement.z = value; } }
-    public float CurrentMovementX { get { return currentMovement.x; } set { currentMovement.x = value; } }
-    public float CurrentMovementZ { get { return currentMovement.z; } set { currentMovement.z = value; } }
-    public Vector2 CurrentMovementInput { get { return currentMovementInput; } set { currentMovementInput = value; } }
-    Vector3 positionToLookAt = Vector3.zero;
+    public float CurrentMovementY { get { return currentMovement.y;} set { currentMovement.y = value;}}
+    public float AppliedMovementY { get { return appliedMovement.y;} set { appliedMovement.y = value;}}
+    public float AppliedMovementX { get { return appliedMovement.x;} set { appliedMovement.x = value;}}
+    public float AppliedMovementZ { get { return appliedMovement.z;} set { appliedMovement.z = value;}}
+    public Transform CameraMainTransform { get{ return cameraMainTransform; }}
+    public float CurrentMovementX { get { return currentMovement.x;} set { currentMovement.x = value;}}
+    public float CurrentMovementZ { get { return currentMovement.z;} set { currentMovement.z = value;}}
+    public  Vector2 CurrentMovementInput { get { return currentMovementInput;} set {currentMovementInput = value;}}
     void Awake()
     {
         input = new Player_Controller();
@@ -136,7 +137,7 @@ public class Player_State_Machine : MonoBehaviour
         hasBoxHash = Animator.StringToHash("HasBox");
         jumpCountHash = Animator.StringToHash("JumpCount");
         isAttacking = Animator.StringToHash("IsAttacking");
-
+        
         sockets = GetComponent<Handle_Mesh_Sockets>();
         cameraMainTransform = Camera.main.transform;
         _states = new Player_StateFactory(this);
@@ -149,7 +150,7 @@ public class Player_State_Machine : MonoBehaviour
 
         input.Player.Run.started += OnRun;
         input.Player.Run.canceled += OnRun;
-
+        
         input.Player.Switch.started += OnSwitchWeapon;
         input.Player.Switch.canceled += OnSwitchWeapon;
 
@@ -196,21 +197,28 @@ public class Player_State_Machine : MonoBehaviour
     void OnMovementInput(InputAction.CallbackContext context)
     {
         currentMovementInput = context.ReadValue<Vector2>();
-        currentMovement.x = currentMovementInput.x;
+        
+        currentMovement.x = currentMovementInput.x ;
         currentMovement.z = currentMovementInput.y;
         currentRunMovement.x = currentMovementInput.x * runSpeed;
         currentRunMovement.z = currentMovementInput.y * runSpeed;
-
+        
+        
         isMovementPressed = currentMovementInput.x != 0 || currentMovementInput.y != 0;
     }
     void Update()
     {
-        HandleRotation();
         _currentState.UpdateStates();
-        // currentMovement = cameraMainTransform.forward * currentMovement.z + cameraMainTransform.right *
-        //     currentMovement.x;
-        //appliedMovement += cameraMainTransform.forward;
+
+        Vector3 forwardCam = cameraMainTransform.forward;
+        forwardCam.y = 0;
+        forwardCam = forwardCam.normalized;
+        if (forwardCam.sqrMagnitude < 0.01f)
+            return;
+        Quaternion inputFrame = Quaternion.LookRotation(forwardCam, Vector3.up);
+        appliedMovement = inputFrame * currentMovement;
         characterController.Move(appliedMovement * Time.deltaTime);
+        HandleRotation();
     }
     public void OnAnimationEvent(string eventName)
     {
@@ -236,65 +244,40 @@ public class Player_State_Machine : MonoBehaviour
     void SetUpJumpVariables()
     {
         float timeToApex = maxJumpTIme / 2f;
-        gravity = ( -2 * maxJumpHeight ) / Mathf.Pow(timeToApex, 2);
-        initialJumpVelocity = ( 2 * maxJumpHeight ) / timeToApex;
-        float secondJumpGravity = ( -2 * ( maxJumpHeight + 2 ) ) / Mathf.Pow(( timeToApex * 1.25f ), 2);
-        float secondJumpInitialVelocity = ( 2 * ( maxJumpHeight + 2 ) ) / ( timeToApex * 1.25f );
-        float thirdJumpGravity = ( -2 * ( maxJumpHeight + 4 ) ) / Mathf.Pow(( timeToApex * 1.5f ), 2);
-        float thirdJumpInitialVelocity = ( 2 * ( maxJumpHeight + 4 ) ) / ( timeToApex * 1.5f );
-
-        initialJumpVelocities.Add(1, initialJumpVelocity);
-        initialJumpVelocities.Add(2, secondJumpInitialVelocity);
-        initialJumpVelocities.Add(3, thirdJumpInitialVelocity);
-
-        jumpGravities.Add(0, gravity);
-        jumpGravities.Add(1, gravity);
-        jumpGravities.Add(2, secondJumpGravity);
-        jumpGravities.Add(3, thirdJumpGravity);
+        gravity = (-2 * maxJumpHeight) / Mathf.Pow(timeToApex, 2);
+        initialJumpVelocity = (2 * maxJumpHeight) / timeToApex;
+        float secondJumpGravity = (-2 * (maxJumpHeight + 2)) / Mathf.Pow((timeToApex * 1.25f), 2);
+        float secondJumpInitialVelocity =  (2 * (maxJumpHeight + 2)) / (timeToApex * 1.25f);
+        float thirdJumpGravity = (-2 * (maxJumpHeight + 4)) / Mathf.Pow((timeToApex * 1.5f), 2);
+        float thirdJumpInitialVelocity =  (2 * (maxJumpHeight + 4)) / (timeToApex * 1.5f);
+        
+        initialJumpVelocities.Add(1,initialJumpVelocity);
+        initialJumpVelocities.Add(2,secondJumpInitialVelocity);
+        initialJumpVelocities.Add(3,thirdJumpInitialVelocity);
+        
+        jumpGravities.Add(0,gravity);
+        jumpGravities.Add(1,gravity);
+        jumpGravities.Add(2,secondJumpGravity);
+        jumpGravities.Add(3,thirdJumpGravity);
     }
-
+    
     void HandleRotation()
     {
-
-
-        positionToLookAt.x = currentMovement.x;
-        positionToLookAt.y = 0;
-        positionToLookAt.z = currentMovement.z;
-
-        //  float targetAngle = Mathf.Atan2(positionToLookAt.x, positionToLookAt.z) * Mathf.Rad2Deg;
-        //  Quaternion rotation = quaternion.Euler(0,targetAngle,0);
-        // // positionToLookAt + ;
-        // positionToLookAt += cameraMainTransform.forward;
-        Quaternion currRotation = transform.rotation;
-        if (transform.forward != cameraMainTransform.forward)
+        
+        Vector3 positionToLookAt;
+        positionToLookAt.x = appliedMovement.x;
+        positionToLookAt.y = 0f;
+        positionToLookAt.z = appliedMovement.z;
+        
+        if (appliedMovement.sqrMagnitude > 0.01f && isMovementPressed)
         {
-            transform.forward = cameraMainTransform.forward;
-
-            if (isMovementPressed)
-            {
-                float rotation = Mathf.Atan2(positionToLookAt.x, positionToLookAt.y) * Mathf.Rad2Deg +
-                                                      cameraMainTransform.eulerAngles.y;
-                Quaternion targetRotation = Quaternion.LookRotation(positionToLookAt);
-                transform.rotation = Quaternion.Slerp(currRotation, targetRotation, rotationFactor * Time.deltaTime);
-            }
+        
+            Quaternion currRotation = transform.rotation;
+            Quaternion targetRotation = Quaternion.LookRotation(positionToLookAt, Vector3.up);
+            transform.rotation = Quaternion.Slerp(currRotation, targetRotation, Damper.Damp(1, rotationFactor, Time.deltaTime));
         }
-        //else
-        //{
-        //    transform.forward = cameraMainTransform.forward;
-        //}
-        // else
-        // {
-        //     transform.forward = cameraMainTransform.forward;
-        //
-        // }
-        // if (currentMovementInput != Vector2.zero)
-        // {
-        //     float rotation = Mathf.Atan2(positionToLookAt.x, positionToLookAt.y) * Mathf.Rad2Deg +
-        //                      Mathf.Abs(cameraMainTransform.eulerAngles.y);
-        //     transform.eulerAngles = Vector3.up * Mathf.SmoothDampAngle(transform.eulerAngles.y, rotation, ref currentvelocity, 5 *Time.deltaTime);
-        // }
     }
-
+    
     public void OnAttackStart()
     {
         Collider[] collidersHitted = Physics.OverlapSphere(weapon.position, 0.5f, 1 << 6);
@@ -303,7 +286,6 @@ public class Player_State_Machine : MonoBehaviour
             item.GetComponentInParent<Enemy>().AddDamage(40, this.gameObject, false);
         }
     }
-
     private void OnEnable()
     {
         input.Player.Enable();
@@ -312,13 +294,5 @@ public class Player_State_Machine : MonoBehaviour
     private void OnDisable()
     {
         input.Player.Disable();
-    }
-    private void OnTriggerEnter(Collider other)
-    {
-        if (other.CompareTag("Box")) mai_BoxIsTakable = true;
-    }
-    private void OnTriggerExit(Collider other)
-    {
-        if (other.CompareTag("Box")) mai_BoxIsTakable = false;
     }
 }
