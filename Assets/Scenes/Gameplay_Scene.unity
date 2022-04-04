@@ -3501,5 +3501,9 @@ PrefabInstance:
       propertyPath: rotationFactor
       value: 0.5
       objectReference: {fileID: 0}
+    - target: {fileID: 5642937540443918774, guid: ddea97438436bd34e81dca6fb5f8ffe2, type: 3}
+      propertyPath: m_StepOffset
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: ddea97438436bd34e81dca6fb5f8ffe2, type: 3}
