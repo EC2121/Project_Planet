@@ -52,7 +52,10 @@ public class AudioController : MonoBehaviour
             FMODUnity.EventReference eventReference = soundReferences[i].AudioClipEvent;
 
             eventDict[soundReferences[i].SoundType.ToString().GetHashCode()] =
-                () => { FMODUnity.RuntimeManager.PlayOneShot(eventReference, transform.position); };
+                () => { 
+                    FMODUnity.RuntimeManager.PlayOneShot(eventReference, transform.position);
+                    
+                };
         }
 
     }
