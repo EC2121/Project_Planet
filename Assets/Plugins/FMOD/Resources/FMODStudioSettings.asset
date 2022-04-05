@@ -272,7 +272,7 @@ MonoBehaviour:
   HasSourceProject: 0
   HasPlatforms: 0
   sourceProjectPath: C:/Users/User/Documents/FMOD Studio/fmodTry/fmodTry.fspro
-  sourceBankPath: C:/Users/User/Documents/FMOD Studio/fmodTry/Build/Desktop
+  sourceBankPath: Assets/Desktop
   SourceBankPathUnformatted: 
   BankRefreshCooldown: 5
   ShowBankRefreshWindow: 1
