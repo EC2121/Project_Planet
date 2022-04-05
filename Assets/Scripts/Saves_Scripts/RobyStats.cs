@@ -22,7 +22,7 @@ namespace UnityTemplateProjects.Saves_Scripts
         
         private void SaveSystemOnOnSave(object sender, EventArgs e)
         {
-            Debug.Log("Entered in Save ROBY FROM EVENT");
+            //Debug.Log("Entered in Save ROBY FROM EVENT");
             try
             {
                 //UPDATE PLAYER STATS
@@ -34,15 +34,16 @@ namespace UnityTemplateProjects.Saves_Scripts
                 Debug.Log(e.ToString());
                 return;
             }
-            Debug.Log("Game Saved ROBY FROM EVENT");
+            //Debug.Log("Game Saved ROBY FROM EVENT");
         }
         private void SaveSystemOnOnLoad(object sender, EventArgs e)
         {
             GameData data = SaveSystem.LoadPlayer(true);
             
             #region Apply Loaded Data to Transform
-            transform.position = new Vector3(Position.x, Position.y, Position.z);
-            transform.rotation = new Quaternion(Rotation.x, Rotation.y, Rotation.z, Rotation.w);
+            transform.position = new Vector3(data.RobyPosition[0], data.RobyPosition[1], data.RobyPosition[2]);
+            transform.rotation = new Quaternion(data.RobyRotation[0], data.RobyRotation[1],
+                                                data.RobyRotation[2], data.RobyRotation[3]);
             #endregion
             
             #region Apply loaded data to MonoBehaviour
@@ -51,8 +52,9 @@ namespace UnityTemplateProjects.Saves_Scripts
             
             UpdateStats();
             #endregion
-
-            Debug.Log("Game Loaded ROBY FROM EVENT");
+            
+            //TODO Set State to Idle
+            //Debug.Log("Game Loaded ROBY FROM EVENT");
         }
         
         public void UpdateStats()
@@ -61,6 +63,7 @@ namespace UnityTemplateProjects.Saves_Scripts
             Position = transform.position;
             Rotation = transform.rotation;
             //??
+            //profit
         }
     }
 }

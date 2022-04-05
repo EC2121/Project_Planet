@@ -8,13 +8,19 @@ using UnityTemplateProjects.Saves_Scripts;
 public class EnemyStats
 {
     //enum enemytype
-    public bool isAlpha;
+    public EnemyType EnemyType;
     public float hp;
     public int GUID;
     public float[] EnemyPosition = new float[3]; 
     public float[] EnemyRotation = new float[4];
 }
 
+[System.Serializable]
+public class CustomDictionary
+{
+    public string SpawnPointName;
+    public List<EnemyStats> EnemyStatsList;
+}
 
 [System.Serializable]
 public class GameData
@@ -41,7 +47,9 @@ public class GameData
     public float[] CrateRotation = new float[4];
 
     //Enemies
-    public List<EnemyStats> Enemies = new List<EnemyStats>();
+    //public List<EnemyStats> Enemies = new List<EnemyStats>();
+
+    public List<CustomDictionary> CustomDictionaries = new List<CustomDictionary>();
 
     public GameData(GameObject self)
     {
@@ -107,8 +115,10 @@ public class GameData
             //Enemies.Clear();
             Enemy selfEnemy = self.GetComponent<Enemy>();
             EnemyStats stats = new EnemyStats();
-
+            
+            
             stats.GUID = self.transform.GetInstanceID(); //KEY
+            stats.EnemyType = selfEnemy.enemyType;
             stats.hp = selfEnemy.Hp;
             //stats.isAlpha = selfEnemy.
             stats.EnemyPosition[0] = self.transform.position.x;
@@ -120,7 +130,27 @@ public class GameData
             stats.EnemyRotation[2] = self.transform.rotation.z;
             stats.EnemyRotation[3] = self.transform.rotation.w;
             
-            Enemies.Add(stats);
+            //Enemies.Add(stats);
+            
+            //Se è la prima volta che aggiungo un nemico creo un nuovo dizionario
+            //Se non è la prima volta che aggiungo un nemico ed il nemico che devo aggiungere proviene da un nuovo spawn point
+            if (CustomDictionaries.Count == 0 || (CustomDictionaries.Count != 0 && CustomDictionaries[CustomDictionaries.Count-1].SpawnPointName != self.transform.parent.name))
+            {
+                List<EnemyStats> enemyStatsList = new List<EnemyStats>();
+                enemyStatsList.Add(stats);
+                
+                CustomDictionary customDictionary = new CustomDictionary();
+                customDictionary.EnemyStatsList = enemyStatsList;
+                customDictionary.SpawnPointName = self.transform.parent.name;//"SpawnPoint (1)"; HASHING?
+                
+                CustomDictionaries.Add(customDictionary);
+            }
+            else //aggiungo all'ultimo indice del dizionario un nemico 
+            {
+                CustomDictionaries[CustomDictionaries.Count-1].EnemyStatsList.Add(stats);
+            }
+            //TODO Altrimnenti devo andare a prendere l'indice della lista che ha lo stesso SpawnPointName con dell'oggetto con cui sto confrontando
+            
             
         }
         //GUID DI ENEMYSTATS?  

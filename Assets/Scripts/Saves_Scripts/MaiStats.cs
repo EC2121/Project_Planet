@@ -42,8 +42,9 @@ namespace UnityTemplateProjects.Saves_Scripts
             //IsVisible = 
             transform.GetComponent<Player_State_Machine>().HasBox = data.HasBox;
             
-            transform.position = new Vector3(Position.x, Position.y, Position.z);
-            transform.rotation = new Quaternion(Rotation.x, Rotation.y, Rotation.z, Rotation.w);
+            transform.position = new Vector3(data.MaiPosition[0], data.MaiPosition[1], data.MaiPosition[2]);
+            transform.rotation = new Quaternion(data.MaiRotation[0], data.MaiRotation[1],
+                                                data.MaiRotation[2], data.MaiRotation[3]);
             #endregion
             
             #region Apply loaded data to MonoBehaviour
@@ -57,8 +58,9 @@ namespace UnityTemplateProjects.Saves_Scripts
             
             //ABILITARE IL CHARACTER CONTROLLER DURANTE IL RIPOSIZIONAMENTO
             transform.GetComponent<CharacterController>().enabled = true;
-
-            Debug.Log("Game Loaded FROM EVENT");
+            
+            //TODO Set State to Idle after load
+            //Debug.Log("Game Loaded FROM EVENT");
         }
 
         private void SaveSystemOnOnSave(object sender, EventArgs e)
@@ -84,6 +86,7 @@ namespace UnityTemplateProjects.Saves_Scripts
             Position = transform.position;
             Rotation = transform.rotation;
             //??
+            //profit
         }
 
         //Add OnDisable - OnEnable ?

@@ -5,7 +5,8 @@ using UnityTemplateProjects.Saves_Scripts;
 
 public class SaveMGR : MonoBehaviour
 {
-    //test bools
+    //TODO remove
+    //Editor test bools
     public bool SaveData = false, LoadData = false;
 
     public void Save()

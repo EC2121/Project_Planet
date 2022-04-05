@@ -165,7 +165,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &212719410
 Transform:
   m_ObjectHideFlags: 0
@@ -197,7 +197,7 @@ MonoBehaviour:
   SpawnPoint:
   - {fileID: 1913498926}
   - {fileID: 1824675321}
-  NumberOfBaseChompy: 3
+  NumberOfBaseChompy: 1
 --- !u!1 &214334819
 GameObject:
   m_ObjectHideFlags: 0
@@ -1961,7 +1961,7 @@ GameObject:
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 4294967295
   m_IsActive: 1
 --- !u!114 &1959560847
 MonoBehaviour:

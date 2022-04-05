@@ -45,9 +45,7 @@ namespace UnityTemplateProjects.Saves_Scripts
             if (Saves.ElementAtOrDefault(CurrentSave) != null)
             {
                 Saves[CurrentSave].Append_GameData(sender);
-                
-                //Saves[CurrentSave] = new GameData((GameObject)sender);  
-                //Aggiungere gamedata invece di sovrascrivere?
+                //Aggiungere gamedata invece di sovrascrivere
             }
             else
             {
@@ -68,13 +66,10 @@ namespace UnityTemplateProjects.Saves_Scripts
             {
                 Debug.Log(e.ToString());
             }
-           
-            //Deve far fare il savedata a tutte le classi che implementano il metodo (MAI, ROBY, ENEMIES)
 
+            //Sceglie in quale slot andare a salvare
             OnSave_ListOfSaves(self);
-            
-            //GameData data = new GameData(self);
-            
+
             if (JSON)
             {
                 string json = JsonUtility.ToJson(Saves[CurrentSave]);
@@ -85,7 +80,6 @@ namespace UnityTemplateProjects.Saves_Scripts
                 BinaryFormatter formatter = new BinaryFormatter();
                 using (FileStream stream = new FileStream(path+"/NEWSaveTest1.txt", FileMode.Create))
                 {
-                    //PlayerData data = new PlayerData(mai, roby);
                     formatter.Serialize(stream, Saves[CurrentSave]);
                 }   
             }
