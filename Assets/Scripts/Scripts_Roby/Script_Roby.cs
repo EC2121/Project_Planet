@@ -19,7 +19,7 @@ public class Script_Roby : MonoBehaviour
 
     //Public solo per prova!
     [HideInInspector] public float Roby_Live;
-    public float roby_Life;
+    public float roby_Life; 
     public bool GetDamage = false;
     public Transform Roby_Hand;
 

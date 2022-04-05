@@ -1363,14 +1363,14 @@ ModelImporter:
           postInfinity: 3
           rotationOrder: 4
       events:
-      - time: 0.4356436
+      - time: 0.43176013
         functionName: PlaySound
         data: run
-        objectReferenceParameter: {instanceID: 0}
+        objectReferenceParameter: {fileID: 699349530763464186, guid: 59e9f4601471f0349b1dc940e49350f7, type: 3}
         floatParameter: 0
         intParameter: 0
         messageOptions: 0
-      - time: 0.95437855
+      - time: 0.95049506
         functionName: PlaySound
         data: run
         objectReferenceParameter: {instanceID: 0}

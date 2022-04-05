@@ -6284,6 +6284,7 @@ GameObject:
   - component: {fileID: 4175080481532853629}
   - component: {fileID: 5751029830935800950}
   - component: {fileID: 1257076487184138613}
+  - component: {fileID: 4147713368250118692}
   m_Layer: 7
   m_Name: Grenadier
   m_TagString: Roby
@@ -6482,3 +6483,52 @@ SphereCollider:
   serializedVersion: 2
   m_Radius: 5
   m_Center: {x: 0, y: 1, z: 0}
+--- !u!114 &4147713368250118692
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6248447185350112716}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: df169864eeb65274ba4b4edc4337d9da, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  soundReferences:
+  - fontName: walk
+    SoundType: 0
+    AudioClipEvent:
+      Guid:
+        Data1: 2045200081
+        Data2: 1129143971
+        Data3: -1480828003
+        Data4: 1001843246
+      Path: event:/Roby/RobyWalk
+  - fontName: attack
+    SoundType: 4
+    AudioClipEvent:
+      Guid:
+        Data1: 1455034842
+        Data2: 1088907588
+        Data3: 1463892409
+        Data4: -2146514421
+      Path: event:/Roby/RobyMeleeAttack
+  - fontName: rangedattack
+    SoundType: 5
+    AudioClipEvent:
+      Guid:
+        Data1: 856017803
+        Data2: 1254717109
+        Data3: 1131394183
+        Data4: -1982125786
+      Path: event:/Roby/RobyRangedAttack
+  - fontName: death
+    SoundType: 8
+    AudioClipEvent:
+      Guid:
+        Data1: -1945335070
+        Data2: 1074357920
+        Data3: -2025778776
+        Data4: -339038237
+      Path: event:/Roby/RobyDeath
