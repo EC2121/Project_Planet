@@ -5,7 +5,7 @@ using UnityEditor;
 using UnityEngine;
 using UnityEngine.Events;
 
-public enum Sounds { walk, run, jump, land, attack, idle, hitted, LAST }
+public enum Sounds { walk, run, jump, land, attack, rangedattack, idle, hitted,death, LAST }
 
 [System.Serializable]
 public class SoundReference
@@ -47,14 +47,16 @@ public class AudioController : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        if (soundReferences.Count < 1) return;
         for (int i = 0; i < soundReferences.Count; i++)
         {
             FMODUnity.EventReference eventReference = soundReferences[i].AudioClipEvent;
 
             eventDict[soundReferences[i].SoundType.ToString().GetHashCode()] =
-                () => { 
+                () =>
+                {
                     FMODUnity.RuntimeManager.PlayOneShot(eventReference, transform.position);
-                    
+
                 };
         }
 
@@ -65,11 +67,18 @@ public class AudioController : MonoBehaviour
     {
 
     }
-   
+
     public void PlaySound(string Sound)
     {
 
-        eventDict[Sound.GetHashCode()]?.Invoke();
+        try
+        {
+            eventDict[Sound.GetHashCode()]?.Invoke();
+        }
+        catch
+        {
+            Debug.Log(Sound);
+        }
 
 
     }
