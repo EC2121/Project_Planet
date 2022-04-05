@@ -8,6 +8,7 @@ TagManager:
   - Roby
   - Chomp
   - Box
+  - Hologram
   layers:
   - Default
   - TransparentFX

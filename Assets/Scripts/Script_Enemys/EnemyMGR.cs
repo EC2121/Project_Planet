@@ -6,15 +6,17 @@ using UnityEngine.AI;
 public class EnemyMGR : MonoBehaviour
 {
     // Start is called before the first frame update
+    public Transform Hologram;
     List<GameObject> enemies;
     public List<Transform> SpawnPoint;
     public int NumberOfBaseChompy;
     
-    void Start()
+    void Awake()
     {
         enemies = new List<GameObject>();
         Transform Player = GameObject.FindGameObjectWithTag("Player").transform;
         Transform Roby = GameObject.FindGameObjectWithTag("Roby").transform;
+        Transform Hologram = this.Hologram;
         GameObject ChomperPrefab = Resources.Load<GameObject>("Enemies/ChomperBase/Chomper");
         GameObject ChomperAlpha = Resources.Load<GameObject>("Enemies/ChomperAlpha/AlphaChomper");
         EnemyData ChomperBaseData = Resources.Load<EnemyData>("Enemies/ChomperBase/BaseChomperData");
@@ -23,14 +25,14 @@ public class EnemyMGR : MonoBehaviour
         {
             //Chompy Alpha
             GameObject go = Instantiate(ChomperAlpha, null);
-            PrepareEnemy(go, SpawnPoint[i].position, ChomperAlphaData, Player, Roby);
+            PrepareEnemy(go, SpawnPoint[i].position, ChomperAlphaData, Player, Roby,Hologram);
             enemies.Add(go);
 
             //Chompys Beta
             for (int j = 0; j < NumberOfBaseChompy; j++)
             {
                 GameObject Go = Instantiate(ChomperPrefab, null);
-                PrepareEnemy(Go,SpawnPoint[i].position,ChomperBaseData,Player,Roby);
+                PrepareEnemy(Go,SpawnPoint[i].position,ChomperBaseData,Player,Roby,Hologram);
                 print(SpawnPoint[i].position);
                 enemies.Add(Go);
             }
@@ -38,12 +40,12 @@ public class EnemyMGR : MonoBehaviour
         }
     }
 
-    public void PrepareEnemy(GameObject Go,Vector3 position,EnemyData Data,Transform Player,Transform Roby)
+    public void PrepareEnemy(GameObject Go,Vector3 position,EnemyData Data,Transform Player,Transform Roby,Transform Hologram)
     {
         Go.transform.position = new Vector3(position.x + Random.insideUnitCircle.x * 10
          , 0.5f, position.z + Random.insideUnitCircle.y * 10);
         Enemy enemy = Go.GetComponent<Enemy>();
-        enemy.LoadData(Data,Player,Roby);
+        enemy.LoadData(Data,Player,Roby,Hologram);
         
     }
 

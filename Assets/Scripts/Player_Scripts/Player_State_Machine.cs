@@ -8,6 +8,7 @@ using UnityEngine.InputSystem;
 public class Player_State_Machine : MonoBehaviour
 {
     public static UnityEvent takeTheBox = new UnityEvent();
+    public static UnityEvent<GameObject> OnHologramDisable = new UnityEvent<GameObject>();
 
     [SerializeField] private Transform weapon;
     [SerializeField] private float jumpSpeed = 10f;
@@ -119,8 +120,12 @@ public class Player_State_Machine : MonoBehaviour
 
     private Vector3 positionToLookAt = Vector3.zero;
 
+    private GameObject hologram;
     private void Awake()
     {
+
+        hologram = GameObject.FindGameObjectWithTag("Hologram");
+        hologram.SetActive(false);
         input = new Player_Controller();
         characterController = GetComponent<CharacterController>();
         anim = GetComponent<Animator>();
@@ -164,7 +169,7 @@ public class Player_State_Machine : MonoBehaviour
         isWeaponAttached = false;
         SetUpJumpVariables();
     }
-
+    
     private void OnRun(InputAction.CallbackContext context)
     {
         isRunPressed = context.ReadValueAsButton();
@@ -205,9 +210,30 @@ public class Player_State_Machine : MonoBehaviour
 
         isMovementPressed = currentMovementInput.x != 0 || currentMovementInput.y != 0;
     }
+    private void CreateHologram()
+    {
+        hologram.SetActive(true);
+        hologram.transform.rotation = this.transform.rotation;
+        hologram.transform.position = this.transform.position + this.transform.forward * 2;
+        Animator animator = hologram.GetComponent<Animator>();
+        animator.SetBool("isWalking", true);
+        animator.SetBool("isRunning", true);
+    }
+    private void DestroyHologram()
+    {
+        OnHologramDisable.Invoke(this.gameObject);
+        hologram.SetActive(false);
+    }
 
     private void Update()
     {
+
+        if (Keyboard.current.qKey.wasPressedThisFrame)
+        {
+            CreateHologram();
+            Invoke("DestroyHologram", 5);
+        }
+
         _currentState.UpdateStates();
 
         Vector3 forwardCam = cameraMainTransform.forward;
