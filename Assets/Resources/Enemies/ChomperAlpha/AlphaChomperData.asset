@@ -12,6 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4d8dcdb6730ff9144be32356c1bc5736, type: 3}
   m_Name: AlphaChomperData
   m_EditorClassIdentifier: 
+  enemyType: 1
   VisionRange: 5
   AttackRange: 4
   AttackCD: 2

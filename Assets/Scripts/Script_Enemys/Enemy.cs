@@ -1,12 +1,16 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
+using Unity.Mathematics;
 using UnityEngine;
 //using UnityEditor.Animations;
 using UnityEngine.AI;
 using UnityEngine.Events;
+using UnityTemplateProjects.Saves_Scripts;
 
 public enum EnemyStates { Idle, Patrol, Attack, Follow, Alert, Die, Hit, Thrown }
+public enum EnemyType {Chomper, AlphaChomper}
 public class Enemy : MonoBehaviour
 {
 
@@ -18,6 +22,8 @@ public class Enemy : MonoBehaviour
     [HideInInspector] public Transform Hologram { get; private set; }
     [HideInInspector] public NavMeshAgent Agent { get; private set; }
     [HideInInspector] public Animator Anim { get; private set; }
+
+    [HideInInspector] public EnemyType enemyType;
     [HideInInspector] public Dictionary<EnemyStates, AI_Enemies_IBaseState> StatesDictionary;
     [HideInInspector] public /*AnimatorController*/AnimatorOverrideController AnimatorController;
     [HideInInspector] public NavMeshPath AgentPath;
@@ -35,6 +41,7 @@ public class Enemy : MonoBehaviour
     [HideInInspector] public float HorizontalDot;
     [HideInInspector] public bool IsAlerted;
     [HideInInspector] public bool IsAttacking;
+    [HideInInspector] public bool IsDisabled; //Da tenere?
 
     //Animation Hashes
     [HideInInspector] public int NearBaseHash = Animator.StringToHash("NearBase");
@@ -52,13 +59,43 @@ public class Enemy : MonoBehaviour
         Player_State_Machine.OnHologramDisable.AddListener(SwitchTarget);
         OnActorDeath.AddListener(SwitchTarget);
         OnDamageTaken.AddListener(AddDamage);
+        SaveSystem.OnSave += SaveSystemOnOnSave;
+        //SaveSystem.OnLoad += SaveSystemOnOnLoad;
+        IsDisabled = false;
+    }
+
+    // private void SaveSystemOnOnLoad(object sender, EventArgs e)
+    // {
+    //     GameData data = SaveSystem.LoadPlayer(true);
+    //
+    //     
+    //     //Se il nemico è disabilitato oppure non è più presente nella gerarchia?
+    //     foreach (var enemy in data.Enemies)
+    //     {
+    //         //creare una lista di GUID contentnte i vary EnemyStats
+    //         if (enemy.GUID == transform.GetInstanceID() && !IsDisabled) //??
+    //         {
+    //             Hp = enemy.hp;
+    //             transform.position = new Vector3(enemy.EnemyPosition[0], enemy.EnemyPosition[1], enemy.EnemyPosition[2]);
+    //             transform.rotation = new quaternion(enemy.EnemyRotation[0], enemy.EnemyRotation[1], 
+    //                 enemy.EnemyRotation[2], enemy.EnemyRotation[3]);    
+    //             return;
+    //         }
+    //     }
+    // }
+
+    private void SaveSystemOnOnSave(object sender, EventArgs e)
+    {
+        SaveSystem.SaveData(this.gameObject, true);
     }
 
     private void OnDisable()
     {
         OnDamageTaken.RemoveListener(AddDamage);
         OnActorDeath.RemoveListener(SwitchTarget);
-
+        SaveSystem.OnSave -= SaveSystemOnOnSave;
+        //SaveSystem.OnLoad -= SaveSystemOnOnLoad;
+        IsDisabled = true;
     }
     private void Start()
     {
@@ -134,6 +171,7 @@ public class Enemy : MonoBehaviour
         this.Player = playerRef;
         this.Roby = robyRef;
         Hp = Data.MaxHp;
+        enemyType = Data.enemyType;
         StatesDictionary = new Dictionary<EnemyStates, AI_Enemies_IBaseState>();
         StatesDictionary[EnemyStates.Idle] = new AI_Chompies_IdleState();
         StatesDictionary[EnemyStates.Patrol] = new AI_Chompies_PatrolState();

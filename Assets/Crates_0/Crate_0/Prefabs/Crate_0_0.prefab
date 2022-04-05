@@ -128,7 +128,7 @@ GameObject:
   - component: {fileID: 1869261102}
   m_Layer: 0
   m_Name: Crate_0_0
-  m_TagString: Box
+  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -222,6 +222,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Box_GuiInteractWrite: {fileID: 0}
   Player_Chest: {fileID: 0}
+  TakeMe: 0
 --- !u!1 &1663644854023780
 GameObject:
   m_ObjectHideFlags: 0

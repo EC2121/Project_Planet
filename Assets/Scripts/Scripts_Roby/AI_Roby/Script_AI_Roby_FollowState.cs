@@ -8,10 +8,8 @@ public class Script_AI_Roby_FollowState : Script_AI_Roby_BaseState
     private Vector3 roby_NearestpointOnEdge;
     public void OnEnter(Script_Roby AIRoby)
     {
-        roby_NearestpointOnEdge = AIRoby.Mai_Player.transform.position + (AIRoby.Mai_PlayerNearZone) * (Vector3.Normalize(AIRoby.transform.position - AIRoby.Mai_Player.transform.position));
         AIRoby.Roby_Animator.SetBool(AIRoby.Roby_AshAnimator_walk, true);
         AIRoby.Roby_Animator.SetFloat(AIRoby.Roby_AshAnimator_walkSpeed, 1);
-        AIRoby.SetPath(roby_NearestpointOnEdge);
     }
 
     public void OnExit(Script_Roby AIRoby)
@@ -47,7 +45,14 @@ public class Script_AI_Roby_FollowState : Script_AI_Roby_BaseState
 
     public void UpdateState(Script_Roby AIRoby)
     {
-        if (AIRoby.Roby_NavAgent.remainingDistance < AIRoby.Roby_NavAgent.stoppingDistance) AIRoby.SwitchState(RobyStates.Idle);
+        if (AIRoby.Roby_NavAgent.remainingDistance < AIRoby.Roby_NavAgent.stoppingDistance)
+        {
+            AIRoby.SwitchState(RobyStates.Idle);
+            return;
+        }
+
+        roby_NearestpointOnEdge = AIRoby.Mai_Player.transform.position + (AIRoby.Mai_PlayerNearZone) * (Vector3.Normalize(AIRoby.transform.position - AIRoby.Mai_Player.transform.position));
+        AIRoby.SetPath(roby_NearestpointOnEdge);
     }
 
     public void CustomCollisionEnter(Script_Roby AiRoby, Collision other)

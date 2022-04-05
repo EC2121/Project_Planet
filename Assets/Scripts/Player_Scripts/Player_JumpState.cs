@@ -13,14 +13,15 @@ public class Player_JumpState : Player_BaseState
     }
 
     public override void EnterState()
-    {
+     {
         Context.Animator.SetBool(Context.IsAttacking,false);
-
         HandleJump();
     }
 
     public override void UpdateState()
-    {
+    {  
+        // Context.AppliedMovementX = Context.CameraMainTransform.forward.x;
+        // Context.AppliedMovementZ = Context.CameraMainTransform.forward.z;
         CheckSwitchStates();
         HandleGravity();
     }
@@ -28,6 +29,7 @@ public class Player_JumpState : Player_BaseState
     public override void ExitState()
     {
         Context.Animator.SetBool(Context.IsJumpingHash, false);
+
         if (!Context.IsRunPressed)
         {
             Context.Animator.SetBool(Context.IsRunningHash, false);
@@ -74,6 +76,7 @@ public class Player_JumpState : Player_BaseState
         {
             Context.StopCoroutine(Context.CurrentJumpResetRoutine);
         }
+
         Context.Animator.SetBool(Context.IsJumpingHash, true);
         Context.IsJumping = true;
         Context.JumpCount += 1;
