@@ -28,8 +28,8 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2525720617998125795}
-  m_LocalRotation: {x: 0.15257274, y: -0.009868576, z: 0.01226007, w: 0.9881669}
-  m_LocalPosition: {x: 104.06034, y: 2.4010582, z: 94.165405}
+  m_LocalRotation: {x: 0.32326594, y: -0, z: -0, w: 0.94630814}
+  m_LocalPosition: {x: 104.1, y: 3.5080373, z: 93.67727}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 2525720618498828084}
@@ -118,7 +118,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2525720617998125795}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 72ece51f2901e7445ab60da3685d6b5f, type: 3}
   m_Name: 
@@ -398,7 +398,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2985357405209969551, guid: 9c9fd63daca5f0840a8d8ed5746f9fd2, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 3.7820373
+      value: 3.5080373
       objectReference: {fileID: 0}
     - target: {fileID: 2985357405209969551, guid: 9c9fd63daca5f0840a8d8ed5746f9fd2, type: 3}
       propertyPath: m_LocalPosition.z
@@ -557,7 +557,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   soundReferences:
-  - fontName: Walk
+  - fontName: walk
     SoundType: 0
     AudioClipEvent:
       Guid:
@@ -566,7 +566,7 @@ MonoBehaviour:
         Data3: 2103405484
         Data4: -79910158
       Path: event:/Sfx/Mai/MaiWalk
-  - fontName: Run
+  - fontName: run
     SoundType: 1
     AudioClipEvent:
       Guid:
@@ -575,7 +575,7 @@ MonoBehaviour:
         Data3: -193654878
         Data4: 936893690
       Path: event:/Sfx/Mai/MaiRun
-  - fontName: Jump
+  - fontName: jump
     SoundType: 2
     AudioClipEvent:
       Guid:
@@ -584,7 +584,7 @@ MonoBehaviour:
         Data3: -1941681491
         Data4: -1138491331
       Path: event:/Sfx/Mai/MaiJump
-  - fontName: Land
+  - fontName: land
     SoundType: 3
     AudioClipEvent:
       Guid:
@@ -593,7 +593,7 @@ MonoBehaviour:
         Data3: 778784429
         Data4: 589569189
       Path: event:/Sfx/Mai/MaiLand
-  - fontName: Attack
+  - fontName: attack
     SoundType: 4
     AudioClipEvent:
       Guid:
