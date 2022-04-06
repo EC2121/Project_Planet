@@ -6380,6 +6380,7 @@ MonoBehaviour:
   Roby_EnemyIndex: 0
   Roby_IgnoreEnemy: 0
   IsAttacking: 0
+  Roby_Particle_Shoot: {fileID: 0}
   RobyHpSlider: {fileID: 0}
 --- !u!114 &1159518113781105222
 MonoBehaviour:

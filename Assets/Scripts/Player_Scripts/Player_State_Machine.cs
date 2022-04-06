@@ -16,6 +16,10 @@ public class Player_State_Machine : MonoBehaviour
     [SerializeField] private float runSpeed = 2.65f;
     [SerializeField] private float rotationFactor = 0.5f;
 
+    //OnlyFor Debug
+    [SerializeField] private float maxHp = 1000f;
+
+
     private bool mai_BoxIsTakable;
     private Animator anim;
     private int isWalkingHash;
@@ -69,7 +73,6 @@ public class Player_State_Machine : MonoBehaviour
     private Coroutine currentAttackResetRoutine = null;
     private Transform cameraMainTransform;
     private bool requireNewInteraction = false;
-    private float maxHp = 1000f;
     private float hp;
     private bool isHitted = false;
     private bool requireNewHit = false;
