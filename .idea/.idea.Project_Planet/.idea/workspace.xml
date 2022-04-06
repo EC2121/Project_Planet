@@ -3,41 +3,11 @@
   <component name="ChangeListManager">
     <list default="true" id="602c179c-419d-446c-b8ea-27c52ae9895b" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/.idea.Project_Planet/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.Project_Planet/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Art/Animations/AnimationClips/Characters/Ellen/@EllenDeath.fbx.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Art/Animations/AnimationClips/Characters/Ellen/@EllenDeath.fbx.meta" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Art/Animations/AnimationClips/Characters/Ellen/@EllenHitBack.fbx.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Art/Animations/AnimationClips/Characters/Ellen/@EllenHitBack.fbx.meta" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Art/Animations/AnimationClips/Characters/Ellen/@EllenHitBackLeft.fbx.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Art/Animations/AnimationClips/Characters/Ellen/@EllenHitBackLeft.fbx.meta" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Art/Animations/AnimationClips/Characters/Ellen/@EllenHitBackRight.fbx.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Art/Animations/AnimationClips/Characters/Ellen/@EllenHitBackRight.fbx.meta" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Art/Animations/AnimationClips/Characters/Ellen/@EllenHitFront.fbx.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Art/Animations/AnimationClips/Characters/Ellen/@EllenHitFront.fbx.meta" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Art/Animations/AnimationClips/Characters/Ellen/@EllenHitFrontLeft.fbx.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Art/Animations/AnimationClips/Characters/Ellen/@EllenHitFrontLeft.fbx.meta" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Art/Animations/AnimationClips/Characters/Ellen/@EllenHitFrontRight.fbx.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Art/Animations/AnimationClips/Characters/Ellen/@EllenHitFrontRight.fbx.meta" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Art/Animations/AnimationClips/Characters/Ellen/@EllenHitLeft.fbx.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Art/Animations/AnimationClips/Characters/Ellen/@EllenHitLeft.fbx.meta" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Art/Animations/AnimationClips/Characters/Ellen/@EllenHitRight.fbx.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Art/Animations/AnimationClips/Characters/Ellen/@EllenHitRight.fbx.meta" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Art/Animations/AnimationClips/Characters/Ellen/@EllenRunForwardLandingFast.fbx.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Art/Animations/AnimationClips/Characters/Ellen/@EllenRunForwardLandingFast.fbx.meta" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/Art/Animations/Animators/Characters/Ellen_Controller.controller" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Art/Animations/Animators/Characters/Ellen_Controller.controller" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/Plugins/FMOD/Cache/Editor/FMODStudioCache.asset" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Plugins/FMOD/Cache/Editor/FMODStudioCache.asset" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/Plugins/FMOD/Resources/FMODStudioSettings.asset" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Plugins/FMOD/Resources/FMODStudioSettings.asset" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Plugins/FMOD/platforms/mac/lib/fmodstudio.bundle/Contents/Info.plist" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Plugins/FMOD/platforms/mac/lib/fmodstudio.bundle/Contents/Info.plist" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Plugins/FMOD/platforms/mac/lib/fmodstudioL.bundle/Contents/Info.plist" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Plugins/FMOD/platforms/mac/lib/fmodstudioL.bundle/Contents/Info.plist" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Plugins/FMOD/platforms/mac/lib/resonanceaudio.bundle/Contents/Info.plist" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Plugins/FMOD/platforms/mac/lib/resonanceaudio.bundle/Contents/Info.plist" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Resources/Player/Mai_Player.prefab" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Resources/Player/Mai_Player.prefab" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/Scenes/Gameplay_Scene.unity" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scenes/Gameplay_Scene.unity" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Player_Scripts/Follow_Transform.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Player_Scripts/Follow_Transform.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Player_Scripts/Player_BaseState.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Player_Scripts/Player_BaseState.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Player_Scripts/Player_Controller.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Player_Scripts/Player_Controller.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Player_Scripts/Player_Controller.inputactions" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Player_Scripts/Player_Controller.inputactions" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Player_Scripts/Player_GroundState.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Player_Scripts/Player_GroundState.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Player_Scripts/Player_HittedState.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Player_Scripts/Player_HittedState.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Player_Scripts/Player_IdleState.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Player_Scripts/Player_IdleState.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Player_Scripts/Player_Interactable.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Player_Scripts/Player_Interactable.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Player_Scripts/Player_JumpState.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Player_Scripts/Player_JumpState.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Player_Scripts/Player_RunState.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Player_Scripts/Player_RunState.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Player_Scripts/Player_StateFactory.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Player_Scripts/Player_StateFactory.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Player_Scripts/Player_State_Machine.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Player_Scripts/Player_State_Machine.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Player_Scripts/Player_SwitchWeaponState.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Player_Scripts/Player_SwitchWeaponState.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Player_Scripts/Player_WalkState.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Player_Scripts/Player_WalkState.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Script_Enemys/AI_Enemies/AI_Chompies_AttackState.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Script_Enemys/AI_Enemies/AI_Chompies_AttackState.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Script_Enemys/Enemy.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Script_Enemys/Enemy.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Scripts_Roby/AI_Roby/Script_AI_Roby_BattleState_MeleeAttack.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Scripts_Roby/AI_Roby/Script_AI_Roby_BattleState_MeleeAttack.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Player_Scripts/Player_StaffAttack.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Player_Scripts/Player_StaffAttack.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/fmod_editor.log" beforeDir="false" afterPath="$PROJECT_DIR$/fmod_editor.log" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -50,11 +20,22 @@
     <setting file="file://$PROJECT_DIR$/Library/PackageCache/com.unity.inputsystem@1.3.0/InputSystem/Plugins/UI/InputSystemUIInputModule.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Library/PackageCache/com.unity.inputsystem@1.3.0/InputSystem/Unity.InputSystem.asmdef" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Library/PackageCache/com.unity.ugui@1.0.0/Runtime/EventSystem/UIBehaviour.cs" root0="SKIP_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/Library/PackageCache/com.unity.cinemachine@2.6.11/Runtime/Core/CinemachineExtension.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Library/PackageCache/com.unity.cinemachine@2.6.11/Editor/Utility/SaveDuringPlay.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Library/PackageCache/com.unity.render-pipelines.core@10.8.1/Runtime/Debugging/DebugUpdater.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Library/PackageCache/com.unity.inputsystem@1.3.0/InputSystem/Plugins/OnScreen/OnScreenButton.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Library/PackageCache/com.unity.ugui@1.0.0/Runtime/EventSystem/InputModules/BaseInput.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Library/PackageCache/com.unity.render-pipelines.universal@10.8.1/Editor/SavedParameter.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Library/PackageCache/com.unity.ugui@1.0.0/Runtime/EventSystem/EventSystem.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/3be1a7ff939c43f181c0a10b5a0189ac13c800/63/40f4dada/MonoBehaviour.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Library/PackageCache/com.unity.inputsystem@1.3.0/Samples~/RebindingUI/RebindSaveLoad.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Library/PackageCache/com.unity.cinemachine@2.6.11/Runtime/Core/CinemachineExtension.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Library/PackageCache/com.unity.inputsystem@1.3.0/InputSystem/Utilities/SavedState.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Library/PackageCache/com.unity.burst@1.3.4/Tests/Runtime/Shared/091-Matrices.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Library/PackageCache/com.unity.animation.rigging@1.0.3/Runtime/AnimationRig/RigBuilder.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Library/PackageCache/com.unity.burst@1.3.4/Tests/Runtime/Unity.Burst.Tests/TestCompilerAttribute.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Library/PackageCache/com.unity.burst@1.3.4/Tests/Runtime/Shared/060-TestEnums.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Library/PackageCache/com.unity.cinemachine@2.6.11/Runtime/Core/CinemachineVirtualCameraBase.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Library/PackageCache/com.unity.burst@1.3.4/Tests/Runtime/Shared/TestCompilerAttributeBase.cs" root0="SKIP_HIGHLIGHTING" />
   </component>
   <component name="MarkdownSettingsMigration">
     <option name="stateVersion" value="1" />
@@ -126,6 +107,8 @@
       <workItem from="1649086302226" duration="18026000" />
       <workItem from="1649147838386" duration="23084000" />
       <workItem from="1649234964553" duration="6564000" />
+      <workItem from="1649252074961" duration="249000" />
+      <workItem from="1649258341868" duration="552000" />
     </task>
     <servers />
   </component>
