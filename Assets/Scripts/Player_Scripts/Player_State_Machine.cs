@@ -1,3 +1,4 @@
+using System;
 using Cinemachine.Utility;
 using System.Collections.Generic;
 using UnityEngine;
@@ -44,6 +45,7 @@ public class Player_State_Machine : MonoBehaviour
     private bool isMousePressed = false;
     private bool isJumpPressed = false;
     private bool switchWeapon = false;
+    private bool onHologram = false;
     private Vector2 currentAnimationBlend;
     private Vector2 animationVelocity;
     private bool isWeaponAttached;
@@ -139,7 +141,6 @@ public class Player_State_Machine : MonoBehaviour
     {
 
         hologram = GameObject.FindGameObjectWithTag("Hologram");
-        hologram.SetActive(false);
         input = new Player_Controller();
         characterController = GetComponent<CharacterController>();
         anim = GetComponent<Animator>();
@@ -182,14 +183,26 @@ public class Player_State_Machine : MonoBehaviour
         input.Player.F_Interact.started += OnInteract;
         input.Player.F_Interact.canceled += OnInteract;
 
+        input.Player.Q.started += Hologram;
+        input.Player.Q.canceled += Hologram;
+
         isWeaponAttached = false;
         hp = maxHp;
         SetUpJumpVariables();
     }
-    
+
+    private void Start()
+    {
+       hologram.SetActive(false);
+    }
+
     private void OnRun(InputAction.CallbackContext context)
     {
         isRunPressed = context.ReadValueAsButton();
+    }
+    private void Hologram(InputAction.CallbackContext context)
+    {
+        onHologram = context.ReadValueAsButton();
     }
 
     private void OnMousePressed(InputAction.CallbackContext context)
@@ -208,6 +221,7 @@ public class Player_State_Machine : MonoBehaviour
     {
         isInteract = context.ReadValueAsButton();
         requireNewInteraction = false;
+        Debug.Log(isInteract);
     }
 
     private void OnJump(InputAction.CallbackContext context)
@@ -245,7 +259,7 @@ public class Player_State_Machine : MonoBehaviour
     private void Update()
     {
 
-        if (Keyboard.current.qKey.wasPressedThisFrame)
+        if (onHologram)
         {
             CreateHologram();
             Invoke("DestroyHologram", 5);

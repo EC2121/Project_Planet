@@ -89,6 +89,15 @@ public partial class @Player_Controller : IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Q"",
+                    ""type"": ""Button"",
+                    ""id"": ""1edf59fc-1a31-4cb5-b87b-689f779e438f"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -234,6 +243,17 @@ public partial class @Player_Controller : IInputActionCollection2, IDisposable
                     ""action"": ""Look"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""aacf73fc-0bff-430d-8c48-29b0506fccf4"",
+                    ""path"": ""<Keyboard>/q"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Q"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         }
@@ -249,6 +269,7 @@ public partial class @Player_Controller : IInputActionCollection2, IDisposable
         m_Player_Switch = m_Player.FindAction("Switch", throwIfNotFound: true);
         m_Player_L_MouseClick = m_Player.FindAction("L_MouseClick", throwIfNotFound: true);
         m_Player_F_Interact = m_Player.FindAction("F_Interact", throwIfNotFound: true);
+        m_Player_Q = m_Player.FindAction("Q", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -315,6 +336,7 @@ public partial class @Player_Controller : IInputActionCollection2, IDisposable
     private readonly InputAction m_Player_Switch;
     private readonly InputAction m_Player_L_MouseClick;
     private readonly InputAction m_Player_F_Interact;
+    private readonly InputAction m_Player_Q;
     public struct PlayerActions
     {
         private @Player_Controller m_Wrapper;
@@ -326,6 +348,7 @@ public partial class @Player_Controller : IInputActionCollection2, IDisposable
         public InputAction @Switch => m_Wrapper.m_Player_Switch;
         public InputAction @L_MouseClick => m_Wrapper.m_Player_L_MouseClick;
         public InputAction @F_Interact => m_Wrapper.m_Player_F_Interact;
+        public InputAction @Q => m_Wrapper.m_Player_Q;
         public InputActionMap Get() { return m_Wrapper.m_Player; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -356,6 +379,9 @@ public partial class @Player_Controller : IInputActionCollection2, IDisposable
                 @F_Interact.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnF_Interact;
                 @F_Interact.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnF_Interact;
                 @F_Interact.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnF_Interact;
+                @Q.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnQ;
+                @Q.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnQ;
+                @Q.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnQ;
             }
             m_Wrapper.m_PlayerActionsCallbackInterface = instance;
             if (instance != null)
@@ -381,6 +407,9 @@ public partial class @Player_Controller : IInputActionCollection2, IDisposable
                 @F_Interact.started += instance.OnF_Interact;
                 @F_Interact.performed += instance.OnF_Interact;
                 @F_Interact.canceled += instance.OnF_Interact;
+                @Q.started += instance.OnQ;
+                @Q.performed += instance.OnQ;
+                @Q.canceled += instance.OnQ;
             }
         }
     }
@@ -394,5 +423,6 @@ public partial class @Player_Controller : IInputActionCollection2, IDisposable
         void OnSwitch(InputAction.CallbackContext context);
         void OnL_MouseClick(InputAction.CallbackContext context);
         void OnF_Interact(InputAction.CallbackContext context);
+        void OnQ(InputAction.CallbackContext context);
     }
 }
