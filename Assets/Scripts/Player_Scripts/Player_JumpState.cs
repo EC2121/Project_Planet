@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class Player_JumpState : Player_BaseState
 {
+    private bool isBeenHitted = false;
     public Player_JumpState(Player_State_Machine currentContext, Player_StateFactory playerStateFactory) : base(
         currentContext, playerStateFactory)
     {
@@ -13,15 +14,15 @@ public class Player_JumpState : Player_BaseState
     }
 
     public override void EnterState()
-     {
+    {
         Context.Animator.SetBool(Context.IsAttacking,false);
+        Context.Animator.SetBool("isHitted",false);
+
         HandleJump();
     }
 
     public override void UpdateState()
-    {  
-        // Context.AppliedMovementX = Context.CameraMainTransform.forward.x;
-        // Context.AppliedMovementZ = Context.CameraMainTransform.forward.z;
+    {
         CheckSwitchStates();
         HandleGravity();
     }
@@ -29,7 +30,7 @@ public class Player_JumpState : Player_BaseState
     public override void ExitState()
     {
         Context.Animator.SetBool(Context.IsJumpingHash, false);
-
+        Context.Animator.SetBool("isJumpHitted", false);
         if (!Context.IsRunPressed)
         {
             Context.Animator.SetBool(Context.IsRunningHash, false);
@@ -60,6 +61,10 @@ public class Player_JumpState : Player_BaseState
 
     public override void CheckSwitchStates()
     {
+        // if (Context.IsIsHitted)
+        // {
+        //     SwitchState(Factory.JumpHitted());
+        // }
         if (Context.CharacterController.isGrounded)
         {
             SwitchState(Factory.Grounded());
@@ -68,6 +73,7 @@ public class Player_JumpState : Player_BaseState
 
     public override void InitializeSubState()
     {
+       
     }
 
     void HandleJump()
@@ -76,7 +82,6 @@ public class Player_JumpState : Player_BaseState
         {
             Context.StopCoroutine(Context.CurrentJumpResetRoutine);
         }
-
         Context.Animator.SetBool(Context.IsJumpingHash, true);
         Context.IsJumping = true;
         Context.JumpCount += 1;
@@ -87,6 +92,13 @@ public class Player_JumpState : Player_BaseState
 
     void HandleGravity()
     {
+        if (Context.IsIsHitted && !isBeenHitted)
+        {
+            isBeenHitted = true;
+            Context.Animator.SetBool("isJumpHitted", true);
+            Context.Animator.SetBool(Context.IsJumpingHash,false);
+            Context.Hp -= 30f;
+        }
         bool isFalling = Context.CurrentMovementY <= 0.0f || !Context.IsJumpPressed;
         float fallMultiplier = 2.0f;
 

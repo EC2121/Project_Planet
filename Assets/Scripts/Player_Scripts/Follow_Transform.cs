@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 
 public class Follow_Transform : MonoBehaviour
@@ -8,6 +9,13 @@ public class Follow_Transform : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        transform.position = target.position + new Vector3(0,0,-0.5f);
+       // transform.position = target.position + new Vector3(0,0,-0.5f);
     }
+
+    private void OnCollisionEnter(Collision collision)
+    {
+        if(collision.gameObject.CompareTag("Player"))
+        Player_State_Machine.hit.Invoke(true);
+    }
+    
 }

@@ -9,6 +9,7 @@ public class Player_State_Machine : MonoBehaviour
 {
     public static UnityEvent takeTheBox = new UnityEvent();
     public static UnityEvent<GameObject> OnHologramDisable = new UnityEvent<GameObject>();
+    public static UnityEvent<bool> hit = new UnityEvent<bool>();
 
     [SerializeField] private Transform weapon;
     [SerializeField] private float jumpSpeed = 10f;
@@ -27,6 +28,7 @@ public class Player_State_Machine : MonoBehaviour
     private int hasBoxHash;
     private int jumpCountHash;
     private int isAttacking;
+    private string unEquipHash;
     private Player_Controller input;
     private CharacterController characterController;
     private Vector2 currentMovementInput;
@@ -66,12 +68,16 @@ public class Player_State_Machine : MonoBehaviour
     private Coroutine currentJumpResetRoutine = null;
     private Coroutine currentAttackResetRoutine = null;
     private Transform cameraMainTransform;
-    private readonly float currentvelocity = 0f;
     private bool requireNewInteraction = false;
+    private float maxHp = 1000f;
+    private float hp;
+    private bool isHitted = false;
+    private bool requireNewHit = false;
     //getters and setters
     public Player_BaseState CurrentState { get { return _currentState; } set { _currentState = value; } }
     public CharacterController CharacterController { get { return characterController; } set { characterController = value; } }
     public UnityEvent TakeTheBox { get { return takeTheBox; } }
+    public UnityEvent<bool> Hit { get { return hit; } }
     public Coroutine CurrentJumpResetRoutine { get { return currentJumpResetRoutine; } set { currentJumpResetRoutine = value; } }
     public Coroutine CurrentAttackResetRoutine { get { return currentAttackResetRoutine; } set { currentAttackResetRoutine = value; } }
     public Dictionary<int, float> InitialJumpVelocities { get { return initialJumpVelocities; } set { initialJumpVelocities = value; } }
@@ -84,6 +90,8 @@ public class Player_State_Machine : MonoBehaviour
     public bool IsJumpPressed { get { return isJumpPressed; } }
     public bool RequireNewWeaponSwitch { get { return requireNewWeaponSwitch; } set { requireNewWeaponSwitch = value; } }
     public bool RequireNewAttack { get { return requireNewAttack; } set { requireNewAttack = value; } }
+    public bool RequireNewHit { get { return requireNewHit; } set { requireNewHit = value; } }
+
     public bool RequireNewInteraction { get { return requireNewInteraction; } set { requireNewInteraction = value; } }
     public int AttackIndexHash { get { return attackIndexHash; } set { attackIndexHash = value; } }
     public Vector3 PlayerPos { get { return transform.position; } }
@@ -96,6 +104,7 @@ public class Player_State_Machine : MonoBehaviour
     public bool IsRunPressed { get { return isRunPressed; } }
     public bool RequireNewJump { get { return requireNewJump; } set { requireNewJump = value; } }
     public int IsWalkingHash { get { return isWalkingHash; } }
+    public string UnEquipHash { get { return unEquipHash; } }
     public int IsAttacking { get { return isAttacking; } }
     public int IsRunningHash { get { return isRunningHash; } }
     public int JumpCountHash { get { return jumpCountHash; } }
@@ -103,6 +112,7 @@ public class Player_State_Machine : MonoBehaviour
     public float RunMultiplier { get { return runSpeed; } }
     public bool HasBox { get { return hasBox; } set { hasBox = value; } }
     public bool IsSwitchPressed { get { return switchWeapon; } }
+    public bool IsIsHitted { get { return isHitted; } set{isHitted = value;} }
     public bool Mai_BoxIsTakable { get { return mai_BoxIsTakable; } }
     public bool IsWeaponAttached { get { return isWeaponAttached; } set { isWeaponAttached = value; } }
     public Handle_Mesh_Sockets Sockets { get { return sockets; } }
@@ -116,6 +126,7 @@ public class Player_State_Machine : MonoBehaviour
     public float AppliedMovementZ { get { return appliedMovement.z; } set { appliedMovement.z = value; } }
     public float CurrentMovementX { get { return currentMovement.x; } set { currentMovement.x = value; } }
     public float CurrentMovementZ { get { return currentMovement.z; } set { currentMovement.z = value; } }
+    public float Hp { get { return hp; } set { hp = value; } }
     public Vector2 CurrentMovementInput { get { return currentMovementInput; } set { currentMovementInput = value; } }
 
     private Vector3 positionToLookAt = Vector3.zero;
@@ -139,9 +150,11 @@ public class Player_State_Machine : MonoBehaviour
         hasBoxHash = Animator.StringToHash("HasBox");
         jumpCountHash = Animator.StringToHash("JumpCount");
         isAttacking = Animator.StringToHash("IsAttacking");
-
+        unEquipHash = "Un_Equip";
+        
         sockets = GetComponent<Handle_Mesh_Sockets>();
         cameraMainTransform = Camera.main.transform;
+        
         _states = new Player_StateFactory(this);
         _currentState = _states.Grounded();
         _currentState.EnterState();
@@ -167,6 +180,7 @@ public class Player_State_Machine : MonoBehaviour
         input.Player.F_Interact.canceled += OnInteract;
 
         isWeaponAttached = false;
+        hp = maxHp;
         SetUpJumpVariables();
     }
     
@@ -245,6 +259,9 @@ public class Player_State_Machine : MonoBehaviour
         appliedMovement = inputFrame * currentMovement;
         characterController.Move(appliedMovement * Time.deltaTime);
         HandleRotation();
+       // Debug.Log(isHitted);
+        Debug.Log(hp + " HPPPPPPPPPPP");
+
     }
     public void OnAnimationEvent(string eventName)
     {
@@ -314,11 +331,13 @@ public class Player_State_Machine : MonoBehaviour
     private void OnEnable()
     {
         input.Player.Enable();
+        hit.AddListener(arg0 => isHitted = true);
     }
 
     private void OnDisable()
     {
         input.Player.Disable();
+        hit.RemoveListener(arg0 => isHitted = false);
     }
     private void OnTriggerEnter(Collider other)
     {
