@@ -9,7 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4466139095766064}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: CreateCap_0_0
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -42,7 +42,7 @@ GameObject:
   - component: {fileID: 4305435131339280}
   - component: {fileID: 33396282072846216}
   - component: {fileID: 23251259088887860}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: Object001
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -126,7 +126,7 @@ GameObject:
   - component: {fileID: 1920193337}
   - component: {fileID: 1920193341}
   - component: {fileID: 1869261102}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: Crate_0_0
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -222,7 +222,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Box_GuiInteractWrite: {fileID: 0}
   Player_Chest: {fileID: 0}
-  TakeMe: 0
 --- !u!1 &1663644854023780
 GameObject:
   m_ObjectHideFlags: 0
@@ -235,7 +234,7 @@ GameObject:
   - component: {fileID: 33321515311011782}
   - component: {fileID: 23961547167554850}
   - component: {fileID: 95246483188420634}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: ChamferBox001
   m_TagString: Untagged
   m_Icon: {fileID: 0}
