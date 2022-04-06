@@ -1,8 +1,4 @@
-using System;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.InputSystem;
 
 public class Player_GroundState : Player_BaseState
 {
@@ -38,13 +34,13 @@ public class Player_GroundState : Player_BaseState
         // {
         //     SwitchState(Factory.JumpHitted());
         // }
-        if (Context.IsInteract && (!Context.IsWeaponAttached && !Context.IsRunPressed &&
-                                   !Context.Animator.GetCurrentAnimatorStateInfo(1).IsName(Context.UnEquipHash)) &&
+        if (Context.IsInteract && ( !Context.IsWeaponAttached && !Context.IsRunPressed &&
+                                   !Context.Animator.GetCurrentAnimatorStateInfo(1).IsName(Context.UnEquipHash) ) &&
             !Context.RequireNewWeaponSwitch && !Context.RequireNewInteraction &&
             Context.Mai_BoxIsTakable)
-
         {
             SwitchState(Factory.Interactable());
+            Debug.Log("ciao");
         }
         if (Context.Hp <= 0)
         {
@@ -89,6 +85,6 @@ public class Player_GroundState : Player_BaseState
         {
             SetSubState(Factory.StaffAttack());
         }
-        
+
     }
 }
