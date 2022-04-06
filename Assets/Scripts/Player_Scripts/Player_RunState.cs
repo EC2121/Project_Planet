@@ -30,6 +30,18 @@ public class Player_RunState : Player_BaseState
 
     public override void CheckSwitchStates()
     {
+        if (Context.Hp <= 0)
+        {
+            SwitchState(Factory.Dead());
+        }
+        if (Context.IsIsHitted)
+        {
+            SwitchState(Factory.Hitted());
+        }
+        if (Context.IsSwitchPressed && !Context.RequireNewWeaponSwitch && !Context.HasBox)
+        {
+            SwitchState(Factory.SwitchWeapon());
+        }
         if (!Context.IsMovementPressed)
         {
             SwitchState(Factory.Idle());
@@ -38,6 +50,8 @@ public class Player_RunState : Player_BaseState
         {
             SwitchState(Factory.Walk());
         }
+       
+     
     }
 
     public override void InitializeSubState()

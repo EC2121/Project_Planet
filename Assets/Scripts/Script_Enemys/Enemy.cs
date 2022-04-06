@@ -256,6 +256,7 @@ public class Enemy : MonoBehaviour
     {
         currentState.OnCollEnter(this, collision);
     }
+    
 
     private void OnTriggerExit(Collider other)
     {
