@@ -96,7 +96,7 @@ MonoBehaviour:
   Path: Assets/Desktop/Bank A.bank
   Name: Bank A
   StudioPath: bank:/Bank A
-  lastModified: 637847785881784986
+  lastModified: 637846846043552878
   FileSizes: []
   Exists: 1
 --- !u!114 &-4805689967766974117
@@ -141,7 +141,7 @@ MonoBehaviour:
   Path: Assets/Desktop/Master.strings.bank
   Name: Master.strings
   StudioPath: bank:/Master.strings
-  lastModified: 637847785882065057
+  lastModified: 637848437625708466
   FileSizes:
   - Name: 
     Value: 1618
@@ -188,7 +188,7 @@ MonoBehaviour:
   Path: Assets/Desktop/New Bank.bank
   Name: New Bank
   StudioPath: bank:/New Bank
-  lastModified: 637847785882065057
+  lastModified: 637848437625718205
   FileSizes: []
   Exists: 1
 --- !u!114 &-3785660350733267211
@@ -341,7 +341,7 @@ MonoBehaviour:
   Path: Assets/Desktop/Master.bank
   Name: Master
   StudioPath: bank:/Master
-  lastModified: 637847785882055055
+  lastModified: 637848437625688284
   FileSizes: []
   Exists: 1
 --- !u!114 &11400000
@@ -386,7 +386,7 @@ MonoBehaviour:
   - {fileID: -1385252958102866005}
   StringsBanks:
   - {fileID: -4754765858113200358}
-  cacheTime: 637847785882065057
+  cacheTime: 637848437625718205
   cacheVersion: 10
 --- !u!114 &854177811709761783
 MonoBehaviour:
