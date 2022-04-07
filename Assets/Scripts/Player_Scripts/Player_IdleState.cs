@@ -27,6 +27,14 @@ public class Player_IdleState :  Player_BaseState
 
     public override void CheckSwitchStates()
     {
+        if (Context.Hp <= 0)
+        {
+            SwitchState(Factory.Dead());
+        }
+        if (Context.IsIsHitted)
+        {
+            SwitchState(Factory.Hitted());
+        }
         if (Context.IsMousePressed && Context.IsWeaponAttached && !Context.RequireNewAttack)
         {
             SwitchState(Factory.StaffAttack());

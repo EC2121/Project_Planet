@@ -11,6 +11,7 @@ using Random = UnityEngine.Random;
 public class EnemyMGR : MonoBehaviour
 {
     // Start is called before the first frame update
+    public Transform Hologram;
     List<GameObject> enemies;
     public List<Transform> SpawnPoint;
     public int NumberOfBaseChompy;
@@ -22,8 +23,9 @@ public class EnemyMGR : MonoBehaviour
     [HideInInspector]private EnemyData ChomperBaseData;
     [HideInInspector]private EnemyData ChomperAlphaData;
     
-    void Start()
+    void Awake()
     {
+        Transform Hologram = this.Hologram;
         enemies = new List<GameObject>(); //TODO fare pulizia
         Player = GameObject.FindGameObjectWithTag("Player").transform;
         Roby = GameObject.FindGameObjectWithTag("Roby").transform; 
@@ -49,7 +51,7 @@ public class EnemyMGR : MonoBehaviour
     {
         GameObject go = Instantiate(ChomperAlpha, parent);
         go.tag = "Enemy";
-        PrepareEnemy(go, SpawnPosition, ChomperAlphaData, Player, Roby, PerfectPosition);
+        PrepareEnemy(go, SpawnPosition, ChomperAlphaData, Player, Roby, Hologram, PerfectPosition);
         if (Rotation != default(Quaternion))
         {
             go.transform.rotation = Rotation;
@@ -61,7 +63,7 @@ public class EnemyMGR : MonoBehaviour
     {
         GameObject Go = Instantiate(ChomperPrefab, parent);
         Go.tag = "Enemy";
-        PrepareEnemy(Go,SpawnPosition,ChomperBaseData,Player,Roby, PerfectPosition);
+        PrepareEnemy(Go,SpawnPosition,ChomperBaseData,Player,Roby, Hologram, PerfectPosition);
         print(SpawnPosition);
         if (Rotation != default(Quaternion))
         {
@@ -70,7 +72,7 @@ public class EnemyMGR : MonoBehaviour
         enemies.Add(Go);       
     }
 
-    public void PrepareEnemy(GameObject Go,Vector3 position,EnemyData Data,Transform Player,Transform Roby, bool PerfectPosition = false)
+    public void PrepareEnemy(GameObject Go,Vector3 position,EnemyData Data,Transform Player,Transform Roby, Transform Hologram, bool PerfectPosition = false)
     {
         if (!PerfectPosition)
         {
@@ -83,7 +85,7 @@ public class EnemyMGR : MonoBehaviour
         }
         
         Enemy enemy = Go.GetComponent<Enemy>();
-        enemy.LoadData(Data,Player,Roby);
+        enemy.LoadData(Data,Player,Roby,Hologram);
     }
 
     private void OnEnable()

@@ -89,6 +89,15 @@ public partial class @Player_Controller : IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Q"",
+                    ""type"": ""Button"",
+                    ""id"": ""1edf59fc-1a31-4cb5-b87b-689f779e438f"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -170,42 +179,9 @@ public partial class @Player_Controller : IInputActionCollection2, IDisposable
                     ""isPartOfComposite"": false
                 },
                 {
-                    ""name"": ""One Modifier"",
-                    ""id"": ""d9c5db56-c363-4802-b00d-4cfb0595ac2f"",
-                    ""path"": ""OneModifier"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": """",
-                    ""action"": ""Look"",
-                    ""isComposite"": true,
-                    ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": ""modifier"",
-                    ""id"": ""e29ad27b-5f78-4795-9cc7-a8f8c7cb252b"",
-                    ""path"": ""<Mouse>/rightButton"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": """",
-                    ""action"": ""Look"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": true
-                },
-                {
-                    ""name"": ""binding"",
-                    ""id"": ""ba86dc38-85c4-4d97-8ae8-7c55347e331f"",
-                    ""path"": ""<Mouse>/delta"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": """",
-                    ""action"": ""Look"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": true
-                },
-                {
                     ""name"": """",
                     ""id"": ""b51a3562-a42d-46de-8e52-5b2b3cdd8a31"",
-                    ""path"": ""<Keyboard>/1"",
+                    ""path"": ""<Keyboard>/r"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
@@ -234,6 +210,50 @@ public partial class @Player_Controller : IInputActionCollection2, IDisposable
                     ""action"": ""F_Interact"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": ""One Modifier"",
+                    ""id"": ""a52732ba-aa39-4f15-b6aa-b3a0f9b876f0"",
+                    ""path"": ""OneModifier"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Look"",
+                    ""isComposite"": true,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": ""modifier"",
+                    ""id"": ""360dff63-5523-47fc-92ee-317870796ee4"",
+                    ""path"": ""<Mouse>/rightButton"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Look"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": ""binding"",
+                    ""id"": ""0b6ff28c-a1a3-4a8e-b190-73a5b0a6c91f"",
+                    ""path"": ""<Mouse>/delta"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Look"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""aacf73fc-0bff-430d-8c48-29b0506fccf4"",
+                    ""path"": ""<Keyboard>/q"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Q"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         }
@@ -249,6 +269,7 @@ public partial class @Player_Controller : IInputActionCollection2, IDisposable
         m_Player_Switch = m_Player.FindAction("Switch", throwIfNotFound: true);
         m_Player_L_MouseClick = m_Player.FindAction("L_MouseClick", throwIfNotFound: true);
         m_Player_F_Interact = m_Player.FindAction("F_Interact", throwIfNotFound: true);
+        m_Player_Q = m_Player.FindAction("Q", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -315,6 +336,7 @@ public partial class @Player_Controller : IInputActionCollection2, IDisposable
     private readonly InputAction m_Player_Switch;
     private readonly InputAction m_Player_L_MouseClick;
     private readonly InputAction m_Player_F_Interact;
+    private readonly InputAction m_Player_Q;
     public struct PlayerActions
     {
         private @Player_Controller m_Wrapper;
@@ -326,6 +348,7 @@ public partial class @Player_Controller : IInputActionCollection2, IDisposable
         public InputAction @Switch => m_Wrapper.m_Player_Switch;
         public InputAction @L_MouseClick => m_Wrapper.m_Player_L_MouseClick;
         public InputAction @F_Interact => m_Wrapper.m_Player_F_Interact;
+        public InputAction @Q => m_Wrapper.m_Player_Q;
         public InputActionMap Get() { return m_Wrapper.m_Player; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -356,6 +379,9 @@ public partial class @Player_Controller : IInputActionCollection2, IDisposable
                 @F_Interact.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnF_Interact;
                 @F_Interact.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnF_Interact;
                 @F_Interact.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnF_Interact;
+                @Q.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnQ;
+                @Q.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnQ;
+                @Q.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnQ;
             }
             m_Wrapper.m_PlayerActionsCallbackInterface = instance;
             if (instance != null)
@@ -381,6 +407,9 @@ public partial class @Player_Controller : IInputActionCollection2, IDisposable
                 @F_Interact.started += instance.OnF_Interact;
                 @F_Interact.performed += instance.OnF_Interact;
                 @F_Interact.canceled += instance.OnF_Interact;
+                @Q.started += instance.OnQ;
+                @Q.performed += instance.OnQ;
+                @Q.canceled += instance.OnQ;
             }
         }
     }
@@ -394,5 +423,6 @@ public partial class @Player_Controller : IInputActionCollection2, IDisposable
         void OnSwitch(InputAction.CallbackContext context);
         void OnL_MouseClick(InputAction.CallbackContext context);
         void OnF_Interact(InputAction.CallbackContext context);
+        void OnQ(InputAction.CallbackContext context);
     }
 }

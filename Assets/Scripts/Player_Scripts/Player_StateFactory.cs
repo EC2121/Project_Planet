@@ -46,8 +46,13 @@ public class Player_StateFactory
         return new Player_HittedState(_context, this);
     }
     
-    public Player_Interactable Interactable()
+    public Player_BaseState Interactable()
     {
         return new Player_Interactable(_context, this);
+    }
+
+    public Player_BaseState Dead()
+    {
+        return new Player_Dead(_context, this);
     }
 }

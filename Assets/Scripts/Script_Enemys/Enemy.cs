@@ -19,6 +19,7 @@ public class Enemy : MonoBehaviour
     public static UnityEvent<GameObject> OnEnemyDeath = new UnityEvent<GameObject>();
     [HideInInspector] public Transform Player { get; private set; }
     [HideInInspector] public Transform Roby { get; private set; }
+    [HideInInspector] public Transform Hologram { get; private set; }
     [HideInInspector] public NavMeshAgent Agent { get; private set; }
     [HideInInspector] public Animator Anim { get; private set; }
 
@@ -55,6 +56,7 @@ public class Enemy : MonoBehaviour
     public bool DebugMode;
     private void OnEnable()
     {
+        Player_State_Machine.OnHologramDisable.AddListener(SwitchTarget);
         OnActorDeath.AddListener(SwitchTarget);
         OnDamageTaken.AddListener(AddDamage);
         SaveSystem.OnSave += SaveSystemOnOnSave;
@@ -102,7 +104,11 @@ public class Enemy : MonoBehaviour
 
     public void SwitchTarget(GameObject actor)
     {
-        Target = Player;
+        if (Target == Hologram || Target == actor)
+        {
+            Target = Player;
+        }
+       
     }
     public Vector3 Flocking()
     {
@@ -158,8 +164,9 @@ public class Enemy : MonoBehaviour
         transform.position = position;
 
     }
-    public void LoadData(EnemyData Data, Transform playerRef, Transform robyRef)
+    public void LoadData(EnemyData Data, Transform playerRef, Transform robyRef, Transform HologramRef)
     {
+        Hologram = HologramRef;
         Target = null;
         this.Player = playerRef;
         this.Roby = robyRef;
@@ -257,7 +264,7 @@ public class Enemy : MonoBehaviour
                 SwitchState(EnemyStates.Hit);
             }
         }
-        
+
     }
     public virtual void SwitchState(EnemyStates state)
     {
@@ -278,6 +285,14 @@ public class Enemy : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
+        if (Target == Hologram) return;
+
+        else if (other.CompareTag("Hologram"))
+        {
+            Target = Hologram;
+            return;
+        }
+
         if (other.CompareTag("Enemy"))
         {
             Enemy enemy = other.GetComponent<Enemy>();
@@ -294,9 +309,12 @@ public class Enemy : MonoBehaviour
     {
         currentState.OnCollEnter(this, collision);
     }
+    
 
     private void OnTriggerExit(Collider other)
     {
+       
+
         if (other.CompareTag("Enemy"))
         {
             Enemy enemy = other.GetComponent<Enemy>();

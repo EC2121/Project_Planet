@@ -6,7 +6,7 @@ public class Script_AI_Roby_BattleState_MeleeAttack : Script_AI_Roby_BaseState
 {
     public void CustomCollisionEnter(Script_Roby AiRoby, Collision other)
     {
-
+        Player_State_Machine.hit.Invoke(true);
         //AiRoby.transform.LookAt(AiRoby.Roby_EnemyTarget.transform);
         //if (other.gameObject.CompareTag("Enemy") && AiRoby.IsAttacking)
         //{
