@@ -6,7 +6,7 @@ using UnityEngine.InputSystem;
 
 public class Player_StaffAttack : Player_BaseState
 {
-    private float timer = 0.6f;
+    private float timer = 0.5f;
 
     public Player_StaffAttack(Player_State_Machine currentContext, Player_StateFactory playerStateFactory) : base(
         currentContext, playerStateFactory)

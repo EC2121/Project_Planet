@@ -12,10 +12,11 @@ public class AI_Chompies_IdleState : AI_Enemies_IBaseState
         owner.Anim.SetBool(owner.NearBaseHash, true);
         owner.Agent.ResetPath();
     }
+
     public void OnExit(Enemy owner)
     {
-
     }
+
     public void UpdateState(Enemy owner)
     {
         if (IdleTimerExpired(owner))
@@ -34,13 +35,15 @@ public class AI_Chompies_IdleState : AI_Enemies_IBaseState
             owner.IdleTimer = 0;
             return true;
         }
+
         return false;
     }
 
     public void OnTrigEnter(Enemy owner, Collider other)
     {
         if (owner.Target != null) return;
-
+        
+        
         if (ReferenceEquals(other.gameObject, owner.Player.gameObject))
         {
             owner.Target = owner.Player;
@@ -48,6 +51,8 @@ public class AI_Chompies_IdleState : AI_Enemies_IBaseState
             owner.SwitchState(EnemyStates.Alert);
             return;
         }
+
+
         if (ReferenceEquals(other.gameObject, owner.Roby.gameObject))
         {
             owner.Target = owner.Roby;
@@ -55,10 +60,9 @@ public class AI_Chompies_IdleState : AI_Enemies_IBaseState
             owner.SwitchState(EnemyStates.Alert);
             return;
         }
-
-
     }
-
+   
+   
     public void OnCollEnter(Enemy owner, Collision other)
     {
     }

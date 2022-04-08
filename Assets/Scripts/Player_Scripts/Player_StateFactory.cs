@@ -55,4 +55,13 @@ public class Player_StateFactory
     {
         return new Player_Dead(_context, this);
     }
+    
+    public Player_BaseState RunAttack()
+    {
+        return new Player_RunAttack(_context, this);
+    }
+    public Player_BaseState JumpAttack()
+    {
+        return new Player_JumpAttack(_context, this);
+    }
 }

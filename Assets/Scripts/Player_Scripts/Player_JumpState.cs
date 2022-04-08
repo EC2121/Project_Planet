@@ -16,7 +16,9 @@ public class Player_JumpState : Player_BaseState
     public override void EnterState()
     {
         Context.Animator.SetBool(Context.IsAttacking,false);
-        Context.Animator.SetBool("isHitted",false);
+        Context.Animator.SetBool(Context.IsHittedHash,false);
+        Context.Animator.SetBool(Context.IsRunAttackingHash, false);
+        Context.Animator.SetBool("isJumpAttack", false);
 
         HandleJump();
     }
@@ -30,7 +32,7 @@ public class Player_JumpState : Player_BaseState
     public override void ExitState()
     {
         Context.Animator.SetBool(Context.IsJumpingHash, false);
-        Context.Animator.SetBool("isJumpHitted", false);
+        Context.Animator.SetBool(Context.IsJumpHittedHash, false);
         if (!Context.IsRunPressed)
         {
             Context.Animator.SetBool(Context.IsRunningHash, false);
@@ -61,10 +63,10 @@ public class Player_JumpState : Player_BaseState
 
     public override void CheckSwitchStates()
     {
-        // if (Context.IsIsHitted)
-        // {
-        //     SwitchState(Factory.JumpHitted());
-        // }
+        if (Context.IsMousePressed && Context.IsWeaponAttached)
+        {
+            SwitchState(Factory.JumpAttack());
+        }
         if (Context.CharacterController.isGrounded)
         {
             SwitchState(Factory.Grounded());
@@ -95,7 +97,7 @@ public class Player_JumpState : Player_BaseState
         if (Context.IsIsHitted && !isBeenHitted)
         {
             isBeenHitted = true;
-            Context.Animator.SetBool("isJumpHitted", true);
+            Context.Animator.SetBool(Context.IsJumpHittedHash, true);
             Context.Animator.SetBool(Context.IsJumpingHash,false);
             Context.Hp -= 30f;
         }
