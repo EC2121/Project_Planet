@@ -8,16 +8,18 @@ public class GameUIMGR : MonoBehaviour
 {
 
     GameObject currentMenu;
-    GameObject mainMenu;
-    public GameObject optionsMenu;
-    public GameObject audioMenu;
-    public GameObject videoMenu;
-    GameObject prevMenu;
+    public GameObject Menu;
+    private GameObject mainMenu;
+
+    private FMOD.Studio.Bus music;
+    private FMOD.Studio.Bus sfx;
 
 
     private void Awake()
     {
-        mainMenu = transform.GetChild(2).gameObject;
+        mainMenu = Menu.transform.GetChild(0).gameObject;
+        music = FMODUnity.RuntimeManager.GetBus("bus:/Music");
+        sfx = FMODUnity.RuntimeManager.GetBus("bus:/SFX");
     }
 
     private void Update()
@@ -37,30 +39,58 @@ public class GameUIMGR : MonoBehaviour
         }
     }
 
-    public void OnOptionsPressed()
+    public void OnVideoQualityChange(int value)
     {
-        currentMenu.SetActive(false);
-        currentMenu = optionsMenu;
-        currentMenu.SetActive(true);
+        QualitySettings.SetQualityLevel(value);
     }
 
-    public void OnAudioPressed()
+    public void OnSFXValueChange(float value)
     {
+        sfx.setVolume(value);
+    }
 
-        currentMenu.SetActive(false);
-        currentMenu = audioMenu;
-        currentMenu.SetActive(true);
-    }
-    public void OnVideoPressed()
+    public void OnMusicValueChanged(float value)
     {
-        currentMenu.SetActive(false);
-        currentMenu = videoMenu;
-        currentMenu.SetActive(true);
+        music.setVolume(value);
     }
+
+    public void OnSaveButtonPressed()
+    {
+        SaveMGR.Save();
+    }
+
+    public void OnLoadButtonPressed()
+    {
+        SaveMGR.Load();
+    }
+
+    //public void OnOptionsPressed()
+    //{
+    //    currentMenu.SetActive(false);
+    //    currentMenu = optionsMenu;
+    //    currentMenu.SetActive(true);
+    //}
+
+    //public void OnAudioPressed()
+    //{
+
+    //    currentMenu.SetActive(false);
+    //    currentMenu = audioMenu;
+    //    currentMenu.SetActive(true);
+    //}
+    //public void OnVideoPressed()
+    //{
+    //    currentMenu.SetActive(false);
+    //    currentMenu = videoMenu;
+    //    currentMenu.SetActive(true);
+    //}
 
     public void OnResume()
     {
-        currentMenu.SetActive(false);
+        for (int i = 0; i < Menu.transform.childCount; i++)
+        {
+            Menu.transform.GetChild(i).gameObject.SetActive(false);
+        }
         currentMenu = null;
     }
 
@@ -68,17 +98,17 @@ public class GameUIMGR : MonoBehaviour
     {
         SceneManager.LoadScene("UI_MenuScene");
     }
-    public void OnBackPressed()
-    {
-        currentMenu.SetActive(false);
-        if (currentMenu == optionsMenu)
-        {
-            currentMenu = mainMenu;
-        }
-        else if (currentMenu == audioMenu || currentMenu == videoMenu)
-        {
-            currentMenu = optionsMenu;
-        }
-        currentMenu.SetActive(true);
-    }
+    //public void OnBackPressed()
+    //{
+    //    currentMenu.SetActive(false);
+    //    if (currentMenu == optionsMenu)
+    //    {
+    //        currentMenu = mainMenu;
+    //    }
+    //    else if (currentMenu == audioMenu || currentMenu == videoMenu)
+    //    {
+    //        currentMenu = optionsMenu;
+    //    }
+    //    currentMenu.SetActive(true);
+    //}
 }

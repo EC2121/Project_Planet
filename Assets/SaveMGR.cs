@@ -9,11 +9,11 @@ public class SaveMGR : MonoBehaviour
     //Editor test bools
     public bool SaveData = false, LoadData = false;
 
-    public void Save()
+    public static void Save()
     {
         SaveSystem.InvokeOnSave();    
     }
-    public void Load()
+    public static void Load()
     {
         SaveSystem.InvokeOnLoad();    
     }
