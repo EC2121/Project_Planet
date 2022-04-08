@@ -22,7 +22,7 @@ public class AI_Chompies_FollowState : AI_Enemies_IBaseState
     public void OnExit(Enemy owner)
     {
         //owner.Anim.SetBool(owner.InPursuitHash, false);
-        // owner.Anim.SetBool(owner.HasTargetHash, false);
+        //owner.Anim.SetBool(owner.HasTargetHash, false);
     }
 
     public void UpdateState(Enemy owner)
@@ -60,6 +60,12 @@ public class AI_Chompies_FollowState : AI_Enemies_IBaseState
         //
         //     return;
         // }
+        if (Vector3.Distance(owner.transform.position, owner.PatrolCenter) > 20 && Vector3.Distance(owner.Target.position,owner.transform.position) > 11)
+        {
+            owner.SwitchState(EnemyStates.Idle);
+            return;
+        }
+
 
         if (distance <= owner.AttackRange)
         {
@@ -69,7 +75,7 @@ public class AI_Chompies_FollowState : AI_Enemies_IBaseState
 
         FollowPlayer(owner);
     }
-    
+
 
     public void CanAttackTarget()
     {

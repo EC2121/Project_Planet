@@ -24,6 +24,11 @@ public class AI_Chompies_PatrolState : AI_Enemies_IBaseState
             owner.SwitchState(EnemyStates.Idle);
             return;
         }
+        if(CheckForTarget(owner))
+        {
+            owner.SwitchState(EnemyStates.Alert);
+            return;
+        }
 
     }
 
@@ -36,22 +41,26 @@ public class AI_Chompies_PatrolState : AI_Enemies_IBaseState
 
     public void OnTrigEnter(Enemy owner, Collider other)
     {
-        if (owner.Target != null) return;
+        //if (owner.Target != null) return;
 
-        if (ReferenceEquals(other.gameObject, owner.Player.gameObject))
-        {
-            owner.Target = owner.Player;
-            owner.IsAlerted = true;
-            owner.SwitchState(EnemyStates.Alert);
-            return;
-        }
-        if (ReferenceEquals(other.gameObject, owner.Roby.gameObject))
-        {
-            owner.Target = owner.Roby;
-            owner.IsAlerted = true;
-            owner.SwitchState(EnemyStates.Alert);
-            return;
-        }
+        //if (ReferenceEquals(other.gameObject, owner.Player.gameObject))
+        //{
+        //    owner.Target = owner.Player;
+        //    owner.IsAlerted = true;
+        //    owner.SwitchState(EnemyStates.Alert);
+        //    owner.sphereCollider.enabled = false;
+
+        //    return;
+        //}
+        //if (ReferenceEquals(other.gameObject, owner.Roby.gameObject))
+        //{
+        //    owner.Target = owner.Roby;
+        //    owner.IsAlerted = true;
+        //    owner.SwitchState(EnemyStates.Alert);
+        //    owner.sphereCollider.enabled = false;
+
+        //    return;
+        //}
 
     }
 
@@ -59,31 +68,43 @@ public class AI_Chompies_PatrolState : AI_Enemies_IBaseState
     {
     }
 
-    //public bool CheckForTarget(Enemy owner)
-    //{
+    public bool CheckForTarget(Enemy owner)
+    {
 
-    //    float distanceFromPlayer = Vector3.Distance(owner.transform.position, owner.Player.position);
-    //    float distanceFromRoby = Vector3.Distance(owner.transform.position, owner.Player.position);
+        float distanceFromPlayer = Vector3.Distance(owner.transform.position, owner.Player.position);
+        float distanceFromRoby = Vector3.Distance(owner.transform.position, owner.Roby.position);
 
 
-    //    if ((distanceFromPlayer <= owner.VisionRange) || (distanceFromPlayer <= owner.VisionAngleRange &&
-    //        Vector3.Angle(owner.transform.forward, owner.Player.position - owner.transform.position) <= owner.VisionAngle))
-    //    {
-    //        owner.Target = owner.Player;
-    //        owner.IsAlerted = true;
-    //        return true;
-    //    }
+        if ((distanceFromPlayer <= 10) || (distanceFromPlayer <= 10 &&
+            Vector3.Angle(owner.transform.forward, owner.Player.position - owner.transform.position) <= 30))
+        {
+            owner.Target = owner.Player;
+            owner.IsAlerted = true;
+            return true;
+        }
 
-    //    if ((distanceFromRoby <= owner.VisionRange) || (distanceFromRoby <= owner.VisionAngleRange &&
-    //        Vector3.Angle(owner.transform.forward, owner.Roby.position - owner.transform.position) <= owner.VisionAngle))
-    //    {
-    //        owner.Target = owner.Roby;
-    //        owner.IsAlerted = true;
-    //        return true;
-    //    }
+        if ((distanceFromRoby <= 10) || (distanceFromRoby <= 10 &&
+            Vector3.Angle(owner.transform.forward, owner.Roby.position - owner.transform.position) <= 30))
+        {
+            owner.Target = owner.Roby;
+            owner.IsAlerted = true;
+            return true;
+        }
 
-    //    return false;
-    //}
+        if (owner.Hologram.gameObject.activeInHierarchy)
+        {
+            float distanceFromHologram = Vector3.Distance(owner.transform.position, owner.Hologram.position);
+            if (distanceFromHologram <= 10)
+            {
+                owner.Target = owner.Hologram;
+                owner.IsAlerted = true;
+                return true;
+            }
+        }
+
+
+        return false;
+    }
 
 
 

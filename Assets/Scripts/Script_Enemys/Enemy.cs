@@ -67,18 +67,21 @@ public class Enemy : MonoBehaviour
     [HideInInspector] public int SpottedHash = Animator.StringToHash("Spotted");
     [HideInInspector] public int DieHash = Animator.StringToHash("Die");
 
+
+    [HideInInspector] public SphereCollider sphereCollider;
     public List<Enemy> nearEnemies;
     public Transform Tounge;
     public bool DebugMode;
 
     private void OnEnable()
     {
-        Player_State_Machine.OnHologramDisable.AddListener(SwitchTarget);
+        Player_State_Machine.OnHologramDisable.AddListener(OnHologramDestroy);
         OnActorDeath.AddListener(SwitchTarget);
         OnDamageTaken.AddListener(AddDamage);
         SaveSystem.OnSave += SaveSystemOnOnSave;
         //SaveSystem.OnLoad += SaveSystemOnOnLoad;
         IsDisabled = false;
+        sphereCollider = GetComponent<SphereCollider>();
     }
 
     // private void SaveSystemOnOnLoad(object sender, EventArgs e)
@@ -121,10 +124,7 @@ public class Enemy : MonoBehaviour
 
     public void SwitchTarget(GameObject actor)
     {
-        if (Target == Hologram || Target == actor)
-        {
             Target = Player;
-        }
     }
 
     public Vector3 Flocking()
@@ -161,6 +161,11 @@ public class Enemy : MonoBehaviour
         //transform.position = Agent.nextPosition;
         //Agent.nextPosition = Vector3.Lerp(transform.position, Agent.nextPosition + flockingVec, Time.deltaTime);
         currentState.UpdateState(this);
+        if (Hologram.gameObject.activeInHierarchy && Vector3.Distance(Hologram.position,transform.position) < 10)
+        {
+            Target = Hologram;
+        }
+        Debug.Log(currentState);
     }
 
     private void OnAnimatorMove()
@@ -244,6 +249,11 @@ public class Enemy : MonoBehaviour
         }
     }
 
+    public void OnHologramDestroy(GameObject go)
+    {
+        SwitchState(EnemyStates.Idle);
+    }
+
     public void OnAttackEnd()
     {
         IsAttacking = false;
@@ -299,36 +309,25 @@ public class Enemy : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if (Target == Hologram) return;
-        int ciao = Random.Range(0, 2);
-        // if (ciao == 0)
-        // {
-            if (other.CompareTag("Player"))
-            {
-                Target = Player;
-            }
-       // }
 
-       // if (ciao == 1)
+        if (other.CompareTag("Player"))
         {
-            if (other.CompareTag("Enemy"))
+            Target = Player;
+        }
+
+        if (other.CompareTag("Enemy"))
+        {
+            Enemy enemy = other.GetComponent<Enemy>();
+            if (!nearEnemies.Contains(enemy))
             {
-                Enemy enemy = other.GetComponent<Enemy>();
-                if (!nearEnemies.Contains(enemy))
-                {
-                    nearEnemies.Add(enemy);
-                }
+                nearEnemies.Add(enemy);
             }
-        } 
-        if (other.CompareTag("Hologram"))
-        {
-            Target = Hologram;
         }
 
 
         currentState.OnTrigEnter(this, other);
     }
-    
+
     private void OnCollisionEnter(Collision collision)
     {
         currentState.OnCollEnter(this, collision);
