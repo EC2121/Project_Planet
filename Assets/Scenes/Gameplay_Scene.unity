@@ -3510,6 +3510,10 @@ PrefabInstance:
       value: CliffBig01
       objectReference: {fileID: 0}
     - target: {fileID: 100000, guid: 843d122e5e84aa84db8a1036fe1d3dd8, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 100000, guid: 843d122e5e84aa84db8a1036fe1d3dd8, type: 3}
       propertyPath: m_StaticEditorFlags
       value: 4294967295
       objectReference: {fileID: 0}
@@ -4542,8 +4546,16 @@ PrefabInstance:
       value: 4294967295
       objectReference: {fileID: 0}
     - target: {fileID: 100004, guid: 28deb9f2de69da84a8b4690810e91ebb, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 100004, guid: 28deb9f2de69da84a8b4690810e91ebb, type: 3}
       propertyPath: m_StaticEditorFlags
       value: 4294967295
+      objectReference: {fileID: 0}
+    - target: {fileID: 100006, guid: 28deb9f2de69da84a8b4690810e91ebb, type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 100006, guid: 28deb9f2de69da84a8b4690810e91ebb, type: 3}
       propertyPath: m_StaticEditorFlags
@@ -4605,6 +4617,18 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 2300000, guid: 28deb9f2de69da84a8b4690810e91ebb, type: 3}
+      propertyPath: m_Materials.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2300000, guid: 28deb9f2de69da84a8b4690810e91ebb, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 6db363e943dc4c745b0d4b5a07cce538, type: 2}
+    - target: {fileID: 2300000, guid: 28deb9f2de69da84a8b4690810e91ebb, type: 3}
+      propertyPath: m_Materials.Array.data[1]
+      value: 
+      objectReference: {fileID: 2100000, guid: 6db363e943dc4c745b0d4b5a07cce538, type: 2}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 28deb9f2de69da84a8b4690810e91ebb, type: 3}
 --- !u!4 &643644625 stripped
@@ -10071,7 +10095,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 100000, guid: 843d122e5e84aa84db8a1036fe1d3dd8, type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 100000, guid: 843d122e5e84aa84db8a1036fe1d3dd8, type: 3}
       propertyPath: m_StaticEditorFlags
@@ -11209,6 +11233,10 @@ PrefabInstance:
       value: RockLedge02
       objectReference: {fileID: 0}
     - target: {fileID: 100000, guid: a4181c3067a7a5c448ec8fca35647597, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 100000, guid: a4181c3067a7a5c448ec8fca35647597, type: 3}
       propertyPath: m_StaticEditorFlags
       value: 4294967295
       objectReference: {fileID: 0}
@@ -12325,6 +12353,10 @@ PrefabInstance:
     - target: {fileID: 100000, guid: 362e8229a15ec8740aca91e6ec290477, type: 3}
       propertyPath: m_Name
       value: CliffBig03
+      objectReference: {fileID: 0}
+    - target: {fileID: 100000, guid: 362e8229a15ec8740aca91e6ec290477, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 100000, guid: 362e8229a15ec8740aca91e6ec290477, type: 3}
       propertyPath: m_StaticEditorFlags
