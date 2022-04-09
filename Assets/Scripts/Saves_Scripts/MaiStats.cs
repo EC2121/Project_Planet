@@ -50,9 +50,9 @@ namespace UnityTemplateProjects.Saves_Scripts
             #region Apply loaded data to MonoBehaviour
             CurrentAbilities = data.CurrentAbilities;
             MaxHealth = data.MaiMaxHealth;
-            CurrentHealth = data.MaiCurrentHealth;
+            CurrentHealth = transform.GetComponent<Player_State_Machine>().Hp = data.MaiCurrentHealth;
             CollectedCoins = data.CollectedCoins;
-                
+
             UpdateStats(); //Aggiorna la struttura
             #endregion
             
