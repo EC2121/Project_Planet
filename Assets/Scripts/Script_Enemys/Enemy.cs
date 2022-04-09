@@ -67,6 +67,7 @@ public class Enemy : MonoBehaviour
     {
         Target = Player;
     }
+
     public Vector3 Flocking()
     {
         Vector3 alignment = Vector3.zero;
