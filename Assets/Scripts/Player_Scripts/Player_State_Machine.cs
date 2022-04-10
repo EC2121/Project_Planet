@@ -1,4 +1,3 @@
-using System;
 using Cinemachine.Utility;
 using System.Collections.Generic;
 using UnityEngine;
@@ -126,7 +125,7 @@ public class Player_State_Machine : MonoBehaviour
     public float RunMultiplier { get { return runSpeed; } }
     public bool HasBox { get { return hasBox; } set { hasBox = value; } }
     public bool IsSwitchPressed { get { return switchWeapon; } }
-    public bool IsIsHitted { get { return isHitted; } set{isHitted = value;} }
+    public bool IsIsHitted { get { return isHitted; } set { isHitted = value; } }
     public bool Mai_BoxIsTakable { get { return mai_BoxIsTakable; } }
     public bool IsWeaponAttached { get { return isWeaponAttached; } set { isWeaponAttached = value; } }
     public Handle_Mesh_Sockets Sockets { get { return sockets; } }
@@ -145,10 +144,12 @@ public class Player_State_Machine : MonoBehaviour
 
     private Vector3 positionToLookAt = Vector3.zero;
 
-    private GameObject hologram;
+    //private GameObject hologram;
 
     public bool HasKey;
-    
+    private float hologramTimer;
+    private bool startHologramTimer;
+
     private void Awake()
     {
         Interactable.OnKeyTakenDel += () => HasKey = true;
@@ -170,10 +171,10 @@ public class Player_State_Machine : MonoBehaviour
         isJumpHittedHash = Animator.StringToHash("isJumpHitted");
         isHittedHash = Animator.StringToHash("isHitted");
         unEquipString = "Un_Equip";
-        
+
         sockets = GetComponent<Handle_Mesh_Sockets>();
         cameraMainTransform = Camera.main.transform;
-        
+
         _states = new Player_StateFactory(this);
         _currentState = _states.Grounded();
         _currentState.EnterState();
@@ -208,7 +209,7 @@ public class Player_State_Machine : MonoBehaviour
 
     private void Start()
     {
-       hologram.SetActive(false);
+        hologram.SetActive(false);
     }
 
     private void OnRun(InputAction.CallbackContext context)
@@ -258,15 +259,15 @@ public class Player_State_Machine : MonoBehaviour
     private void CreateHologram()
     {
         hologram.SetActive(true);
-        hologram.transform.rotation = this.transform.rotation;
-        hologram.transform.position = this.transform.position + this.transform.forward * 2;
+        hologram.transform.rotation = transform.rotation;
+        hologram.transform.position = transform.position + transform.forward * 2;
         Animator animator = hologram.GetComponent<Animator>();
         animator.SetBool("isWalking", true);
         animator.SetBool("isRunning", true);
     }
     private void DestroyHologram()
     {
-        OnHologramDisable.Invoke(this.gameObject);
+        OnHologramDisable.Invoke(gameObject);
         hologram.SetActive(false);
     }
 
@@ -275,8 +276,19 @@ public class Player_State_Machine : MonoBehaviour
 
         if (onHologram)
         {
-            CreateHologram();
-            Invoke("DestroyHologram", 5);
+            if (hologramTimer <= 0)
+            {
+                startHologramTimer = true;
+                CreateHologram();
+                hologramTimer = 10;
+                Invoke("DestroyHologram", 5);
+            }
+        }
+
+        if (startHologramTimer)
+        {
+            hologramTimer -= Time.deltaTime;
+            if (hologramTimer <= 0) startHologramTimer = false;
         }
 
         _currentState.UpdateStates();
@@ -290,8 +302,8 @@ public class Player_State_Machine : MonoBehaviour
         appliedMovement = inputFrame * currentMovement;
         characterController.Move(appliedMovement * Time.deltaTime);
         HandleRotation();
-       // Debug.Log(isHitted);
-     //   Debug.Log(hp + " HPPPPPPPPPPP");
+        // Debug.Log(isHitted);
+        //   Debug.Log(hp + " HPPPPPPPPPPP");
 
     }
     public void OnAnimationEvent(string eventName)

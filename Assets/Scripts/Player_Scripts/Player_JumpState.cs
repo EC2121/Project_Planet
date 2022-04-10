@@ -101,7 +101,7 @@ public class Player_JumpState : Player_BaseState
             Context.Animator.SetBool(Context.IsJumpingHash,false);
             Context.Hp -= 30f;
         }
-        bool isFalling = Context.CurrentMovementY <= 0.0f || !Context.IsJumpPressed;
+        bool isFalling = Context.CurrentMovementY <= 0.03f || !Context.IsJumpPressed;
         float fallMultiplier = 2.0f;
 
         if (isFalling)

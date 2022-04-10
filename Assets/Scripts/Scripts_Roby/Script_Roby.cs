@@ -95,7 +95,7 @@ public class Script_Roby : MonoBehaviour
 
     protected virtual void Update()
     {
-       // print(Roby_CurrentState);
+        print(Roby_CurrentState);
         Roby_CurrentState.UpdateState(this);
     }
 
@@ -119,9 +119,9 @@ public class Script_Roby : MonoBehaviour
     private void Init()
     {
 
-        Mai_PlayerNearZone = 7;
-        Mai_PlayerNormalZone = 10;
-        Mai_PlayerBattleZone = 15;
+        Mai_PlayerNearZone = 3;
+        Mai_PlayerNormalZone = 5;
+        Mai_PlayerBattleZone = 10;
         Mai_MinDistance = 4;
         Roby_RobyNearZone = 5;
         RobyHpSlider.maxValue = roby_Life;

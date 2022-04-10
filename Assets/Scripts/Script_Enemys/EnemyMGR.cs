@@ -78,7 +78,7 @@ public class EnemyMGR : MonoBehaviour
         if (!PerfectPosition)
         {
             Go.transform.position = new Vector3(position.x + Random.insideUnitCircle.x * 10
-                , 0.5f, position.z + Random.insideUnitCircle.y * 10);
+                , position.y, position.z + Random.insideUnitCircle.y * 10);
         }
         else
         {

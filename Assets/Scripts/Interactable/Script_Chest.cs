@@ -71,14 +71,23 @@ public class Script_Chest : MonoBehaviour
 
     private void OnEnable()
     {
-        Player_State_Machine.takeTheBox.AddListener(() => box_IsTaken = !box_IsTaken);
+        Player_State_Machine.takeTheBox.AddListener(() =>
+        {
+            box_IsTaken = !box_IsTaken;
+            box_Collider.enabled = !box_IsTaken;
+        });
+
         SaveSystem.OnSave += SaveSystemOnOnSave;
         SaveSystem.OnLoad += SaveSystemOnOnLoad;
     }
 
     private void OnDisable()
     {
-        Player_State_Machine.takeTheBox.RemoveListener(() => box_IsTaken = !box_IsTaken);
+        Player_State_Machine.takeTheBox.RemoveListener(() =>
+        {
+            box_IsTaken = !box_IsTaken;
+            box_Collider.enabled = !box_IsTaken;
+        });
 
         SaveSystem.OnSave -= SaveSystemOnOnSave;
         SaveSystem.OnLoad -= SaveSystemOnOnLoad;
