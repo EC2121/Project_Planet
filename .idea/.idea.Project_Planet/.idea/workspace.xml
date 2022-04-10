@@ -2,31 +2,14 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="602c179c-419d-446c-b8ea-27c52ae9895b" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/Assets/Scripts/Menu/AudioMenu.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Scripts/Menu/AudioMenu.cs.meta" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/.idea.Project_Planet/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.Project_Planet/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Art/Models/Environment/Stonework/Materials/WallTallLong01-WallTall_Long_mat.mat" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Art/Models/Environment/Stonework/Materials/WallTallLong01-WallTall_Long_mat.mat" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Plugins/FMOD/Cache/Editor/FMODStudioCache.asset" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Plugins/FMOD/Cache/Editor/FMODStudioCache.asset" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Resources/Environment/Construction/Environment_Corner_Broken.prefab" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Resources/Environment/Construction/Environment_Corner_Broken.prefab" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Resources/Environment/Construction/Environment_Floor_Panel_1x1.prefab" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Resources/Environment/Construction/Environment_Floor_Panel_1x1.prefab" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Resources/Environment/Construction/Environment_Switch_Standing.prefab" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Resources/Environment/Construction/Environment_Switch_Standing.prefab" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Resources/Environment/Construction/Environment_Wall_Corner.prefab" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Resources/Environment/Construction/Environment_Wall_Corner.prefab" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Resources/Environment/Construction/Environment_Wall_Huge.prefab" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Resources/Environment/Construction/Environment_Wall_Huge.prefab" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Resources/Environment/Construction/Environment_Wall_Long.prefab" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Resources/Environment/Construction/Environment_Wall_Long.prefab" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Resources/Environment/Construction/Environment_Wall_Long_Broken.prefab" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Resources/Environment/Construction/Environment_Wall_Long_Broken.prefab" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Resources/Environment/Construction/Gate_Huge.prefab" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Resources/Environment/Construction/Gate_Huge.prefab" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Resources/Environment/Construction/RockFloating02 (8).prefab" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Resources/Environment/Construction/RockFloating02 (8).prefab" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Resources/Environment/Construction/Wall_Tall_Long_FrontBack.prefab" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Resources/Environment/Construction/Wall_Tall_Long_FrontBack.prefab" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Resources/Environment/Map.prefab" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Resources/Environment/Map.prefab" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Resources/Environment/Natural_Rock/Environment_Big_Cliff_Hole.prefab" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Resources/Environment/Natural_Rock/Environment_Big_Cliff_Hole.prefab" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Resources/Environment/Natural_Rock/Environment_Rock_Floating_04.prefab" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Resources/Environment/Natural_Rock/Environment_Rock_Floating_04.prefab" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Resources/Interactable/Interactable_Box.prefab" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Resources/Interactable/Interactable_Box.prefab" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/Resources/Player/UI/Canvas.prefab" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Resources/Player/UI/Canvas.prefab" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Saves/NEWSaveTest.json" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Saves/NEWSaveTest.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/Scenes/Gameplay_Scene.unity" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scenes/Gameplay_Scene.unity" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Player_Scripts/Player_State_Machine.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Player_Scripts/Player_State_Machine.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Saves_Scripts/GameData.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Saves_Scripts/GameData.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Saves_Scripts/MaiStats.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Saves_Scripts/MaiStats.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Script_Enemys/EnemyMGR.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Script_Enemys/EnemyMGR.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ProjectSettings/EditorBuildSettings.asset" beforeDir="false" afterPath="$PROJECT_DIR$/ProjectSettings/EditorBuildSettings.asset" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/fmod_editor.log" beforeDir="false" afterPath="$PROJECT_DIR$/fmod_editor.log" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scenes/UI_MenuScene.unity" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scenes/UI_MenuScene.unity" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Menu/GraphicsMenu.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Menu/GraphicsMenu.cs" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -49,6 +32,7 @@
     <setting file="file://$PROJECT_DIR$/Library/PackageCache/com.unity.inputsystem@1.3.0/InputSystem/Plugins/OnScreen/OnScreenButton.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Library/PackageCache/com.unity.ugui@1.0.0/Runtime/EventSystem/InputModules/BaseInput.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Library/PackageCache/com.unity.cinemachine@2.6.11/Editor/Utility/SaveDuringPlay.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Library/PackageCache/com.unity.textmeshpro@3.0.6/Scripts/Runtime/TMP_Dropdown.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Library/PackageCache/com.unity.burst@1.3.4/Tests/Runtime/Shared/091-Matrices.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Library/PackageCache/com.unity.ugui@1.0.0/Runtime/UI/Core/Slider.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/3be1a7ff939c43f181c0a10b5a0189ac13c800/97/d1c276db/Component.cs" root0="SKIP_HIGHLIGHTING" />
@@ -65,6 +49,7 @@
     <setting file="file://$PROJECT_DIR$/Library/PackageCache/com.unity.ugui@1.0.0/Runtime/EventSystem/UIBehaviour.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/5d9cca3e225d482d8a3c2bc9152ed3be28400/2c/08256d8f/GUISkin.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Library/PackageCache/com.unity.inputsystem@1.3.0/Samples~/RebindingUI/RebindSaveLoad.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/IL/40fb0c744b874b1b8639efc0b67020506c000/93/0885ac0c/02000018pdb.il" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Library/PackageCache/com.unity.ugui@1.0.0/Runtime/EventSystem/EventSystem.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Library/PackageCache/com.unity.burst@1.3.4/Tests/Runtime/Unity.Burst.Tests/TestCompilerAttribute.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Library/PackageCache/com.unity.inputsystem@1.3.0/InputSystem/Unity.InputSystem.asmdef" root0="SKIP_HIGHLIGHTING" />
@@ -147,7 +132,7 @@
       <workItem from="1649402950702" duration="16341000" />
       <workItem from="1649493392728" duration="2183000" />
       <workItem from="1649523600738" duration="1213000" />
-      <workItem from="1649621107280" duration="1023000" />
+      <workItem from="1649621107280" duration="4622000" />
     </task>
     <servers />
   </component>

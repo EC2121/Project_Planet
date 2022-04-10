@@ -1,1 +1,84 @@
-{"IsEnabled":false,"IsVisible":false,"IsAlive":false,"CurrentAbilities":[],"MaiMaxHealth":100.0,"MaiCurrentHealth":1000.0,"CollectedCoins":0,"MaiPosition":[156.36474609375,0.025999993085861207,168.85726928710938],"MaiRotation":[0.0,0.9902629852294922,0.0,0.1392093002796173],"HasBox":true,"RobyMaxHealth":100.0,"RobyCurrentHealth":50000.0,"RobyPosition":[161.54257202148438,0.0833333358168602,171.8300018310547],"RobyRotation":[0.0,0.012621670961380005,0.0,0.9999203681945801],"CratePosition":[156.32464599609376,0.8456851243972778,168.4739990234375],"CrateRotation":[-0.026103809475898744,0.9858792424201965,-0.03742074593901634,-0.16112244129180909],"CustomDictionaries":[{"SpawnPointName":"GameObject","EnemyStatsList":[{"EnemyType":1,"hp":200.0,"GUID":-156148,"EnemyPosition":[159.22386169433595,0.0833333358168602,187.52598571777345],"EnemyRotation":[0.0,0.9808631539344788,0.0,-0.19469858705997468]},{"EnemyType":0,"hp":100.0,"GUID":-156568,"EnemyPosition":[165.07899475097657,0.0833333358168602,203.11367797851563],"EnemyRotation":[0.0,0.22938808798789979,0.0,0.9733350276947022]}]}]}
+{
+  "IsEnabled": false,
+  "IsVisible": false,
+  "IsAlive": false,
+  "CurrentAbilities": [],
+  "MaiMaxHealth": 100.0,
+  "MaiCurrentHealth": 1000.0,
+  "CollectedCoins": 0,
+  "MaiPosition": [
+    156.36474609375,
+    0.025999993085861207,
+    168.85726928710938
+  ],
+  "MaiRotation": [
+    0.0,
+    0.9902629852294922,
+    0.0,
+    0.1392093002796173
+  ],
+  "HasBox": true,
+  "RobyMaxHealth": 100.0,
+  "RobyCurrentHealth": 50000.0,
+  "RobyPosition": [
+    161.54257202148438,
+    0.0833333358168602,
+    171.8300018310547
+  ],
+  "RobyRotation": [
+    0.0,
+    0.012621670961380005,
+    0.0,
+    0.9999203681945801
+  ],
+  "CratePosition": [
+    156.32464599609376,
+    0.8456851243972778,
+    168.4739990234375
+  ],
+  "CrateRotation": [
+    -0.026103809475898744,
+    0.9858792424201965,
+    -0.03742074593901634,
+    -0.16112244129180909
+  ],
+  "CustomDictionaries": [
+    {
+      "SpawnPointName": "GameObject",
+      "EnemyStatsList": [
+        {
+          "EnemyType": 1,
+          "hp": 200.0,
+          "GUID": -156148,
+          "EnemyPosition": [
+            159.22386169433595,
+            0.0833333358168602,
+            187.52598571777345
+          ],
+          "EnemyRotation": [
+            0.0,
+            0.9808631539344788,
+            0.0,
+            -0.19469858705997468
+          ]
+        },
+        {
+          "EnemyType": 0,
+          "hp": 100.0,
+          "GUID": -156568,
+          "EnemyPosition": [
+            165.07899475097657,
+            0.0833333358168602,
+            203.11367797851563
+          ],
+          "EnemyRotation": [
+            0.0,
+            0.22938808798789979,
+            0.0,
+            0.9733350276947022
+          ]
+        }
+      ]
+    }
+  ]
+}
