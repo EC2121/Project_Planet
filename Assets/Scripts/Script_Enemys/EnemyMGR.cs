@@ -97,6 +97,19 @@ public class EnemyMGR : MonoBehaviour
     private void SaveSystemOnOnLoad(object sender, EventArgs e)
     {
         GameData data = SaveSystem.LoadPlayer(true);
+        //Se nel salvataggio non c'era nessun nemico
+        if (data.CustomDictionaries.Count <= 0)
+        {
+            foreach (Transform child in transform)
+            {
+                foreach (Transform child1 in child)
+                {
+                    Destroy(child1.gameObject);
+                }
+            }
+            return;
+        }
+        
         //Presuppongo che l'enemyMGR venga sempre messo sotto un GO che funge da SpawnMGR (quindi nella gerarchia contiene spawnPoint)
         foreach (CustomDictionary CD in data.CustomDictionaries)
         {

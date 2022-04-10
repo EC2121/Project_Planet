@@ -10,6 +10,7 @@ namespace UnityTemplateProjects.Saves_Scripts
 {
     public static class SaveSystem
     {
+        public static bool newGame;
         public static event EventHandler OnSave, OnLoad;
         public static List<GameData> Saves = new List<GameData>();
         // per specificare ulteriori parametri da passare all'evento (usare il generic <> sull'evento)

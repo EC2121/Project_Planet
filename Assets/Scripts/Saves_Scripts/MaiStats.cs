@@ -71,7 +71,6 @@ namespace UnityTemplateProjects.Saves_Scripts
 
         private void SaveSystemOnOnSave(object sender, EventArgs e)
         {
-            Debug.Log("Entered in Save FROM EVENT");
             try
             {
                 //UPDATE PLAYER STATS
@@ -82,7 +81,6 @@ namespace UnityTemplateProjects.Saves_Scripts
             {
                 Debug.Log(e.ToString());
             }
-            Debug.Log("Game Saved FROM EVENT");
         }
         
 
