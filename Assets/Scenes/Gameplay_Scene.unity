@@ -247,6 +247,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fe23e33a29ab34f4a901bd1136fef632, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  Hologram: {fileID: 0}
   SpawnPoint:
   - {fileID: 1913498926}
   - {fileID: 1824675321}
@@ -1290,6 +1291,41 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ac0b09e7857660247b1477e93731de29, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!1 &734142570 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 313157804, guid: ddea97438436bd34e81dca6fb5f8ffe2, type: 3}
+  m_PrefabInstance: {fileID: 2525720617516549278}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &734142572
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 734142570}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9a6610d2e704f1648819acc8d7460285, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  CollisionTag: 
+  EventReference:
+    Guid:
+      Data1: -713255267
+      Data2: 1294716618
+      Data3: 1306506
+      Data4: 435643791
+    Path: event:/Music/GamePlayMusic
+  Event: 
+  PlayEvent: 1
+  StopEvent: 2
+  AllowFadeout: 1
+  TriggerOnce: 0
+  Preload: 0
+  Params: []
+  OverrideAttenuation: 0
+  OverrideMinDistance: 1
+  OverrideMaxDistance: 20
 --- !u!114 &792389540 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 2029871264781155333, guid: 66067fd29c47b54409f49dcad60b6ec8, type: 3}
@@ -2395,6 +2431,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ac0b09e7857660247b1477e93731de29, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!1 &1657546230 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 7151257800076689623, guid: 66067fd29c47b54409f49dcad60b6ec8, type: 3}
+  m_PrefabInstance: {fileID: 1675482133}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &1675482133
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -2402,6 +2443,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 1747957569, guid: 66067fd29c47b54409f49dcad60b6ec8, type: 3}
+      propertyPath: Menu
+      value: 
+      objectReference: {fileID: 1657546230}
     - target: {fileID: 2029871264903509726, guid: 66067fd29c47b54409f49dcad60b6ec8, type: 3}
       propertyPath: m_AnchorMax.x
       value: 0
@@ -3375,7 +3420,8 @@ PrefabInstance:
       propertyPath: m_StepOffset
       value: 0
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 313157808, guid: ddea97438436bd34e81dca6fb5f8ffe2, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: ddea97438436bd34e81dca6fb5f8ffe2, type: 3}
 --- !u!1001 &4812308448267073476
 PrefabInstance:
