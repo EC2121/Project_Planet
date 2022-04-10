@@ -40,7 +40,6 @@ public class Player_GroundState : Player_BaseState
             Context.Mai_BoxIsTakable)
         {
             SwitchState(Factory.Interactable());
-            Debug.Log("ciao");
         }
         if (Context.Hp <= 0)
         {
