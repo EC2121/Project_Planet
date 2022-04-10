@@ -1,6 +1,4 @@
-using System.Collections;
 using System.Collections.Generic;
-using System.Runtime.CompilerServices;
 using UnityEngine;
 using UnityTemplateProjects.Saves_Scripts;
 
@@ -30,7 +28,7 @@ public class GameData
     
     //MAI
     //Utilizzare una lista di enum per tenere traccia delle abilità sbloccate?
-    public List<MaiStats.Abilities> CurrentAbilities;// = new List<MeiStats.Abilities>();
+    public List<MaiStats.Abilities> CurrentAbilities;
     public float MaiMaxHealth, MaiCurrentHealth;
     public int CollectedCoins;
     public float[] MaiPosition = new float[3]; 
@@ -57,9 +55,8 @@ public class GameData
     }
 
     //chiamo questo metodo se non devo creare da zero la struttura
-    public void Append_GameData(GameObject self) //OVERRIDE PER LE LISTE DI ENEMY?
+    public void Append_GameData(GameObject self) 
     {
-        //Ora mettere tutto dentro una lista :)
         //IsEnabled = self.activeSelf;
 
         if (self.CompareTag("Player"))
@@ -158,12 +155,6 @@ public class GameData
             
             
         }
-        //GUID DI ENEMYSTATS?  
     }
-
     //Environment data
-    
-    //Enemies data
-    
-    
 }

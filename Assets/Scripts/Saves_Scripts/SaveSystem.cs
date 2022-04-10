@@ -3,19 +3,11 @@ using System.Collections.Generic;
 using UnityEngine;
 using System.IO;
 using System.Linq;
-using System.Runtime.CompilerServices;
 using System.Runtime.Serialization.Formatters.Binary;
-using System.Runtime.Serialization.Json;
-using FMODUnity;
-using UnityEditor;
 using EventHandler = System.EventHandler;
-
-//JSON?
 
 namespace UnityTemplateProjects.Saves_Scripts
 {
-   
-    
     public static class SaveSystem
     {
         public static event EventHandler OnSave, OnLoad;

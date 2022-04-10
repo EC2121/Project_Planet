@@ -1,10 +1,7 @@
 using System;
-using System.Collections;
 using System.Collections.Generic;
 using Unity.Mathematics;
-using UnityEditor;
 using UnityEngine;
-using UnityEngine.AI;
 using UnityTemplateProjects.Saves_Scripts;
 using Random = UnityEngine.Random;
 
