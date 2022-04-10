@@ -11,6 +11,8 @@ public class Timer_OClock : MonoBehaviour
 {
 
     public float StartTime;
+    public GameObject CutScene;
+    public GameObject Ship;
     private bool Going=false;
 
     private float currentTime;
@@ -19,11 +21,11 @@ public class Timer_OClock : MonoBehaviour
 
     private void OnEnable()
     {
-        Script_WaitTheShip.GamePlayer_FinalePhase.AddListener(() => { Going = true; });
+        Player_State_Machine.gamePlayerFinalePhase.AddListener(() => { Going = true; });
     }
     private void OnDisable()
     {
-        Script_WaitTheShip.GamePlayer_FinalePhase.RemoveListener(() => { Going = true; });
+        Player_State_Machine.gamePlayerFinalePhase.RemoveListener(() => { Going = true; });
     }
 
     private void Awake()
@@ -43,11 +45,20 @@ public class Timer_OClock : MonoBehaviour
             currentTime -= Time.deltaTime;
             TimeSpan time = TimeSpan.FromSeconds(currentTime);
             timer.SetText($"{time.ToString(@"mm\:ss\:fff")}");
-            if (currentTime <= 0) //<= altrimenti riparte
+            if (currentTime <= 0)
             {
-                //TimeEnd.Invoke();
-                SceneManager.LoadScene("UI_MenuScene");
+                //currentTime = 0f;
+                CutScene.SetActive(true);
+                gameObject.SetActive(false);
+                //Ship.SetActive(true);
             }
+            // if (currentTime <= 0) //<= altrimenti riparte
+            // {
+            //    // CutScene.gameObject.SetActive(false);
+            //     //StartTime = 0f;
+            //     time = TimeSpan.FromSeconds(0);
+            //     //SceneManager.LoadScene("UI_MenuScene");
+            // }
         }
     }
 }

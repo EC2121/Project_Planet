@@ -5,6 +5,7 @@ using UnityEngine.InputSystem;
 
 public class Player_Interactable : Player_BaseState
 {
+
     private bool canExit = false;
     public Player_Interactable(Player_State_Machine currentContext, Player_StateFactory playerStateFactory) : base(
         currentContext, playerStateFactory)
@@ -48,6 +49,7 @@ public class Player_Interactable : Player_BaseState
 
     private void GotBox()
     {
+        Context.GamePlayerFinalePhase.Invoke();
         if (!Context.HasBox)
         {
             Context.HasBox = true;
@@ -59,7 +61,6 @@ public class Player_Interactable : Player_BaseState
         {
             Context.HasBox = false;
             canExit = true;
-
             Context.Animator.SetBool(Context.HasBoxHash, false);
             Context.TakeTheBox.Invoke();
         }

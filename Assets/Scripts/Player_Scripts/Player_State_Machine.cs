@@ -11,14 +11,16 @@ public class Player_State_Machine : MonoBehaviour
     public static UnityEvent takeTheBox = new UnityEvent();
     public static UnityEvent<GameObject> OnHologramDisable = new UnityEvent<GameObject>();
     public static UnityEvent<bool> hit = new UnityEvent<bool>();
+    public static UnityEvent gamePlayerFinalePhase = new UnityEvent();
 
     [SerializeField] private Transform weapon;
     [SerializeField] private float jumpSpeed = 10f;
     [SerializeField] private float runSpeed = 2.65f;
     [SerializeField] private float rotationFactor = 0.5f;
+    [SerializeField] private float maxHp = 1000f;
 
     //OnlyFor Debug
-    [SerializeField] private float maxHp = 1000f;
+    public static bool hasBox;
 
 
     private bool mai_BoxIsTakable;
@@ -63,7 +65,6 @@ public class Player_State_Machine : MonoBehaviour
     private AnimatorStateInfo stateInfo;
     private int attackId = 0;
     private bool isInteract = false;
-    private bool hasBox = false;
     private bool requireNewJump = false;
     private float initialJumpVelocity;
     private bool isJumping = false;
@@ -81,10 +82,13 @@ public class Player_State_Machine : MonoBehaviour
     private float hp;
     private bool isHitted = false;
     private bool requireNewHit = false;
+    private GameObject hologram;
+
     //getters and setters
     public Player_BaseState CurrentState { get { return _currentState; } set { _currentState = value; } }
     public CharacterController CharacterController { get { return characterController; } set { characterController = value; } }
     public UnityEvent TakeTheBox { get { return takeTheBox; } }
+    public UnityEvent GamePlayerFinalePhase { get { return gamePlayerFinalePhase; } }
     public UnityEvent<bool> Hit { get { return hit; } }
     public Coroutine CurrentJumpResetRoutine { get { return currentJumpResetRoutine; } set { currentJumpResetRoutine = value; } }
     public Coroutine CurrentAttackResetRoutine { get { return currentAttackResetRoutine; } set { currentAttackResetRoutine = value; } }
@@ -138,10 +142,7 @@ public class Player_State_Machine : MonoBehaviour
     public float CurrentMovementZ { get { return currentMovement.z; } set { currentMovement.z = value; } }
     public float Hp { get { return hp; } set { hp = value; } }
     public Vector2 CurrentMovementInput { get { return currentMovementInput; } set { currentMovementInput = value; } }
-
-    private Vector3 positionToLookAt = Vector3.zero;
-
-    private GameObject hologram;
+    
     private void Awake()
     {
 
@@ -229,7 +230,6 @@ public class Player_State_Machine : MonoBehaviour
     {
         isInteract = context.ReadValueAsButton();
         requireNewInteraction = false;
-        Debug.Log(isInteract);
     }
 
     private void OnJump(InputAction.CallbackContext context)
@@ -330,6 +330,10 @@ public class Player_State_Machine : MonoBehaviour
         jumpGravities.Add(3, thirdJumpGravity);
     }
 
+    public void ForceIdle()
+    {
+        _currentState = _states.Grounded();
+    }
     private void HandleRotation()
     {
         Vector3 positionToLookAt;

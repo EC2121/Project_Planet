@@ -17,9 +17,9 @@ public class Script_WaitTheShip : MonoBehaviour
     {
         Player_State_Machine.takeTheBox.RemoveListener(() => TakeMe = !TakeMe);
     }
-    private void OnTriggerEnter(Collider other)
-    {
-        if (other.CompareTag("Player") && TakeMe)
-            GamePlayer_FinalePhase.Invoke();
-    }
+    // private void OnTriggerEnter(Collider other)
+    // {
+    //     if (other.CompareTag("Player") && TakeMe)
+    //         GamePlayer_FinalePhase.Invoke();
+    // }
 }
