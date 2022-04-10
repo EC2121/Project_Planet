@@ -3,19 +3,30 @@
   <component name="ChangeListManager">
     <list default="true" id="602c179c-419d-446c-b8ea-27c52ae9895b" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/.idea.Project_Planet/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.Project_Planet/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Plugins/FMOD/Resources/FMODStudioSettings.asset" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Plugins/FMOD/Resources/FMODStudioSettings.asset" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Plugins/FMOD/Resources/FMODStudioSettings.asset.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Plugins/FMOD/Resources/FMODStudioSettings.asset.meta" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Plugins/FMOD/platforms/mac/lib/fmodstudio.bundle/Contents/Info.plist" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Plugins/FMOD/platforms/mac/lib/fmodstudio.bundle/Contents/Info.plist" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Plugins/FMOD/platforms/mac/lib/fmodstudioL.bundle/Contents/Info.plist" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Plugins/FMOD/platforms/mac/lib/fmodstudioL.bundle/Contents/Info.plist" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Plugins/FMOD/platforms/mac/lib/resonanceaudio.bundle/Contents/Info.plist" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Plugins/FMOD/platforms/mac/lib/resonanceaudio.bundle/Contents/Info.plist" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/SaveMGR.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/SaveMGR.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Saves/NEWSaveTest.json" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Saves/NEWSaveTest.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scenes/Try Scene/Test.unity" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scenes/Try Scene/Test.unity" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scenes/UI_MenuScene.unity" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scenes/UI_MenuScene.unity" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Menu/MainMenu.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Menu/MainMenu.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Saves_Scripts/SaveSystem.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Saves_Scripts/SaveSystem.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Art/Models/Environment/Stonework/Materials/WallTallLong01-WallTall_Long_mat.mat" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Art/Models/Environment/Stonework/Materials/WallTallLong01-WallTall_Long_mat.mat" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Plugins/FMOD/Cache/Editor/FMODStudioCache.asset" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Plugins/FMOD/Cache/Editor/FMODStudioCache.asset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Resources/Environment/Construction/Environment_Corner_Broken.prefab" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Resources/Environment/Construction/Environment_Corner_Broken.prefab" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Resources/Environment/Construction/Environment_Floor_Panel_1x1.prefab" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Resources/Environment/Construction/Environment_Floor_Panel_1x1.prefab" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Resources/Environment/Construction/Environment_Switch_Standing.prefab" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Resources/Environment/Construction/Environment_Switch_Standing.prefab" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Resources/Environment/Construction/Environment_Wall_Corner.prefab" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Resources/Environment/Construction/Environment_Wall_Corner.prefab" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Resources/Environment/Construction/Environment_Wall_Huge.prefab" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Resources/Environment/Construction/Environment_Wall_Huge.prefab" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Resources/Environment/Construction/Environment_Wall_Long.prefab" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Resources/Environment/Construction/Environment_Wall_Long.prefab" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Resources/Environment/Construction/Environment_Wall_Long_Broken.prefab" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Resources/Environment/Construction/Environment_Wall_Long_Broken.prefab" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Resources/Environment/Construction/Gate_Huge.prefab" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Resources/Environment/Construction/Gate_Huge.prefab" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Resources/Environment/Construction/RockFloating02 (8).prefab" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Resources/Environment/Construction/RockFloating02 (8).prefab" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Resources/Environment/Construction/Wall_Tall_Long_FrontBack.prefab" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Resources/Environment/Construction/Wall_Tall_Long_FrontBack.prefab" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Resources/Environment/Map.prefab" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Resources/Environment/Map.prefab" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Resources/Environment/Natural_Rock/Environment_Big_Cliff_Hole.prefab" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Resources/Environment/Natural_Rock/Environment_Big_Cliff_Hole.prefab" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Resources/Environment/Natural_Rock/Environment_Rock_Floating_04.prefab" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Resources/Environment/Natural_Rock/Environment_Rock_Floating_04.prefab" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Resources/Interactable/Interactable_Box.prefab" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Resources/Interactable/Interactable_Box.prefab" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Resources/Player/UI/Canvas.prefab" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Resources/Player/UI/Canvas.prefab" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scenes/Gameplay_Scene.unity" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scenes/Gameplay_Scene.unity" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Player_Scripts/Player_State_Machine.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Player_Scripts/Player_State_Machine.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Saves_Scripts/GameData.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Saves_Scripts/GameData.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Saves_Scripts/MaiStats.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Saves_Scripts/MaiStats.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/Scripts/Script_Enemys/EnemyMGR.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Script_Enemys/EnemyMGR.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/ProjectSettings/EditorBuildSettings.asset" beforeDir="false" afterPath="$PROJECT_DIR$/ProjectSettings/EditorBuildSettings.asset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/fmod_editor.log" beforeDir="false" afterPath="$PROJECT_DIR$/fmod_editor.log" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -74,7 +85,7 @@
     <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
-    <property name="XThreadsFramesViewSplitterKey" value="0.35771066" />
+    <property name="XThreadsFramesViewSplitterKey" value="0.2647059" />
     <property name="rider.run.widget.enabled.cache" value="false" />
     <property name="settings.editor.selected.configurable" value="RiderDpaPageId" />
     <property name="vue.rearranger.settings.migration" value="true" />
@@ -136,6 +147,7 @@
       <workItem from="1649402950702" duration="16341000" />
       <workItem from="1649493392728" duration="2183000" />
       <workItem from="1649523600738" duration="1213000" />
+      <workItem from="1649621107280" duration="1023000" />
     </task>
     <servers />
   </component>

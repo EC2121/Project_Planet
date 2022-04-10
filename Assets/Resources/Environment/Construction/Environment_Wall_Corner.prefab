@@ -91,6 +91,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4269903527601781682}
   - component: {fileID: 4269903527584395026}
+  - component: {fileID: 5515310444809547716}
   m_Layer: 0
   m_Name: Environment_Wall_Corner
   m_TagString: Untagged
@@ -137,6 +138,20 @@ LODGroup:
     renderers:
     - renderer: {fileID: 4269903527599487318}
   m_Enabled: 1
+--- !u!64 &5515310444809547716
+MeshCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4269903527601743762}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 4
+  m_Convex: 0
+  m_CookingOptions: 30
+  m_Mesh: {fileID: 4300004, guid: a4eab86d769790e419808e57fb55f0c2, type: 3}
 --- !u!1 &4269903527601743766
 GameObject:
   m_ObjectHideFlags: 0

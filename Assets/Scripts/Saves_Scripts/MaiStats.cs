@@ -46,7 +46,8 @@ namespace UnityTemplateProjects.Saves_Scripts
             {
                 transform.GetComponent<Player_State_Machine>().CurrentState.Factory.Interactable().EnterState();     
             }
-            
+
+            transform.GetComponent<Player_State_Machine>().HasKey = data.HasKey; 
             
             transform.position = new Vector3(data.MaiPosition[0], data.MaiPosition[1], data.MaiPosition[2]);
             transform.rotation = new Quaternion(data.MaiRotation[0], data.MaiRotation[1],

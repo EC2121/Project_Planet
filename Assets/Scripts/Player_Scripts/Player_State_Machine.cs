@@ -142,9 +142,11 @@ public class Player_State_Machine : MonoBehaviour
     private Vector3 positionToLookAt = Vector3.zero;
 
     private GameObject hologram;
+
+    public bool HasKey;
     private void Awake()
     {
-
+        Interactable.OnKeyTakenDel += () => HasKey = true;
         hologram = GameObject.FindGameObjectWithTag("Hologram");
         input = new Player_Controller();
         characterController = GetComponent<CharacterController>();

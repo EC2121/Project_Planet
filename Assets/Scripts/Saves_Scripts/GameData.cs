@@ -33,7 +33,7 @@ public class GameData
     public int CollectedCoins;
     public float[] MaiPosition = new float[3]; 
     public float[] MaiRotation = new float[4];
-    public bool HasBox;
+    public bool HasBox, HasKey;
 
     //Roby
     public float RobyMaxHealth, RobyCurrentHealth;
@@ -63,7 +63,7 @@ public class GameData
         {
             MaiStats mai = self.GetComponent<MaiStats>();
             HasBox = self.GetComponent<Player_State_Machine>().HasBox;
-
+            HasKey = self.GetComponent<Player_State_Machine>().HasKey;
             //ID?
             CurrentAbilities = mai.CurrentAbilities;
             MaiMaxHealth     = mai.MaxHealth;

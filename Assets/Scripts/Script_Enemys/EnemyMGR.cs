@@ -38,6 +38,9 @@ public class EnemyMGR : MonoBehaviour
 
         for (int i = 0; i < SpawnPoint.Count; i++)
         {
+            if (SpawnPoint[i].SpawnPointLocation == null)
+                continue;
+            
             //Chompy Alpha
             SpawnAlphaChomper(SpawnPoint[i].SpawnPointLocation, SpawnPoint[i].SpawnPointLocation.position);
 

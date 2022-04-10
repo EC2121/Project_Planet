@@ -10,6 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 5820437324577819953}
   - component: {fileID: 5820437324594157969}
+  - component: {fileID: 6776422880143977542}
   m_Layer: 0
   m_Name: Environment_Big_Cliff_Hole
   m_TagString: Untagged
@@ -61,6 +62,20 @@ LODGroup:
     renderers:
     - renderer: {fileID: 5820437324576051159}
   m_Enabled: 1
+--- !u!64 &6776422880143977542
+MeshCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5820437324577984785}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 4
+  m_Convex: 0
+  m_CookingOptions: 30
+  m_Mesh: {fileID: 4300006, guid: 4c27bf02daa2a7248821d10516e3a864, type: 3}
 --- !u!1 &5820437324577984787
 GameObject:
   m_ObjectHideFlags: 0
