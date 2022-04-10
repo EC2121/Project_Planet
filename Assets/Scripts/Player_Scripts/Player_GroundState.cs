@@ -35,7 +35,7 @@ public class Player_GroundState : Player_BaseState
         //     SwitchState(Factory.JumpHitted());
         // }
         if (Context.IsInteract && ( !Context.IsWeaponAttached && !Context.IsRunPressed &&
-                                   !Context.Animator.GetCurrentAnimatorStateInfo(1).IsName(Context.UnEquipHash) ) &&
+                                   !Context.Animator.GetCurrentAnimatorStateInfo(1).IsName(Context.UnEquipString) ) &&
             !Context.RequireNewWeaponSwitch && !Context.RequireNewInteraction &&
             Context.Mai_BoxIsTakable)
         {

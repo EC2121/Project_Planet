@@ -64,7 +64,6 @@ public class EnemyMGR : MonoBehaviour
         GameObject Go = Instantiate(ChomperPrefab, parent);
         Go.tag = "Enemy";
         PrepareEnemy(Go,SpawnPosition,ChomperBaseData,Player,Roby, Hologram, PerfectPosition);
-        print(SpawnPosition);
         if (Rotation != default(Quaternion))
         {
             Go.transform.rotation = Rotation;

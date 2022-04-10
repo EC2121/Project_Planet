@@ -25,7 +25,14 @@ public class AI_Chompies_AttackState : AI_Enemies_IBaseState
         if (!owner.Anim.IsInTransition(0) && owner.Anim.GetCurrentAnimatorStateInfo(0).IsName("PrepareAttack"))
         {
             Attack(owner);
+            return;
         }
+        if (Vector3.Distance(owner.transform.position, owner.PatrolCenter) > 20 && Vector3.Distance(owner.Target.position, owner.transform.position) > 11)
+        {
+            owner.SwitchState(EnemyStates.Idle);
+            return;
+        }
+
     }
 
 
@@ -60,6 +67,10 @@ public class AI_Chompies_AttackState : AI_Enemies_IBaseState
         if (other.gameObject.CompareTag("Roby") && owner.IsAttacking)
         {
             Script_Roby.Roby_Hit.Invoke(20);
+        }
+
+        if (other.gameObject.CompareTag("Player") && owner.IsAttacking)
+        {
             Player_State_Machine.hit.Invoke(true);
         }
         

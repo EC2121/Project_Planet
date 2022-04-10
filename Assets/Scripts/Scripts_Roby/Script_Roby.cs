@@ -95,7 +95,7 @@ public class Script_Roby : MonoBehaviour
 
     protected virtual void Update()
     {
-        print(Roby_CurrentState);
+       // print(Roby_CurrentState);
         Roby_CurrentState.UpdateState(this);
     }
 
@@ -219,12 +219,7 @@ public class Script_Roby : MonoBehaviour
         roby_Life = 1;
         SwitchState(RobyStates.Die);
     }
-
-    public void PrintMe(string msg)
-    {
-        print(msg);
-    }
-
+    
     public void SetPath(Vector3 roby_targetPath)
     {
         Roby_NavAgent.CalculatePath(roby_targetPath, roby_NavMeshPath);
@@ -264,8 +259,7 @@ public class Script_Roby : MonoBehaviour
             {
                 Roby_EnemyTarget = null;
             }
-
-            print(roby_EnemysInMyArea.Count);
+            
         }
     }
     public void RobyShoot()

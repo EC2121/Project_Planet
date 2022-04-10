@@ -22,7 +22,6 @@ public class Script_AI_Roby_BattleState_RangedAttack : Script_AI_Roby_BaseState
         //{
         //    return;
         //}
-        AIRoby.PrintMe(roby_AttackAngle.ToString());
         if (roby_AttackAngle < -10 || roby_AttackAngle > 10)
         {
             roby_AttackAngle /= 180;
