@@ -1,6 +1,6 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!1 &7960900647051686129
+--- !u!1 &296447197459319384
 GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -8,43 +8,43 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
-  - component: {fileID: 7960900647052045521}
-  - component: {fileID: 7960900647032207473}
-  - component: {fileID: 1967357241680860813}
+  - component: {fileID: 296447197459682936}
+  - component: {fileID: 296447197438821080}
+  - component: {fileID: 4777976661029412165}
   m_Layer: 0
-  m_Name: Environment_BigCliff_AncientEntrance
+  m_Name: Environment_RockLedge
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 4294967295
   m_IsActive: 1
---- !u!4 &7960900647052045521
+--- !u!4 &296447197459682936
 Transform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7960900647051686129}
-  m_LocalRotation: {x: 0, y: -0.5110005, z: 0, w: 0.8595804}
-  m_LocalPosition: {x: 467.21597, y: 17.622137, z: 295.14178}
-  m_LocalScale: {x: 2.1739004, y: 2.1739, z: 2.1739004}
+  m_GameObject: {fileID: 296447197459319384}
+  m_LocalRotation: {x: -0.031861637, y: -0.19897597, z: 0.08846623, w: 0.97548306}
+  m_LocalPosition: {x: 257, y: 102, z: 429}
+  m_LocalScale: {x: 2.6724, y: 2.6724, z: 2.6724}
   m_Children:
-  - {fileID: 7960900647052045523}
-  - {fileID: 7960900647052045525}
-  - {fileID: 7960900647052045527}
+  - {fileID: 296447197459682938}
+  - {fileID: 296447197459682940}
+  - {fileID: 296447197459682942}
   m_Father: {fileID: 0}
   m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: -61.461, z: 0}
---- !u!205 &7960900647032207473
+  m_LocalEulerAnglesHint: {x: -1.545, y: -23.202, z: 10.681}
+--- !u!205 &296447197438821080
 LODGroup:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7960900647051686129}
+  m_GameObject: {fileID: 296447197459319384}
   serializedVersion: 2
-  m_LocalReferencePoint: {x: -0.395401, y: 14.433904, z: 2.5161896}
-  m_Size: 48.04926
+  m_LocalReferencePoint: {x: 1.0947495, y: 1.3265753, z: -5.4564714}
+  m_Size: 32.43882
   m_FadeMode: 0
   m_AnimateCrossFading: 0
   m_LastLODIsBillboard: 0
@@ -52,31 +52,31 @@ LODGroup:
   - screenRelativeHeight: 0.25
     fadeTransitionWidth: 0
     renderers:
-    - renderer: {fileID: 7960900647049752113}
+    - renderer: {fileID: 296447197457388696}
   - screenRelativeHeight: 0.125
     fadeTransitionWidth: 0
     renderers:
-    - renderer: {fileID: 7960900647049752115}
+    - renderer: {fileID: 296447197457388698}
   - screenRelativeHeight: 0.01
     fadeTransitionWidth: 0
     renderers:
-    - renderer: {fileID: 7960900647049752117}
+    - renderer: {fileID: 296447197457388700}
   m_Enabled: 1
---- !u!64 &1967357241680860813
+--- !u!64 &4777976661029412165
 MeshCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7960900647051686129}
+  m_GameObject: {fileID: 296447197459319384}
   m_Material: {fileID: 0}
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 4
   m_Convex: 0
   m_CookingOptions: 30
-  m_Mesh: {fileID: 4300004, guid: 843d122e5e84aa84db8a1036fe1d3dd8, type: 3}
---- !u!1 &7960900647051686131
+  m_Mesh: {fileID: 4300004, guid: a4181c3067a7a5c448ec8fca35647597, type: 3}
+--- !u!1 &296447197459319386
 GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -84,45 +84,45 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
-  - component: {fileID: 7960900647052045523}
-  - component: {fileID: 7960900647048621297}
-  - component: {fileID: 7960900647049752113}
+  - component: {fileID: 296447197459682938}
+  - component: {fileID: 296447197456291416}
+  - component: {fileID: 296447197457388696}
   m_Layer: 0
-  m_Name: CliffBig01_LOD00
+  m_Name: RockLedge02_LOD00
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 4294967295
   m_IsActive: 1
---- !u!4 &7960900647052045523
+--- !u!4 &296447197459682938
 Transform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7960900647051686131}
+  m_GameObject: {fileID: 296447197459319386}
   m_LocalRotation: {x: 0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: -0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
-  m_Father: {fileID: 7960900647052045521}
+  m_Father: {fileID: 296447197459682936}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!33 &7960900647048621297
+--- !u!33 &296447197456291416
 MeshFilter:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7960900647051686131}
-  m_Mesh: {fileID: 4300000, guid: 843d122e5e84aa84db8a1036fe1d3dd8, type: 3}
---- !u!23 &7960900647049752113
+  m_GameObject: {fileID: 296447197459319386}
+  m_Mesh: {fileID: 4300000, guid: a4181c3067a7a5c448ec8fca35647597, type: 3}
+--- !u!23 &296447197457388696
 MeshRenderer:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7960900647051686131}
+  m_GameObject: {fileID: 296447197459319386}
   m_Enabled: 1
   m_CastShadows: 1
   m_ReceiveShadows: 1
@@ -135,7 +135,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 904d2bcbde2715e4d919eb40e528e7d6, type: 2}
+  - {fileID: 2100000, guid: b0cf7be9c44582841b1cf988c450601d, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -157,7 +157,7 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!1 &7960900647051686133
+--- !u!1 &296447197459319388
 GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -165,45 +165,45 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
-  - component: {fileID: 7960900647052045525}
-  - component: {fileID: 7960900647048621299}
-  - component: {fileID: 7960900647049752115}
+  - component: {fileID: 296447197459682940}
+  - component: {fileID: 296447197456291418}
+  - component: {fileID: 296447197457388698}
   m_Layer: 0
-  m_Name: CliffBig01_LOD01
+  m_Name: RockLedge02_LOD01
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 4294967295
   m_IsActive: 1
---- !u!4 &7960900647052045525
+--- !u!4 &296447197459682940
 Transform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7960900647051686133}
+  m_GameObject: {fileID: 296447197459319388}
   m_LocalRotation: {x: 0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: -0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
-  m_Father: {fileID: 7960900647052045521}
+  m_Father: {fileID: 296447197459682936}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!33 &7960900647048621299
+--- !u!33 &296447197456291418
 MeshFilter:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7960900647051686133}
-  m_Mesh: {fileID: 4300002, guid: 843d122e5e84aa84db8a1036fe1d3dd8, type: 3}
---- !u!23 &7960900647049752115
+  m_GameObject: {fileID: 296447197459319388}
+  m_Mesh: {fileID: 4300002, guid: a4181c3067a7a5c448ec8fca35647597, type: 3}
+--- !u!23 &296447197457388698
 MeshRenderer:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7960900647051686133}
+  m_GameObject: {fileID: 296447197459319388}
   m_Enabled: 1
   m_CastShadows: 1
   m_ReceiveShadows: 1
@@ -216,7 +216,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 904d2bcbde2715e4d919eb40e528e7d6, type: 2}
+  - {fileID: 2100000, guid: b0cf7be9c44582841b1cf988c450601d, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -238,7 +238,7 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!1 &7960900647051686135
+--- !u!1 &296447197459319390
 GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -246,45 +246,45 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
-  - component: {fileID: 7960900647052045527}
-  - component: {fileID: 7960900647048621301}
-  - component: {fileID: 7960900647049752117}
+  - component: {fileID: 296447197459682942}
+  - component: {fileID: 296447197456291420}
+  - component: {fileID: 296447197457388700}
   m_Layer: 0
-  m_Name: CliffBig01_LOD02
+  m_Name: RockLedge02_LOD02
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 4294967295
   m_IsActive: 1
---- !u!4 &7960900647052045527
+--- !u!4 &296447197459682942
 Transform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7960900647051686135}
+  m_GameObject: {fileID: 296447197459319390}
   m_LocalRotation: {x: 0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: -0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
-  m_Father: {fileID: 7960900647052045521}
+  m_Father: {fileID: 296447197459682936}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!33 &7960900647048621301
+--- !u!33 &296447197456291420
 MeshFilter:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7960900647051686135}
-  m_Mesh: {fileID: 4300004, guid: 843d122e5e84aa84db8a1036fe1d3dd8, type: 3}
---- !u!23 &7960900647049752117
+  m_GameObject: {fileID: 296447197459319390}
+  m_Mesh: {fileID: 4300004, guid: a4181c3067a7a5c448ec8fca35647597, type: 3}
+--- !u!23 &296447197457388700
 MeshRenderer:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7960900647051686135}
+  m_GameObject: {fileID: 296447197459319390}
   m_Enabled: 1
   m_CastShadows: 1
   m_ReceiveShadows: 1
@@ -297,7 +297,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 904d2bcbde2715e4d919eb40e528e7d6, type: 2}
+  - {fileID: 2100000, guid: b0cf7be9c44582841b1cf988c450601d, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
