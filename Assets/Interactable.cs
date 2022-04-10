@@ -17,6 +17,7 @@ public class Interactable : MonoBehaviour
         if (other.gameObject.CompareTag("Player"))
         {
             OnKeyTakenDel?.Invoke();
+            this.gameObject.SetActive(false);
         }
     }
    
