@@ -8,13 +8,14 @@ Material:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_Name: CliffBig01-CliffBig01_Mat
-  m_Shader: {fileID: -6465566751694194690, guid: c24e13a33c7aa0c4e93f909354cd45b3, type: 3}
+  m_Shader: {fileID: 4800000, guid: 933532a4fcc9baf4fa0491de14d08ed7, type: 3}
   m_ShaderKeywords: _EMISSION _METALLICSPECGLOSSMAP _NORMALMAP _OCCLUSIONMAP
   m_LightmapFlags: 2
   m_EnableInstancingVariants: 0
   m_DoubleSidedGI: 1
-  m_CustomRenderQueue: -1
-  stringTagMap: {}
+  m_CustomRenderQueue: 2000
+  stringTagMap:
+    RenderType: Opaque
   disabledShaderPasses: []
   m_SavedProperties:
     serializedVersion: 3
@@ -25,6 +26,10 @@ Material:
         m_Offset: {x: 0, y: 0}
     - Texture2D_4baa915ff640492194a81eb1d3c3181c:
         m_Texture: {fileID: 2800000, guid: 49652e51668454a4cbe0ceaeb6ea1f4f, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - Texture2D_9c2a1230694844af96182923c7cf03c9:
+        m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - Texture2D_e46dc01e88a64acc8671829fbe7eb84a:
@@ -94,6 +99,7 @@ Material:
     m_Floats:
     - Boolean_1: 1
     - Boolean_4f25131e55634ebda5ea77143a07f675: 1
+    - Vector1_26ec201e464045b8a31d88aaac62b7d5: 0
     - Vector1_735ae244dfa143bbab4d987f7e4e7375: 0
     - Vector1_7e13d6d2680e400cab8e285065c26802: 0.5
     - Vector1_cb75872da58e46e1ae588b190b81e364: 0
@@ -126,6 +132,7 @@ Material:
     - _WorkflowMode: 1
     - _ZWrite: 1
     m_Colors:
+    - Color_7501f12e56c444bead508a5e5665dd44: {r: 0, g: 0, b: 0, a: 0}
     - _BaseColor: {r: 0.5, g: 0.5, b: 0.5, a: 1}
     - _Color: {r: 0.5, g: 0.5, b: 0.5, a: 1}
     - _EmissionColor: {r: 2, g: 2, b: 2, a: 1}

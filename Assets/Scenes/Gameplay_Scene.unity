@@ -108,8 +108,8 @@ NavMeshSettings:
     agentTypeID: 0
     agentRadius: 0.5
     agentHeight: 2
-    agentSlope: 45
-    agentClimb: 0.4
+    agentSlope: 60
+    agentClimb: 0.6
     ledgeDropHeight: 0
     maxJumpAcrossDistance: 0
     minRegionArea: 2
@@ -122,7 +122,7 @@ NavMeshSettings:
     preserveTilesOutsideBounds: 0
     debug:
       m_Flags: 0
-  m_NavMeshData: {fileID: 23800000, guid: 42db6564b70a0c24a99776bcb5ed76c4, type: 2}
+  m_NavMeshData: {fileID: 0}
 --- !u!1 &8374731
 GameObject:
   m_ObjectHideFlags: 3
@@ -213,7 +213,7 @@ GameObject:
   - component: {fileID: 212719410}
   - component: {fileID: 212719411}
   m_Layer: 0
-  m_Name: Spawn1
+  m_Name: EnemyMGR
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -247,11 +247,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fe23e33a29ab34f4a901bd1136fef632, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Hologram: {fileID: 0}
+  Hologram: {fileID: 824750283}
   SpawnPoint:
-  - {fileID: 1913498926}
-  - {fileID: 1824675321}
-  NumberOfBaseChompy: 3
+  - SpawnPointLocation: {fileID: 0}
+    NumberOfChompies: 0
+  - SpawnPointLocation: {fileID: 0}
+    NumberOfChompies: 0
 --- !u!1 &214334819
 GameObject:
   m_ObjectHideFlags: 0
@@ -1605,6 +1606,11 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 11
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!4 &824750283 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 2187953599388935058, guid: ddea97438436bd34e81dca6fb5f8ffe2, type: 3}
+  m_PrefabInstance: {fileID: 2525720617516549278}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1068879623
 GameObject:
   m_ObjectHideFlags: 0
@@ -2791,6 +2797,10 @@ PrefabInstance:
     - target: {fileID: 505417661, guid: 66067fd29c47b54409f49dcad60b6ec8, type: 3}
       propertyPath: m_OnValueChanged.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
       value: UnityEngine.Object, UnityEngine
+      objectReference: {fileID: 0}
+    - target: {fileID: 731450370, guid: 66067fd29c47b54409f49dcad60b6ec8, type: 3}
+      propertyPath: m_RootOrder
+      value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 761748968, guid: 66067fd29c47b54409f49dcad60b6ec8, type: 3}
       propertyPath: m_text
