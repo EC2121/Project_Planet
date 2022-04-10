@@ -4,12 +4,28 @@ using UnityEngine;
 using UnityEngine.AI;
 using UnityEngine.Events;
 using UnityTemplateProjects.Saves_Scripts;
+using Random = UnityEngine.Random;
 
-public enum EnemyStates { Idle, Patrol, Attack, Follow, Alert, Die, Hit, Thrown }
-public enum EnemyType {Chomper, AlphaChomper}
+public enum EnemyStates
+{
+    Idle,
+    Patrol,
+    Attack,
+    Follow,
+    Alert,
+    Die,
+    Hit,
+    Thrown
+}
+
+public enum EnemyType
+{
+    Chomper,
+    AlphaChomper
+}
+
 public class Enemy : MonoBehaviour
 {
-
     public static UnityEvent<float, GameObject, bool> OnDamageTaken = new UnityEvent<float, GameObject, bool>();
     public static UnityEvent<GameObject> OnActorDeath = new UnityEvent<GameObject>();
     public static UnityEvent<GameObject> OnEnemyDeath = new UnityEvent<GameObject>();
@@ -21,7 +37,7 @@ public class Enemy : MonoBehaviour
 
     [HideInInspector] public EnemyType enemyType;
     [HideInInspector] public Dictionary<EnemyStates, AI_Enemies_IBaseState> StatesDictionary;
-    [HideInInspector] public /*AnimatorController*/AnimatorOverrideController AnimatorController;
+    [HideInInspector] public /*AnimatorController*/ AnimatorOverrideController AnimatorController;
     [HideInInspector] public NavMeshPath AgentPath;
     [HideInInspector] public AI_Enemies_IBaseState currentState;
     [HideInInspector] public Transform Target;
@@ -47,17 +63,21 @@ public class Enemy : MonoBehaviour
     [HideInInspector] public int SpottedHash = Animator.StringToHash("Spotted");
     [HideInInspector] public int DieHash = Animator.StringToHash("Die");
 
+
+    [HideInInspector] public SphereCollider sphereCollider;
     public List<Enemy> nearEnemies;
     public Transform Tounge;
     public bool DebugMode;
+
     private void OnEnable()
     {
-        Player_State_Machine.OnHologramDisable.AddListener(SwitchTarget);
+        Player_State_Machine.OnHologramDisable.AddListener(OnHologramDestroy);
         OnActorDeath.AddListener(SwitchTarget);
         OnDamageTaken.AddListener(AddDamage);
         SaveSystem.OnSave += SaveSystemOnOnSave;
         //SaveSystem.OnLoad += SaveSystemOnOnLoad;
         IsDisabled = false;
+        sphereCollider = GetComponent<SphereCollider>();
     }
 
     // private void SaveSystemOnOnLoad(object sender, EventArgs e)
@@ -93,19 +113,16 @@ public class Enemy : MonoBehaviour
         //SaveSystem.OnLoad -= SaveSystemOnOnLoad;
         IsDisabled = true;
     }
+
     private void Start()
     {
-
     }
 
     public void SwitchTarget(GameObject actor)
     {
-        if (Target == Hologram || Target == actor)
-        {
             Target = Player;
-        }
-       
     }
+
     public Vector3 Flocking()
     {
         Vector3 alignment = Vector3.zero;
@@ -131,9 +148,7 @@ public class Enemy : MonoBehaviour
 
 
         return (alignment + cohesion + (separation * 1.5f)) / 3;
-
     }
-
 
 
     protected virtual void Update()
@@ -142,7 +157,13 @@ public class Enemy : MonoBehaviour
         //transform.position = Agent.nextPosition;
         //Agent.nextPosition = Vector3.Lerp(transform.position, Agent.nextPosition + flockingVec, Time.deltaTime);
         currentState.UpdateState(this);
+        if (Hologram.gameObject.activeInHierarchy && Vector3.Distance(Hologram.position,transform.position) < 10)
+        {
+            Target = Hologram;
+        }
+        Debug.Log(currentState);
     }
+
     private void OnAnimatorMove()
     {
         //if (ReferenceEquals(currentState, StatesDictionary[EnemyStates.Follow]))
@@ -158,8 +179,8 @@ public class Enemy : MonoBehaviour
         position = Anim.rootPosition;
         position.y = Agent.nextPosition.y;
         transform.position = position;
-
     }
+
     public void LoadData(EnemyData Data, Transform playerRef, Transform robyRef, Transform HologramRef)
     {
         Hologram = HologramRef;
@@ -221,11 +242,12 @@ public class Enemy : MonoBehaviour
             {
                 Debug.Log("hitted Player");
             }
-
-
         }
+    }
 
-
+    public void OnHologramDestroy(GameObject go)
+    {
+        SwitchState(EnemyStates.Idle);
     }
 
     public void OnAttackEnd()
@@ -237,6 +259,7 @@ public class Enemy : MonoBehaviour
     {
         this.gameObject.SetActive(false);
     }
+
     public void AddDamage(float amount, GameObject source, bool wasThrown)
     {
         if (Hp > 0)
@@ -256,12 +279,13 @@ public class Enemy : MonoBehaviour
                     SwitchState(EnemyStates.Thrown);
                     return;
                 }
+
                 HorizontalDot = Vector3.Dot(transform.forward, source.transform.forward);
                 SwitchState(EnemyStates.Hit);
             }
         }
-
     }
+
     public virtual void SwitchState(EnemyStates state)
     {
         currentState.OnExit(this);
@@ -281,12 +305,10 @@ public class Enemy : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if (Target == Hologram) return;
 
-        else if (other.CompareTag("Hologram"))
+        if (other.CompareTag("Player"))
         {
-            Target = Hologram;
-            return;
+            Target = Player;
         }
 
         if (other.CompareTag("Enemy"))
@@ -298,6 +320,7 @@ public class Enemy : MonoBehaviour
             }
         }
 
+
         currentState.OnTrigEnter(this, other);
     }
 
@@ -305,12 +328,10 @@ public class Enemy : MonoBehaviour
     {
         currentState.OnCollEnter(this, collision);
     }
-    
+
 
     private void OnTriggerExit(Collider other)
     {
-       
-
         if (other.CompareTag("Enemy"))
         {
             Enemy enemy = other.GetComponent<Enemy>();
@@ -319,10 +340,5 @@ public class Enemy : MonoBehaviour
                 nearEnemies.Remove(enemy);
             }
         }
-
-
     }
-
-
-
 }

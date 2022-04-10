@@ -33,7 +33,10 @@ public class Player_State_Machine : MonoBehaviour
     private int hasBoxHash;
     private int jumpCountHash;
     private int isAttacking;
-    private string unEquipHash;
+    private int isRunAttackingHash;
+    private int isJumpHittedHash;
+    private int isHittedHash;
+    private string unEquipString;
     private Player_Controller input;
     private CharacterController characterController;
     private Vector2 currentMovementInput;
@@ -96,22 +99,24 @@ public class Player_State_Machine : MonoBehaviour
     public bool RequireNewWeaponSwitch { get { return requireNewWeaponSwitch; } set { requireNewWeaponSwitch = value; } }
     public bool RequireNewAttack { get { return requireNewAttack; } set { requireNewAttack = value; } }
     public bool RequireNewHit { get { return requireNewHit; } set { requireNewHit = value; } }
-
     public bool RequireNewInteraction { get { return requireNewInteraction; } set { requireNewInteraction = value; } }
     public int AttackIndexHash { get { return attackIndexHash; } set { attackIndexHash = value; } }
     public Vector3 PlayerPos { get { return transform.position; } }
     public int IsLandingHash { get { return isLandingHash; } }
     public int HasBoxHash { get { return hasBoxHash; } }
     public int EquipHash { get { return equipHash; } }
+    public int IsHittedHash { get { return isHittedHash; } }
     public bool IsMovementPressed { get { return isMovementPressed; } }
     public bool IsInteract { get { return isInteract; } }
     public bool IsMousePressed { get { return isMousePressed; } }
     public bool IsRunPressed { get { return isRunPressed; } }
     public bool RequireNewJump { get { return requireNewJump; } set { requireNewJump = value; } }
     public int IsWalkingHash { get { return isWalkingHash; } }
-    public string UnEquipHash { get { return unEquipHash; } }
+    public int IsJumpHittedHash { get { return isJumpHittedHash; } }
+    public string UnEquipString { get { return unEquipString; } }
     public int IsAttacking { get { return isAttacking; } }
     public int IsRunningHash { get { return isRunningHash; } }
+    public int IsRunAttackingHash { get { return isRunAttackingHash; } }
     public int JumpCountHash { get { return jumpCountHash; } }
     public float GroundGravity { get { return groundGravity; } }
     public float RunMultiplier { get { return runSpeed; } }
@@ -154,7 +159,10 @@ public class Player_State_Machine : MonoBehaviour
         hasBoxHash = Animator.StringToHash("HasBox");
         jumpCountHash = Animator.StringToHash("JumpCount");
         isAttacking = Animator.StringToHash("IsAttacking");
-        unEquipHash = "Un_Equip";
+        isRunAttackingHash = Animator.StringToHash("isRunAttacking");
+        isJumpHittedHash = Animator.StringToHash("isJumpHitted");
+        isHittedHash = Animator.StringToHash("isHitted");
+        unEquipString = "Un_Equip";
         
         sockets = GetComponent<Handle_Mesh_Sockets>();
         cameraMainTransform = Camera.main.transform;
@@ -277,7 +285,7 @@ public class Player_State_Machine : MonoBehaviour
         characterController.Move(appliedMovement * Time.deltaTime);
         HandleRotation();
        // Debug.Log(isHitted);
-        Debug.Log(hp + " HPPPPPPPPPPP");
+     //   Debug.Log(hp + " HPPPPPPPPPPP");
 
     }
     public void OnAnimationEvent(string eventName)
