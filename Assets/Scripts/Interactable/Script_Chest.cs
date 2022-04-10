@@ -121,13 +121,13 @@ public class Script_Chest : MonoBehaviour
     }
 
     /// <summary>
-    /// Se non è presa dal giocatore riposiziono la scatola dov'è stata lasciata
+    /// Se non è presa dal giocatore (nel salvataggio) riposiziono la scatola dov'era
     /// </summary>
     private void SaveSystemOnOnLoad(object sender, EventArgs e)
     {
         GameData data = SaveSystem.LoadPlayer(true);
         
-        if (data.HasBox)
+        if (!data.HasBox)
         {
             // posiziona la box
             transform.position = new Vector3(data.CratePosition[0], data.CratePosition[1], data.CratePosition[2]);

@@ -39,9 +39,15 @@ namespace UnityTemplateProjects.Saves_Scripts
             //gameObject.SetActive(data.IsEnabled); //NON STA FUNZIONANDO
             //IsAlive =
             //IsVisible = 
-
-            transform.GetComponent<Player_State_Machine>().CurrentState.Factory.Interactable().EnterState();
-           
+            
+            //Se nel salvataggio ha la scatola
+            if ((data.HasBox && !transform.GetComponent<Player_State_Machine>().HasBox) || 
+                (!data.HasBox && transform.GetComponent<Player_State_Machine>().HasBox))
+            {
+                transform.GetComponent<Player_State_Machine>().CurrentState.Factory.Interactable().EnterState();     
+            }
+            
+            
             transform.position = new Vector3(data.MaiPosition[0], data.MaiPosition[1], data.MaiPosition[2]);
             transform.rotation = new Quaternion(data.MaiRotation[0], data.MaiRotation[1],
                                                 data.MaiRotation[2], data.MaiRotation[3]);
@@ -60,7 +66,7 @@ namespace UnityTemplateProjects.Saves_Scripts
             transform.GetComponent<CharacterController>().enabled = true;
             
             //TODO Set State to Idle after load
-            //Debug.Log("Game Loaded FROM EVENT");
+            transform.GetComponent<Animator>().Play("Entry",0);
         }
 
         private void SaveSystemOnOnSave(object sender, EventArgs e)

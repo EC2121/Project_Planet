@@ -45,6 +45,7 @@ namespace UnityTemplateProjects.Saves_Scripts
             #region Apply loaded data to MonoBehaviour
             MaxHealth = data.MaiMaxHealth;
             CurrentHealth = transform.GetComponent<Script_Roby>().roby_Life = data.MaiCurrentHealth;
+            
             transform.GetComponent<Script_Roby>().SwitchState(RobyStates.Idle);
             UpdateStats();
             #endregion

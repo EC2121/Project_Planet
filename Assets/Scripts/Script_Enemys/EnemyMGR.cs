@@ -103,21 +103,7 @@ public class EnemyMGR : MonoBehaviour
                 GameObject SP = new GameObject(CD.SpawnPointName); 
                 SP.transform.parent = this.transform; //ho creato un nuovo SP e l'ho associato allo spawnMGW
 
-                foreach (EnemyStats ES in CD.EnemyStatsList)
-                {
-                    if (ES.EnemyType == EnemyType.AlphaChomper) 
-                    {
-                        SpawnAlphaChomper(SP.transform, new Vector3(ES.EnemyPosition[0], ES.EnemyPosition[1], ES.EnemyPosition[2]),
-                            new quaternion(ES.EnemyRotation[0], ES.EnemyRotation[1], ES.EnemyRotation[2], ES.EnemyRotation[3] ));
-                    } 
-                    else if (ES.EnemyType == EnemyType.Chomper)
-                    {
-                        SpawnBetaChomper(SP.transform, new Vector3(ES.EnemyPosition[0], ES.EnemyPosition[1], ES.EnemyPosition[2]),
-                            new quaternion(ES.EnemyRotation[0], ES.EnemyRotation[1], ES.EnemyRotation[2], ES.EnemyRotation[3] ));        
-                    }
-                    //per avere una referenza a se stesso posso prendere l'ultimo nemico aggiunto nella lista "enemies"
-                    enemies[enemies.Count - 1].GetComponent<Enemy>().Hp = ES.hp;
-                }
+                SpawnEnemiesFromCustomDictionary(CD, true);
             }
             else if (transform.Find(CD.SpawnPointName) != null)  //se ha trovato lo spawn point
             {//se non ha lo stesso numero di figli
@@ -126,24 +112,35 @@ public class EnemyMGR : MonoBehaviour
                     Destroy(child.gameObject);
                 }
                 
-                foreach (EnemyStats ES in CD.EnemyStatsList) //ripetizione
-                {
-                    if (ES.EnemyType == EnemyType.AlphaChomper) 
-                    {
-                        SpawnAlphaChomper(transform.Find(CD.SpawnPointName), new Vector3(ES.EnemyPosition[0], ES.EnemyPosition[1], ES.EnemyPosition[2]),
-                            new quaternion(ES.EnemyRotation[0], ES.EnemyRotation[1], ES.EnemyRotation[2], ES.EnemyRotation[3] ));
-                    } 
-                    else if (ES.EnemyType == EnemyType.Chomper)
-                    {
-                        SpawnBetaChomper(transform.Find(CD.SpawnPointName), new Vector3(ES.EnemyPosition[0], ES.EnemyPosition[1], ES.EnemyPosition[2]),
-                            new quaternion(ES.EnemyRotation[0], ES.EnemyRotation[1], ES.EnemyRotation[2], ES.EnemyRotation[3] ));        
-                    }
-                    //per avere una referenza a se stesso posso prendere l'ultimo nemico aggiunto nella lista "enemies"
-                    enemies[enemies.Count - 1].GetComponent<Enemy>().Hp = ES.hp;
-                }
+                SpawnEnemiesFromCustomDictionary(CD,true);
             }
         }
-        
+    }
+
+    /// <summary>
+    /// Per ogni EnemyStats presente nella lista dei nemici ne controllo l'EnemyType e lo spawno
+    /// </summary>
+    /// <param name="CD">Il CustomDictionary preso dal salvataggio (GameData)</param>
+    /// <param name="PerfectPosition">Per scegliere se spawnare i nemici nell'esatta posizione in cui si trovavano oppure spawnarli con un random</param>
+    private void SpawnEnemiesFromCustomDictionary(CustomDictionary CD, bool PerfectPosition = false)
+    {
+        foreach (EnemyStats ES in CD.EnemyStatsList) //ripetizione
+        {
+            if (ES.EnemyType == EnemyType.AlphaChomper)
+            {
+                SpawnAlphaChomper(transform.Find(CD.SpawnPointName),
+                    new Vector3(ES.EnemyPosition[0], ES.EnemyPosition[1], ES.EnemyPosition[2]),
+                    new quaternion(ES.EnemyRotation[0], ES.EnemyRotation[1], ES.EnemyRotation[2], ES.EnemyRotation[3]), PerfectPosition);
+            }
+            else if (ES.EnemyType == EnemyType.Chomper)
+            {
+                SpawnBetaChomper(transform.Find(CD.SpawnPointName),
+                    new Vector3(ES.EnemyPosition[0], ES.EnemyPosition[1], ES.EnemyPosition[2]),
+                    new quaternion(ES.EnemyRotation[0], ES.EnemyRotation[1], ES.EnemyRotation[2], ES.EnemyRotation[3]), PerfectPosition);
+            }
+            //per avere una referenza a se stesso posso prendere l'ultimo nemico aggiunto nella lista "enemies"
+            enemies[enemies.Count - 1].GetComponent<Enemy>().Hp = ES.hp;
+        }
     }
 
     private void OnDisable()
