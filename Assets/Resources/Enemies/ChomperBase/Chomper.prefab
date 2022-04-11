@@ -1434,7 +1434,7 @@ Animator:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1148794101669109335}
-  m_Enabled: 1
+  m_Enabled: 0
   m_Avatar: {fileID: 9000000, guid: 2732fe64dd2799f439fb845921df626b, type: 3}
   m_Controller: {fileID: 9100000, guid: eee661ff082b004488dea60aa9839a1c, type: 2}
   m_CullingMode: 1
@@ -1452,11 +1452,12 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1148794101669109335}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 94feda2c86fa34b41ae2a366c7bd0810, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  enemyType: 0
   AnimatorController: {fileID: 0}
   Target: {fileID: 0}
   Avatar: {fileID: 0}
@@ -1471,12 +1472,14 @@ MonoBehaviour:
   HorizontalDot: 0
   IsAlerted: 0
   IsAttacking: 0
+  IsDisabled: 0
   NearBaseHash: -2117890585
   InPursuitHash: 1654002963
   HasTargetHash: -1300016053
   AttackHash: 1080829965
   SpottedHash: -1300016053
   DieHash: 20298039
+  sphereCollider: {fileID: 0}
   nearEnemies: []
   Tounge: {fileID: 1148794101668938685}
   DebugMode: 0
@@ -1522,7 +1525,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   soundReferences:
-  - fontName: Walk
+  - fontName: walk
     SoundType: 0
     AudioClipEvent:
       Guid:
@@ -1531,7 +1534,7 @@ MonoBehaviour:
         Data3: -627050344
         Data4: -1037268460
       Path: event:/Sfx/Chompies/ChompiesWalk
-  - fontName: Run
+  - fontName: run
     SoundType: 1
     AudioClipEvent:
       Guid:
@@ -1540,7 +1543,7 @@ MonoBehaviour:
         Data3: -687243347
         Data4: -678376818
       Path: event:/Sfx/Chompies/ChompiesRun
-  - fontName: Attack
+  - fontName: attack
     SoundType: 4
     AudioClipEvent:
       Guid:
@@ -1549,7 +1552,7 @@ MonoBehaviour:
         Data3: -1005051731
         Data4: 2118477485
       Path: event:/Sfx/Chompies/BaseChomperAttack
-  - fontName: Idle
+  - fontName: rangedattack
     SoundType: 5
     AudioClipEvent:
       Guid:
@@ -1558,7 +1561,7 @@ MonoBehaviour:
         Data3: 137247403
         Data4: -197600087
       Path: event:/Sfx/Chompies/ChompiesIdle
-  - fontName: Hitted
+  - fontName: idle
     SoundType: 6
     AudioClipEvent:
       Guid:

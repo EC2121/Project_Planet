@@ -6420,7 +6420,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1751082027291692028}
   - component: {fileID: 3058191203070245471}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: Environment_DeatBox
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -36123,7 +36123,7 @@ GameObject:
   m_Component:
   - component: {fileID: 3467948361946914800}
   - component: {fileID: 6561963127083500802}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: Environment_DeatBox (1)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -36138,7 +36138,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5348729637016479444}
   m_LocalRotation: {x: -0, y: 0.0027475217, z: -0, w: 0.9999963}
-  m_LocalPosition: {x: 242, y: 1, z: 247}
+  m_LocalPosition: {x: 242, y: -10.9, z: 247}
   m_LocalScale: {x: 7.7583, y: 1, z: 1.9599}
   m_Children: []
   m_Father: {fileID: 4812308447216166716}

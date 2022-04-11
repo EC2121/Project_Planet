@@ -387,7 +387,17 @@ public class Player_State_Machine : MonoBehaviour
     }
     private void OnTriggerEnter(Collider other)
     {
-        if (other.CompareTag("Box")) mai_BoxIsTakable = true;
+        if (other.CompareTag("Box"))
+            mai_BoxIsTakable = true;
+
+        if (other.gameObject.layer == 11)
+        {
+            //anim.SetBool("isDead", true);
+            //anim.SetBool(IsWalkingHash, false);
+            //anim.SetBool(IsRunningHash, false);
+            _currentState = _states.Dead();
+            _currentState.EnterState();
+        }
     }
     private void OnTriggerExit(Collider other)
     {
