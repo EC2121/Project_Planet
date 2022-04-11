@@ -19,7 +19,7 @@ public class Player_HittedState : Player_BaseState
         if (Context.Hp > 0)
         {
             Context.Hp -= 33f;
-
+            Context.MaySliderValue = Context.Hp;
         }
         Context.Animator.SetBool(Context.IsHittedHash, true);
         canExit = true;

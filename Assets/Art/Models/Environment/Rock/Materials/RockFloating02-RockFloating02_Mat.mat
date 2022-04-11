@@ -112,7 +112,7 @@ Material:
     - Boolean_1: 1
     - Boolean_4f25131e55634ebda5ea77143a07f675: 1
     - Vector1_26ec201e464045b8a31d88aaac62b7d5: 0
-    - Vector1_735ae244dfa143bbab4d987f7e4e7375: 0.5
+    - Vector1_735ae244dfa143bbab4d987f7e4e7375: 0.12
     - Vector1_7e13d6d2680e400cab8e285065c26802: 0
     - Vector1_cb75872da58e46e1ae588b190b81e364: 0
     - Vector1_ddd140fa880c46ebb468dd008f4e80b9: 0.5
@@ -132,7 +132,7 @@ Material:
     - _GlossyReflections: 0
     - _Metallic: 0
     - _OcclusionStrength: 1
-    - _Opacity: 1
+    - _Opacity: 0.85
     - _Parallax: 0.005
     - _QueueOffset: 0
     - _ReceiveShadows: 1

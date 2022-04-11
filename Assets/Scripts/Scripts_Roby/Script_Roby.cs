@@ -166,7 +166,6 @@ public class Script_Roby : MonoBehaviour
         Roby_CurrentState.OnEnter(this);
     }
 
-
     public void SwitchTarget(GameObject enemy)
     {
         if (roby_EnemysInMyArea.Contains(enemy))
@@ -178,6 +177,7 @@ public class Script_Roby : MonoBehaviour
             }
         }
     }
+
     public void OnRobyAddDamage(float Damage)
     {
         if (roby_Life > 1)
@@ -228,8 +228,6 @@ public class Script_Roby : MonoBehaviour
         Roby_NavAgent.SetPath(roby_NavMeshPath);
     }
 
-
-
     public void RobyExplosion()
     {
         foreach (GameObject enemys in roby_EnemysInMyArea)
@@ -264,6 +262,7 @@ public class Script_Roby : MonoBehaviour
 
         }
     }
+
     public void RobyShoot()
     {
         if (ReferenceEquals(Roby_EnemyTarget, null) || roby_EnemysInMyArea.Count == 0) return;
@@ -296,7 +295,6 @@ public class Script_Roby : MonoBehaviour
 
     public void AngleCalculator()
     {
-
         Vector3 MyForw = transform.forward;
         float dot = Vector3.Dot(MyForw, ( Roby_NavAgent.destination - transform.position ).normalized);
         Vector3 Cross = Vector3.Cross(MyForw, ( Roby_NavAgent.destination - transform.position ).normalized);

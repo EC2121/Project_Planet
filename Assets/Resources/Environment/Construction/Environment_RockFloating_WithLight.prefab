@@ -118,7 +118,7 @@ GameObject:
   - component: {fileID: 2274334261516004800}
   - component: {fileID: 6367668487696550251}
   m_Layer: 0
-  m_Name: RockFloating02 (8)
+  m_Name: Environment_RockFloating_WithLight
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

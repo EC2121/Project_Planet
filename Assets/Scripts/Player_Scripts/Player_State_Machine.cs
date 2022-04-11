@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.InputSystem;
-
+using UnityEngine.UI;
 
 public class Player_State_Machine : MonoBehaviour
 {
@@ -17,7 +17,7 @@ public class Player_State_Machine : MonoBehaviour
     [SerializeField] private float runSpeed = 2.65f;
     [SerializeField] private float rotationFactor = 0.5f;
     [SerializeField] private float maxHp = 1000f;
-
+    [SerializeField] private Slider mayHpSlider;
     //OnlyFor Debug
     public static bool hasBox;
 
@@ -141,10 +141,7 @@ public class Player_State_Machine : MonoBehaviour
     public float CurrentMovementZ { get { return currentMovement.z; } set { currentMovement.z = value; } }
     public float Hp { get { return hp; } set { hp = value; } }
     public Vector2 CurrentMovementInput { get { return currentMovementInput; } set { currentMovementInput = value; } }
-
-    private Vector3 positionToLookAt = Vector3.zero;
-
-    //private GameObject hologram;
+    public float MaySliderValue { get { return mayHpSlider.value; } set { mayHpSlider.value = value; } }
 
     public bool HasKey;
     private float hologramTimer;
@@ -204,6 +201,8 @@ public class Player_State_Machine : MonoBehaviour
 
         isWeaponAttached = false;
         hp = maxHp;
+        mayHpSlider.maxValue = maxHp;
+        mayHpSlider.value = hp;
         SetUpJumpVariables();
     }
 
