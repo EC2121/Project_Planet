@@ -1,1 +1,84 @@
-{"IsEnabled":false,"IsVisible":false,"IsAlive":false,"CurrentAbilities":[],"MaiMaxHealth":100.0,"MaiCurrentHealth":100.0,"CollectedCoins":0,"MaiPosition":[51.723785400390628,0.5603728294372559,83.62306213378906],"MaiRotation":[0.0,1.691521321508265e-17,0.0,1.0],"HasBox":false,"RobyMaxHealth":0.0,"RobyCurrentHealth":0.0,"RobyPosition":[0.0,0.0,0.0],"RobyRotation":[0.0,0.0,0.0,0.0],"CratePosition":[53.29497528076172,1.611936092376709,50.260475158691409],"CrateRotation":[-0.000009016133844852448,-0.000012266249541426077,0.009451646357774735,0.9999553561210632],"CustomDictionaries":[{"SpawnPointName":"SpawnPoint","EnemyStatsList":[{"EnemyType":1,"hp":200.0,"GUID":-175336,"EnemyPosition":[91.70046997070313,0.5,-145.4594268798828],"EnemyRotation":[0.0,0.0,0.0,1.0]},{"EnemyType":0,"hp":100.0,"GUID":-175756,"EnemyPosition":[90.55897521972656,0.5,-143.06834411621095],"EnemyRotation":[0.0,0.0,0.0,1.0]},{"EnemyType":0,"hp":100.0,"GUID":-176176,"EnemyPosition":[83.69229125976563,0.5,-148.17897033691407],"EnemyRotation":[0.0,0.0,0.0,1.0]},{"EnemyType":0,"hp":100.0,"GUID":-176596,"EnemyPosition":[93.64927673339844,0.5,-144.4005584716797],"EnemyRotation":[0.0,0.0,0.0,1.0]}]},{"SpawnPointName":"SpawnPoint (1)","EnemyStatsList":[{"EnemyType":1,"hp":200.0,"GUID":-177016,"EnemyPosition":[98.39373779296875,0.5,-142.33485412597657],"EnemyRotation":[0.0,0.0,0.0,1.0]},{"EnemyType":0,"hp":100.0,"GUID":-177436,"EnemyPosition":[107.9949951171875,0.5,-145.4728546142578],"EnemyRotation":[0.0,0.0,0.0,1.0]},{"EnemyType":0,"hp":100.0,"GUID":-177856,"EnemyPosition":[97.5161361694336,0.5,-153.13568115234376],"EnemyRotation":[0.0,0.0,0.0,1.0]},{"EnemyType":0,"hp":100.0,"GUID":-178276,"EnemyPosition":[109.04509735107422,0.5,-161.00534057617188],"EnemyRotation":[0.0,0.0,0.0,1.0]}]},{"SpawnPointName":"SpawnPoint","EnemyStatsList":[{"EnemyType":1,"hp":200.0,"GUID":-179218,"EnemyPosition":[89.5286865234375,0.5,-139.778076171875],"EnemyRotation":[0.0,0.0,0.0,1.0]},{"EnemyType":0,"hp":100.0,"GUID":-179638,"EnemyPosition":[93.89250183105469,0.5,-138.63365173339845],"EnemyRotation":[0.0,0.0,0.0,1.0]},{"EnemyType":0,"hp":100.0,"GUID":-180058,"EnemyPosition":[75.92123413085938,0.5,-151.3092498779297],"EnemyRotation":[0.0,0.0,0.0,1.0]},{"EnemyType":0,"hp":100.0,"GUID":-180478,"EnemyPosition":[89.08157348632813,0.5,-132.66270446777345],"EnemyRotation":[0.0,0.0,0.0,1.0]}]},{"SpawnPointName":"SpawnPoint (1)","EnemyStatsList":[{"EnemyType":1,"hp":200.0,"GUID":-180898,"EnemyPosition":[107.9681167602539,0.5,-129.72024536132813],"EnemyRotation":[0.0,0.0,0.0,1.0]},{"EnemyType":0,"hp":100.0,"GUID":-181318,"EnemyPosition":[110.65047454833985,0.5,-133.1776580810547],"EnemyRotation":[0.0,0.0,0.0,1.0]},{"EnemyType":0,"hp":100.0,"GUID":-181738,"EnemyPosition":[89.70458221435547,0.5,-146.79466247558595],"EnemyRotation":[0.0,0.0,0.0,1.0]},{"EnemyType":0,"hp":100.0,"GUID":-182158,"EnemyPosition":[111.3320541381836,0.5,-159.3551483154297],"EnemyRotation":[0.0,0.0,0.0,1.0]}]},{"SpawnPointName":"SpawnPoint","EnemyStatsList":[{"EnemyType":1,"hp":200.0,"GUID":-186046,"EnemyPosition":[85.57847595214844,0.5,-121.12653350830078],"EnemyRotation":[0.0,0.0,0.0,1.0]},{"EnemyType":0,"hp":100.0,"GUID":-186466,"EnemyPosition":[93.60563659667969,0.5,-132.33168029785157],"EnemyRotation":[0.0,0.0,0.0,1.0]},{"EnemyType":0,"hp":100.0,"GUID":-186886,"EnemyPosition":[77.88340759277344,0.5,-149.87828063964845],"EnemyRotation":[0.0,0.0,0.0,1.0]},{"EnemyType":0,"hp":100.0,"GUID":-187306,"EnemyPosition":[94.36825561523438,0.5,-117.99736785888672],"EnemyRotation":[0.0,0.0,0.0,1.0]}]},{"SpawnPointName":"SpawnPoint (1)","EnemyStatsList":[{"EnemyType":1,"hp":200.0,"GUID":-187726,"EnemyPosition":[115.14139556884766,0.5,-107.17719268798828],"EnemyRotation":[0.0,0.0,0.0,1.0]},{"EnemyType":0,"hp":100.0,"GUID":-188146,"EnemyPosition":[102.68042755126953,0.5,-120.12371063232422],"EnemyRotation":[0.0,0.0,0.0,1.0]},{"EnemyType":0,"hp":100.0,"GUID":-188566,"EnemyPosition":[86.56769561767578,0.5,-136.5609893798828],"EnemyRotation":[0.0,0.0,0.0,1.0]},{"EnemyType":0,"hp":100.0,"GUID":-188986,"EnemyPosition":[108.38475799560547,0.5,-148.9947052001953],"EnemyRotation":[0.0,0.0,0.0,1.0]}]}]}
+{
+  "IsEnabled": false,
+  "IsVisible": false,
+  "IsAlive": false,
+  "CurrentAbilities": [],
+  "MaiMaxHealth": 100.0,
+  "MaiCurrentHealth": 1000.0,
+  "CollectedCoins": 0,
+  "MaiPosition": [
+    156.36474609375,
+    0.025999993085861207,
+    168.85726928710938
+  ],
+  "MaiRotation": [
+    0.0,
+    0.9902629852294922,
+    0.0,
+    0.1392093002796173
+  ],
+  "HasBox": true,
+  "RobyMaxHealth": 100.0,
+  "RobyCurrentHealth": 50000.0,
+  "RobyPosition": [
+    161.54257202148438,
+    0.0833333358168602,
+    171.8300018310547
+  ],
+  "RobyRotation": [
+    0.0,
+    0.012621670961380005,
+    0.0,
+    0.9999203681945801
+  ],
+  "CratePosition": [
+    156.32464599609376,
+    0.8456851243972778,
+    168.4739990234375
+  ],
+  "CrateRotation": [
+    -0.026103809475898744,
+    0.9858792424201965,
+    -0.03742074593901634,
+    -0.16112244129180909
+  ],
+  "CustomDictionaries": [
+    {
+      "SpawnPointName": "GameObject",
+      "EnemyStatsList": [
+        {
+          "EnemyType": 1,
+          "hp": 200.0,
+          "GUID": -156148,
+          "EnemyPosition": [
+            159.22386169433595,
+            0.0833333358168602,
+            187.52598571777345
+          ],
+          "EnemyRotation": [
+            0.0,
+            0.9808631539344788,
+            0.0,
+            -0.19469858705997468
+          ]
+        },
+        {
+          "EnemyType": 0,
+          "hp": 100.0,
+          "GUID": -156568,
+          "EnemyPosition": [
+            165.07899475097657,
+            0.0833333358168602,
+            203.11367797851563
+          ],
+          "EnemyRotation": [
+            0.0,
+            0.22938808798789979,
+            0.0,
+            0.9733350276947022
+          ]
+        }
+      ]
+    }
+  ]
+}

@@ -1,13 +1,7 @@
 using System;
-using System.Collections;
-using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using System.Linq;
-using System.Management;
-using System.ComponentModel;
-using UnityEngine.Rendering;
-using UnityEngine.UIElements;
 using Slider = UnityEngine.UI.Slider;
 using Toggle = UnityEngine.UI.Toggle;
 
@@ -150,3 +144,5 @@ public class GraphicsMenu : MonoBehaviour
         }
     }
 }
+
+

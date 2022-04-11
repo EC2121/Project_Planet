@@ -986,8 +986,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Hologram: {fileID: 666676673}
   SpawnPoint:
-  - {fileID: 570806282}
-  NumberOfBaseChompy: 3
+  - SpawnPointLocation: {fileID: 570806282}
+    NumberOfChompies: 1
 --- !u!4 &667084311
 Transform:
   m_ObjectHideFlags: 0

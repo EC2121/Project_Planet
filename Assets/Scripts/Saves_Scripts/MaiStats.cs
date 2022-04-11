@@ -1,5 +1,4 @@
 using System;
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -40,7 +39,15 @@ namespace UnityTemplateProjects.Saves_Scripts
             //gameObject.SetActive(data.IsEnabled); //NON STA FUNZIONANDO
             //IsAlive =
             //IsVisible = 
-            transform.GetComponent<Player_State_Machine>().HasBox = data.HasBox;
+            
+            //Se nel salvataggio ha la scatola
+            if ((data.HasBox && !transform.GetComponent<Player_State_Machine>().HasBox) || 
+                (!data.HasBox && transform.GetComponent<Player_State_Machine>().HasBox))
+            {
+                transform.GetComponent<Player_State_Machine>().CurrentState.Factory.Interactable().EnterState();     
+            }
+
+            transform.GetComponent<Player_State_Machine>().HasKey = data.HasKey; 
             
             transform.position = new Vector3(data.MaiPosition[0], data.MaiPosition[1], data.MaiPosition[2]);
             transform.rotation = new Quaternion(data.MaiRotation[0], data.MaiRotation[1],
@@ -50,9 +57,9 @@ namespace UnityTemplateProjects.Saves_Scripts
             #region Apply loaded data to MonoBehaviour
             CurrentAbilities = data.CurrentAbilities;
             MaxHealth = data.MaiMaxHealth;
-            CurrentHealth = data.MaiCurrentHealth;
+            CurrentHealth = transform.GetComponent<Player_State_Machine>().Hp = data.MaiCurrentHealth;
             CollectedCoins = data.CollectedCoins;
-                
+
             UpdateStats(); //Aggiorna la struttura
             #endregion
             
@@ -60,12 +67,11 @@ namespace UnityTemplateProjects.Saves_Scripts
             transform.GetComponent<CharacterController>().enabled = true;
             
             //TODO Set State to Idle after load
-            //Debug.Log("Game Loaded FROM EVENT");
+            transform.GetComponent<Animator>().Play("Entry",0);
         }
 
         private void SaveSystemOnOnSave(object sender, EventArgs e)
         {
-            Debug.Log("Entered in Save FROM EVENT");
             try
             {
                 //UPDATE PLAYER STATS
@@ -76,7 +82,6 @@ namespace UnityTemplateProjects.Saves_Scripts
             {
                 Debug.Log(e.ToString());
             }
-            Debug.Log("Game Saved FROM EVENT");
         }
         
 

@@ -11,7 +11,7 @@ public abstract class Player_BaseState
     
     protected bool IsRootState { set {_isRootState = value;}}
     protected Player_State_Machine Context { get { return  _ctx;}}
-    protected Player_StateFactory Factory { get { return  _factory;}}
+    public Player_StateFactory Factory { get { return  _factory;}}
 
     public Player_BaseState(Player_State_Machine currentContext, Player_StateFactory playerStateFactory)
     {

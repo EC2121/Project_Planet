@@ -1,6 +1,4 @@
-using System.Collections;
 using System.Collections.Generic;
-using System.Runtime.CompilerServices;
 using UnityEngine;
 using UnityTemplateProjects.Saves_Scripts;
 
@@ -30,12 +28,12 @@ public class GameData
     
     //MAI
     //Utilizzare una lista di enum per tenere traccia delle abilità sbloccate?
-    public List<MaiStats.Abilities> CurrentAbilities;// = new List<MeiStats.Abilities>();
+    public List<MaiStats.Abilities> CurrentAbilities;
     public float MaiMaxHealth, MaiCurrentHealth;
     public int CollectedCoins;
     public float[] MaiPosition = new float[3]; 
     public float[] MaiRotation = new float[4];
-    public bool HasBox;
+    public bool HasBox, HasKey;
 
     //Roby
     public float RobyMaxHealth, RobyCurrentHealth;
@@ -47,30 +45,29 @@ public class GameData
     public float[] CrateRotation = new float[4];
 
     //Enemies
-    //public List<EnemyStats> Enemies = new List<EnemyStats>();
-
     public List<CustomDictionary> CustomDictionaries = new List<CustomDictionary>();
 
+    private bool firstTime;
+    
     public GameData(GameObject self)
     {
         Append_GameData(self);
     }
 
     //chiamo questo metodo se non devo creare da zero la struttura
-    public void Append_GameData(GameObject self) //OVERRIDE PER LE LISTE DI ENEMY?
+    public void Append_GameData(GameObject self) 
     {
-        //Ora mettere tutto dentro una lista :)
         //IsEnabled = self.activeSelf;
 
         if (self.CompareTag("Player"))
         {
             MaiStats mai = self.GetComponent<MaiStats>();
             HasBox = self.GetComponent<Player_State_Machine>().HasBox;
-
+            HasKey = self.GetComponent<Player_State_Machine>().HasKey;
             //ID?
             CurrentAbilities = mai.CurrentAbilities;
             MaiMaxHealth     = mai.MaxHealth;
-            MaiCurrentHealth = mai.CurrentHealth;
+            MaiCurrentHealth = self.GetComponent<Player_State_Machine>().Hp;//mai.CurrentHealth;
             CollectedCoins   = mai.CollectedCoins;
             //TRANSFORM
             MaiPosition[0] = mai.Position.x;
@@ -88,7 +85,7 @@ public class GameData
             
             //ID?
             RobyMaxHealth     = roby.MaxHealth;
-            RobyCurrentHealth = roby.CurrentHealth;
+            RobyCurrentHealth = self.GetComponent<Script_Roby>().roby_Life;//roby.CurrentHealth;
             //TRANSFORM
             RobyPosition[0] = roby.Position.x;
             RobyPosition[1] = roby.Position.y;
@@ -129,8 +126,13 @@ public class GameData
             stats.EnemyRotation[1] = self.transform.rotation.y;
             stats.EnemyRotation[2] = self.transform.rotation.z;
             stats.EnemyRotation[3] = self.transform.rotation.w;
-            
-            //Enemies.Add(stats);
+
+            if (SaveSystem.IsFirstInvoke)
+            {
+                CustomDictionaries.Clear(); //Così sono sicuro di non avere duplicati duplicati
+                
+                SaveSystem.IsFirstInvoke = false;
+            }
             
             //Se è la prima volta che aggiungo un nemico creo un nuovo dizionario
             //Se non è la prima volta che aggiungo un nemico ed il nemico che devo aggiungere proviene da un nuovo spawn point
@@ -153,12 +155,6 @@ public class GameData
             
             
         }
-        //GUID DI ENEMYSTATS?  
     }
-
     //Environment data
-    
-    //Enemies data
-    
-    
 }

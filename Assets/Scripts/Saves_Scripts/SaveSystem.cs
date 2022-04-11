@@ -3,19 +3,14 @@ using System.Collections.Generic;
 using UnityEngine;
 using System.IO;
 using System.Linq;
-using System.Runtime.CompilerServices;
 using System.Runtime.Serialization.Formatters.Binary;
-using System.Runtime.Serialization.Json;
-using UnityEditor;
-
-//JSON?
+using EventHandler = System.EventHandler;
 
 namespace UnityTemplateProjects.Saves_Scripts
 {
-   
-    
     public static class SaveSystem
     {
+        public static bool newGame;
         public static event EventHandler OnSave, OnLoad;
         public static List<GameData> Saves = new List<GameData>();
         // per specificare ulteriori parametri da passare all'evento (usare il generic <> sull'evento)
@@ -23,14 +18,21 @@ namespace UnityTemplateProjects.Saves_Scripts
         // {
         //     public int CurrentSave;
         // }
-        
+        public static bool IsFirstInvoke
+        {
+            get { return isFirstInvoke;}
+            set { isFirstInvoke = value; }
+        }
         
         public static int CurrentSave = 0;
 
         private static string path = Application.dataPath+"/Saves"; //DateTime.Now.ToString();
+        private static bool isFirstInvoke; //Mi serve per sapere se resettare le strutture dati della GameData
+        
 
         public static void InvokeOnSave()
         {
+            isFirstInvoke = true;
             OnSave?.Invoke(null, EventArgs.Empty); //Invoca l'evento se non è null (nessun subscriber)
         }
 
