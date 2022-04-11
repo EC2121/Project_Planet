@@ -147,9 +147,6 @@ public class Player_State_Machine : MonoBehaviour
     private float hologramTimer;
     private bool startHologramTimer;
 
-    private GameObject hologram;
-
-    public bool HasKey;
     private void Awake()
     {
         Interactable.OnKeyTakenDel += () => HasKey = true;

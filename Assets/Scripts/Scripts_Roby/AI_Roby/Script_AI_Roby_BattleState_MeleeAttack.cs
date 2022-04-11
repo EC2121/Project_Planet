@@ -22,6 +22,9 @@ public class Script_AI_Roby_BattleState_MeleeAttack : Script_AI_Roby_BaseState
     {
         AIRoby.SetPath(AIRoby.Roby_EnemyTarget.transform.position);
         AIRoby.Roby_Animator.SetBool(AIRoby.Roby_AshAnimator_walk, true);
+
+        if (AIRoby.roby_EnemysInMyArea.Count == 0 || ReferenceEquals(AIRoby.Roby_EnemyTarget, null))
+            AIRoby.SwitchState(RobyStates.Idle);
     }
 
     public void OnExit(Script_Roby AIRoby)
@@ -31,7 +34,7 @@ public class Script_AI_Roby_BattleState_MeleeAttack : Script_AI_Roby_BaseState
 
     public void UpdateState(Script_Roby AIRoby)
     {
-        if (AIRoby.roby_EnemysInMyArea.Count == 0)
+        if (AIRoby.roby_EnemysInMyArea.Count == 0 || ReferenceEquals(AIRoby.Roby_EnemyTarget, null))
         {
             AIRoby.SwitchState(RobyStates.Idle);
             return;

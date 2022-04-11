@@ -20,6 +20,7 @@ public class Script_Roby : MonoBehaviour
     public float roby_Life;
     public bool GetDamage = false;
     public Transform Roby_Hand;
+    public GameObject Mai_Player;
 
     [HideInInspector] public int Roby_EnemyIndex;
     [HideInInspector] public bool Roby_IgnoreEnemy;
@@ -27,7 +28,6 @@ public class Script_Roby : MonoBehaviour
     [HideInInspector] public ParticleSystem Roby_Particle_Shoot;
 
     public Animator Roby_Animator { get; private set; }
-    public GameObject Mai_Player { get; private set; }
     public Dictionary<RobyStates, Script_AI_Roby_BaseState> Roby_StateDictionary { get; private set; }
     public float Mai_MinDistance { get; private set; }
     public float Mai_PlayerNearZone { get; private set; }
@@ -48,6 +48,7 @@ public class Script_Roby : MonoBehaviour
     public Slider RobyHpSlider;
     private Script_AI_Roby_BaseState Roby_CurrentState;
     private NavMeshPath roby_NavMeshPath;
+
     private void OnEnable()
     {
         Enemy.OnEnemyDeath.AddListener(SwitchTarget);
@@ -95,14 +96,11 @@ public class Script_Roby : MonoBehaviour
 
     protected virtual void Update()
     {
-        print(Roby_CurrentState);
         Roby_CurrentState.UpdateState(this);
     }
 
     private void Awake()
     {
-        Mai_Player = GameObject.Find("Mai");
-
         Roby_NavAgent = GetComponent<NavMeshAgent>();
         Roby_Animator = GetComponent<Animator>();
         //roby_RigidBody = GetComponent<Rigidbody>();
