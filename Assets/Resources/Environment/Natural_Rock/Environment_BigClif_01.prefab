@@ -253,6 +253,7 @@ GameObject:
   m_Component:
   - component: {fileID: 7253166252511738511}
   - component: {fileID: 7253166252496973359}
+  - component: {fileID: 643318888321475874}
   m_Layer: 0
   m_Name: Environment_BigClif_01
   m_TagString: Untagged
@@ -267,9 +268,9 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7253166252512224943}
-  m_LocalRotation: {x: 0.26149842, y: 0.00016170184, z: -0.082638405, w: 0.9616598}
+  m_LocalRotation: {x: 0.2615003, y: 0.00015896933, z: -0.08263787, w: 0.9616593}
   m_LocalPosition: {x: 25.19, y: 23.2, z: 15.43}
-  m_LocalScale: {x: 1.8669996, y: 1.8669999, z: 1.867}
+  m_LocalScale: {x: 0.984973, y: 0.98497313, z: 0.9849732}
   m_Children:
   - {fileID: 7253166252511738509}
   - {fileID: 7253166252511738507}
@@ -304,3 +305,17 @@ LODGroup:
     renderers:
     - renderer: {fileID: 7253166252514162795}
   m_Enabled: 1
+--- !u!64 &643318888321475874
+MeshCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7253166252512224943}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 4
+  m_Convex: 0
+  m_CookingOptions: 30
+  m_Mesh: {fileID: 4300000, guid: 04fa4995cb1cfcd4eb8dc1defa230c89, type: 3}

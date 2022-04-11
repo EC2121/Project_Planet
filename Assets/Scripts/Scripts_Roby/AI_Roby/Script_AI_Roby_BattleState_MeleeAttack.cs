@@ -7,25 +7,16 @@ public class Script_AI_Roby_BattleState_MeleeAttack : Script_AI_Roby_BaseState
     public void CustomCollisionEnter(Script_Roby AiRoby, Collision other)
     {
         Player_State_Machine.hit.Invoke(true);
-        //AiRoby.transform.LookAt(AiRoby.Roby_EnemyTarget.transform);
-        //if (other.gameObject.CompareTag("Enemy") && AiRoby.IsAttacking)
-        //{
-        //    other.gameObject.GetComponent<Enemy>().AddDamage(50,AiRoby.gameObject,false);
-        //}
     }
 
-    public void CustomOnTriggerEnter(Script_Roby AiRoby, Collider collider)
-    {
-    }
+    public void CustomOnTriggerEnter(Script_Roby AiRoby, Collider collider) { }
 
     public void CustomOnTriggerExit(Script_Roby AiRoby, Collider collider)
     {
         AiRoby.EnemyOutArea(collider.gameObject);
     }
 
-    public void CustomOnTriggerStay(Script_Roby AiRoby, Collider collider)
-    {
-    }
+    public void CustomOnTriggerStay(Script_Roby AiRoby, Collider collider) { }
 
     public void OnEnter(Script_Roby AIRoby)
     {
@@ -69,11 +60,12 @@ public class Script_AI_Roby_BattleState_MeleeAttack : Script_AI_Roby_BaseState
 
         AIRoby.Roby_Animator.SetTrigger(AIRoby.Roby_AshAnimator_turnTrigger);
     }
+
     public float AngleCalculator(Script_Roby AIRoby)
     {
         Vector3 MyForw = AIRoby.transform.forward;
-        float dot = Vector3.Dot(MyForw, (AIRoby.Roby_EnemyTarget.transform.position - AIRoby.transform.position).normalized);
-        Vector3 Cross = Vector3.Cross(MyForw, (AIRoby.Roby_EnemyTarget.transform.position - AIRoby.transform.position).normalized);
+        float dot = Vector3.Dot(MyForw, ( AIRoby.Roby_EnemyTarget.transform.position - AIRoby.transform.position ).normalized);
+        Vector3 Cross = Vector3.Cross(MyForw, ( AIRoby.Roby_EnemyTarget.transform.position - AIRoby.transform.position ).normalized);
         float angle = Mathf.Acos(dot) * Mathf.Rad2Deg;
 
         if (Mathf.Sign(Cross.y) == -1)
