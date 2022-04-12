@@ -10,12 +10,13 @@ GameObject:
   m_Component:
   - component: {fileID: 7960900647052045521}
   - component: {fileID: 7960900647032207473}
+  - component: {fileID: 1967357241680860813}
   m_Layer: 0
   m_Name: Environment_BigCliff_AncientEntrance
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 4294967295
   m_IsActive: 1
 --- !u!4 &7960900647052045521
 Transform:
@@ -24,9 +25,9 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7960900647051686129}
-  m_LocalRotation: {x: -0, y: -0.51099896, z: -0, w: 0.85958135}
+  m_LocalRotation: {x: 0, y: -0.5110005, z: 0, w: 0.8595804}
   m_LocalPosition: {x: 467.21597, y: 17.622137, z: 295.14178}
-  m_LocalScale: {x: 2.1739, y: 2.1739, z: 2.1739}
+  m_LocalScale: {x: 2.1739004, y: 2.1739, z: 2.1739004}
   m_Children:
   - {fileID: 7960900647052045523}
   - {fileID: 7960900647052045525}
@@ -61,6 +62,20 @@ LODGroup:
     renderers:
     - renderer: {fileID: 7960900647049752117}
   m_Enabled: 1
+--- !u!64 &1967357241680860813
+MeshCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7960900647051686129}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 4
+  m_Convex: 0
+  m_CookingOptions: 30
+  m_Mesh: {fileID: 4300004, guid: 843d122e5e84aa84db8a1036fe1d3dd8, type: 3}
 --- !u!1 &7960900647051686131
 GameObject:
   m_ObjectHideFlags: 0
@@ -77,7 +92,7 @@ GameObject:
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 4294967295
   m_IsActive: 1
 --- !u!4 &7960900647052045523
 Transform:
@@ -158,7 +173,7 @@ GameObject:
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 4294967295
   m_IsActive: 1
 --- !u!4 &7960900647052045525
 Transform:
@@ -239,7 +254,7 @@ GameObject:
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 4294967295
   m_IsActive: 1
 --- !u!4 &7960900647052045527
 Transform:

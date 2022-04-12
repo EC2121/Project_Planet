@@ -100,8 +100,9 @@ public class Player_JumpState : Player_BaseState
             Context.Animator.SetBool(Context.IsJumpHittedHash, true);
             Context.Animator.SetBool(Context.IsJumpingHash,false);
             Context.Hp -= 30f;
+            Context.MaySliderValue = Context.Hp;
         }
-        bool isFalling = Context.CurrentMovementY <= 0.0f || !Context.IsJumpPressed;
+        bool isFalling = Context.CurrentMovementY <= 0f || !Context.IsJumpPressed;
         float fallMultiplier = 2.0f;
 
         if (isFalling)

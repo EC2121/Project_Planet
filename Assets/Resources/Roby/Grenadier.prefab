@@ -6282,9 +6282,9 @@ GameObject:
   - component: {fileID: 3047293750476214866}
   - component: {fileID: 1159518113781105222}
   - component: {fileID: 4175080481532853629}
-  - component: {fileID: 5751029830935800950}
   - component: {fileID: 1257076487184138613}
   - component: {fileID: 4147713368250118692}
+  - component: {fileID: 883449258}
   m_Layer: 7
   m_Name: Grenadier
   m_TagString: Roby
@@ -6374,9 +6374,10 @@ MonoBehaviour:
   Roby_EnemyTarget: {fileID: 0}
   roby_EnemysInMyArea: []
   Roby_Live: 0
-  roby_Life: 50000
+  roby_Life: 500
   GetDamage: 0
   Roby_Hand: {fileID: 6248447185349945732}
+  Mai_Player: {fileID: 0}
   Roby_EnemyIndex: 0
   Roby_IgnoreEnemy: 0
   IsAttacking: 0
@@ -6447,7 +6448,7 @@ NavMeshAgent:
   m_Acceleration: 8
   avoidancePriority: 50
   m_AngularSpeed: 120
-  m_StoppingDistance: 2
+  m_StoppingDistance: 1
   m_AutoTraverseOffMeshLink: 1
   m_AutoBraking: 1
   m_AutoRepath: 1
@@ -6455,22 +6456,6 @@ NavMeshAgent:
   m_BaseOffset: 0
   m_WalkableMask: 4294967295
   m_ObstacleAvoidanceType: 4
---- !u!208 &5751029830935800950
-NavMeshObstacle:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6248447185350112716}
-  m_Enabled: 0
-  serializedVersion: 3
-  m_Shape: 1
-  m_Extents: {x: 0.5, y: 0.5, z: 0.5}
-  m_MoveThreshold: 0.1
-  m_Carve: 1
-  m_CarveOnlyStationary: 1
-  m_Center: {x: 0, y: 0, z: 0}
-  m_TimeToStationary: 0.5
 --- !u!135 &1257076487184138613
 SphereCollider:
   m_ObjectHideFlags: 0
@@ -6533,3 +6518,19 @@ MonoBehaviour:
         Data3: -2025778776
         Data4: -339038237
       Path: event:/Roby/RobyDeath
+--- !u!114 &883449258
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6248447185350112716}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ab4a7be8a4634c6fbaf634ecc30965ce, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  MaxHealth: 100
+  CurrentHealth: 100
+  Position: {x: 0, y: 0, z: 0}
+  Rotation: {x: 0, y: 0, z: 0, w: 0}

@@ -160,7 +160,7 @@ public partial class @Player_Controller : IInputActionCollection2, IDisposable
                     ""name"": """",
                     ""id"": ""7fb1d07c-1fda-43b2-8f71-987df17331c4"",
                     ""path"": ""<Keyboard>/leftShift"",
-                    ""interactions"": ""Press"",
+                    ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
                     ""action"": ""Run"",

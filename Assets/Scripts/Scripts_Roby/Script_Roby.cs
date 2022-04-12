@@ -17,9 +17,10 @@ public class Script_Roby : MonoBehaviour
 
     //Public solo per prova!
     [HideInInspector] public float Roby_Live;
-    public float roby_Life; 
+    public float roby_Life;
     public bool GetDamage = false;
     public Transform Roby_Hand;
+    public GameObject Mai_Player;
 
     [HideInInspector] public int Roby_EnemyIndex;
     [HideInInspector] public bool Roby_IgnoreEnemy;
@@ -27,7 +28,6 @@ public class Script_Roby : MonoBehaviour
     [HideInInspector] public ParticleSystem Roby_Particle_Shoot;
 
     public Animator Roby_Animator { get; private set; }
-    public GameObject Mai_Player { get; private set; }
     public Dictionary<RobyStates, Script_AI_Roby_BaseState> Roby_StateDictionary { get; private set; }
     public float Mai_MinDistance { get; private set; }
     public float Mai_PlayerNearZone { get; private set; }
@@ -48,6 +48,7 @@ public class Script_Roby : MonoBehaviour
     public Slider RobyHpSlider;
     private Script_AI_Roby_BaseState Roby_CurrentState;
     private NavMeshPath roby_NavMeshPath;
+
     private void OnEnable()
     {
         Enemy.OnEnemyDeath.AddListener(SwitchTarget);
@@ -95,14 +96,11 @@ public class Script_Roby : MonoBehaviour
 
     protected virtual void Update()
     {
-       // print(Roby_CurrentState);
         Roby_CurrentState.UpdateState(this);
     }
 
     private void Awake()
     {
-        Mai_Player = GameObject.Find("Mai");
-
         Roby_NavAgent = GetComponent<NavMeshAgent>();
         Roby_Animator = GetComponent<Animator>();
         //roby_RigidBody = GetComponent<Rigidbody>();
@@ -119,9 +117,9 @@ public class Script_Roby : MonoBehaviour
     private void Init()
     {
 
-        Mai_PlayerNearZone = 7;
-        Mai_PlayerNormalZone = 10;
-        Mai_PlayerBattleZone = 15;
+        Mai_PlayerNearZone = 3;
+        Mai_PlayerNormalZone = 5;
+        Mai_PlayerBattleZone = 10;
         Mai_MinDistance = 4;
         Roby_RobyNearZone = 5;
         RobyHpSlider.maxValue = roby_Life;
@@ -145,15 +143,17 @@ public class Script_Roby : MonoBehaviour
         Roby_AshAnimator_turnTrigger = Animator.StringToHash("TurnTrigger");
         Roby_AshAnimator_GetDamage = Animator.StringToHash("Hit");
 
-        Roby_StateDictionary = new Dictionary<RobyStates, Script_AI_Roby_BaseState>();
-        Roby_StateDictionary[RobyStates.Idle] = new Script_AI_Roby_Idle();
-        Roby_StateDictionary[RobyStates.Patroll] = new Script_AI_Roby_Patroll();
-        Roby_StateDictionary[RobyStates.Follow] = new Script_AI_Roby_FollowState();
-        Roby_StateDictionary[RobyStates.Battle] = new Script_AI_Roby_BattleState();
-        Roby_StateDictionary[RobyStates.MeleeAttack] = new Script_AI_Roby_BattleState_MeleeAttack();
-        Roby_StateDictionary[RobyStates.RangeAttack] = new Script_AI_Roby_BattleState_RangedAttack();
-        Roby_StateDictionary[RobyStates.ZoneAttack] = new Script_Ai_Roby_BattleState_ZoneAttack();
-        Roby_StateDictionary[RobyStates.Die] = new Script_AI_Roby_Dead();
+        Roby_StateDictionary = new Dictionary<RobyStates, Script_AI_Roby_BaseState>
+        {
+            [RobyStates.Idle] = new Script_AI_Roby_Idle(),
+            [RobyStates.Patroll] = new Script_AI_Roby_Patroll(),
+            [RobyStates.Follow] = new Script_AI_Roby_FollowState(),
+            [RobyStates.Battle] = new Script_AI_Roby_BattleState(),
+            [RobyStates.MeleeAttack] = new Script_AI_Roby_BattleState_MeleeAttack(),
+            [RobyStates.RangeAttack] = new Script_AI_Roby_BattleState_RangedAttack(),
+            [RobyStates.ZoneAttack] = new Script_Ai_Roby_BattleState_ZoneAttack(),
+            [RobyStates.Die] = new Script_AI_Roby_Dead()
+        };
         Roby_CurrentState = Roby_StateDictionary[RobyStates.Idle];
     }
 
@@ -163,7 +163,6 @@ public class Script_Roby : MonoBehaviour
         Roby_CurrentState = Roby_StateDictionary[state];
         Roby_CurrentState.OnEnter(this);
     }
-
 
     public void SwitchTarget(GameObject enemy)
     {
@@ -176,6 +175,7 @@ public class Script_Roby : MonoBehaviour
             }
         }
     }
+
     public void OnRobyAddDamage(float Damage)
     {
         if (roby_Life > 1)
@@ -204,7 +204,7 @@ public class Script_Roby : MonoBehaviour
     {
         //Roby_Particle_Shoot.GetCollisionEvents();
 
-        other.gameObject.GetComponentInParent<Enemy>().AddDamage(20, gameObject, false);
+        other.GetComponentInParent<Enemy>().AddDamage(20, gameObject, false);
 
         Roby_Particle_Shoot.Clear();
     }
@@ -219,14 +219,12 @@ public class Script_Roby : MonoBehaviour
         roby_Life = 1;
         SwitchState(RobyStates.Die);
     }
-    
+
     public void SetPath(Vector3 roby_targetPath)
     {
         Roby_NavAgent.CalculatePath(roby_targetPath, roby_NavMeshPath);
         Roby_NavAgent.SetPath(roby_NavMeshPath);
     }
-
-
 
     public void RobyExplosion()
     {
@@ -259,12 +257,13 @@ public class Script_Roby : MonoBehaviour
             {
                 Roby_EnemyTarget = null;
             }
-            
+
         }
     }
+
     public void RobyShoot()
     {
-        if (ReferenceEquals(Roby_EnemyTarget, null)) return;
+        if (ReferenceEquals(Roby_EnemyTarget, null) || roby_EnemysInMyArea.Count == 0) return;
 
         Roby_Particle_Shoot.transform.LookAt(Roby_EnemyTarget.transform.position + new Vector3(0, Roby_EnemyTarget.transform.localScale.y * 0.5f, 0));
         Roby_Particle_Shoot.Play(true);
@@ -294,7 +293,6 @@ public class Script_Roby : MonoBehaviour
 
     public void AngleCalculator()
     {
-
         Vector3 MyForw = transform.forward;
         float dot = Vector3.Dot(MyForw, ( Roby_NavAgent.destination - transform.position ).normalized);
         Vector3 Cross = Vector3.Cross(MyForw, ( Roby_NavAgent.destination - transform.position ).normalized);
