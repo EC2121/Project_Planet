@@ -48,15 +48,24 @@ public class GraphicsMenu : MonoBehaviour
         //Controllo se l'HDR è disponibile
         #region HDR
 
-        if (!HDROutputSettings.displays[Display.activeEditorGameViewTarget].available)
+        try
         {
-            HDR.isOn = false;
-            HDR.interactable = false;
+            if (!HDROutputSettings.displays[Display.activeEditorGameViewTarget].available)
+            {
+                HDR.isOn = false;
+                HDR.interactable = false;
+            }
+            else
+            {
+                HDR.isOn = false;
+                HDR.interactable = true;    
+            }
         }
-        else
+        catch (InvalidOperationException e)
         {
-            HDR.isOn = false;
-            HDR.interactable = true;    
+            //hdr è disabilitato dalle impostazioni del progetto
+            HDR.interactable = false;
+            HDR.transform.GetChild(1).GetComponent<TMP_Text>().faceColor = new Color32(39, 39, 39, 255);
         }
 
         #endregion

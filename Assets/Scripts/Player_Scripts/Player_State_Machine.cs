@@ -201,7 +201,8 @@ public class Player_State_Machine : MonoBehaviour
 
         isWeaponAttached = false;
         hp = maxHp;
-        mayHpSlider.maxValue = maxHp;
+        mayHpSlider = GameObject.FindGameObjectWithTag("MaySlider").GetComponent<Slider>();
+        mayHpSlider.maxValue = maxHp; 
         mayHpSlider.value = hp;
         SetUpJumpVariables();
     }

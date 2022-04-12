@@ -273,7 +273,7 @@ public class Script_Roby : MonoBehaviour
 
     public bool IsMaITooFar(float zone)
     {
-        float distanceFromMai = Vector3.Distance(transform.position, Mai_Player.transform.position);
+        float distanceFromMai = Vector3.Distance(transform.position, Mai_Player.transform.position); 
         if (distanceFromMai > zone) return true;
         return false;
     }
