@@ -143,12 +143,26 @@ public class Player_State_Machine : MonoBehaviour
     public Vector2 CurrentMovementInput { get { return currentMovementInput; } set { currentMovementInput = value; } }
     public float MaySliderValue { get { return mayHpSlider.value; } set { mayHpSlider.value = value; } }
 
-    public bool HasKey;
+    
+    [SerializeField]private bool hasKey;
+    private GameObject keyReference;
+
+    public bool HasKey
+    {
+        get => hasKey;
+        set
+        {
+            hasKey = value;
+            keyReference.SetActive(!hasKey);
+        }
+    }
+
     private float hologramTimer;
     private bool startHologramTimer;
 
     private void Awake()
     {
+        keyReference = GameObject.FindGameObjectWithTag("Key");
         Interactable.OnKeyTakenDel += () => HasKey = true;
         hologram = GameObject.FindGameObjectWithTag("Hologram");
         input = new Player_Controller();

@@ -27,6 +27,7 @@ public class DoorHandler : MonoBehaviour
             {
                 GetComponent<Animator>().SetTrigger("OpenDoor");
                 GetComponent<BoxCollider>().enabled = false;
+                SaveMGR.Save();
             }
             else
             {

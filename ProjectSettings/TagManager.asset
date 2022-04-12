@@ -10,6 +10,7 @@ TagManager:
   - Box
   - Hologram
   - MaySlider
+  - Key
   layers:
   - Default
   - TransparentFX

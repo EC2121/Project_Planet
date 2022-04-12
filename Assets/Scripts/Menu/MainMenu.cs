@@ -8,7 +8,7 @@ public class MainMenu : MonoBehaviour
 {
     public void PlayScene()
     {
-        SaveSystem.newGame = true;
+        SaveSystem.saveType = SaveSystem.SaveType.SaveOnNewGame;
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
     }
 
@@ -52,7 +52,7 @@ public class MainMenu : MonoBehaviour
     public void LoadScene()
     {
         //StartCoroutine(_LoadScene());
-        SaveSystem.newGame = false;
+        SaveSystem.saveType = SaveSystem.SaveType.Load;
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
     }
 

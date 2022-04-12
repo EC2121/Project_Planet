@@ -22,10 +22,15 @@ public class SaveMGR : MonoBehaviour
     private void Start()
     {
         //dontdestroyonload save number
-        if(!SaveSystem.newGame)
-            Load();
-        else
-            Save();
+        if (SaveSystem.saveType == SaveSystem.SaveType.SaveOnNewGame ||
+            SaveSystem.saveType == SaveSystem.SaveType.Save)
+        {
+            Save();        
+        }
+        else if (SaveSystem.saveType == SaveSystem.SaveType.Load)
+        {
+            Load();     
+        }
     }
 
     public static void Save()

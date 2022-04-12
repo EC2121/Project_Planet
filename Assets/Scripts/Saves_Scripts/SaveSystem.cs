@@ -8,9 +8,12 @@ using EventHandler = System.EventHandler;
 
 namespace UnityTemplateProjects.Saves_Scripts
 {
+    
     public static class SaveSystem
     {
-        public static bool newGame;
+        public enum SaveType {None, Save, SaveOnNewGame, Load}
+
+        public static SaveType saveType = SaveType.None;
         public static event EventHandler OnSave, OnLoad;
         public static List<GameData> Saves = new List<GameData>();
         // per specificare ulteriori parametri da passare all'evento (usare il generic <> sull'evento)

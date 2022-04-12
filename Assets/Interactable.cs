@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityTemplateProjects.Saves_Scripts;
 
 public class Interactable : MonoBehaviour
 {
@@ -18,6 +19,7 @@ public class Interactable : MonoBehaviour
         {
             OnKeyTakenDel?.Invoke();
             this.gameObject.SetActive(false);
+            SaveMGR.Save();
         }
     }
    
