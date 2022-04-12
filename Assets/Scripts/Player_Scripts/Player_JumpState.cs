@@ -5,6 +5,9 @@ using UnityEngine;
 public class Player_JumpState : Player_BaseState
 {
     private bool isBeenHitted = false;
+    private bool isJumpAttacked = false;
+    private float timer = 0f;
+
     public Player_JumpState(Player_State_Machine currentContext, Player_StateFactory playerStateFactory) : base(
         currentContext, playerStateFactory)
     {
@@ -15,37 +18,41 @@ public class Player_JumpState : Player_BaseState
 
     public override void EnterState()
     {
-        Context.Animator.SetBool(Context.IsAttacking,false);
-        Context.Animator.SetBool(Context.IsHittedHash,false);
+        Context.Animator.SetBool(Context.IsAttacking, false);
+        Context.Animator.SetBool(Context.IsHittedHash, false);
         Context.Animator.SetBool(Context.IsRunAttackingHash, false);
-        Context.Animator.SetBool("isJumpAttack", false);
-
+        isBeenHitted = false;
         HandleJump();
     }
 
     public override void UpdateState()
     {
+        timer -= Time.deltaTime;
+
         CheckSwitchStates();
         HandleGravity();
+        HandleAnimation();
     }
 
     public override void ExitState()
     {
         Context.Animator.SetBool(Context.IsJumpingHash, false);
         Context.Animator.SetBool(Context.IsJumpHittedHash, false);
+        Context.Animator.SetBool("isJumpAttack", false);
         if (!Context.IsRunPressed)
         {
             Context.Animator.SetBool(Context.IsRunningHash, false);
 
-            Context.AppliedMovementX = 0;
-            Context.AppliedMovementZ = 0;
+            Context.AppliedMovementX = Context.CurrentMovementInput.x;
+            Context.AppliedMovementZ = Context.CurrentMovementInput.y;
         }
 
         if (!Context.IsMovementPressed)
         {
+            Context.Animator.SetBool(Context.IsRunningHash, false);
             Context.Animator.SetBool(Context.IsWalkingHash, false);
-            Context.AppliedMovementX = 0;
-            Context.AppliedMovementZ = 0;
+            Context.AppliedMovementX = 0f;
+            Context.AppliedMovementZ = 0f;
         }
 
         if (Context.IsJumpPressed)
@@ -63,11 +70,11 @@ public class Player_JumpState : Player_BaseState
 
     public override void CheckSwitchStates()
     {
-        if (Context.IsMousePressed && Context.IsWeaponAttached)
-        {
-            SwitchState(Factory.JumpAttack());
-        }
-        if (Context.CharacterController.isGrounded)
+        // {
+        //     SwitchState(Factory.JumpAttack());
+        // } 
+
+        if (Context.CharacterController.isGrounded && timer <= 0f)
         {
             SwitchState(Factory.Grounded());
         }
@@ -75,7 +82,10 @@ public class Player_JumpState : Player_BaseState
 
     public override void InitializeSubState()
     {
-       
+        // if (Context.IsMousePressed && Context.IsWeaponAttached &&!Context.CharacterController.isGrounded)
+        // {
+        //     SetSubState(Factory.JumpAttack());
+        // } 
     }
 
     void HandleJump()
@@ -84,6 +94,7 @@ public class Player_JumpState : Player_BaseState
         {
             Context.StopCoroutine(Context.CurrentJumpResetRoutine);
         }
+
         Context.Animator.SetBool(Context.IsJumpingHash, true);
         Context.IsJumping = true;
         Context.JumpCount += 1;
@@ -92,17 +103,30 @@ public class Player_JumpState : Player_BaseState
         Context.AppliedMovementY = Context.InitialJumpVelocities[Context.JumpCount];
     }
 
-    void HandleGravity()
+    void HandleAnimation()
     {
         if (Context.IsIsHitted && !isBeenHitted)
         {
             isBeenHitted = true;
+            Context.IsIsHitted = false;
+            float previousY_Velocity = Context.CurrentMovementY;
             Context.Animator.SetBool(Context.IsJumpHittedHash, true);
-            Context.Animator.SetBool(Context.IsJumpingHash,false);
             Context.Hp -= 30f;
             Context.MaySliderValue = Context.Hp;
         }
-        bool isFalling = Context.CurrentMovementY <= 0.03f || !Context.IsJumpPressed;
+
+        if (Context.IsMousePressed && Context.IsWeaponAttached && !Context.CharacterController.isGrounded &&
+            !isJumpAttacked && Context.JumpCount <= 2)
+        {
+            isJumpAttacked = true;
+            timer = 0.6f;
+            Context.Animator.SetBool("isJumpAttack", true);
+        }
+    }
+
+    void HandleGravity()
+    {
+        bool isFalling = Context.CurrentMovementY <= 0f || !Context.IsJumpPressed;
         float fallMultiplier = 2.0f;
 
         if (isFalling)

@@ -1103,6 +1103,22 @@ PrefabInstance:
       propertyPath: CutScene
       value: 
       objectReference: {fileID: 786128572}
+    - target: {fileID: 2029871264903509726, guid: 66067fd29c47b54409f49dcad60b6ec8, type: 3}
+      propertyPath: m_AnchorMax.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2029871264903509726, guid: 66067fd29c47b54409f49dcad60b6ec8, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2029871265435000375, guid: 66067fd29c47b54409f49dcad60b6ec8, type: 3}
+      propertyPath: m_AnchorMax.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2029871265435000375, guid: 66067fd29c47b54409f49dcad60b6ec8, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 2029871266314658693, guid: 66067fd29c47b54409f49dcad60b6ec8, type: 3}
       propertyPath: m_Pivot.x
       value: 0

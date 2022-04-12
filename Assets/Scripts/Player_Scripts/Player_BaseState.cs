@@ -43,7 +43,7 @@ public abstract class Player_BaseState
     protected void SwitchState(Player_BaseState newState)
     {
         ExitState();
-       //Debug.Log(newState);
+       Debug.Log(newState);
         newState.EnterState();
         if (_isRootState)
         {

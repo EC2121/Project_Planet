@@ -35,12 +35,13 @@ public class Player_RunAttack : Player_BaseState
         {
             Context.Animator.SetBool(Context.IsRunningHash, false);
 
-            Context.AppliedMovementX = 0;
-            Context.AppliedMovementZ = 0;
+            Context.AppliedMovementX = Context.CurrentMovementInput.x;
+            Context.AppliedMovementZ = Context.CurrentMovementInput.y;
         }
 
         if (!Context.IsMovementPressed)
         {
+            Context.Animator.SetBool(Context.IsRunningHash, false);
             Context.Animator.SetBool(Context.IsWalkingHash, false);
             Context.AppliedMovementX = 0;
             Context.AppliedMovementZ = 0;

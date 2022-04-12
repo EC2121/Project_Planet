@@ -272,6 +272,7 @@ public class Player_State_Machine : MonoBehaviour
 
     private void Update()
     {
+        _currentState.UpdateStates();
 
         if (onHologram)
         {
@@ -289,9 +290,15 @@ public class Player_State_Machine : MonoBehaviour
             hologramTimer -= Time.deltaTime;
             if (hologramTimer <= 0) startHologramTimer = false;
         }
+        HandleCameraRotation();
+        characterController.Move(appliedMovement * Time.deltaTime);
+        HandleRotation();
+        HandleGravity();
 
-        _currentState.UpdateStates();
+    }
 
+    void HandleCameraRotation()
+    {
         Vector3 forwardCam = cameraMainTransform.forward;
         forwardCam.y = 0;
         forwardCam = forwardCam.normalized;
@@ -299,11 +306,14 @@ public class Player_State_Machine : MonoBehaviour
             return;
         Quaternion inputFrame = Quaternion.LookRotation(forwardCam, Vector3.up);
         appliedMovement = inputFrame * currentMovement;
-        characterController.Move(appliedMovement * Time.deltaTime);
-        HandleRotation();
-        // Debug.Log(isHitted);
-        //   Debug.Log(hp + " HPPPPPPPPPPP");
-
+    }
+    void HandleGravity()
+    {
+        if (!characterController.isGrounded && !isJumpPressed)
+        {
+            currentMovement.y += gravity * Time.deltaTime;
+            currentRunMovement.y += gravity * Time.deltaTime;
+        }
     }
     public void OnAnimationEvent(string eventName)
     {

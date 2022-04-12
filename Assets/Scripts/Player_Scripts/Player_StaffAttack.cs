@@ -6,7 +6,7 @@ using UnityEngine.InputSystem;
 
 public class Player_StaffAttack : Player_BaseState
 {
-    private float timer = 0.55f;
+    private float timer = 0.565f;
 
     public Player_StaffAttack(Player_State_Machine currentContext, Player_StateFactory playerStateFactory) : base(
         currentContext, playerStateFactory)
@@ -33,8 +33,8 @@ public class Player_StaffAttack : Player_BaseState
         {
             Context.Animator.SetBool(Context.IsRunningHash, false);
         
-            Context.AppliedMovementX = 0;
-            Context.AppliedMovementZ = 0;
+            Context.AppliedMovementX = Context.CurrentMovementInput.x;
+            Context.AppliedMovementZ = Context.CurrentMovementInput.y;
         }
         
         if (!Context.IsMovementPressed)

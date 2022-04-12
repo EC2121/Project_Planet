@@ -75,6 +75,11 @@ public class Player_GroundState : Player_BaseState
         {
             SetSubState(Factory.Hitted());
         }
+        
+        if (Context.IsMousePressed && !Context.IsJumpPressed && Context.IsWeaponAttached)
+        {
+            SetSubState(Factory.RunAttack());
+        }
         //
         // if (Context.IsIsHitted && Context.IsJumpPressed)
         // {

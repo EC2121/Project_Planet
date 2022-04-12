@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Data.SqlTypes;
 using System.Timers;
 using UnityEngine;
 
@@ -11,28 +12,18 @@ public class Player_JumpAttack : Player_BaseState
     public Player_JumpAttack(Player_State_Machine currentContext, Player_StateFactory playerStateFactory) : base(
         currentContext, playerStateFactory)
     {
-        IsRootState = true;
-        InitializeSubState();
     }
 
     public override void EnterState()
     {
         Context.Animator.SetBool("isJumpAttack", true);
         Context.Animator.SetBool(Context.IsJumpingHash, false);
-
-        // Context.CharacterController.enabled = false;
-        // Context.IsIsHitted = false;
+        
     }
 
     public override void UpdateState()
     {
         timer -= Time.deltaTime;
-       // Context.CurrentMovementY = 5;
-       // Context.AppliedMovementY = 5;
-       if (Context.IsJumpPressed)
-       {
-           Context.Animator.SetBool(Context.IsJumpingHash, false);
-       }
         CheckSwitchStates();
         HandleGravity();
     }
@@ -50,8 +41,9 @@ public class Player_JumpAttack : Player_BaseState
 
         if (!Context.IsMovementPressed)
         {
+            Context.Animator.SetBool(Context.IsRunningHash, false);
             Context.Animator.SetBool(Context.IsWalkingHash, false);
-            Context.AppliedMovementX = 0;
+            Context.AppliedMovementX = 0; 
             Context.AppliedMovementZ = 0;
         }
     }

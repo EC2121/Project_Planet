@@ -12,6 +12,8 @@ public class Player_IdleState :  Player_BaseState
     {
         Context.Animator.SetBool(Context.IsWalkingHash,false);
         Context.Animator.SetBool(Context.IsRunningHash,false);
+        Context.Animator.SetBool(Context.IsRunAttackingHash, false);
+
     }
 
     public override void UpdateState()

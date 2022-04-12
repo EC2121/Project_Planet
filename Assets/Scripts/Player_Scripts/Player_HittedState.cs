@@ -29,6 +29,17 @@ public class Player_HittedState : Player_BaseState
     public override void UpdateState()
     {
         timer -= Time.deltaTime;
+        if (!Context.IsRunPressed)
+        {
+            Context.Animator.SetBool(Context.IsRunningHash, false);
+        }
+        if (!Context.IsMovementPressed)
+        {
+            Context.Animator.SetBool(Context.IsRunningHash, false);
+            Context.Animator.SetBool(Context.IsWalkingHash, false);
+            Context.AppliedMovementX = 0f;
+            Context.AppliedMovementZ = 0f;
+        }
         CheckSwitchStates();
     }
 
