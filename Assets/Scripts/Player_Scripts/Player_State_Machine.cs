@@ -59,7 +59,7 @@ public class Player_State_Machine : MonoBehaviour
     private Player_StateFactory _states;
     private bool requireNewWeaponSwitch = false;
     private bool requireNewAttack = false;
-    private readonly float groundGravity = -1.10f;
+    private readonly float groundGravity = -0.05f;
     private readonly float fallingSpeed;
     private AnimatorStateInfo stateInfo;
     private int attackId = 0;
