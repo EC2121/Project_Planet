@@ -6,26 +6,63 @@ using UnityEngine.UI;
 using TMPro;
 using UnityEngine.Events;
 using UnityEngine.SceneManagement;
+using UnityTemplateProjects.Saves_Scripts;
+
+[Serializable]
+public struct TimerStats
+{
+    public bool Going;
+    public float CurrentTime;
+}
 
 public class Timer_OClock : MonoBehaviour
 {
-
     public float StartTime;
     public GameObject CutScene;
     public GameObject Ship;
-    private bool Going=false;
+    private bool going = false;
 
     private float currentTime;
     private float finalTime;
     private TextMeshProUGUI timer;
 
+    public float CurrentTime
+    {
+        get => currentTime;
+        // set => currentTime = value;
+    }
+
+    public bool Going
+    {
+        get => going;
+        //set => finalTime = value;
+    }
+
     private void OnEnable()
     {
-        Player_State_Machine.gamePlayerFinalePhase.AddListener(() => { Going = true; });
+        Player_State_Machine.gamePlayerFinalePhase.AddListener(() => { going = true; });
+        SaveSystem.OnSave += SaveSystemOnOnSave;
+        SaveSystem.OnLoad += SaveSystemOnOnLoad;
     }
+
+    private void SaveSystemOnOnSave(object sender, EventArgs e)
+    {
+        SaveSystem.SaveData(gameObject, true);
+    }
+
+    private void SaveSystemOnOnLoad(object sender, EventArgs e)
+    {
+        GameData data = SaveSystem.LoadPlayer(true);
+
+        currentTime = data.timer.CurrentTime;
+        going = data.timer.Going;
+    }
+
     private void OnDisable()
     {
-        Player_State_Machine.gamePlayerFinalePhase.RemoveListener(() => { Going = true; });
+        Player_State_Machine.gamePlayerFinalePhase.RemoveListener(() => { going = true; });
+        SaveSystem.OnSave -= SaveSystemOnOnSave;
+        SaveSystem.OnLoad -= SaveSystemOnOnLoad;
     }
 
     private void Awake()
@@ -40,7 +77,7 @@ public class Timer_OClock : MonoBehaviour
 
     void Update()
     {
-        if (Going)
+        if (going)
         {
             currentTime -= Time.deltaTime;
             TimeSpan time = TimeSpan.FromSeconds(currentTime);

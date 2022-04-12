@@ -47,7 +47,11 @@ public class GameData
     //Enemies
     public List<CustomDictionary> CustomDictionaries = new List<CustomDictionary>();
 
+    public TimerStats timer;
+  
+    //PRIVATE FIELDS
     private bool firstTime;
+
     
     public GameData(GameObject self)
     {
@@ -154,6 +158,12 @@ public class GameData
             //TODO Altrimnenti devo andare a prendere l'indice della lista che ha lo stesso SpawnPointName con dell'oggetto con cui sto confrontando
             
             
+        }
+        else if (self.name == "EndGame_Timer")
+        {
+            timer = new TimerStats();
+            timer.Going = self.GetComponent<Timer_OClock>().Going;
+            timer.CurrentTime = self.GetComponent<Timer_OClock>().CurrentTime;
         }
     }
     //Environment data
