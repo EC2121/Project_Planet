@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.AI;
 using UnityEngine.Events;
 
 public class AI_Chompies_PatrolState : AI_Enemies_IBaseState
@@ -34,9 +35,18 @@ public class AI_Chompies_PatrolState : AI_Enemies_IBaseState
 
     private void SetRandomPath(Enemy owner)
     {
-        owner.Agent.CalculatePath(new Vector3(owner.PatrolCenter.x + Random.insideUnitCircle.x * 10
-         , 0.5f, owner.PatrolCenter.z + Random.insideUnitCircle.y * 10), owner.AgentPath);
-        owner.Agent.path = owner.AgentPath;
+        Vector3 randomPosition = Random.insideUnitSphere * owner.PatrolMaxDist + owner.transform.position;
+        NavMeshHit navMeshHit;
+        int patrolableAreaMask = 1 << 3;
+        if (NavMesh.SamplePosition(randomPosition, out navMeshHit, owner.PatrolMaxDist, patrolableAreaMask))
+        {
+            owner.Agent.CalculatePath(navMeshHit.position, owner.AgentPath);
+            owner.Agent.path = owner.AgentPath;
+        }
+      
+        //owner.Agent.CalculatePath(new Vector3(owner.PatrolCenter.x + Random.insideUnitCircle.x * 10
+        // , owner.transform.position.y, owner.PatrolCenter.z + Random.insideUnitCircle.y * 10), owner.AgentPath);
+        //owner.Agent.path = owner.AgentPath;
     }
 
     public void OnTrigEnter(Enemy owner, Collider other)
@@ -91,16 +101,6 @@ public class AI_Chompies_PatrolState : AI_Enemies_IBaseState
             return true;
         }
 
-        if (owner.Hologram.gameObject.activeInHierarchy)
-        {
-            float distanceFromHologram = Vector3.Distance(owner.transform.position, owner.Hologram.position);
-            if (distanceFromHologram <= 10)
-            {
-                owner.Target = owner.Hologram;
-                owner.IsAlerted = true;
-                return true;
-            }
-        }
 
 
         return false;

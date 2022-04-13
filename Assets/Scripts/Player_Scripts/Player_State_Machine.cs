@@ -1,4 +1,5 @@
 using Cinemachine.Utility;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
@@ -9,6 +10,7 @@ public class Player_State_Machine : MonoBehaviour
 {
     public static UnityEvent takeTheBox = new UnityEvent();
     public static UnityEvent<GameObject> OnHologramDisable = new UnityEvent<GameObject>();
+    public static UnityEvent OnHologramCreated = new UnityEvent();
     public static UnityEvent<bool> hit = new UnityEvent<bool>();
     public static UnityEvent gamePlayerFinalePhase = new UnityEvent();
 
@@ -146,9 +148,11 @@ public class Player_State_Machine : MonoBehaviour
     public bool HasKey;
     private float hologramTimer;
     private bool startHologramTimer;
+    private bool canCreateHologram;
 
     private void Awake()
     {
+        canCreateHologram = true;
         Interactable.OnKeyTakenDel += () => HasKey = true;
         hologram = GameObject.FindGameObjectWithTag("Hologram");
         input = new Player_Controller();
@@ -264,31 +268,45 @@ public class Player_State_Machine : MonoBehaviour
         animator.SetBool("isWalking", true);
         animator.SetBool("isRunning", true);
     }
-    private void DestroyHologram()
+
+    IEnumerator DestroyHologram()
     {
+        yield return new WaitForSeconds(5);
         OnHologramDisable.Invoke(gameObject);
         hologram.SetActive(false);
+        yield return new WaitForSeconds(5);
+        canCreateHologram = true;
     }
+    
+       
 
     private void Update()
     {
 
         if (onHologram)
         {
-            if (hologramTimer <= 0)
+            if (canCreateHologram)
             {
-                startHologramTimer = true;
+                canCreateHologram = false;
                 CreateHologram();
-                hologramTimer = 10;
-                Invoke("DestroyHologram", 5);
+                OnHologramCreated?.Invoke();
+                StartCoroutine(DestroyHologram());
             }
+           
+            //if (hologramTimer <= 0)
+            //{
+            //    startHologramTimer = true;
+            //    OnHologramCreated?.Invoke();
+            //    hologramTimer = 10;
+            //    StartCoroutine(DestroyHologram());
+            //}
         }
 
-        if (startHologramTimer)
-        {
-            hologramTimer -= Time.deltaTime;
-            if (hologramTimer <= 0) startHologramTimer = false;
-        }
+        //if (startHologramTimer)
+        //{
+        //    hologramTimer -= Time.deltaTime;
+        //    if (hologramTimer <= 0) startHologramTimer = false;
+        //}
 
         _currentState.UpdateStates();
 
