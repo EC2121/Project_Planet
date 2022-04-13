@@ -99,6 +99,11 @@ public class Script_Roby : MonoBehaviour
         Roby_CurrentState.UpdateState(this);
     }
 
+    private void OnBecameInvisible()
+    {
+        transform.position = Mai_Player.transform.position;
+    }
+
     private void Awake()
     {
         Roby_NavAgent = GetComponent<NavMeshAgent>();
