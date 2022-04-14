@@ -760,16 +760,16 @@ ModelImporter:
       bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
       curves: []
       events:
-      - time: 0.31303373
-        functionName: OnAttackStart
-        data: 
+      - time: 0.30242473
+        functionName: PlaySound
+        data: attack
         objectReferenceParameter: {fileID: 7873018163916560823, guid: c691a68c1cccb30458ccacc5e4556b41, type: 3}
         floatParameter: 0
         intParameter: 1
         messageOptions: 0
-      - time: 0.31877348
-        functionName: PlaySound
-        data: attack
+      - time: 0.31303373
+        functionName: OnAttackStart
+        data: 
         objectReferenceParameter: {fileID: 7873018163916560823, guid: c691a68c1cccb30458ccacc5e4556b41, type: 3}
         floatParameter: 0
         intParameter: 1
