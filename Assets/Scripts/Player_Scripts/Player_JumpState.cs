@@ -22,13 +22,16 @@ public class Player_JumpState : Player_BaseState
         Context.Animator.SetBool(Context.IsHittedHash, false);
         Context.Animator.SetBool(Context.IsRunAttackingHash, false);
         isBeenHitted = false;
+
         HandleJump();
+        SetJumpHeightRun();
+       
     }
 
     public override void UpdateState()
     {
         timer -= Time.deltaTime;
-
+        
         CheckSwitchStates();
         HandleGravity();
         HandleAnimation();
@@ -38,7 +41,9 @@ public class Player_JumpState : Player_BaseState
     {
         Context.Animator.SetBool(Context.IsJumpingHash, false);
         Context.Animator.SetBool(Context.IsJumpHittedHash, false);
-        Context.Animator.SetBool("isJumpAttack", false);
+        Context.Animator.SetBool(Context.IsJumpAttackHash, false);
+        Context.CurrentMovementX =Context.CurrentMovementInput.x;
+        Context.CurrentMovementZ =Context.CurrentMovementInput.y;
         if (!Context.IsRunPressed)
         {
             Context.Animator.SetBool(Context.IsRunningHash, false);
@@ -70,10 +75,6 @@ public class Player_JumpState : Player_BaseState
 
     public override void CheckSwitchStates()
     {
-        // {
-        //     SwitchState(Factory.JumpAttack());
-        // } 
-
         if (Context.CharacterController.isGrounded && timer <= 0f)
         {
             SwitchState(Factory.Grounded());
@@ -82,10 +83,6 @@ public class Player_JumpState : Player_BaseState
 
     public override void InitializeSubState()
     {
-        // if (Context.IsMousePressed && Context.IsWeaponAttached &&!Context.CharacterController.isGrounded)
-        // {
-        //     SetSubState(Factory.JumpAttack());
-        // } 
     }
 
     void HandleJump()
@@ -120,7 +117,7 @@ public class Player_JumpState : Player_BaseState
         {
             isJumpAttacked = true;
             timer = 0.6f;
-            Context.Animator.SetBool("isJumpAttack", true);
+            Context.Animator.SetBool(Context.IsJumpAttackHash, true);
         }
     }
 
@@ -142,6 +139,20 @@ public class Player_JumpState : Player_BaseState
             Context.CurrentMovementY =
                 Context.CurrentMovementY + (Context.JumpGravities[Context.JumpCount] * Time.deltaTime);
             Context.AppliedMovementY = (previousY_Velocity + Context.CurrentMovementY) * 0.5f;
+        }
+    }
+
+    void SetJumpHeightRun()
+    {
+        Context.CurrentMovementX = Context.CurrentMovementInput.x *2.5f;
+        Context.CurrentMovementZ = Context.CurrentMovementInput.y *2.5f;
+
+        if (Context.IsRunPressed)
+        {
+            Context.CurrentMovementX = Context.CurrentMovementInput.x *4;
+            Context.CurrentMovementZ = Context.CurrentMovementInput.y *4;
+            Context.CurrentMovementY += 3;
+            Context.AppliedMovementY += 3;
         }
     }
 

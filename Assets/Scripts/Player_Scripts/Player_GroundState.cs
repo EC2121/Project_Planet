@@ -30,12 +30,8 @@ public class Player_GroundState : Player_BaseState
         {
             SwitchState(Factory.Jump());
         }
-        // if (Context.IsJumpPressed && !Context.RequireNewJump && !Context.HasBox && !Context.IsIsHitted)
-        // {
-        //     SwitchState(Factory.JumpHitted());
-        // }
         if (Context.IsInteract && ( !Context.IsWeaponAttached && !Context.IsRunPressed &&
-                                   !Context.Animator.GetCurrentAnimatorStateInfo(1).IsName(Context.UnEquipString) ) &&
+                                    !Context.Animator.GetCurrentAnimatorStateInfo(1).IsName(Context.UnEquipString) ) &&
             !Context.RequireNewWeaponSwitch && !Context.RequireNewInteraction &&
             Context.Mai_BoxIsTakable)
         {
@@ -45,10 +41,6 @@ public class Player_GroundState : Player_BaseState
         {
             SwitchState(Factory.Dead());
         }
-        // if (Context.IsIsHitted)
-        // {
-        //     SwitchState(Factory.Hitted());
-        // }
     }
 
     public override void InitializeSubState()
@@ -80,11 +72,6 @@ public class Player_GroundState : Player_BaseState
         {
             SetSubState(Factory.RunAttack());
         }
-        //
-        // if (Context.IsIsHitted && Context.IsJumpPressed)
-        // {
-        //     SetSubState(Factory.JumpHitted());
-        // }
         if (Context.IsMousePressed && Context.IsWeaponAttached && !Context.RequireNewAttack)
         {
             SetSubState(Factory.StaffAttack());

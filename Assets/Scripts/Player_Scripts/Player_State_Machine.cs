@@ -1,3 +1,4 @@
+using System;
 using Cinemachine.Utility;
 using System.Collections.Generic;
 using UnityEngine;
@@ -37,7 +38,11 @@ public class Player_State_Machine : MonoBehaviour
     private int isRunAttackingHash;
     private int isJumpHittedHash;
     private int isHittedHash;
+    private int isJumpAttackHash;
     private string unEquipString;
+    private string attachWeaponString;
+    private string detachWeaponString;
+    private string boxString;
     private Player_Controller input;
     private CharacterController characterController;
     private Vector2 currentMovementInput;
@@ -68,9 +73,10 @@ public class Player_State_Machine : MonoBehaviour
     private float initialJumpVelocity;
     private bool isJumping = false;
     private bool isAttack = false;
-    private readonly float maxJumpHeight = 2f;
+    private float maxJumpHeight = 2f;
     private readonly float maxJumpTIme = 0.75f;
     private float gravity = -9.81f;
+    private float timeToApex;
     private int jumpCount = 0;
     private Dictionary<int, float> initialJumpVelocities = new Dictionary<int, float>();
     private Dictionary<int, float> jumpGravities = new Dictionary<int, float>();
@@ -96,7 +102,9 @@ public class Player_State_Machine : MonoBehaviour
     public Animator Animator { get { return anim; } }
     public int IsJumpingHash { get { return isJumpingHash; } }
     public float JumpSpeed { get { return jumpSpeed; } }
+    public float TimeToApex { get { return timeToApex; } }
     public bool IsJumping { set { isJumping = value; } }
+    public float MaxJumpHeight { get { return maxJumpHeight;} set { maxJumpHeight = value; }}
     public bool IsAttack { set { isAttack = value; } }
     public bool IsJumpPressed { get { return isJumpPressed; } }
     public bool RequireNewWeaponSwitch { get { return requireNewWeaponSwitch; } set { requireNewWeaponSwitch = value; } }
@@ -115,6 +123,7 @@ public class Player_State_Machine : MonoBehaviour
     public bool IsRunPressed { get { return isRunPressed; } }
     public bool RequireNewJump { get { return requireNewJump; } set { requireNewJump = value; } }
     public int IsWalkingHash { get { return isWalkingHash; } }
+    public int IsJumpAttackHash { get { return isJumpAttackHash; } }
     public int IsJumpHittedHash { get { return isJumpHittedHash; } }
     public string UnEquipString { get { return unEquipString; } }
     public int IsAttacking { get { return isAttacking; } }
@@ -122,6 +131,7 @@ public class Player_State_Machine : MonoBehaviour
     public int IsRunAttackingHash { get { return isRunAttackingHash; } }
     public int JumpCountHash { get { return jumpCountHash; } }
     public float GroundGravity { get { return groundGravity; } }
+    public float Gravity { get { return gravity; } set { gravity = value; } }
     public float RunMultiplier { get { return runSpeed; } }
     public bool HasBox { get { return hasBox; } set { hasBox = value; } }
     public bool IsSwitchPressed { get { return switchWeapon; } }
@@ -167,8 +177,12 @@ public class Player_State_Machine : MonoBehaviour
         isRunAttackingHash = Animator.StringToHash("isRunAttacking");
         isJumpHittedHash = Animator.StringToHash("isJumpHitted");
         isHittedHash = Animator.StringToHash("isHitted");
+        isJumpAttackHash = Animator.StringToHash("isJumpAttack");
         unEquipString = "Un_Equip";
-
+        attachWeaponString = "EquipWeapon";
+        detachWeaponString = "Detach";
+        boxString = "Box";
+            
         sockets = GetComponent<Handle_Mesh_Sockets>();
         cameraMainTransform = Camera.main.transform;
 
@@ -261,8 +275,8 @@ public class Player_State_Machine : MonoBehaviour
         hologram.transform.rotation = transform.rotation;
         hologram.transform.position = transform.position + transform.forward * 2;
         Animator animator = hologram.GetComponent<Animator>();
-        animator.SetBool("isWalking", true);
-        animator.SetBool("isRunning", true);
+        animator.SetBool(isWalkingHash, true);
+        animator.SetBool(isRunningHash, true);
     }
     private void DestroyHologram()
     {
@@ -281,7 +295,7 @@ public class Player_State_Machine : MonoBehaviour
                 startHologramTimer = true;
                 CreateHologram();
                 hologramTimer = 10;
-                Invoke("DestroyHologram", 5);
+                Invoke(nameof(DestroyHologram), 5);
             }
         }
 
@@ -295,6 +309,7 @@ public class Player_State_Machine : MonoBehaviour
         HandleRotation();
         HandleGravity();
 
+        Debug.Log(characterController.stepOffset);
     }
 
     void HandleCameraRotation()
@@ -317,29 +332,19 @@ public class Player_State_Machine : MonoBehaviour
     }
     public void OnAnimationEvent(string eventName)
     {
-        if (eventName == "EquipWeapon")
+        if (eventName == attachWeaponString)
         {
             sockets.Attach(weapon.transform, Handle_Mesh_Sockets.SocketId.RightHand);
         }
 
-        if (eventName == "Detach")
-        {
+        if (eventName == detachWeaponString)
+        { 
             sockets.Attach(weapon.transform, Handle_Mesh_Sockets.SocketId.Spine);
         }
     }
-
-    // private void OnControllerColliderHit(ControllerColliderHit hit)
-    // {
-    //     if (hit.gameObject.tag =="Player")
-    //     {
-    //         Debug.Log("CIAoasdasdasd");
-    //
-    //     }
-    // }
-
     private void SetUpJumpVariables()
     {
-        float timeToApex = maxJumpTIme / 2f;
+        timeToApex = maxJumpTIme / 2f;
         gravity = ( -2 * maxJumpHeight ) / Mathf.Pow(timeToApex, 2);
         initialJumpVelocity = ( 2 * maxJumpHeight ) / timeToApex;
         float secondJumpGravity = ( -2 * ( maxJumpHeight + 2 ) ) / Mathf.Pow(( timeToApex * 1.25f ), 2);
@@ -374,10 +379,23 @@ public class Player_State_Machine : MonoBehaviour
             transform.rotation = Quaternion.Slerp(currRotation, targetRotation, Damper.Damp(1, rotationFactor, Time.deltaTime));
         }
     }
+    
+    private void OnCollisionEnter(Collision collision)
+    {
+        if (collision.gameObject.CompareTag("Enemy"))
+        {
+            characterController.stepOffset = 0f;
+        }
+    }
+
+    private void OnCollisionExit(Collision other)
+    {
+        characterController.stepOffset = 0.5f;
+    }
 
     public void OnAttackStart()
     {
-        Collider[] collidersHitted = Physics.OverlapSphere(weapon.position, 0.5f, 1 << 6);
+        Collider[] collidersHitted = Physics.OverlapSphere(weapon.position, 1f, 1 << 6);
         foreach (var item in collidersHitted)
         {
             item.GetComponentInParent<Enemy>().AddDamage(40, gameObject, false);
@@ -397,20 +415,17 @@ public class Player_State_Machine : MonoBehaviour
     }
     private void OnTriggerEnter(Collider other)
     {
-        if (other.CompareTag("Box"))
+        if (other.CompareTag(boxString))
             mai_BoxIsTakable = true;
 
         if (other.gameObject.layer == 11)
         {
-            //anim.SetBool("isDead", true);
-            //anim.SetBool(IsWalkingHash, false);
-            //anim.SetBool(IsRunningHash, false);
             _currentState = _states.Dead();
             _currentState.EnterState();
         }
     }
     private void OnTriggerExit(Collider other)
     {
-        if (other.CompareTag("Box")) mai_BoxIsTakable = false;
+        if (other.CompareTag(boxString)) mai_BoxIsTakable = false;
     }
 }
