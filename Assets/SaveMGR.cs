@@ -35,7 +35,9 @@ public class SaveMGR : MonoBehaviour
 
     public static void Save()
     {
-        SaveSystem.InvokeOnSave();    
+        SaveSystem.DirectoryCheck();
+        SaveSystem.InvokeOnSave();  
+        SaveSystem.WriteOnFile();
     }
     public static void Load()
     {

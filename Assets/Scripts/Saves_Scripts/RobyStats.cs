@@ -11,12 +11,16 @@ namespace UnityTemplateProjects.Saves_Scripts
         public Quaternion Rotation;
         //Forma attuale?
 
-        private void Start()
+        private void OnEnable()
         {
             SaveSystem.OnSave += SaveSystemOnOnSave;
             SaveSystem.OnLoad += SaveSystemOnOnLoad;
         }
-
+        private void OnDisable()
+        {
+            SaveSystem.OnSave -= SaveSystemOnOnSave;
+            SaveSystem.OnLoad -= SaveSystemOnOnLoad;
+        }
         
         private void SaveSystemOnOnSave(object sender, EventArgs e)
         {
@@ -37,16 +41,24 @@ namespace UnityTemplateProjects.Saves_Scripts
             GameData data = SaveSystem.LoadPlayer(true);
             
             #region Apply Loaded Data to Transform
-            transform.position = new Vector3(data.RobyPosition[0], data.RobyPosition[1], data.RobyPosition[2]);
-            transform.rotation = new Quaternion(data.RobyRotation[0], data.RobyRotation[1],
-                                                data.RobyRotation[2], data.RobyRotation[3]);
+            //transform.GetComponent<Script_Roby>().SwitchState(RobyStates.Idle);
+            //transform.GetComponent<Animator>().enabled = false;
+            transform.gameObject.SetActive(false);
+
+            transform.SetPositionAndRotation(new Vector3(data.RobyPosition[0], data.RobyPosition[1], data.RobyPosition[2]),
+                                          new Quaternion(data.RobyRotation[0], data.RobyRotation[1],
+                                                                data.RobyRotation[2], data.RobyRotation[3]));
+           // transform.GetComponent<Animator>().enabled = true;
+            transform.gameObject.SetActive(true);
+            transform.GetComponent<Script_Roby>().SwitchState(RobyStates.Idle);
+            
             #endregion
             
             #region Apply loaded data to MonoBehaviour
-            MaxHealth = data.MaiMaxHealth;
-            CurrentHealth = transform.GetComponent<Script_Roby>().roby_Life = data.MaiCurrentHealth;
+            MaxHealth = data.RobyMaxHealth;
+            CurrentHealth = transform.GetComponent<Script_Roby>().roby_Life = data.RobyCurrentHealth;
             
-            transform.GetComponent<Script_Roby>().SwitchState(RobyStates.Idle);
+            
             UpdateStats();
             #endregion
             

@@ -58,7 +58,7 @@ namespace UnityTemplateProjects.Saves_Scripts
             }
         }
 
-        public static void SaveData(GameObject self, bool JSON)
+        public static void DirectoryCheck()
         {
             try
             {
@@ -71,10 +71,16 @@ namespace UnityTemplateProjects.Saves_Scripts
             {
                 Debug.Log(e.ToString());
             }
-
+        }    
+        
+        public static void SaveData(GameObject self, bool JSON)
+        {
             //Sceglie in quale slot andare a salvare
             OnSave_ListOfSaves(self);
+        }
 
+        public static void WriteOnFile(bool JSON = true)
+        {
             if (JSON)
             {
                 string json = JsonUtility.ToJson(Saves[CurrentSave]);
@@ -89,6 +95,8 @@ namespace UnityTemplateProjects.Saves_Scripts
                 }   
             }
         }
+        
+        
         
         public static GameData LoadPlayer(bool JSON)
         {

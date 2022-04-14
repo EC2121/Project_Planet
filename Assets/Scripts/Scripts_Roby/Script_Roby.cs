@@ -112,8 +112,6 @@ public class Script_Roby : MonoBehaviour
         Init();
     }
 
-
-
     private void Init()
     {
 
