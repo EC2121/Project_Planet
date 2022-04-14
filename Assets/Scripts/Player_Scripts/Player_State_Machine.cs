@@ -143,6 +143,9 @@ public class Player_State_Machine : MonoBehaviour
     public Vector2 CurrentMovementInput { get { return currentMovementInput; } set { currentMovementInput = value; } }
     public float MaySliderValue { get { return mayHpSlider.value; } set { mayHpSlider.value = value; } }
 
+    public int PlayerComboInputHash { get { return Animator.StringToHash("PlayerComboInput"); } }
+    public int AttackComboIndexHash { get { return Animator.StringToHash("AttackComboIndex"); } }
+    public bool WasMouseLeftPressedThisFrame { get { return Mouse.current.leftButton.wasPressedThisFrame; } }
     
     [SerializeField]private bool hasKey;
     private GameObject keyReference;
@@ -305,6 +308,8 @@ public class Player_State_Machine : MonoBehaviour
             if (hologramTimer <= 0) startHologramTimer = false;
         }
 
+
+        Debug.Log(_currentState);
         _currentState.UpdateStates();
 
         Vector3 forwardCam = cameraMainTransform.forward;

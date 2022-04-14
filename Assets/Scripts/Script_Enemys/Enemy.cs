@@ -161,7 +161,6 @@ public class Enemy : MonoBehaviour
         {
             Target = Hologram;
         }
-        Debug.Log(currentState);
     }
 
     private void OnAnimatorMove()

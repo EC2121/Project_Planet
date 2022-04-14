@@ -20,6 +20,8 @@ public class GameUIMGR : MonoBehaviour
         mainMenu = Menu.transform.GetChild(0).gameObject;
         music = FMODUnity.RuntimeManager.GetBus("bus:/Music");
         sfx = FMODUnity.RuntimeManager.GetBus("bus:/SFX");
+
+        music.setVolume(0);
     }
 
     private void Update()
