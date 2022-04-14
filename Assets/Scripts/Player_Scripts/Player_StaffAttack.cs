@@ -21,8 +21,8 @@ public class Player_StaffAttack : Player_BaseState
 
     public override void UpdateState()
     {
-        CheckSwitchStates();
         timer -= Time.deltaTime;
+        CheckSwitchStates();
     }
 
     public override void ExitState()
@@ -69,6 +69,11 @@ public class Player_StaffAttack : Player_BaseState
         if ( Context.IsJumpPressed && !Context.RequireNewJump  && timer <= 0)
         {
             SwitchState(Factory.Jump());
+        }
+
+        if (Context.IsIsHitted)
+        {
+            SwitchState(Factory.Hitted());
         }
     }
 

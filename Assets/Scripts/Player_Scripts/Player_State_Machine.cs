@@ -17,7 +17,7 @@ public class Player_State_Machine : MonoBehaviour
     [SerializeField] private float jumpSpeed = 10f;
     [SerializeField] private float runSpeed = 2.65f;
     [SerializeField] private float rotationFactor = 0.5f;
-    [SerializeField] private float maxHp = 1000f;
+    [SerializeField] private float maxHp;
     [SerializeField] private Slider mayHpSlider;
     //OnlyFor Debug
     public static bool hasBox;
@@ -308,8 +308,8 @@ public class Player_State_Machine : MonoBehaviour
         characterController.Move(appliedMovement * Time.deltaTime);
         HandleRotation();
         HandleGravity();
-
-        Debug.Log(characterController.stepOffset);
+        Debug.Log(hp);
+        
     }
 
     void HandleCameraRotation()
@@ -385,12 +385,14 @@ public class Player_State_Machine : MonoBehaviour
         if (collision.gameObject.CompareTag("Enemy"))
         {
             characterController.stepOffset = 0f;
+            characterController.slopeLimit = 20f;
         }
     }
 
     private void OnCollisionExit(Collision other)
     {
         characterController.stepOffset = 0.5f;
+        characterController.slopeLimit = 45;
     }
 
     public void OnAttackStart()

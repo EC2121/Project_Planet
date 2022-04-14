@@ -22,6 +22,14 @@ public class Player_HittedState : Player_BaseState
             Context.MaySliderValue = Context.Hp;
         }
         Context.Animator.SetBool(Context.IsHittedHash, true);
+        Context.Animator.SetBool(Context.IsAttacking, false);
+        Context.Animator.SetBool(Context.IsRunAttackingHash, false);
+
+
+        // Context.Animator.SetBool(Context.IsWalkingHash,false);
+        // Context.Animator.SetBool(Context.IsRunningHash,false);
+        // Context.CurrentMovementX = 0;
+        // Context.CurrentMovementZ = 0;
         canExit = true;
         Context.IsIsHitted = false;
     }
@@ -32,6 +40,8 @@ public class Player_HittedState : Player_BaseState
         if (!Context.IsRunPressed)
         {
             Context.Animator.SetBool(Context.IsRunningHash, false);
+            Context.AppliedMovementX = Context.CurrentMovementInput.x;
+            Context.AppliedMovementZ = Context.CurrentMovementInput.y;
         }
         if (!Context.IsMovementPressed)
         {
@@ -58,21 +68,21 @@ public class Player_HittedState : Player_BaseState
     public override void CheckSwitchStates()
     {
        
-        if (Context.IsMousePressed && Context.IsWeaponAttached && !Context.RequireNewAttack && timer <= 0)
-        {
-            SwitchState(Factory.StaffAttack());
-        }
+        // if (Context.IsMousePressed && Context.IsWeaponAttached && !Context.RequireNewAttack)
+        // {
+        //     SwitchState(Factory.StaffAttack());
+        // }
 
-        if (!Context.IsMovementPressed && timer <= 0)
+        if (!Context.IsMovementPressed)
         {
             SwitchState(Factory.Idle());
         }
-        if (Context.IsMovementPressed && !Context.IsRunPressed && timer <= 0)
+        if (Context.IsMovementPressed && !Context.IsRunPressed && !Context.HasBox)
         {
             SwitchState(Factory.Walk());
         }
 
-        if (!Context.HasBox && Context.IsRunPressed && timer <= 0)
+        if (Context.IsMovementPressed && Context.IsRunPressed)
         {
             SwitchState(Factory.Run());
         }

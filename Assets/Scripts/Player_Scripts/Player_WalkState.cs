@@ -12,8 +12,8 @@ public class Player_WalkState :  Player_BaseState
     {
         Context.Animator.SetBool(Context.IsWalkingHash,true);
         Context.Animator.SetBool(Context.IsRunningHash,false);
-        //Context.Animator.SetBool(Context.IsAttacking,false);
-        Context.Animator.SetBool(Context.IsRunAttackingHash, false);
+        Context.Animator.SetBool(Context.IsHittedHash, false);
+
 
     }
 

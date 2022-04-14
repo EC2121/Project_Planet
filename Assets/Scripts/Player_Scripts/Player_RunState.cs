@@ -13,7 +13,8 @@ public class Player_RunState : Player_BaseState
     {
         Context.Animator.SetBool(Context.IsWalkingHash, true);
         Context.Animator.SetBool(Context.IsRunningHash, true);
-        
+        Context.Animator.SetBool(Context.IsHittedHash, false);
+
     }
 
     public override void UpdateState()
@@ -30,7 +31,7 @@ public class Player_RunState : Player_BaseState
 
     public override void CheckSwitchStates()
     {
-        if (Context.IsMousePressed && !Context.IsJumpPressed && Context.IsWeaponAttached)
+        if (Context.IsMousePressed && !Context.IsJumpPressed && Context.IsWeaponAttached && Context.IsRunPressed)
         {
             SwitchState(Factory.RunAttack());
         }

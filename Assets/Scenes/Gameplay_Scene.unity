@@ -208,7 +208,7 @@ MonoBehaviour:
   SpawnPoint:
   - SpawnPointLocation: {fileID: 35800667}
     NumberOfChompies: 3
-  - SpawnPointLocation: {fileID: 264146435}
+  - SpawnPointLocation: {fileID: 1029284704}
     NumberOfChompies: 5
   - SpawnPointLocation: {fileID: 517900541}
     NumberOfChompies: 5
@@ -1562,6 +1562,10 @@ PrefabInstance:
       propertyPath: m_LocalPosition.z
       value: 77.00998
       objectReference: {fileID: 0}
+    - target: {fileID: 1315704078, guid: ddea97438436bd34e81dca6fb5f8ffe2, type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 1727888425, guid: ddea97438436bd34e81dca6fb5f8ffe2, type: 3}
       propertyPath: m_LocalPosition.y
       value: 1.9859992
@@ -1620,7 +1624,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5642937540443918768, guid: ddea97438436bd34e81dca6fb5f8ffe2, type: 3}
       propertyPath: maxHp
-      value: 2000
+      value: 200000
       objectReference: {fileID: 0}
     - target: {fileID: 5642937540443918768, guid: ddea97438436bd34e81dca6fb5f8ffe2, type: 3}
       propertyPath: m_Enabled

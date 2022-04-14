@@ -11,14 +11,14 @@ public class Player_RunAttack : Player_BaseState
     public Player_RunAttack(Player_State_Machine currentContext, Player_StateFactory playerStateFactory) : base(
         currentContext, playerStateFactory)
     {
-        IsRootState = true;
-        InitializeSubState();
+        // IsRootState = true;
+        // InitializeSubState();
     }
 
     public override void EnterState()
     {
         Context.Animator.SetBool(Context.IsRunAttackingHash, true);
-        
+       // Context.Animator.SetBool(Context.IsAttacking,false);
        // Context.IsIsHitted = false;
     }
 
@@ -53,6 +53,11 @@ public class Player_RunAttack : Player_BaseState
         if (Context.Hp <= 0)
         {
             SwitchState(Factory.Dead());
+        }
+
+        if (Context.IsIsHitted)
+        {
+            SwitchState(Factory.Hitted());
         }
         if (Context.CharacterController.isGrounded && timer <=0)
             SwitchState(Factory.Grounded());
