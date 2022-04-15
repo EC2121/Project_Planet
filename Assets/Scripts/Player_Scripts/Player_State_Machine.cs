@@ -147,8 +147,9 @@ public class Player_State_Machine : MonoBehaviour
     public int PlayerComboInputHash { get { return Animator.StringToHash("PlayerComboInput"); } }
     public int AttackComboIndexHash { get { return Animator.StringToHash("AttackComboIndex"); } }
     public bool WasMouseLeftPressedThisFrame { get { return Mouse.current.leftButton.wasPressedThisFrame; } }
-    
-    [SerializeField]private bool hasKey;
+
+    private const string EllenCombo4Name = "Ellen_Combo4";
+    [SerializeField] private bool hasKey;
     private GameObject keyReference;
 
     public bool HasKey
@@ -220,7 +221,7 @@ public class Player_State_Machine : MonoBehaviour
         isWeaponAttached = false;
         hp = maxHp;
         mayHpSlider = GameObject.FindGameObjectWithTag("MaySlider").GetComponent<Slider>();
-        mayHpSlider.maxValue = maxHp; 
+        mayHpSlider.maxValue = maxHp;
         mayHpSlider.value = hp;
         SetUpJumpVariables();
     }
@@ -351,12 +352,12 @@ public class Player_State_Machine : MonoBehaviour
     private void SetUpJumpVariables()
     {
         float timeToApex = maxJumpTIme / 2f;
-        gravity = ( -2 * maxJumpHeight ) / Mathf.Pow(timeToApex, 2);
-        initialJumpVelocity = ( 2 * maxJumpHeight ) / timeToApex;
-        float secondJumpGravity = ( -2 * ( maxJumpHeight + 2 ) ) / Mathf.Pow(( timeToApex * 1.25f ), 2);
-        float secondJumpInitialVelocity = ( 2 * ( maxJumpHeight + 2 ) ) / ( timeToApex * 1.25f );
-        float thirdJumpGravity = ( -2 * ( maxJumpHeight + 4 ) ) / Mathf.Pow(( timeToApex * 1.5f ), 2);
-        float thirdJumpInitialVelocity = ( 2 * ( maxJumpHeight + 4 ) ) / ( timeToApex * 1.5f );
+        gravity = (-2 * maxJumpHeight) / Mathf.Pow(timeToApex, 2);
+        initialJumpVelocity = (2 * maxJumpHeight) / timeToApex;
+        float secondJumpGravity = (-2 * (maxJumpHeight + 2)) / Mathf.Pow((timeToApex * 1.25f), 2);
+        float secondJumpInitialVelocity = (2 * (maxJumpHeight + 2)) / (timeToApex * 1.25f);
+        float thirdJumpGravity = (-2 * (maxJumpHeight + 4)) / Mathf.Pow((timeToApex * 1.5f), 2);
+        float thirdJumpInitialVelocity = (2 * (maxJumpHeight + 4)) / (timeToApex * 1.5f);
 
         initialJumpVelocities.Add(1, initialJumpVelocity);
         initialJumpVelocities.Add(2, secondJumpInitialVelocity);
@@ -388,13 +389,14 @@ public class Player_State_Machine : MonoBehaviour
 
     private void OnDrawGizmos()
     {
-        Gizmos.DrawSphere(weaponTip.position, 0.5f);
+        //Gizmos.DrawSphere(weaponTip.position, 0.5f);
+        Gizmos.DrawSphere(transform.position + transform.forward * 0.8f + transform.up * 0.6f, 0.7f);
     }
 
     public void OnAttackStart()
     {
 
-        Collider[] collidersHitted = Physics.OverlapSphere(weaponTip.position, 0.5f, 1 << 6);
+        Collider[] collidersHitted = Physics.OverlapSphere(transform.position + transform.forward * 0.8f + transform.up * 0.6f, 0.7f, 1 << 6);
         foreach (var item in collidersHitted)
         {
             item.GetComponentInParent<Enemy>().AddDamage(40, gameObject, false);

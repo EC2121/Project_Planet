@@ -10,6 +10,9 @@ public class AI_Chompies_DieState : AI_Enemies_IBaseState
     {
         owner.Agent.destination = owner.transform.position;
         owner.Anim.SetTrigger(owner.DieHash);
+        owner.GetComponent<Rigidbody>().detectCollisions = false;
+        owner.GetComponent<Rigidbody>().useGravity = false;
+        //EnemyMGR.enemies.Remove(owner.gameObject);
     }
     public void OnExit(Enemy owner)
     {

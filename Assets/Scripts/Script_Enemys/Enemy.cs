@@ -182,6 +182,8 @@ public class Enemy : MonoBehaviour
 
     public void LoadData(EnemyData Data, Transform playerRef, Transform robyRef, Transform HologramRef)
     {
+        transform.GetComponent<Rigidbody>().detectCollisions = true;
+        transform.GetComponent<Rigidbody>().useGravity = true;
         Hologram = HologramRef;
         Target = null;
         this.Player = playerRef;

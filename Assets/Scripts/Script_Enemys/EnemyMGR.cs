@@ -15,7 +15,7 @@ public class EnemyMGR : MonoBehaviour
 {
     // Start is called before the first frame update
     public Transform Hologram;
-    private List<GameObject> enemies;
+    [HideInInspector] public static List<GameObject> enemies;
     public List<SpawnPoint> SpawnPoint;
 
     [HideInInspector] private Transform Player;
