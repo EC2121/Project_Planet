@@ -23,7 +23,7 @@ TagManager:
   - AlliedActors
   - DeadBox
   - Post_Process_Layer
-  - 
+  - CameraCollider
   - 
   - 
   - 
