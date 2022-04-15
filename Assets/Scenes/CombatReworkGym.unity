@@ -155,7 +155,7 @@ MonoBehaviour:
   Hologram: {fileID: 1785544174}
   SpawnPoint:
   - SpawnPointLocation: {fileID: 525954381}
-    NumberOfChompies: 1
+    NumberOfChompies: 10
 --- !u!4 &225385609
 Transform:
   m_ObjectHideFlags: 0
@@ -171,11 +171,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!4 &275830464 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 5642937540283889739, guid: ddea97438436bd34e81dca6fb5f8ffe2, type: 3}
-  m_PrefabInstance: {fileID: 683026482}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &525954380
 GameObject:
   m_ObjectHideFlags: 0
@@ -213,22 +208,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 313157810, guid: ddea97438436bd34e81dca6fb5f8ffe2, type: 3}
-      propertyPath: m_LocalPosition.y
-      value: 1.9859992
-      objectReference: {fileID: 0}
-    - target: {fileID: 313157810, guid: ddea97438436bd34e81dca6fb5f8ffe2, type: 3}
-      propertyPath: m_LocalPosition.z
-      value: 77.00998
-      objectReference: {fileID: 0}
-    - target: {fileID: 1727888425, guid: ddea97438436bd34e81dca6fb5f8ffe2, type: 3}
-      propertyPath: m_LocalPosition.y
-      value: 1.9859992
-      objectReference: {fileID: 0}
-    - target: {fileID: 1727888425, guid: ddea97438436bd34e81dca6fb5f8ffe2, type: 3}
-      propertyPath: m_LocalPosition.z
-      value: 77.00998
-      objectReference: {fileID: 0}
     - target: {fileID: 2525720618498828084, guid: ddea97438436bd34e81dca6fb5f8ffe2, type: 3}
       propertyPath: m_RootOrder
       value: 1
@@ -239,7 +218,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2525720618498828084, guid: ddea97438436bd34e81dca6fb5f8ffe2, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0
+      value: -0.35
       objectReference: {fileID: 0}
     - target: {fileID: 2525720618498828084, guid: ddea97438436bd34e81dca6fb5f8ffe2, type: 3}
       propertyPath: m_LocalPosition.z
@@ -277,10 +256,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: Mai_Player
       objectReference: {fileID: 0}
-    - target: {fileID: 5642937540443918768, guid: ddea97438436bd34e81dca6fb5f8ffe2, type: 3}
-      propertyPath: weaponTip
-      value: 
-      objectReference: {fileID: 275830464}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: ddea97438436bd34e81dca6fb5f8ffe2, type: 3}
 --- !u!1 &881057626
