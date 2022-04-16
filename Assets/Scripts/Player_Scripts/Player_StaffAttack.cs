@@ -79,15 +79,25 @@ public class Player_StaffAttack : Player_BaseState
 
     void HandleCombo()
     {
-        if (Context.AttackCount < 4 && Context.CurrentAttackResetRoutine != null)
-        {
-            Context.StopCoroutine(Context.CurrentAttackResetRoutine);
-        }
-        Context.Animator.SetBool(Context.IsAttacking,true);
-
-        Context.AttackCount += 1;
-        Context.IsAttack = true;
-        Context.Animator.SetInteger(Context.AttackIndexHash, Context.AttackCount);
+        // if (Context.AttackCount < 4 && Context.CurrentAttackResetRoutine != null)
+        // {
+        //     Context.StopCoroutine(Context.CurrentAttackResetRoutine);
+        // }
+        // Context.Animator.SetBool(Context.IsAttacking,true);
+        //
+        // Context.AttackCount += 1;
+        // Context.IsAttack = true;
+        // Context.Animator.SetInteger(Context.AttackIndexHash, Context.AttackCount);
+        
+        // if (Context.Animator.IsInTransition(3) || Context.Animator.GetCurrentAnimatorStateInfo(3).IsName("Ellen_Combo4")) return;
+        //
+        // if (Context.WasMouseLeftPressedThisFrame && Context.Animator.GetCurrentAnimatorStateInfo(3).normalizedTime >= 0.3f)
+        // {
+        //     attackIndex = Context.Animator.GetInteger(Context.AttackComboIndexHash);
+        //     timer = 0.8f;
+        //     Context.Animator.SetBool(Context.PlayerComboInputHash,true);
+        //     currentTime = Time.time;
+        // }
     }
     public override void InitializeSubState()
     {
