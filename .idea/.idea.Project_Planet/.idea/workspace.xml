@@ -3,12 +3,12 @@
   <component name="ChangeListManager">
     <list default="true" id="602c179c-419d-446c-b8ea-27c52ae9895b" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/.idea.Project_Planet/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.Project_Planet/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/SaveMGR.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/SaveMGR.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Art/Models/Interactables/Materials/Key_mat.mat" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Art/Models/Interactables/Materials/Key_mat.mat" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/DoorHandler.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/DoorHandler.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Resources/Player/UI/Canvas.prefab" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Resources/Player/UI/Canvas.prefab" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/Saves/NEWSaveTest.json" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Saves/NEWSaveTest.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/Scenes/Gameplay_Scene.unity" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scenes/Gameplay_Scene.unity" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Saves_Scripts/RobyStats.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Saves_Scripts/RobyStats.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Saves_Scripts/SaveSystem.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Saves_Scripts/SaveSystem.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Scripts_Roby/Script_Roby.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Scripts_Roby/Script_Roby.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Player_Scripts/Player_State_Machine.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Player_Scripts/Player_State_Machine.cs" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -106,10 +106,10 @@
       </option>
       <method v="2" />
     </configuration>
-    <configuration name="Attach to Unity Editor" type="UNITY_DEBUG_RUN_CONFIGURATION" factoryName="Unity Debug" show_console_on_std_err="false" show_console_on_std_out="false" port="50000" address="localhost" ignored-value-for-modified-check="31716">
+    <configuration name="Attach to Unity Editor" type="UNITY_DEBUG_RUN_CONFIGURATION" factoryName="Unity Debug" show_console_on_std_err="false" show_console_on_std_out="false" port="50000" address="localhost" ignored-value-for-modified-check="3992">
       <option name="allowRunningInParallel" value="false" />
       <option name="listenPortForConnections" value="false" />
-      <option name="pid" value="31716" />
+      <option name="pid" value="3992" />
       <option name="projectPathOnTarget" />
       <option name="selectedOptions">
         <list />

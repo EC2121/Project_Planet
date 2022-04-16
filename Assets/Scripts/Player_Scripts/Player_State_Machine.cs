@@ -154,14 +154,17 @@ public class Player_State_Machine : MonoBehaviour
         {
             hasKey = value;
             keyReference.SetActive(!hasKey);
+            keySprite.GetComponent<Image>().enabled = hasKey;
         }
     }
 
     private float hologramTimer;
     private bool startHologramTimer;
+    private GameObject keySprite;
 
     private void Awake()
     {
+        keySprite = GameObject.Find("KeySprite");
         keyReference = GameObject.FindGameObjectWithTag("Key");
         Interactable.OnKeyTakenDel += () => HasKey = true;
         hologram = GameObject.FindGameObjectWithTag("Hologram");
