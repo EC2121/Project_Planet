@@ -89,15 +89,14 @@ public class Player_StaffAttack : Player_BaseState
         // Context.IsAttack = true;
         // Context.Animator.SetInteger(Context.AttackIndexHash, Context.AttackCount);
         
-        // if (Context.Animator.IsInTransition(3) || Context.Animator.GetCurrentAnimatorStateInfo(3).IsName("Ellen_Combo4")) return;
-        //
-        // if (Context.WasMouseLeftPressedThisFrame && Context.Animator.GetCurrentAnimatorStateInfo(3).normalizedTime >= 0.3f)
-        // {
-        //     attackIndex = Context.Animator.GetInteger(Context.AttackComboIndexHash);
-        //     timer = 0.8f;
-        //     Context.Animator.SetBool(Context.PlayerComboInputHash,true);
-        //     currentTime = Time.time;
-        // }
+        if (Context.Animator.IsInTransition(3) || Context.Animator.GetCurrentAnimatorStateInfo(3).IsName("Ellen_Combo4")) return;
+        
+        if (Context.IsMousePressed && Context.Animator.GetCurrentAnimatorStateInfo(3).normalizedTime >= 0.3f)
+        {
+          
+            timer = 0.8f;
+            currentTime = Time.time;
+        }
     }
     public override void InitializeSubState()
     {
