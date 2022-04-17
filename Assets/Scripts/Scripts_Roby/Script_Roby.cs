@@ -44,6 +44,7 @@ public class Script_Roby : MonoBehaviour
     public int Roby_AshAnimator_RangeDone { get; private set; }
     public int Roby_AshAnimator_Dead { get; private set; }
     public int Roby_AshAnimator_GetDamage { get; private set; }
+    public string Roby_String_Animator_SkyWalkToStop { get; private set; }
 
     public Slider RobyHpSlider;
     private Script_AI_Roby_BaseState Roby_CurrentState;
@@ -99,6 +100,11 @@ public class Script_Roby : MonoBehaviour
         Roby_CurrentState.UpdateState(this);
     }
 
+    private void OnBecameInvisible()
+    {
+        transform.position = Mai_Player.transform.position;
+    }
+
     private void Awake()
     {
         Roby_NavAgent = GetComponent<NavMeshAgent>();
@@ -129,7 +135,6 @@ public class Script_Roby : MonoBehaviour
         roby_EnemysInMyArea = new List<GameObject>();
 
         Roby_NavAgent.updatePosition = false;
-        //Roby_NavAgent.updateRotation = false;
         Roby_Animator.applyRootMotion = true;
 
         Roby_AshAnimator_Dead = Animator.StringToHash("Death");
@@ -142,6 +147,8 @@ public class Script_Roby : MonoBehaviour
         Roby_AshAnimator_TurnValue = Animator.StringToHash("Angle");
         Roby_AshAnimator_turnTrigger = Animator.StringToHash("TurnTrigger");
         Roby_AshAnimator_GetDamage = Animator.StringToHash("Hit");
+
+        Roby_String_Animator_SkyWalkToStop = "SkyWalkToStop";
 
         Roby_StateDictionary = new Dictionary<RobyStates, Script_AI_Roby_BaseState>
         {

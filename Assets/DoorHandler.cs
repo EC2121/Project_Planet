@@ -4,18 +4,7 @@ using UnityEngine;
 
 public class DoorHandler : MonoBehaviour
 {
-    // Start is called before the first frame update
     public GameObject DoorText;
-    void Start()
-    {
-        
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
 
     private void OnTriggerEnter(Collider other)
     {
@@ -30,10 +19,7 @@ public class DoorHandler : MonoBehaviour
                 SaveMGR.Save();
             }
             else
-            {
                 DoorText?.SetActive(true);
-            }
-
         }
     }
 
