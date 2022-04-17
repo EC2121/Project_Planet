@@ -16,7 +16,6 @@ public class Script_AI_Roby_FollowState : Script_AI_Roby_BaseState
     {
         AIRoby.Roby_IgnoreEnemy = false;
         AIRoby.Roby_Animator.SetBool(AIRoby.Roby_AshAnimator_walk, false);
-        //AIRoby.Roby_Animator.SetFloat(AIRoby.Roby_AshAnimator_walkSpeed, 0);
         AIRoby.Roby_NavAgent.ResetPath();
         AIRoby.Roby_NavAgent.updatePosition = false;
         AIRoby.Roby_Animator.applyRootMotion = true;
@@ -48,13 +47,14 @@ public class Script_AI_Roby_FollowState : Script_AI_Roby_BaseState
     public void UpdateState(Script_Roby AIRoby)
     {
         if (AIRoby.Roby_Animator.GetCurrentAnimatorStateInfo(0).IsName(AIRoby.Roby_String_Animator_SkyWalkToStop)
-                    || AIRoby.Roby_Animator.IsInTransition(0))
-        {
+            || AIRoby.Roby_Animator.IsInTransition(0))
             return;
-        }
 
-        roby_NearestpointOnEdge = AIRoby.Mai_Player.transform.position + ( AIRoby.Mai_PlayerNearZone ) * ( Vector3.Normalize(AIRoby.transform.position - AIRoby.Mai_Player.transform.position) );
-        AIRoby.SetPath(roby_NearestpointOnEdge);
+        if (AIRoby.Mai_CharacterController.velocity != Vector3.zero)
+        {
+            roby_NearestpointOnEdge = AIRoby.Mai_Player.transform.position + ( AIRoby.Mai_PlayerNearZone ) * ( Vector3.Normalize(AIRoby.transform.position - AIRoby.Mai_Player.transform.position) );
+            AIRoby.SetPath(roby_NearestpointOnEdge);
+        }
 
         if (AIRoby.Roby_NavAgent.remainingDistance < AIRoby.Roby_NavAgent.stoppingDistance)
         {
@@ -64,5 +64,5 @@ public class Script_AI_Roby_FollowState : Script_AI_Roby_BaseState
     }
 
     public void CustomCollisionEnter(Script_Roby AiRoby, Collision other) { }
-    
+
 }

@@ -7,14 +7,13 @@ using UnityEngine;
 public class Script_Repositioning : MonoBehaviour
 {
     private readonly Dictionary<GameObject, Tuple<Vector3, Quaternion>> templePiece = new Dictionary<GameObject, Tuple<Vector3, Quaternion>>();
-    private bool isCrystal;
+    private bool isCrystal = false;
     public bool isCrystalActive;
     private GameObject[] gameObjectID;
     private int[] randomrotation;
     private int count;
-    private Vector3 vectorTry = Vector3.zero;
-    private readonly float floatTry = 0;
     public Transform PointToRotate;
+    private float fixCount = 0;
 
     private void Awake()
     {
@@ -33,12 +32,17 @@ public class Script_Repositioning : MonoBehaviour
     {
         for (int i = 0; i < gameObjectID.Length; i++)
         {
-            gameObjectID[i].transform.position = UnityEngine.Random.insideUnitSphere * 20 + PointToRotate.position;
-            //gameObjectID[i].transform.position = UnityEngine.Random. * 20 + PointToRotate.position
-            gameObjectID[i].transform.rotation = UnityEngine.Random.rotation;
-            //randomrotation[i] = UnityEngine.Random.Range(-3, 3);
+            if (gameObjectID[i].CompareTag("StairsExtension"))
+                gameObjectID[i].transform.position = new Vector3(UnityEngine.Random.onUnitSphere.x * 60 + PointToRotate.position.x,
+                    PointToRotate.position.y + UnityEngine.Random.Range(0, 30),
+                    UnityEngine.Random.onUnitSphere.z * 60 + PointToRotate.position.z);
+            else
+            {
+                gameObjectID[i].transform.position = UnityEngine.Random.insideUnitSphere * 30 + PointToRotate.position;
+                gameObjectID[i].transform.rotation = UnityEngine.Random.rotation;
+            }
+            randomrotation[i] = UnityEngine.Random.Range(1, 6);
         }
-
     }
 
 
@@ -46,50 +50,40 @@ public class Script_Repositioning : MonoBehaviour
     {
         if (isCrystalActive)
         {
-            StartCoroutine(LerpToPosition());
-            //for (int i = 0; i < gameObjectID.Length; i++)
-            //{
-            //    templePiece.TryGetValue(gameObjectID[i], out Tuple<Vector3, Quaternion> value);
-            //    gameObjectID[i].transform.position = Vector3.SmoothDamp(gameObjectID[i].transform.position, value.Item1, ref vectorTry, 4);
-
-            //    //if (Quaternion.Angle(gameObjectID[i].transform.rotation, value.Item2) <= -0.5f || Quaternion.Angle(gameObjectID[i].transform.rotation, value.Item2) >= 0.5)
-            //    //    gameObjectID[i].transform.rotation = Quaternion.Slerp(gameObjectID[i].transform.rotation, value.Item2, Time.deltaTime);
-            //    //float anglex = Mathf.SmoothDampAngle(gameObjectID[i].transform.eulerAngles.x, value.Item2.eulerAngles.x, ref floatTry, 4);
-            //    //float angley = Mathf.SmoothDampAngle(gameObjectID[i].transform.eulerAngles.y, value.Item2.eulerAngles.y, ref floatTry, 4);
-            //    //float anglez = Mathf.SmoothDampAngle(gameObjectID[i].transform.eulerAngles.z, value.Item2.eulerAngles.z, ref floatTry, 4);
-            //    //gameObjectID[i].transform.rotation = Quaternion.Euler(anglex, angley, anglez);
-            //}
             isCrystal = true;
-            isCrystalActive=false;
-        }
-        else if (!isCrystal)
-        {
-            for (int i = 0; i < gameObjectID.Length; i++)
+            if (fixCount * 0.08f < 1)
             {
-                //gameObjectID[i].transform.position = UnityEngine.Random.insideUnitSphere * 20 + PointToRotate.position;
-                //gameObjectID[i].transform.rotation = UnityEngine.Random.rotation;
-                //gameObjectID[i].transform.RotateAround(PointToRotate.position, Vector3.one, randomrotation[i] * Time.deltaTime);
-            }
-        }
-    }
 
-    private IEnumerator LerpToPosition()
-    {
-        float fixCount = 0;
-        while (fixCount < 1)
+                fixCount += Time.deltaTime;
+                for (int i = 0; i < gameObjectID.Length; i++)
+                {
+                    templePiece.TryGetValue(gameObjectID[i], out Tuple<Vector3, Quaternion> value);
+                    gameObjectID[i].transform.position = Vector3.Lerp(gameObjectID[i].transform.position, value.Item1, Time.deltaTime * 0.5f);
+                    gameObjectID[i].transform.rotation = Quaternion.Slerp(gameObjectID[i].transform.rotation, value.Item2, Time.deltaTime * 0.5f);
+                }
+            }
+            else if (fixCount > 1)
+            {
+                for (int i = 0; i < gameObjectID.Length; i++)
+                {
+                    templePiece.TryGetValue(gameObjectID[i], out Tuple<Vector3, Quaternion> value);
+                    gameObjectID[i].transform.position = value.Item1;
+                    gameObjectID[i].transform.rotation = value.Item2;
+                }
+                isCrystalActive = false;
+            }
+        }
+
+        if (!isCrystal)
         {
-            fixCount += Time.deltaTime;
             for (int i = 0; i < gameObjectID.Length; i++)
             {
-                templePiece.TryGetValue(gameObjectID[i], out Tuple<Vector3, Quaternion> value);
-                gameObjectID[i].transform.position = Vector3.SmoothDamp(gameObjectID[i].transform.position, value.Item1, ref vectorTry, 4);
-                print(value.Item1);
-                print(gameObjectID[i].name);
-                print(gameObjectID.Length);
-                //gameObjectID[i].transform.position = Vector3.Lerp(gameObjectID[i].transform.position, value.Item1, fixCount);
-                //gameObjectID[i].transform.rotation = Quaternion.Slerp(gameObjectID[i].transform.rotation, value.Item2, fixCount);
+                if (gameObjectID[i].CompareTag("StairsExtension"))
+                    gameObjectID[i].transform.RotateAround(PointToRotate.position, Vector3.up, randomrotation[i] * Time.deltaTime);
+
+                else
+                    gameObjectID[i].transform.RotateAround(PointToRotate.position, Vector3.one, randomrotation[i] * Time.deltaTime);
             }
-            yield return null;
         }
     }
 }

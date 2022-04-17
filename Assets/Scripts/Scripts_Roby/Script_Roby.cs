@@ -22,6 +22,8 @@ public class Script_Roby : MonoBehaviour
     public Transform Roby_Hand;
     public GameObject Mai_Player;
 
+    public CharacterController Mai_CharacterController;
+
     [HideInInspector] public int Roby_EnemyIndex;
     [HideInInspector] public bool Roby_IgnoreEnemy;
     [HideInInspector] public bool IsAttacking;
@@ -111,6 +113,7 @@ public class Script_Roby : MonoBehaviour
         Roby_Animator = GetComponent<Animator>();
         //roby_RigidBody = GetComponent<Rigidbody>();
         Roby_Particle_Shoot = GetComponentInChildren<ParticleSystem>();
+        Mai_CharacterController = Mai_Player.GetComponent<CharacterController>();
     }
 
     private void Start()

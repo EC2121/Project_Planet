@@ -2,21 +2,21 @@ using UnityEngine;
 
 public class Script_SinglePieceRandomMove : MonoBehaviour
 {
-    private Vector3 vectorTry = Vector3.zero;
-    private Vector3 randomPosition;
-    private Quaternion randomRotation;
-    private Transform PointToRotate;
+    //private Vector3 vectorTry = Vector3.zero;
+    //private Vector3 randomPosition;
+    //private Quaternion randomRotation;
+    //private Transform PointToRotate;
 
-    private void Awake()
-    {
-        PointToRotate = GameObject.Find("CenterToRotate").transform;
-    }
+    //private void Awake()
+    //{
+    //    PointToRotate = GameObject.Find("CenterToRotate").transform;
+    //}
 
-    private void Start()
-    {
-        randomPosition = Random.insideUnitSphere * 20 + PointToRotate.position;
-        randomRotation = Random.rotation;
-    }
+    //private void Start()
+    //{
+    //    randomPosition = Random.insideUnitSphere * 20 + PointToRotate.position;
+    //    randomRotation = Random.rotation;
+    //}
 
     //private void Update()
     //{

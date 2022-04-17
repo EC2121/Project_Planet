@@ -9,6 +9,7 @@ TagManager:
   - Chomp
   - Box
   - Hologram
+  - StairsExtension
   layers:
   - Default
   - TransparentFX
