@@ -71,9 +71,10 @@ public class AI_Chompies_AttackState : AI_Enemies_IBaseState
 
         if (other.gameObject.CompareTag("Player") && owner.IsAttacking)
         {
-            Player_State_Machine.hit.Invoke(true);
+            Player_State_Machine.hit.Invoke();
+            Debug.Log("CESTODENTROOOOOOO");
         }
-        
+
     }
     
 }

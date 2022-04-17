@@ -13,6 +13,22 @@ public class Player_GroundState : Player_BaseState
     {
         Context.CurrentMovementY = Context.GroundGravity;
         Context.AppliedMovementY = Context.GroundGravity;
+        if (Context.IsMovementPressed && !Context.IsRunPressed)
+        {
+            Context.Animator.SetBool(Context.IsWalkingHash, true);
+        }
+        if (Context.IsMovementPressed && Context.IsRunPressed)
+        {
+            Context.Animator.SetBool(Context.IsWalkingHash, true);
+            Context.Animator.SetBool(Context.IsRunningHash, true);
+
+        }
+        //Context.CurrentMovementX = 0f;
+        //Context.AppliedMovementX = 0f;
+        //Context.CurrentMovementZ = 0f;
+        //Context.AppliedMovementZ = 0f;
+        //Context.AppliedMovementX = 0;
+        //Context.AppliedMovementZ = 0;
     }
 
     public override void UpdateState()
@@ -22,6 +38,7 @@ public class Player_GroundState : Player_BaseState
 
     public override void ExitState()
     {
+
     }
 
     public override void CheckSwitchStates()
@@ -30,13 +47,19 @@ public class Player_GroundState : Player_BaseState
         {
             SwitchState(Factory.Jump());
         }
-        if (Context.IsInteract && ( !Context.IsWeaponAttached && !Context.IsRunPressed &&
-                                    !Context.Animator.GetCurrentAnimatorStateInfo(1).IsName(Context.UnEquipString) ) &&
+        if (Context.IsInteract && (!Context.IsWeaponAttached && !Context.IsRunPressed &&
+                                    !Context.Animator.GetCurrentAnimatorStateInfo(1).IsName(Context.UnEquipString)) &&
             !Context.RequireNewWeaponSwitch && !Context.RequireNewInteraction &&
-            Context.Mai_BoxIsTakable)
+           ( Context.Mai_BoxIsTakable || Context.IsCrystalActivable))
         {
             SwitchState(Factory.Interactable());
         }
+        //Debug.Log(Context.Animator.GetCurrentAnimatorStateInfo(0).IsName("Jump"));
+        //if (Context.IsMousePressed && (Context.Animator.GetCurrentAnimatorStateInfo(0).IsName("Jump") || Context.Animator.GetCurrentAnimatorStateInfo(0).IsName("Jump 2")) && Context.Animator.IsInTransition(0))
+        //{
+        //    Debug.Log("CEPROVOOOO");
+        //    SwitchState(Factory.JumpAttack());
+        //}
         if (Context.Hp <= 0)
         {
             SwitchState(Factory.Dead());
@@ -49,11 +72,11 @@ public class Player_GroundState : Player_BaseState
         {
             SetSubState(Factory.Idle());
         }
-        else if (Context.IsMovementPressed && !Context.IsRunPressed)
+        if (Context.IsMovementPressed && !Context.IsRunPressed)
         {
             SetSubState(Factory.Walk());
         }
-        else if (!Context.HasBox && Context.IsMovementPressed && Context.IsRunPressed)
+        if (!Context.HasBox && Context.IsMovementPressed && Context.IsRunPressed)
         {
             SetSubState(Factory.Run());
         }
@@ -65,9 +88,10 @@ public class Player_GroundState : Player_BaseState
 
         if (Context.IsIsHitted)
         {
+            Debug.Log("AIAMACOLPITOOO");
             SetSubState(Factory.Hitted());
         }
-        
+
         if (Context.IsMousePressed && !Context.IsJumpPressed && Context.IsWeaponAttached && Context.IsRunPressed)
         {
             SetSubState(Factory.RunAttack());
@@ -76,6 +100,11 @@ public class Player_GroundState : Player_BaseState
         {
             SetSubState(Factory.StaffAttack());
         }
-
+        //if (Context.IsMousePressed && !Context.RequireNewAttack && Context.IsWeaponAttached && !Context.CharacterController.isGrounded &&
+        //    Context.JumpCount <= 2)
+        //{
+        //    Debug.Log("CEPROVOOOO");
+        //    SetSubState(Factory.JumpAttack());
+        //}
     }
 }

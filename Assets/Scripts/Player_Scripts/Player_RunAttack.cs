@@ -6,7 +6,7 @@ using UnityEngine;
 public class Player_RunAttack : Player_BaseState
 {
    
-    private float timer = 0.5f;
+    private float timer = 0.7413793f;
 
     public Player_RunAttack(Player_State_Machine currentContext, Player_StateFactory playerStateFactory) : base(
         currentContext, playerStateFactory)
@@ -63,15 +63,15 @@ public class Player_RunAttack : Player_BaseState
         {
             SwitchState(Factory.Hitted());
         }
-        if (!Context.IsMovementPressed && timer <= 0)
+        if (!Context.IsMovementPressed && Context.Animator.GetCurrentAnimatorStateInfo(0).IsName("RunAttack"))
         {
             SwitchState(Factory.Idle());
         }
-        if (Context.IsMovementPressed && timer <= 0)
+        if (Context.IsMovementPressed && !Context.IsRunPressed && Context.Animator.GetCurrentAnimatorStateInfo(0).IsName("RunAttack"))
         {
             SwitchState(Factory.Walk());
         }
-        if (Context.IsMovementPressed && Context.IsRunPressed &&timer <= 0)
+        if (Context.IsMovementPressed && Context.IsRunPressed && Context.Animator.GetCurrentAnimatorStateInfo(0).IsName("RunAttack"))
         {
             SwitchState(Factory.Run());
         }

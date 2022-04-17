@@ -73,16 +73,16 @@ public class Player_HittedState : Player_BaseState
         //     SwitchState(Factory.StaffAttack());
         // }
 
-        if (!Context.IsMovementPressed)
+        if (!Context.IsMovementPressed && Context.Animator.GetCurrentAnimatorStateInfo(0).IsName("Hitted"))
         {
             SwitchState(Factory.Idle());
         }
-        if (Context.IsMovementPressed && !Context.IsRunPressed && !Context.HasBox)
+        if (Context.IsMovementPressed && !Context.IsRunPressed && !Context.HasBox && Context.Animator.GetCurrentAnimatorStateInfo(0).IsName("Hitted"))
         {
             SwitchState(Factory.Walk());
         }
 
-        if (Context.IsMovementPressed && Context.IsRunPressed)
+        if (Context.IsMovementPressed && Context.IsRunPressed && Context.Animator.GetCurrentAnimatorStateInfo(0).IsName("Hitted"))
         {
             SwitchState(Factory.Run());
         }

@@ -9,8 +9,9 @@ using UnityEngine.UI;
 public class Player_State_Machine : MonoBehaviour
 {
     public static UnityEvent takeTheBox = new UnityEvent();
+    public static UnityEvent canCrystal = new UnityEvent();
     public static UnityEvent<GameObject> OnHologramDisable = new UnityEvent<GameObject>();
-    public static UnityEvent<bool> hit = new UnityEvent<bool>();
+    public static UnityEvent hit = new UnityEvent();
     public static UnityEvent gamePlayerFinalePhase = new UnityEvent();
 
     [SerializeField] private Transform weapon;
@@ -22,7 +23,7 @@ public class Player_State_Machine : MonoBehaviour
     //OnlyFor Debug
     public static bool hasBox;
 
-
+    private bool isCrystalActivable;
     private bool mai_BoxIsTakable;
     private Animator anim;
     private int isWalkingHash;
@@ -93,8 +94,9 @@ public class Player_State_Machine : MonoBehaviour
     public Player_BaseState CurrentState { get { return _currentState; } set { _currentState = value; } }
     public CharacterController CharacterController { get { return characterController; } set { characterController = value; } }
     public UnityEvent TakeTheBox { get { return takeTheBox; } }
+    public UnityEvent CanCrystal { get { return canCrystal; } }
     public UnityEvent GamePlayerFinalePhase { get { return gamePlayerFinalePhase; } }
-    public UnityEvent<bool> Hit { get { return hit; } }
+    public UnityEvent Hit { get { return hit; } }
     public Coroutine CurrentJumpResetRoutine { get { return currentJumpResetRoutine; } set { currentJumpResetRoutine = value; } }
     public Coroutine CurrentAttackResetRoutine { get { return currentAttackResetRoutine; } set { currentAttackResetRoutine = value; } }
     public Dictionary<int, float> InitialJumpVelocities { get { return initialJumpVelocities; } set { initialJumpVelocities = value; } }
@@ -137,6 +139,7 @@ public class Player_State_Machine : MonoBehaviour
     public bool IsSwitchPressed { get { return switchWeapon; } }
     public bool IsIsHitted { get { return isHitted; } set { isHitted = value; } }
     public bool Mai_BoxIsTakable { get { return mai_BoxIsTakable; } }
+    public bool IsCrystalActivable { get { return isCrystalActivable; } }
     public bool IsWeaponAttached { get { return isWeaponAttached; } set { isWeaponAttached = value; } }
     public Handle_Mesh_Sockets Sockets { get { return sockets; } }
     public Transform Weapon { get { return weapon; } }
@@ -308,7 +311,8 @@ public class Player_State_Machine : MonoBehaviour
         characterController.Move(appliedMovement * Time.deltaTime);
         HandleRotation();
         HandleGravity();
-       // Debug.Log(hp);
+        // Debug.Log(hp);
+        Debug.Log(isHitted);
 
     }
 
@@ -387,9 +391,10 @@ public class Player_State_Machine : MonoBehaviour
 
         if (collision.gameObject.CompareTag("Enemy"))
         {
-            Debug.Log("WWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWW");
+           // Debug.Log("WWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWW");
             //characterController.enabled = false;
-            characterController.stepOffset = 0f;
+            isHitted = true;
+            characterController.stepOffset = 0.05f;
             characterController.slopeLimit = 0f;
         }
     }
@@ -399,11 +404,7 @@ public class Player_State_Machine : MonoBehaviour
     }
     private void OnCollisionExit(Collision other)
     {
-        if (other.gameObject.CompareTag("Enemy"))
-        {
-            characterController.stepOffset = 0.5f;
-            characterController.slopeLimit = 45;
-        }
+        
     }
 
     public void OnAttackStart()
@@ -418,19 +419,22 @@ public class Player_State_Machine : MonoBehaviour
     private void OnEnable()
     {
         input.Player.Enable();
-        hit.AddListener(arg0 => isHitted = true);
+        hit.AddListener(() =>isHitted = true);
     }
 
     private void OnDisable()
     {
         input.Player.Disable();
-        hit.RemoveListener(arg0 => isHitted = false);
+        hit.RemoveListener(() => isHitted = true);
     }
     private void OnTriggerEnter(Collider other)
     {
         if (other.CompareTag(boxString))
             mai_BoxIsTakable = true;
-
+        if (other.CompareTag("Crystal"))
+        {
+            isCrystalActivable = true;
+        }
         if (other.gameObject.layer == 11)
         {
             _currentState = _states.Dead();
@@ -439,6 +443,13 @@ public class Player_State_Machine : MonoBehaviour
     }
     private void OnTriggerExit(Collider other)
     {
+        if (other.gameObject.CompareTag("Enemy"))
+        {
+            characterController.stepOffset = 0.5f;
+            characterController.slopeLimit = 45;
+        }
+        if (other.CompareTag("Crystal")) isCrystalActivable = false;
+
         if (other.CompareTag(boxString)) mai_BoxIsTakable = false;
     }
 }

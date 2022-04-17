@@ -21,8 +21,8 @@ public class Player_JumpState : Player_BaseState
         Context.Animator.SetBool(Context.IsAttacking, false);
         Context.Animator.SetBool(Context.IsHittedHash, false);
         Context.Animator.SetBool(Context.IsRunAttackingHash, false);
-        Context.Animator.SetBool(Context.IsAttacking,false);
-
+        //Context.Animator.SetBool(Context.IsAttacking,false);
+        Context.RequireNewAttack = false;
         isBeenHitted = false;
 
         HandleJump();
@@ -46,7 +46,7 @@ public class Player_JumpState : Player_BaseState
         Context.Animator.SetBool(Context.IsJumpAttackHash, false);
         //Context.CurrentMovementX = Context.CurrentMovementInput.x;
         // Context.CurrentMovementZ = Context.CurrentMovementInput.y;
-        if (!Context.IsRunPressed && Context.IsMovementPressed)
+        if (!Context.IsRunPressed)
         {
             Context.Animator.SetBool(Context.IsRunningHash, false);
 
@@ -54,18 +54,24 @@ public class Player_JumpState : Player_BaseState
             Context.AppliedMovementZ = Context.CurrentMovementInput.y;
         }
 
-        if (!Context.IsMovementPressed && !Context.IsRunPressed)
+        if (!Context.IsMovementPressed)
         {
             Context.Animator.SetBool(Context.IsRunningHash, false);
             Context.Animator.SetBool(Context.IsWalkingHash, false);
-            Context.AppliedMovementX = 0f;
-            Context.AppliedMovementZ = 0f;
+            Context.AppliedMovementX = 0;
+            Context.AppliedMovementZ = 0;
+
         }
-        if(Context.IsMovementPressed && !Context.IsRunPressed)
-        {
-            Context.CurrentMovementX = Context.CurrentMovementInput.x;
-            Context.CurrentMovementZ = Context.CurrentMovementInput.y;
-        }
+
+        //if (!Context.CharacterController.detectCollisions)
+        //{
+        //    Context.CharacterController.detectCollisions = true;
+        //}
+        //if(Context.IsMovementPressed && !Context.IsRunPressed)
+        //{
+        //    Context.CurrentMovementX = Context.CurrentMovementInput.x;
+        //    Context.CurrentMovementZ = Context.CurrentMovementInput.y;
+        //}
         if (Context.IsJumpPressed)
         {
             Context.RequireNewJump = true;
@@ -85,14 +91,33 @@ public class Player_JumpState : Player_BaseState
 
     public override void CheckSwitchStates()
     {
-        if (Context.CharacterController.isGrounded && timer <= 0f)
+
+        //if (Context.IsMousePressed && !Context.RequireNewAttack && Context.IsWeaponAttached && !Context.CharacterController.isGrounded &&
+        //    Context.JumpCount <= 2 && !isJumpAttacked)
+        //{
+        //    isJumpAttacked = true;
+        //    Debug.Log("CEPROVOOOO");
+        //    SwitchState(Factory.JumpAttack());
+        //}
+        //if (Context.IsMousePressed)
+        //{
+        //    SwitchState(Factory.JumpAttack());
+        //}
+        if (Context.CharacterController.isGrounded && (Context.Animator.GetCurrentAnimatorStateInfo(0).IsName("JumpAttack") || !Context.Animator.GetCurrentAnimatorStateInfo(0).IsName("JumpAttack")))
         {
             SwitchState(Factory.Grounded());
         }
+
     }
 
     public override void InitializeSubState()
     {
+        //if (Context.IsMousePressed && !Context.RequireNewAttack && Context.IsWeaponAttached && !Context.CharacterController.isGrounded &&
+        //    Context.JumpCount <= 2)
+        //{
+        //    Debug.Log("CEPROVOOOO");
+        //    SetSubState(Factory.JumpAttack());
+        //}
     }
 
     void HandleJump()
@@ -116,19 +141,22 @@ public class Player_JumpState : Player_BaseState
         {
             isBeenHitted = true;
             Context.IsIsHitted = false;
-            float previousY_Velocity = Context.CurrentMovementY;
+
             Context.Animator.SetBool(Context.IsJumpHittedHash, true);
             Context.Hp -= 30f;
             Context.MaySliderValue = Context.Hp;
         }
-        if (Context.Animator.IsInTransition(3) || Context.Animator.GetCurrentAnimatorStateInfo(3).IsName("JumpAttack")) return;
-        if (Context.IsMousePressed && !Context.RequireNewAttack && Context.IsWeaponAttached && !Context.CharacterController.isGrounded &&
+
+        if (Context.IsMousePressed && Context.IsWeaponAttached && !Context.CharacterController.isGrounded &&
             !isJumpAttacked && Context.JumpCount <= 2)
         {
             isJumpAttacked = true;
-            Context.Animator.SetBool(Context.IsJumpAttackHash, true);
+            //Context.AppliedMovementX = 0;
+            //Context.AppliedMovementZ = 0;
 
-            timer = 0.7413793f;
+            Context.Animator.SetBool(Context.IsJumpAttackHash, true);
+            //Context.CharacterController.detectCollisions = false;
+            //timer = 0.7794118f;
         }
     }
 

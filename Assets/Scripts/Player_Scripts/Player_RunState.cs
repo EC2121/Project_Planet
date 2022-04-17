@@ -14,12 +14,13 @@ public class Player_RunState : Player_BaseState
         Context.Animator.SetBool(Context.IsWalkingHash, true);
         Context.Animator.SetBool(Context.IsRunningHash, true);
         Context.Animator.SetBool(Context.IsHittedHash, false);
-
+        //Context.Animator.SetBool(Context.IsRunAttackingHash, false);
     }
 
     public override void UpdateState()
     {
         CheckSwitchStates();
+     
         Context.AppliedMovementX = Context.CurrentMovementInput.x * Context.RunMultiplier;
         Context.AppliedMovementZ = Context.CurrentMovementInput.y * Context.RunMultiplier;
     }

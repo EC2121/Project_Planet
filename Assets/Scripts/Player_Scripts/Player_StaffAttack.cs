@@ -93,9 +93,9 @@ public class Player_StaffAttack : Player_BaseState
         // Context.IsAttack = true;
         // Context.Animator.SetInteger(Context.AttackIndexHash, Context.AttackCount);
         
-        if (Context.Animator.IsInTransition(3) || Context.Animator.GetCurrentAnimatorStateInfo(3).IsName("Ellen_Combo4")) return;
+        if (Context.Animator.IsInTransition(0) || Context.Animator.GetCurrentAnimatorStateInfo(0).IsName("Ellen_Combo4")) return;
         
-        if (!Context.RequireNewAttack && Context.Animator.GetCurrentAnimatorStateInfo(3).normalizedTime >= 0.3f)
+        if (/*Context.IsMousePressed && !Context.RequireNewAttack &&*/!Context.RequireNewAttack && Context.Animator.GetCurrentAnimatorStateInfo(0).normalizedTime >= 0.4f)
         {   
             timer = 0.8f;
         }
