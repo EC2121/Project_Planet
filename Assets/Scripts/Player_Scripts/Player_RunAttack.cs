@@ -46,6 +46,10 @@ public class Player_RunAttack : Player_BaseState
             Context.AppliedMovementX = 0;
             Context.AppliedMovementZ = 0;
         }
+        if (Context.IsMousePressed)
+        {
+            Context.RequireNewAttack = true;
+        }
     }
 
     public override void CheckSwitchStates()
@@ -59,8 +63,24 @@ public class Player_RunAttack : Player_BaseState
         {
             SwitchState(Factory.Hitted());
         }
-        if (Context.CharacterController.isGrounded && timer <=0)
-            SwitchState(Factory.Grounded());
+        if (!Context.IsMovementPressed && timer <= 0)
+        {
+            SwitchState(Factory.Idle());
+        }
+        if (Context.IsMovementPressed && timer <= 0)
+        {
+            SwitchState(Factory.Walk());
+        }
+        if (Context.IsMovementPressed && Context.IsRunPressed &&timer <= 0)
+        {
+            SwitchState(Factory.Run());
+        }
+        //if (Context.IsJumpPressed && !Context.RequireNewJump && !Context.HasBox)
+        //{
+        //    SwitchState(Factory.Jump());
+        //}
+        //if (Context.CharacterController.isGrounded && timer <=0)
+        //    SwitchState(Factory.Grounded());
     }
 
     public override void InitializeSubState()

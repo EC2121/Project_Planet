@@ -21,17 +21,19 @@ public class Player_JumpState : Player_BaseState
         Context.Animator.SetBool(Context.IsAttacking, false);
         Context.Animator.SetBool(Context.IsHittedHash, false);
         Context.Animator.SetBool(Context.IsRunAttackingHash, false);
+        Context.Animator.SetBool(Context.IsAttacking,false);
+
         isBeenHitted = false;
 
         HandleJump();
         SetJumpHeightRun();
-       
+
     }
 
     public override void UpdateState()
     {
         timer -= Time.deltaTime;
-        
+
         CheckSwitchStates();
         HandleGravity();
         HandleAnimation();
@@ -42,9 +44,9 @@ public class Player_JumpState : Player_BaseState
         Context.Animator.SetBool(Context.IsJumpingHash, false);
         Context.Animator.SetBool(Context.IsJumpHittedHash, false);
         Context.Animator.SetBool(Context.IsJumpAttackHash, false);
-        Context.CurrentMovementX =Context.CurrentMovementInput.x;
-        Context.CurrentMovementZ =Context.CurrentMovementInput.y;
-        if (!Context.IsRunPressed)
+        //Context.CurrentMovementX = Context.CurrentMovementInput.x;
+        // Context.CurrentMovementZ = Context.CurrentMovementInput.y;
+        if (!Context.IsRunPressed && Context.IsMovementPressed)
         {
             Context.Animator.SetBool(Context.IsRunningHash, false);
 
@@ -52,19 +54,27 @@ public class Player_JumpState : Player_BaseState
             Context.AppliedMovementZ = Context.CurrentMovementInput.y;
         }
 
-        if (!Context.IsMovementPressed)
+        if (!Context.IsMovementPressed && !Context.IsRunPressed)
         {
             Context.Animator.SetBool(Context.IsRunningHash, false);
             Context.Animator.SetBool(Context.IsWalkingHash, false);
             Context.AppliedMovementX = 0f;
             Context.AppliedMovementZ = 0f;
         }
-
+        if(Context.IsMovementPressed && !Context.IsRunPressed)
+        {
+            Context.CurrentMovementX = Context.CurrentMovementInput.x;
+            Context.CurrentMovementZ = Context.CurrentMovementInput.y;
+        }
         if (Context.IsJumpPressed)
         {
             Context.RequireNewJump = true;
         }
 
+        if (Context.IsMousePressed)
+        {
+            Context.RequireNewAttack = true;
+        }
         Context.CurrentJumpResetRoutine = Context.StartCoroutine(IJumpResetRoutine());
         if (Context.JumpCount == 3)
         {
@@ -111,13 +121,14 @@ public class Player_JumpState : Player_BaseState
             Context.Hp -= 30f;
             Context.MaySliderValue = Context.Hp;
         }
-
-        if (Context.IsMousePressed && Context.IsWeaponAttached && !Context.CharacterController.isGrounded &&
+        if (Context.Animator.IsInTransition(3) || Context.Animator.GetCurrentAnimatorStateInfo(3).IsName("JumpAttack")) return;
+        if (Context.IsMousePressed && !Context.RequireNewAttack && Context.IsWeaponAttached && !Context.CharacterController.isGrounded &&
             !isJumpAttacked && Context.JumpCount <= 2)
         {
             isJumpAttacked = true;
-            timer = 0.6f;
             Context.Animator.SetBool(Context.IsJumpAttackHash, true);
+
+            timer = 0.7413793f;
         }
     }
 
@@ -144,13 +155,16 @@ public class Player_JumpState : Player_BaseState
 
     void SetJumpHeightRun()
     {
-        Context.CurrentMovementX = Context.CurrentMovementInput.x *2.5f;
-        Context.CurrentMovementZ = Context.CurrentMovementInput.y *2.5f;
-
-        if (Context.IsRunPressed)
+        if (Context.IsMovementPressed && !Context.IsRunPressed)
         {
-            Context.CurrentMovementX = Context.CurrentMovementInput.x *4;
-            Context.CurrentMovementZ = Context.CurrentMovementInput.y *4;
+            Context.CurrentMovementX = Context.CurrentMovementInput.x * 2.5f;
+            Context.CurrentMovementZ = Context.CurrentMovementInput.y * 2.5f;
+        }
+
+        if (Context.IsMovementPressed && Context.IsRunPressed)
+        {
+            Context.CurrentMovementX = Context.CurrentMovementInput.x * 4;
+            Context.CurrentMovementZ = Context.CurrentMovementInput.y * 4;
             Context.CurrentMovementY += 3;
             Context.AppliedMovementY += 3;
         }

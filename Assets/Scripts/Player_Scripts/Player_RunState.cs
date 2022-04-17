@@ -31,7 +31,7 @@ public class Player_RunState : Player_BaseState
 
     public override void CheckSwitchStates()
     {
-        if (Context.IsMousePressed && !Context.IsJumpPressed && Context.IsWeaponAttached && Context.IsRunPressed)
+        if (Context.IsMousePressed && !Context.IsJumpPressed && !Context.RequireNewAttack && Context.IsWeaponAttached && Context.IsRunPressed)
         {
             SwitchState(Factory.RunAttack());
         }
@@ -51,11 +51,11 @@ public class Player_RunState : Player_BaseState
         {
             SwitchState(Factory.Idle());
         }
-        else if (Context.IsMovementPressed && !Context.IsRunPressed)
+        if (Context.IsMovementPressed && !Context.IsRunPressed)
         {
             SwitchState(Factory.Walk());
         }
-        
+
     }
 
     public override void InitializeSubState()

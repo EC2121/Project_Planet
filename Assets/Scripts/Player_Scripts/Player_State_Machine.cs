@@ -104,7 +104,7 @@ public class Player_State_Machine : MonoBehaviour
     public float JumpSpeed { get { return jumpSpeed; } }
     public float TimeToApex { get { return timeToApex; } }
     public bool IsJumping { set { isJumping = value; } }
-    public float MaxJumpHeight { get { return maxJumpHeight;} set { maxJumpHeight = value; }}
+    public float MaxJumpHeight { get { return maxJumpHeight; } set { maxJumpHeight = value; } }
     public bool IsAttack { set { isAttack = value; } }
     public bool IsJumpPressed { get { return isJumpPressed; } }
     public bool RequireNewWeaponSwitch { get { return requireNewWeaponSwitch; } set { requireNewWeaponSwitch = value; } }
@@ -182,7 +182,7 @@ public class Player_State_Machine : MonoBehaviour
         attachWeaponString = "EquipWeapon";
         detachWeaponString = "Detach";
         boxString = "Box";
-            
+
         sockets = GetComponent<Handle_Mesh_Sockets>();
         cameraMainTransform = Camera.main.transform;
 
@@ -308,8 +308,8 @@ public class Player_State_Machine : MonoBehaviour
         characterController.Move(appliedMovement * Time.deltaTime);
         HandleRotation();
         HandleGravity();
-        Debug.Log(hp);
-        
+       // Debug.Log(hp);
+
     }
 
     void HandleCameraRotation()
@@ -332,25 +332,26 @@ public class Player_State_Machine : MonoBehaviour
     }
     public void OnAnimationEvent(string eventName)
     {
-        if (eventName == attachWeaponString)
+       //if (anim.IsInTransition(1) || anim.GetCurrentAnimatorStateInfo(1).IsName("UnEquip") || anim.GetCurrentAnimatorStateInfo(1).IsName("Equip")) return;
+        if (eventName == attachWeaponString /*&& anim.GetCurrentAnimatorStateInfo(1).normalizedTime >= 1.6f*/)
         {
             sockets.Attach(weapon.transform, Handle_Mesh_Sockets.SocketId.RightHand);
         }
 
-        if (eventName == detachWeaponString)
-        { 
+        if (eventName == detachWeaponString /*&& anim.GetCurrentAnimatorStateInfo(1).normalizedTime >=1.6f*/)
+        {
             sockets.Attach(weapon.transform, Handle_Mesh_Sockets.SocketId.Spine);
         }
     }
     private void SetUpJumpVariables()
     {
         timeToApex = maxJumpTIme / 2f;
-        gravity = ( -2 * maxJumpHeight ) / Mathf.Pow(timeToApex, 2);
-        initialJumpVelocity = ( 2 * maxJumpHeight ) / timeToApex;
-        float secondJumpGravity = ( -2 * ( maxJumpHeight + 2 ) ) / Mathf.Pow(( timeToApex * 1.25f ), 2);
-        float secondJumpInitialVelocity = ( 2 * ( maxJumpHeight + 2 ) ) / ( timeToApex * 1.25f );
-        float thirdJumpGravity = ( -2 * ( maxJumpHeight + 4 ) ) / Mathf.Pow(( timeToApex * 1.5f ), 2);
-        float thirdJumpInitialVelocity = ( 2 * ( maxJumpHeight + 4 ) ) / ( timeToApex * 1.5f );
+        gravity = (-2 * maxJumpHeight) / Mathf.Pow(timeToApex, 2);
+        initialJumpVelocity = (2 * maxJumpHeight) / timeToApex;
+        float secondJumpGravity = (-2 * (maxJumpHeight + 2)) / Mathf.Pow((timeToApex * 1.25f), 2);
+        float secondJumpInitialVelocity = (2 * (maxJumpHeight + 2)) / (timeToApex * 1.25f);
+        float thirdJumpGravity = (-2 * (maxJumpHeight + 4)) / Mathf.Pow((timeToApex * 1.5f), 2);
+        float thirdJumpInitialVelocity = (2 * (maxJumpHeight + 4)) / (timeToApex * 1.5f);
 
         initialJumpVelocities.Add(1, initialJumpVelocity);
         initialJumpVelocities.Add(2, secondJumpInitialVelocity);
@@ -379,20 +380,30 @@ public class Player_State_Machine : MonoBehaviour
             transform.rotation = Quaternion.Slerp(currRotation, targetRotation, Damper.Damp(1, rotationFactor, Time.deltaTime));
         }
     }
-    
+
     private void OnCollisionEnter(Collision collision)
     {
+        //characterController.enableOverlapRecovery = false;
+
         if (collision.gameObject.CompareTag("Enemy"))
         {
+            Debug.Log("WWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWW");
+            //characterController.enabled = false;
             characterController.stepOffset = 0f;
-            characterController.slopeLimit = 20f;
+            characterController.slopeLimit = 0f;
         }
     }
+    private void OnCollisionStay(Collision collision)
+    {
 
+    }
     private void OnCollisionExit(Collision other)
     {
-        characterController.stepOffset = 0.5f;
-        characterController.slopeLimit = 45;
+        if (other.gameObject.CompareTag("Enemy"))
+        {
+            characterController.stepOffset = 0.5f;
+            characterController.slopeLimit = 45;
+        }
     }
 
     public void OnAttackStart()

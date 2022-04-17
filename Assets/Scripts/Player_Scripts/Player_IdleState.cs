@@ -48,7 +48,7 @@ public class Player_IdleState : Player_BaseState
         {
             SwitchState(Factory.Run());
         }
-        else if (Context.IsMovementPressed)
+         if (Context.IsMovementPressed && !Context.IsRunPressed)
         {
             SwitchState(Factory.Walk());
         }

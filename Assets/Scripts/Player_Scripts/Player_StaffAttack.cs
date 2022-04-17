@@ -48,12 +48,12 @@ public class Player_StaffAttack : Player_BaseState
         {
             Context.RequireNewAttack = true;
         }
-        Context.CurrentAttackResetRoutine = Context.StartCoroutine(IAttackResetRoutine());
-        if (Context.AttackCount == 4)
-        {
-            Context.AttackCount = 0;
-            Context.Animator.SetInteger(Context.AttackIndexHash,Context.AttackCount);
-        }
+        //Context.CurrentAttackResetRoutine = Context.StartCoroutine(IAttackResetRoutine());
+        //if (Context.AttackCount == 4)
+        //{
+        //    Context.AttackCount = 0;
+        //    Context.Animator.SetInteger(Context.AttackIndexHash,Context.AttackCount);
+        //}
     }
 
     public override void CheckSwitchStates()
@@ -65,11 +65,15 @@ public class Player_StaffAttack : Player_BaseState
         if ( Context.IsMovementPressed && timer <= 0)
         {
             SwitchState(Factory.Walk());
-        } 
-        if ( Context.IsJumpPressed && !Context.RequireNewJump  && timer <= 0)
-        {
-            SwitchState(Factory.Jump());
         }
+        if (Context.IsMovementPressed && Context.IsRunPressed && timer <= 0)
+        {
+            SwitchState(Factory.Run());
+        }
+        //if (Context.IsJumpPressed && !Context.RequireNewJump && !Context.HasBox)
+        //{
+        //    SwitchState(Factory.Jump());
+        //}
 
         if (Context.IsIsHitted)
         {
@@ -83,7 +87,7 @@ public class Player_StaffAttack : Player_BaseState
         // {
         //     Context.StopCoroutine(Context.CurrentAttackResetRoutine);
         // }
-        // Context.Animator.SetBool(Context.IsAttacking,true);
+         Context.Animator.SetBool(Context.IsAttacking,true);
         //
         // Context.AttackCount += 1;
         // Context.IsAttack = true;
@@ -91,20 +95,18 @@ public class Player_StaffAttack : Player_BaseState
         
         if (Context.Animator.IsInTransition(3) || Context.Animator.GetCurrentAnimatorStateInfo(3).IsName("Ellen_Combo4")) return;
         
-        if (Context.IsMousePressed && Context.Animator.GetCurrentAnimatorStateInfo(3).normalizedTime >= 0.3f)
-        {
-          
+        if (!Context.RequireNewAttack && Context.Animator.GetCurrentAnimatorStateInfo(3).normalizedTime >= 0.3f)
+        {   
             timer = 0.8f;
-            currentTime = Time.time;
         }
     }
     public override void InitializeSubState()
     {
     }
     
-    IEnumerator IAttackResetRoutine()
-    {
-        yield return new WaitForSeconds(0.6f);
-        Context.AttackCount = 0;
-    }
+    //IEnumerator IAttackResetRoutine()
+    //{
+    //    yield return new WaitForSeconds(0.6f);
+    //    Context.AttackCount = 0;
+    //}
 }

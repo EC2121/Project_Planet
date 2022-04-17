@@ -636,6 +636,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Grenadier
       objectReference: {fileID: 0}
+    - target: {fileID: 6248447185350112716, guid: d5cee17333934644ea8d1cf3084c700f, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: d5cee17333934644ea8d1cf3084c700f, type: 3}
 --- !u!1 &702985563 stripped
