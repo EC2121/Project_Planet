@@ -218,7 +218,7 @@ public class Enemy : MonoBehaviour
         AttackCD = Data.AttackCD;
         PatrolCD = Data.PatrolCD;
         AlertRange = Data.AlertRange;
-        AttackTimer = UnityEngine.Random.Range(0, 3);
+        AttackTimer = 3;
         IdleTimer = UnityEngine.Random.Range(0, 3);
         IsAlerted = false;
 

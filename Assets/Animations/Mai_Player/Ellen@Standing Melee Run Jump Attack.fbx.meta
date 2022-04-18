@@ -67,7 +67,7 @@ ModelImporter:
         intParameter: 1
         messageOptions: 0
       - time: 0.66039336
-        functionName: OnAttackStart
+        functionName: OnJumpAttack
         data: 
         objectReferenceParameter: {fileID: 7873018163916560823, guid: c691a68c1cccb30458ccacc5e4556b41, type: 3}
         floatParameter: 0

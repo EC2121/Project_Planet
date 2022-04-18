@@ -13,7 +13,6 @@ public class Player_State_Machine : MonoBehaviour
     public static UnityEvent gamePlayerFinalePhase = new UnityEvent();
 
     [SerializeField] private Transform weapon;
-    [SerializeField] private Transform weaponTip;
     [SerializeField] private float jumpSpeed = 10f;
     [SerializeField] private float runSpeed = 2.65f;
     [SerializeField] private float rotationFactor = 0.5f;
@@ -393,13 +392,21 @@ public class Player_State_Machine : MonoBehaviour
         Gizmos.DrawSphere(transform.position + transform.forward * 0.8f + transform.up * 0.6f, 0.7f);
     }
 
+
+    public void OnJumpAttack()
+    {
+        Collider[] collidersHitted = Physics.OverlapSphere(transform.position + transform.forward * 0.1f + transform.up * 0.1f, 2, 1 << 6);
+        foreach (var item in collidersHitted)
+        {
+            item.GetComponentInParent<Enemy>().AddDamage(0, gameObject, true);
+        }
+    }
     public void OnAttackStart()
     {
-
         Collider[] collidersHitted = Physics.OverlapSphere(transform.position + transform.forward * 0.8f + transform.up * 0.6f, 0.7f, 1 << 6);
         foreach (var item in collidersHitted)
         {
-            item.GetComponentInParent<Enemy>().AddDamage(40, gameObject, false);
+            item.GetComponentInParent<Enemy>().AddDamage(40, gameObject,false);
         }
     }
 

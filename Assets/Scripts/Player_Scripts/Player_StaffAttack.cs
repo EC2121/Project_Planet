@@ -81,7 +81,7 @@ public class Player_StaffAttack : Player_BaseState
 
         if (Context.Animator.IsInTransition(3) || Context.Animator.GetCurrentAnimatorStateInfo(3).IsName("Ellen_Combo4")) return;
       
-        if (Context.WasMouseLeftPressedThisFrame && Context.Animator.GetCurrentAnimatorStateInfo(3).normalizedTime >= 0.3f)
+        if (Context.WasMouseLeftPressedThisFrame && Context.Animator.GetCurrentAnimatorStateInfo(3).normalizedTime >= 0.2f)
         {
             attackIndex = Context.Animator.GetInteger(Context.AttackComboIndexHash);
             timer = 0.8f;
