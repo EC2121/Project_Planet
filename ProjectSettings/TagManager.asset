@@ -10,6 +10,7 @@ TagManager:
   - Box
   - Hologram
   - StairsExtension
+  - Crystal
   layers:
   - Default
   - TransparentFX

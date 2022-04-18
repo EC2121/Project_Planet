@@ -1,12 +1,10 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class Script_CrystalInteract : MonoBehaviour
 {
     public GameObject Crystal_GuiInteractWrite;
     private bool crystal_IsActivaded;
-    private SphereCollider crystal_Collider;
+    private BoxCollider crystal_Collider;
 
     private void OnEnable()
     {
@@ -36,16 +34,20 @@ public class Script_CrystalInteract : MonoBehaviour
         if (other.CompareTag("Player"))
             Crystal_GuiInteractWrite.SetActive(false);
     }
-
-    void Start()
+    private void Awake()
     {
-
+        crystal_Collider = GetComponent<BoxCollider>();
     }
 
-    void Update()
+    private void Start()
+    {
+        Crystal_GuiInteractWrite.SetActive(false);
+    }
+
+    private void Update()
     {
         if (Crystal_GuiInteractWrite.activeInHierarchy)
-            Crystal_GuiInteractWrite.transform.position = Camera.main.WorldToScreenPoint(crystal_Collider.bounds.center + ( Vector3.up * 0.5f ));
+            Crystal_GuiInteractWrite.transform.position = Camera.main.WorldToScreenPoint(crystal_Collider.bounds.center + Vector3.up);
 
         if (crystal_IsActivaded)
             OnInteraction();
