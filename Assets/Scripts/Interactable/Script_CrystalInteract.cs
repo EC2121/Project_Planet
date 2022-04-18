@@ -1,0 +1,58 @@
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+
+public class Script_CrystalInteract : MonoBehaviour
+{
+    public GameObject Crystal_GuiInteractWrite;
+    private bool crystal_IsActivaded;
+    private SphereCollider crystal_Collider;
+
+    private void OnEnable()
+    {
+        Player_State_Machine.canCrystal.AddListener(() =>
+        {
+            crystal_IsActivaded = !crystal_IsActivaded;
+            crystal_Collider.enabled = !crystal_IsActivaded;
+        });
+    }
+    private void OnDisable()
+    {
+        Player_State_Machine.canCrystal.RemoveListener(() =>
+        {
+            crystal_IsActivaded = !crystal_IsActivaded;
+            crystal_Collider.enabled = !crystal_IsActivaded;
+        });
+    }
+
+    private void OnTriggerEnter(Collider other)
+    {
+        if (other.CompareTag("Player"))
+            Crystal_GuiInteractWrite.SetActive(true);
+    }
+
+    private void OnTriggerExit(Collider other)
+    {
+        if (other.CompareTag("Player"))
+            Crystal_GuiInteractWrite.SetActive(false);
+    }
+
+    void Start()
+    {
+
+    }
+
+    void Update()
+    {
+        if (Crystal_GuiInteractWrite.activeInHierarchy)
+            Crystal_GuiInteractWrite.transform.position = Camera.main.WorldToScreenPoint(crystal_Collider.bounds.center + ( Vector3.up * 0.5f ));
+
+        if (crystal_IsActivaded)
+            OnInteraction();
+    }
+
+    private void OnInteraction()
+    {
+        Crystal_GuiInteractWrite.SetActive(false);
+    }
+}

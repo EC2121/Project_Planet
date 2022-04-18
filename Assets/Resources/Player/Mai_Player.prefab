@@ -98,7 +98,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 313157804}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 58.26999, y: 1.9859991, z: 77.00998}
+  m_LocalPosition: {x: 58.26999, y: 1.9860001, z: 77.00998}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 2525720618498828084}
@@ -170,8 +170,8 @@ MonoBehaviour:
     m_Bits: 1
   m_VolumeTrigger: {fileID: 0}
   m_VolumeFrameworkUpdateModeOption: 2
-  m_RenderPostProcessing: 0
-  m_Antialiasing: 0
+  m_RenderPostProcessing: 1
+  m_Antialiasing: 1
   m_AntialiasingQuality: 2
   m_StopNaN: 0
   m_Dithering: 0
@@ -468,6 +468,7 @@ GameObject:
   - component: {fileID: 1727888425}
   - component: {fileID: 1727888424}
   - component: {fileID: 1727888426}
+  - component: {fileID: 2084386058}
   m_Layer: 0
   m_Name: VirtuallCamera
   m_TagString: Untagged
@@ -483,7 +484,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1727888423}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 58.26999, y: 1.9859991, z: 77.00998}
+  m_LocalPosition: {x: 58.26999, y: 1.9860001, z: 77.00998}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 1156098337}
@@ -540,6 +541,36 @@ MonoBehaviour:
   PlayerIndex: -1
   XYAxis: {fileID: 7271369174471098197, guid: 766de7b678d76f44f95d68e599d51b2d, type: 3}
   ZAxis: {fileID: 0}
+--- !u!114 &2084386058
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1727888423}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e501d18bb52cf8c40b1853ca4904654f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_CollideAgainst:
+    serializedVersion: 2
+    m_Bits: 1
+  m_IgnoreTag: 
+  m_TransparentLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_MinimumDistanceFromTarget: 0.1
+  m_AvoidObstacles: 1
+  m_DistanceLimit: 6
+  m_MinimumOcclusionTime: 0
+  m_CameraRadius: 1
+  m_Strategy: 0
+  m_MaximumEffort: 4
+  m_SmoothingTime: 1.8
+  m_Damping: 6
+  m_DampingWhenOccluded: 1.23
+  m_OptimalTargetDistance: 0
 --- !u!1 &1768275552
 GameObject:
   m_ObjectHideFlags: 0
@@ -1284,7 +1315,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4418037495464897806, guid: eab52cb580e77b140a613444ec060f03, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0.81126106
+      value: 0.8112611
       objectReference: {fileID: 0}
     - target: {fileID: 4418037495464897806, guid: eab52cb580e77b140a613444ec060f03, type: 3}
       propertyPath: m_LocalPosition.z
@@ -3098,15 +3129,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7873018163916849779, guid: c691a68c1cccb30458ccacc5e4556b41, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 0.0036315918
+      value: 0.0036201477
       objectReference: {fileID: 0}
     - target: {fileID: 7873018163916849779, guid: c691a68c1cccb30458ccacc5e4556b41, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0.8112602
+      value: 0.8112613
       objectReference: {fileID: 0}
     - target: {fileID: 7873018163916849779, guid: c691a68c1cccb30458ccacc5e4556b41, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 0.018798828
+      value: 0.018795013
       objectReference: {fileID: 0}
     - target: {fileID: 7873018163916849779, guid: c691a68c1cccb30458ccacc5e4556b41, type: 3}
       propertyPath: m_LocalRotation.w
@@ -3802,7 +3833,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7873018164762728174, guid: c691a68c1cccb30458ccacc5e4556b41, type: 3}
       propertyPath: m_StepOffset
-      value: 0.5
+      value: 0.7
       objectReference: {fileID: 0}
     - target: {fileID: 7873018164762728174, guid: c691a68c1cccb30458ccacc5e4556b41, type: 3}
       propertyPath: m_MinMoveDistance
@@ -3810,6 +3841,16 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: c691a68c1cccb30458ccacc5e4556b41, type: 3}
+--- !u!4 &5642937540283889771 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 7873018165441560371, guid: c691a68c1cccb30458ccacc5e4556b41, type: 3}
+  m_PrefabInstance: {fileID: 2525720619094443864}
+  m_PrefabAsset: {fileID: 0}
+--- !u!4 &5642937541812765853 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 7873018163916850117, guid: c691a68c1cccb30458ccacc5e4556b41, type: 3}
+  m_PrefabInstance: {fileID: 2525720619094443864}
+  m_PrefabAsset: {fileID: 0}
 --- !u!95 &5642937541819739337 stripped
 Animator:
   m_CorrespondingSourceObject: {fileID: 7873018163923823505, guid: c691a68c1cccb30458ccacc5e4556b41, type: 3}
@@ -3823,16 +3864,6 @@ Transform:
 --- !u!1 &5642937541812346607 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 7873018163916560823, guid: c691a68c1cccb30458ccacc5e4556b41, type: 3}
-  m_PrefabInstance: {fileID: 2525720619094443864}
-  m_PrefabAsset: {fileID: 0}
---- !u!4 &5642937540283889771 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 7873018165441560371, guid: c691a68c1cccb30458ccacc5e4556b41, type: 3}
-  m_PrefabInstance: {fileID: 2525720619094443864}
-  m_PrefabAsset: {fileID: 0}
---- !u!4 &5642937541812765853 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 7873018163916850117, guid: c691a68c1cccb30458ccacc5e4556b41, type: 3}
   m_PrefabInstance: {fileID: 2525720619094443864}
   m_PrefabAsset: {fileID: 0}
 --- !u!114 &5642937540443918768 stripped
@@ -3994,3 +4025,19 @@ MonoBehaviour:
         Data3: -831606853
         Data4: 1671267598
       Path: event:/Sfx/Mai/MaiAttack
+--- !u!208 &702985572
+NavMeshObstacle:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5642937541812346607}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Shape: 0
+  m_Extents: {x: 1.09, y: 1, z: 1.09}
+  m_MoveThreshold: 0.1
+  m_Carve: 1
+  m_CarveOnlyStationary: 1
+  m_Center: {x: 0, y: 0.87, z: 0}
+  m_TimeToStationary: 0.5
