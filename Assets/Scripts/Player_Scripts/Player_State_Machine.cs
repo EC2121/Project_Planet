@@ -1,4 +1,3 @@
-using System;
 using Cinemachine.Utility;
 using System.Collections.Generic;
 using UnityEngine;
@@ -11,6 +10,7 @@ public class Player_State_Machine : MonoBehaviour
     public static UnityEvent takeTheBox = new UnityEvent();
     public static UnityEvent canCrystal = new UnityEvent();
     public static UnityEvent<GameObject> OnHologramDisable = new UnityEvent<GameObject>();
+    public static UnityEvent OnHologramEnable = new UnityEvent();
     public static UnityEvent hit = new UnityEvent();
     public static UnityEvent gamePlayerFinalePhase = new UnityEvent();
 
@@ -280,6 +280,7 @@ public class Player_State_Machine : MonoBehaviour
         Animator animator = hologram.GetComponent<Animator>();
         animator.SetBool(isWalkingHash, true);
         animator.SetBool(isRunningHash, true);
+        OnHologramEnable.Invoke();
     }
     private void DestroyHologram()
     {
@@ -316,7 +317,7 @@ public class Player_State_Machine : MonoBehaviour
 
     }
 
-    void HandleCameraRotation()
+    private void HandleCameraRotation()
     {
         Vector3 forwardCam = cameraMainTransform.forward;
         forwardCam.y = 0;
@@ -326,7 +327,8 @@ public class Player_State_Machine : MonoBehaviour
         Quaternion inputFrame = Quaternion.LookRotation(forwardCam, Vector3.up);
         appliedMovement = inputFrame * currentMovement;
     }
-    void HandleGravity()
+
+    private void HandleGravity()
     {
         if (!characterController.isGrounded && !isJumpPressed)
         {
@@ -336,7 +338,7 @@ public class Player_State_Machine : MonoBehaviour
     }
     public void OnAnimationEvent(string eventName)
     {
-       //if (anim.IsInTransition(1) || anim.GetCurrentAnimatorStateInfo(1).IsName("UnEquip") || anim.GetCurrentAnimatorStateInfo(1).IsName("Equip")) return;
+        //if (anim.IsInTransition(1) || anim.GetCurrentAnimatorStateInfo(1).IsName("UnEquip") || anim.GetCurrentAnimatorStateInfo(1).IsName("Equip")) return;
         if (eventName == attachWeaponString /*&& anim.GetCurrentAnimatorStateInfo(1).normalizedTime >= 1.6f*/)
         {
             sockets.Attach(weapon.transform, Handle_Mesh_Sockets.SocketId.RightHand);
@@ -350,12 +352,12 @@ public class Player_State_Machine : MonoBehaviour
     private void SetUpJumpVariables()
     {
         timeToApex = maxJumpTIme / 2f;
-        gravity = (-2 * maxJumpHeight) / Mathf.Pow(timeToApex, 2);
-        initialJumpVelocity = (2 * maxJumpHeight) / timeToApex;
-        float secondJumpGravity = (-2 * (maxJumpHeight + 2)) / Mathf.Pow((timeToApex * 1.25f), 2);
-        float secondJumpInitialVelocity = (2 * (maxJumpHeight + 2)) / (timeToApex * 1.25f);
-        float thirdJumpGravity = (-2 * (maxJumpHeight + 4)) / Mathf.Pow((timeToApex * 1.5f), 2);
-        float thirdJumpInitialVelocity = (2 * (maxJumpHeight + 4)) / (timeToApex * 1.5f);
+        gravity = ( -2 * maxJumpHeight ) / Mathf.Pow(timeToApex, 2);
+        initialJumpVelocity = ( 2 * maxJumpHeight ) / timeToApex;
+        float secondJumpGravity = ( -2 * ( maxJumpHeight + 2 ) ) / Mathf.Pow(( timeToApex * 1.25f ), 2);
+        float secondJumpInitialVelocity = ( 2 * ( maxJumpHeight + 2 ) ) / ( timeToApex * 1.25f );
+        float thirdJumpGravity = ( -2 * ( maxJumpHeight + 4 ) ) / Mathf.Pow(( timeToApex * 1.5f ), 2);
+        float thirdJumpInitialVelocity = ( 2 * ( maxJumpHeight + 4 ) ) / ( timeToApex * 1.5f );
 
         initialJumpVelocities.Add(1, initialJumpVelocity);
         initialJumpVelocities.Add(2, secondJumpInitialVelocity);
@@ -391,7 +393,7 @@ public class Player_State_Machine : MonoBehaviour
 
         if (collision.gameObject.CompareTag("Enemy"))
         {
-           // Debug.Log("WWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWW");
+            // Debug.Log("WWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWW");
             //characterController.enabled = false;
             isHitted = true;
             characterController.stepOffset = 0.05f;
@@ -404,7 +406,7 @@ public class Player_State_Machine : MonoBehaviour
     }
     private void OnCollisionExit(Collision other)
     {
-        
+
     }
 
     public void OnAttackStart()
@@ -419,7 +421,7 @@ public class Player_State_Machine : MonoBehaviour
     private void OnEnable()
     {
         input.Player.Enable();
-        hit.AddListener(() =>isHitted = true);
+        hit.AddListener(() => isHitted = true);
     }
 
     private void OnDisable()

@@ -4,7 +4,6 @@ using UnityEngine;
 using UnityEngine.AI;
 using UnityEngine.Events;
 using UnityTemplateProjects.Saves_Scripts;
-using Random = UnityEngine.Random;
 
 public enum EnemyStates
 {
@@ -74,7 +73,7 @@ public class Enemy : MonoBehaviour
 
     private void OnEnable()
     {
-        Player_State_Machine.OnHologramCreated.AddListener(OnHologramCreated);
+        Player_State_Machine.OnHologramEnable.AddListener(OnHologramCreated);
         Player_State_Machine.OnHologramDisable.AddListener(OnHologramDestroy);
         OnActorDeath.AddListener(SwitchTarget);
         OnDamageTaken.AddListener(AddDamage);
@@ -106,7 +105,7 @@ public class Enemy : MonoBehaviour
 
     private void SaveSystemOnOnSave(object sender, EventArgs e)
     {
-        SaveSystem.SaveData(this.gameObject, true);
+        SaveSystem.SaveData(gameObject, true);
     }
 
     private void OnDisable()
@@ -124,7 +123,7 @@ public class Enemy : MonoBehaviour
 
     public void SwitchTarget(GameObject actor)
     {
-       Target = Player;
+        Target = Player;
     }
 
     public Vector3 Flocking()
@@ -138,7 +137,7 @@ public class Enemy : MonoBehaviour
         {
             alignment += enemy.Agent.velocity;
             cohesion += enemy.transform.position;
-            separation += this.transform.position - enemy.transform.position;
+            separation += transform.position - enemy.transform.position;
         }
 
         alignment /= nearEnemies.Count;
@@ -151,7 +150,7 @@ public class Enemy : MonoBehaviour
         separation.Normalize();
 
 
-        return (alignment + cohesion + (separation * 1.5f)) / 3;
+        return ( alignment + cohesion + ( separation * 1.5f ) ) / 3;
     }
 
 
@@ -161,7 +160,7 @@ public class Enemy : MonoBehaviour
         //transform.position = Agent.nextPosition;
         //Agent.nextPosition = Vector3.Lerp(transform.position, Agent.nextPosition + flockingVec, Time.deltaTime);
         currentState.UpdateState(this);
-        
+
     }
 
     private void OnAnimatorMove()
@@ -223,17 +222,14 @@ public class Enemy : MonoBehaviour
 
         Agent.Warp(PatrolCenter);
     }
+
     public void OnHologramCreated()
     {
-        if (!ReferenceEquals(Target,null))
+        if (Vector3.Distance(Hologram.position, transform.position) < 20)
         {
-            if (Vector3.Distance(Hologram.position,transform.position) < 20)
-            {
-                Target = Hologram;
-            }
+            Target = Hologram;
         }
     }
-
 
     public void OnAttackStart()
     {
@@ -241,7 +237,7 @@ public class Enemy : MonoBehaviour
 
         Collider[] colliders = Physics.OverlapSphere(Tounge.position, 0.5f);
 
-        
+
         foreach (var item in colliders)
         {
             if (item.gameObject.CompareTag("Roby"))
@@ -264,7 +260,7 @@ public class Enemy : MonoBehaviour
 
     public void Vanish()
     {
-        this.gameObject.SetActive(false);
+        gameObject.SetActive(false);
     }
 
     public void AddDamage(float amount, GameObject source, bool wasThrown)
@@ -275,7 +271,7 @@ public class Enemy : MonoBehaviour
             if (Hp <= 0)
             {
                 Invoke("Vanish", 3f);
-                OnEnemyDeath.Invoke(this.gameObject);
+                OnEnemyDeath.Invoke(gameObject);
                 SwitchState(EnemyStates.Die);
                 return;
             }
@@ -300,7 +296,7 @@ public class Enemy : MonoBehaviour
         currentState.OnEnter(this);
     }
 
-    
+
 
     public void OnHitEnd()
     {
