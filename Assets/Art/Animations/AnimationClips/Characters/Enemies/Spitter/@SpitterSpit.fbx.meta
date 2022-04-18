@@ -682,14 +682,7 @@ ModelImporter:
       mirror: 0
       bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
       curves: []
-      events:
-      - time: 0.7229487
-        functionName: OnAlertEnd
-        data: 
-        objectReferenceParameter: {fileID: 1148794101669109335, guid: 6148cf354eaa6f0499732fc79959c101, type: 3}
-        floatParameter: 0
-        intParameter: 0
-        messageOptions: 0
+      events: []
       transformMask: []
       maskType: 3
       maskSource: {instanceID: 0}

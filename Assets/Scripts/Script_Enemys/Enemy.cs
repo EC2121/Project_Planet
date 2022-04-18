@@ -49,11 +49,14 @@ public class Enemy : MonoBehaviour
     [HideInInspector] public float AlertRange;
     [HideInInspector] public float AttackTimer;
     [HideInInspector] public float IdleTimer;
+    [HideInInspector] public float VisionRange;
+    [HideInInspector] public float VisionAngle;
+    [HideInInspector] public float PatrolMaxDist;
     [HideInInspector] public float Hp;
     [HideInInspector] public float HorizontalDot;
     [HideInInspector] public bool IsAlerted;
     [HideInInspector] public bool IsAttacking;
-    [HideInInspector] public bool IsDisabled; //Da tenere?
+    [HideInInspector] public bool IsDisabled; //Da tenere? Non penso
 
     //Animation Hashes
     [HideInInspector] public int NearBaseHash = Animator.StringToHash("NearBase");
@@ -71,6 +74,7 @@ public class Enemy : MonoBehaviour
 
     private void OnEnable()
     {
+        Player_State_Machine.OnHologramCreated.AddListener(OnHologramCreated);
         Player_State_Machine.OnHologramDisable.AddListener(OnHologramDestroy);
         OnActorDeath.AddListener(SwitchTarget);
         OnDamageTaken.AddListener(AddDamage);
@@ -120,7 +124,7 @@ public class Enemy : MonoBehaviour
 
     public void SwitchTarget(GameObject actor)
     {
-            Target = Player;
+       Target = Player;
     }
 
     public Vector3 Flocking()
@@ -157,11 +161,7 @@ public class Enemy : MonoBehaviour
         //transform.position = Agent.nextPosition;
         //Agent.nextPosition = Vector3.Lerp(transform.position, Agent.nextPosition + flockingVec, Time.deltaTime);
         currentState.UpdateState(this);
-        if (Hologram.gameObject.activeInHierarchy && Vector3.Distance(Hologram.position,transform.position) < 10)
-        {
-            Target = Hologram;
-        }
-       //Debug.Log(currentState);
+        
     }
 
     private void OnAnimatorMove()
@@ -183,10 +183,10 @@ public class Enemy : MonoBehaviour
 
     public void LoadData(EnemyData Data, Transform playerRef, Transform robyRef, Transform HologramRef)
     {
-        Hologram = HologramRef;
         Target = null;
-        this.Player = playerRef;
-        this.Roby = robyRef;
+        Hologram = HologramRef;
+        Player = playerRef;
+        Roby = robyRef;
         Hp = Data.MaxHp;
         enemyType = Data.enemyType;
         StatesDictionary = new Dictionary<EnemyStates, AI_Enemies_IBaseState>();
@@ -200,7 +200,6 @@ public class Enemy : MonoBehaviour
         StatesDictionary[EnemyStates.Thrown] = new AI_Chompies_ThrownState();
         currentState = StatesDictionary[EnemyStates.Idle];
         Anim = GetComponent<Animator>();
-        Anim.runtimeAnimatorController = Data.AnimatorController;
         Anim.avatar = Data.Avatar;
         Anim.applyRootMotion = true;
         Agent = gameObject.AddComponent<NavMeshAgent>();
@@ -208,8 +207,6 @@ public class Enemy : MonoBehaviour
         Agent.stoppingDistance = Data.AgentStoppingDistance;
         AgentPath = new NavMeshPath();
         SphereCollider sphereCollider = GetComponent<SphereCollider>();
-        sphereCollider.radius = Data.VisionRange;
-        sphereCollider.isTrigger = true;
         //SetSpawnPoint
         PatrolCenter = transform.position;
         nearEnemies = new List<Enemy>();
@@ -217,31 +214,41 @@ public class Enemy : MonoBehaviour
         AttackCD = Data.AttackCD;
         PatrolCD = Data.PatrolCD;
         AlertRange = Data.AlertRange;
+        VisionAngle = Data.VisionAngle;
+        VisionRange = Data.VisionRange;
+        PatrolMaxDist = Data.PatrolMaxDistance;
         AttackTimer = UnityEngine.Random.Range(0, 3);
         IdleTimer = UnityEngine.Random.Range(0, 3);
         IsAlerted = false;
 
         Agent.Warp(PatrolCenter);
     }
+    public void OnHologramCreated()
+    {
+        if (!ReferenceEquals(Target,null))
+        {
+            if (Vector3.Distance(Hologram.position,transform.position) < 20)
+            {
+                Target = Hologram;
+            }
+        }
+    }
+
 
     public void OnAttackStart()
     {
         IsAttacking = true;
 
-        Collider[] colliders = Physics.OverlapSphere(Tounge.position, 0.5f, 1 << 10);
+        Collider[] colliders = Physics.OverlapSphere(Tounge.position, 0.5f);
 
+        
         foreach (var item in colliders)
         {
             if (item.gameObject.CompareTag("Roby"))
             {
                 Script_Roby.Roby_Hit.Invoke(20);
-                return;
             }
 
-            if (item.gameObject.CompareTag("Player"))
-            {
-                Debug.Log("hitted Player");
-            }
         }
     }
 
@@ -293,10 +300,7 @@ public class Enemy : MonoBehaviour
         currentState.OnEnter(this);
     }
 
-    public void OnAlertEnd()
-    {
-        SwitchState(EnemyStates.Follow);
-    }
+    
 
     public void OnHitEnd()
     {
@@ -306,19 +310,18 @@ public class Enemy : MonoBehaviour
     private void OnTriggerEnter(Collider other)
     {
 
-        if (other.CompareTag("Player"))
-        {
-            Target = Player;
-        }
+        //if (other.CompareTag("Player"))
+        //{
+        //    Target = Player;
+        //}
 
-        if (other.CompareTag("Enemy"))
-        {
-            Enemy enemy = other.GetComponent<Enemy>();
-            if (!nearEnemies.Contains(enemy))
-            {
-                nearEnemies.Add(enemy);
-            }
-        }
+        //if (other.CompareTag("Enemy"))
+        //{
+        //    Enemy enemy = other.GetComponent<Enemy>();
+        //    if (!nearEnemies.Contains(enemy))
+        //    {
+        //        nearEnemies.Add(enemy);
+        //    }
 
 
         currentState.OnTrigEnter(this, other);
@@ -332,13 +335,13 @@ public class Enemy : MonoBehaviour
 
     private void OnTriggerExit(Collider other)
     {
-        if (other.CompareTag("Enemy"))
-        {
-            Enemy enemy = other.GetComponent<Enemy>();
-            if (nearEnemies.Contains(enemy))
-            {
-                nearEnemies.Remove(enemy);
-            }
-        }
+        //if (other.CompareTag("Enemy"))
+        //{
+        //    Enemy enemy = other.GetComponent<Enemy>();
+        //    if (nearEnemies.Contains(enemy))
+        //    {
+        //        nearEnemies.Remove(enemy);
+        //    }
+        //}
     }
 }
