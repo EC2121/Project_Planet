@@ -13,12 +13,14 @@ public class Player_RunState : Player_BaseState
     {
         Context.Animator.SetBool(Context.IsWalkingHash, true);
         Context.Animator.SetBool(Context.IsRunningHash, true);
-        
+        Context.Animator.SetBool(Context.IsHittedHash, false);
+        //Context.Animator.SetBool(Context.IsRunAttackingHash, false);
     }
 
     public override void UpdateState()
     {
         CheckSwitchStates();
+     
         Context.AppliedMovementX = Context.CurrentMovementInput.x * Context.RunMultiplier;
         Context.AppliedMovementZ = Context.CurrentMovementInput.y * Context.RunMultiplier;
     }
@@ -30,7 +32,7 @@ public class Player_RunState : Player_BaseState
 
     public override void CheckSwitchStates()
     {
-        if (Context.IsMousePressed && !Context.IsJumpPressed && Context.IsWeaponAttached)
+        if (Context.IsMousePressed && !Context.IsJumpPressed && !Context.RequireNewAttack && Context.IsWeaponAttached && Context.IsRunPressed)
         {
             SwitchState(Factory.RunAttack());
         }
@@ -50,11 +52,11 @@ public class Player_RunState : Player_BaseState
         {
             SwitchState(Factory.Idle());
         }
-        else if (Context.IsMovementPressed && !Context.IsRunPressed)
+        if (Context.IsMovementPressed && !Context.IsRunPressed)
         {
             SwitchState(Factory.Walk());
         }
-        
+
     }
 
     public override void InitializeSubState()

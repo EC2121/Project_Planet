@@ -17,6 +17,9 @@ public class Player_Dead : Player_BaseState
         Context.Animator.SetBool("isDead", true);
         Context.Animator.SetBool(Context.IsWalkingHash, false);
         Context.Animator.SetBool(Context.IsRunningHash, false);
+        Context.CharacterController.enabled = false;
+        Context.CharacterController.radius = 0;
+        Context.CharacterController.height = 0;
 
         //Context.AppliedMovementY = 0;
     }
@@ -27,10 +30,11 @@ public class Player_Dead : Player_BaseState
 
         Context.CurrentMovementX = 0;
         Context.CurrentMovementZ = 0;
+        Context.CurrentMovementY = 0;
         // Context.AppliedMovementX = 0;
         //Context.AppliedMovementZ = 0;
 
-        
+
 
         CheckSwitchStates();
     }

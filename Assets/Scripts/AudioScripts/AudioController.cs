@@ -77,7 +77,7 @@ public class AudioController : MonoBehaviour
         }
         catch
         {
-            Debug.Log(Sound);
+            //Debug.Log(Sound);
         }
 
 

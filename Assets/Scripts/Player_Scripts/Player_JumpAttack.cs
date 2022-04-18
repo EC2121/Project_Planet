@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Data.SqlTypes;
 using System.Timers;
 using UnityEngine;
 
@@ -11,48 +12,47 @@ public class Player_JumpAttack : Player_BaseState
     public Player_JumpAttack(Player_State_Machine currentContext, Player_StateFactory playerStateFactory) : base(
         currentContext, playerStateFactory)
     {
-        IsRootState = true;
-        InitializeSubState();
+       IsRootState = true;
+       InitializeSubState();
     }
 
     public override void EnterState()
     {
-        Context.Animator.SetBool("isJumpAttack", true);
-        Context.Animator.SetBool(Context.IsJumpingHash, false);
-
-        // Context.CharacterController.enabled = false;
-        // Context.IsIsHitted = false;
+        Context.Animator.SetBool(Context.IsJumpAttackHash, true);
+        //Context.Animator.SetBool(Context.IsJumpingHash, false);
+        Context.CharacterController.enabled = false;
+        
     }
 
     public override void UpdateState()
     {
         timer -= Time.deltaTime;
-       // Context.CurrentMovementY = 5;
-       // Context.AppliedMovementY = 5;
-       if (Context.IsJumpPressed)
-       {
-           Context.Animator.SetBool(Context.IsJumpingHash, false);
-       }
         CheckSwitchStates();
-        HandleGravity();
+        //HandleGravity();
     }
 
     public override void ExitState()
     {
-        Context.Animator.SetBool("isJumpAttack", false);
+        Context.CharacterController.enabled = true;
+        Context.Animator.SetBool(Context.IsJumpAttackHash, false);
         if (!Context.IsRunPressed)
         {
             Context.Animator.SetBool(Context.IsRunningHash, false);
 
-            Context.AppliedMovementX = 0;
-            Context.AppliedMovementZ = 0;
+            Context.AppliedMovementX = Context.CurrentMovementInput.x;
+            Context.AppliedMovementZ = Context.CurrentMovementInput.y;
         }
 
         if (!Context.IsMovementPressed)
         {
+            Context.Animator.SetBool(Context.IsRunningHash, false);
             Context.Animator.SetBool(Context.IsWalkingHash, false);
             Context.AppliedMovementX = 0;
             Context.AppliedMovementZ = 0;
+        }
+        if (Context.IsMousePressed)
+        {
+            Context.RequireNewAttack = true;
         }
     }
 
@@ -67,7 +67,7 @@ public class Player_JumpAttack : Player_BaseState
         // {
         //     SwitchState(Factory.Jump());
         // }
-        if (Context.CharacterController.isGrounded && timer <=0)
+        if (Context.Animator.GetCurrentAnimatorStateInfo(0).IsName("JumpAttack"))
             SwitchState(Factory.Grounded());
     }
 
