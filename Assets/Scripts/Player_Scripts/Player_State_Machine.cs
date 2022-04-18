@@ -1,4 +1,5 @@
 using Cinemachine.Utility;
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
@@ -147,6 +148,7 @@ public class Player_State_Machine : MonoBehaviour
     public int AttackComboIndexHash { get { return Animator.StringToHash("AttackComboIndex"); } }
     public bool WasMouseLeftPressedThisFrame { get { return Mouse.current.leftButton.wasPressedThisFrame; } }
 
+    public float HpRecoveryTimer = 10;
     private const string EllenCombo4Name = "Ellen_Combo4";
     [SerializeField] private bool hasKey;
     private GameObject keyReference;
@@ -289,8 +291,22 @@ public class Player_State_Machine : MonoBehaviour
         hologram.SetActive(false);
     }
 
+    private void RecoverHp()
+    {
+        hp = Mathf.Clamp(hp + (Time.deltaTime * 3), 0, maxHp);
+        
+    }
     private void Update()
     {
+        if (HpRecoveryTimer >= 10)
+        {
+            RecoverHp();
+            mayHpSlider.value = hp;
+        }
+        else
+        {
+            HpRecoveryTimer += Time.deltaTime;
+        }
 
         if (onHologram)
         {
@@ -326,6 +342,8 @@ public class Player_State_Machine : MonoBehaviour
         //   Debug.Log(hp + " HPPPPPPPPPPP");
 
     }
+
+
     public void OnAnimationEvent(string eventName)
     {
         if (eventName == "EquipWeapon")

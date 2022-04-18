@@ -18,6 +18,7 @@ public class Player_HittedState : Player_BaseState
     {
         if (Context.Hp > 0)
         {
+            Context.HpRecoveryTimer = 0;
             Context.Hp -= 33f;
             Context.MaySliderValue = Context.Hp;
         }
