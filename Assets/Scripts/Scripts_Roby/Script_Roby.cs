@@ -18,6 +18,7 @@ public class Script_Roby : MonoBehaviour
     public SphereCollider Roby_SphereCollider_Alive;
     public SphereCollider Roby_SphereCollider_Dead;
     public Slider RobyHpSlider;
+    public GameObject Roby_Interact_TXT;
 
     [HideInInspector] public GameObject wallToBreak;
     [HideInInspector] public NavMeshAgent Roby_NavAgent;
@@ -48,7 +49,10 @@ public class Script_Roby : MonoBehaviour
     public int Roby_AshAnimator_RangeDone { get; private set; }
     public int Roby_AshAnimator_Dead { get; private set; }
     public int Roby_AshAnimator_GetDamage { get; private set; }
+    public int Roby_AshAnimator_StartRepair { get; private set; }
     public string Roby_String_Animator_SkyWalkToStop { get; private set; }
+    public bool roby_FullSlider { get; set; }
+
 
     private NavMeshPath roby_NavMeshPath;
     private Script_AI_Roby_BaseState Roby_CurrentState;
@@ -58,6 +62,7 @@ public class Script_Roby : MonoBehaviour
         Enemy.OnEnemyDeath.AddListener(SwitchTarget);
         Roby_Hit.AddListener(OnRobyAddDamage);
         Roby_Dead.AddListener(OnRobyDie);
+        Player_State_Machine.reviveRoby.AddListener(() => roby_FullSlider = true);
     }
 
     private void OnDisable()
@@ -65,6 +70,7 @@ public class Script_Roby : MonoBehaviour
         Enemy.OnEnemyDeath.RemoveListener(SwitchTarget);
         Roby_Hit.RemoveListener(OnRobyAddDamage);
         Roby_Dead.RemoveListener(OnRobyDie);
+        Player_State_Machine.reviveRoby.RemoveListener(() => roby_FullSlider = false);
     }
 
     private void OnAnimatorMove()
@@ -168,7 +174,7 @@ public class Script_Roby : MonoBehaviour
         Roby_AshAnimator_TurnValue = Animator.StringToHash("Angle");
         Roby_AshAnimator_turnTrigger = Animator.StringToHash("TurnTrigger");
         Roby_AshAnimator_GetDamage = Animator.StringToHash("Hit");
-
+        Roby_AshAnimator_StartRepair = Animator.StringToHash("StartRepair");
         Roby_String_Animator_SkyWalkToStop = "SkyWalkToStop";
 
         Roby_StateDictionary = new Dictionary<RobyStates, Script_AI_Roby_BaseState>

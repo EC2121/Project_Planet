@@ -51,7 +51,7 @@ public class Player_GroundState : Player_BaseState
         if (Context.IsInteract && ( !Context.IsWeaponAttached && !Context.IsRunPressed &&
                                     !Context.Animator.GetCurrentAnimatorStateInfo(1).IsName(Context.UnEquipString) ) &&
             !Context.RequireNewWeaponSwitch && !Context.RequireNewInteraction &&
-           ( Context.Mai_BoxIsTakable || Context.IsCrystalActivable || Context.CanReviveRoby))
+           ( Context.Mai_BoxIsTakable || Context.IsCrystalActivable /*|| Context.CanReviveRoby)*/))
         {
             SwitchState(Factory.Interactable());
         }
