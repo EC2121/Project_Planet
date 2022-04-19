@@ -193,8 +193,8 @@ public class Player_JumpState : Player_BaseState
         {
             Context.CurrentMovementX = Context.CurrentMovementInput.x * 4;
             Context.CurrentMovementZ = Context.CurrentMovementInput.y * 4;
-            Context.CurrentMovementY += 3;
-            Context.AppliedMovementY += 3;
+            //Context.CurrentMovementY += 3;
+           // Context.AppliedMovementY += 3;
         }
     }
 

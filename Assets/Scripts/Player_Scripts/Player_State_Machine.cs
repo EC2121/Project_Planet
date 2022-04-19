@@ -8,6 +8,7 @@ using UnityEngine.UI;
 
 public class Player_State_Machine : MonoBehaviour
 {
+    public static UnityEvent reviveRoby = new UnityEvent();
     public static UnityEvent takeTheBox = new UnityEvent();
     public static UnityEvent canCrystal = new UnityEvent();
     public static UnityEvent<GameObject> onBreakableWallFound = new UnityEvent<GameObject>();
@@ -24,10 +25,13 @@ public class Player_State_Machine : MonoBehaviour
     [SerializeField] private float rotationFactor = 0.5f;
     [SerializeField] private float maxHp;
     [SerializeField] private Slider mayHpSlider;
+    [SerializeField] private Slider reviveSlider;
+
     //OnlyFor Debug
     public static bool hasBox;
 
     private bool isCrystalActivable;
+    private bool canReviveRoby;
     private bool mai_BoxIsTakable;
     private Animator anim;
     private int isWalkingHash;
@@ -99,6 +103,7 @@ public class Player_State_Machine : MonoBehaviour
     public CharacterController CharacterController { get { return characterController; } set { characterController = value; } }
     public UnityEvent TakeTheBox { get { return takeTheBox; } }
     public UnityEvent CanCrystal { get { return canCrystal; } }
+    public UnityEvent ReviveRoby { get { return reviveRoby; } }
     public UnityEvent GamePlayerFinalePhase { get { return gamePlayerFinalePhase; } }
     public UnityEvent Hit { get { return hit; } }
     public Coroutine CurrentJumpResetRoutine { get { return currentJumpResetRoutine; } set { currentJumpResetRoutine = value; } }
@@ -144,6 +149,7 @@ public class Player_State_Machine : MonoBehaviour
     public bool IsIsHitted { get { return isHitted; } set { isHitted = value; } }
     public bool Mai_BoxIsTakable { get { return mai_BoxIsTakable; } }
     public bool IsCrystalActivable { get { return isCrystalActivable; } }
+    public bool CanReviveRoby { get { return CanReviveRoby; } }
     public bool IsWeaponAttached { get { return isWeaponAttached; } set { isWeaponAttached = value; } }
     public Handle_Mesh_Sockets Sockets { get { return sockets; } }
     public Transform Weapon { get { return weapon; } }
@@ -159,6 +165,7 @@ public class Player_State_Machine : MonoBehaviour
     public float Hp { get { return hp; } set { hp = value; } }
     public Vector2 CurrentMovementInput { get { return currentMovementInput; } set { currentMovementInput = value; } }
     public float MaySliderValue { get { return mayHpSlider.value; } set { mayHpSlider.value = value; } }
+    public float ReviveSliderValue { get { return reviveSlider.value; } set { reviveSlider.value = value; } }
 
 
     [SerializeField] private bool hasKey;
@@ -326,14 +333,12 @@ public class Player_State_Machine : MonoBehaviour
             {
                 canPing = false;
                 PingImage.gameObject.SetActive(true);
-                PingImage.transform.position = Hitinfo.point + ( Hitinfo.normal * 0.1f );
+                PingImage.transform.position = Hitinfo.point + (Hitinfo.normal * 0.1f);
                 PingImage.transform.forward = Hitinfo.normal;
                 StartCoroutine(PingCoroutine());
                 onBreakableWallFound?.Invoke(Hitinfo.transform.gameObject);
             }
         }
-
-
 
         if (onHologram)
         {
@@ -396,12 +401,12 @@ public class Player_State_Machine : MonoBehaviour
     private void SetUpJumpVariables()
     {
         timeToApex = maxJumpTIme / 2f;
-        gravity = ( -2 * maxJumpHeight ) / Mathf.Pow(timeToApex, 2);
-        initialJumpVelocity = ( 2 * maxJumpHeight ) / timeToApex;
-        float secondJumpGravity = ( -2 * ( maxJumpHeight + 2 ) ) / Mathf.Pow(( timeToApex * 1.25f ), 2);
-        float secondJumpInitialVelocity = ( 2 * ( maxJumpHeight + 2 ) ) / ( timeToApex * 1.25f );
-        float thirdJumpGravity = ( -2 * ( maxJumpHeight + 4 ) ) / Mathf.Pow(( timeToApex * 1.5f ), 2);
-        float thirdJumpInitialVelocity = ( 2 * ( maxJumpHeight + 4 ) ) / ( timeToApex * 1.5f );
+        gravity = (-2 * maxJumpHeight) / Mathf.Pow(timeToApex, 2);
+        initialJumpVelocity = (2 * maxJumpHeight) / timeToApex;
+        float secondJumpGravity = (-2 * (maxJumpHeight + 2)) / Mathf.Pow((timeToApex * 1.25f), 2);
+        float secondJumpInitialVelocity = (2 * (maxJumpHeight + 1)) / (timeToApex * 1.25f);
+        float thirdJumpGravity = (-2 * (maxJumpHeight + 4)) / Mathf.Pow((timeToApex * 1.5f), 2);
+        float thirdJumpInitialVelocity = (2 * (maxJumpHeight + 2)) / (timeToApex * 1.5f);
 
         initialJumpVelocities.Add(1, initialJumpVelocity);
         initialJumpVelocities.Add(2, secondJumpInitialVelocity);
@@ -476,7 +481,13 @@ public class Player_State_Machine : MonoBehaviour
     private void OnTriggerEnter(Collider other)
     {
         if (other.CompareTag(boxString))
+        {
             mai_BoxIsTakable = true;
+        }
+        if (other.CompareTag("Roby"))
+        {
+            canReviveRoby = true;
+        }
         if (other.CompareTag("Crystal"))
         {
             isCrystalActivable = true;
