@@ -14,6 +14,7 @@ public class Script_CrystalInteract : MonoBehaviour
             crystal_Collider.enabled = !crystal_IsActivaded;
         });
     }
+
     private void OnDisable()
     {
         Player_State_Machine.canCrystal.RemoveListener(() =>
@@ -34,6 +35,7 @@ public class Script_CrystalInteract : MonoBehaviour
         if (other.CompareTag("Player"))
             Crystal_GuiInteractWrite.SetActive(false);
     }
+
     private void Awake()
     {
         crystal_Collider = GetComponent<BoxCollider>();

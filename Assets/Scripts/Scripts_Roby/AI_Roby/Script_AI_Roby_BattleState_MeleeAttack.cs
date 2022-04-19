@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class Script_AI_Roby_BattleState_MeleeAttack : Script_AI_Roby_BaseState
