@@ -1,10 +1,23 @@
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 using UnityEngine.Events;
 using UnityEngine.UI;
 
-public enum RobyStates { Idle, Follow, Patroll, Battle, RangeAttack, MeleeAttack, ZoneAttack, Die, Hit }
+public enum RobyStates
+{
+    Idle,
+    Follow,
+    Patroll,
+    Battle,
+    RangeAttack,
+    MeleeAttack,
+    ZoneAttack,
+    Die,
+    Hit
+}
+
 public class Script_Roby : MonoBehaviour
 {
     public static UnityEvent Roby_Dead = new UnityEvent();
@@ -26,6 +39,10 @@ public class Script_Roby : MonoBehaviour
     [HideInInspector] public bool Roby_IgnoreEnemy;
     [HideInInspector] public bool IsAttacking;
     [HideInInspector] public ParticleSystem Roby_Particle_Shoot;
+
+    public ParticleSystem LeftFoot;
+    public ParticleSystem RightFoot;
+    
 
     public Animator Roby_Animator { get; private set; }
     public Dictionary<RobyStates, Script_AI_Roby_BaseState> Roby_StateDictionary { get; private set; }
@@ -119,10 +136,8 @@ public class Script_Roby : MonoBehaviour
     }
 
 
-
     private void Init()
     {
-
         Mai_PlayerNearZone = 3;
         Mai_PlayerNormalZone = 5;
         Mai_PlayerBattleZone = 10;
@@ -215,6 +230,7 @@ public class Script_Roby : MonoBehaviour
 
         Roby_Particle_Shoot.Clear();
     }
+
     public void OnAttackEnd()
     {
         IsAttacking = false;
@@ -239,6 +255,7 @@ public class Script_Roby : MonoBehaviour
         {
             enemys.GetComponent<Rigidbody>().AddExplosionForce(30, transform.position, 5, 1, ForceMode.Impulse);
         }
+
         Roby_IgnoreEnemy = true;
         SwitchState(RobyStates.Follow);
     }
@@ -251,6 +268,7 @@ public class Script_Roby : MonoBehaviour
                 roby_EnemysInMyArea.Add(enemy);
             return true;
         }
+
         return false;
     }
 
@@ -264,7 +282,6 @@ public class Script_Roby : MonoBehaviour
             {
                 Roby_EnemyTarget = null;
             }
-
         }
     }
 
@@ -272,7 +289,8 @@ public class Script_Roby : MonoBehaviour
     {
         if (ReferenceEquals(Roby_EnemyTarget, null) || roby_EnemysInMyArea.Count == 0) return;
 
-        Roby_Particle_Shoot.transform.LookAt(Roby_EnemyTarget.transform.position + new Vector3(0, Roby_EnemyTarget.transform.localScale.y * 0.5f, 0));
+        Roby_Particle_Shoot.transform.LookAt(Roby_EnemyTarget.transform.position +
+                                             new Vector3(0, Roby_EnemyTarget.transform.localScale.y * 0.5f, 0));
         Roby_Particle_Shoot.Play(true);
         Roby_Animator.SetTrigger(Roby_AshAnimator_RangeDone);
         SwitchState(RobyStates.Battle);
@@ -280,7 +298,7 @@ public class Script_Roby : MonoBehaviour
 
     public bool IsMaITooFar(float zone)
     {
-        float distanceFromMai = Vector3.Distance(transform.position, Mai_Player.transform.position); 
+        float distanceFromMai = Vector3.Distance(transform.position, Mai_Player.transform.position);
         if (distanceFromMai > zone) return true;
         return false;
     }
@@ -295,14 +313,15 @@ public class Script_Roby : MonoBehaviour
             if (result == value_max) return max;
             else return min;
         }
+
         return value;
     }
 
     public void AngleCalculator()
     {
         Vector3 MyForw = transform.forward;
-        float dot = Vector3.Dot(MyForw, ( Roby_NavAgent.destination - transform.position ).normalized);
-        Vector3 Cross = Vector3.Cross(MyForw, ( Roby_NavAgent.destination - transform.position ).normalized);
+        float dot = Vector3.Dot(MyForw, (Roby_NavAgent.destination - transform.position).normalized);
+        Vector3 Cross = Vector3.Cross(MyForw, (Roby_NavAgent.destination - transform.position).normalized);
         float angle = Mathf.Acos(dot) * Mathf.Rad2Deg;
         if (Mathf.Sign(Cross.y) == -1)
             angle = 360 - angle;
@@ -319,12 +338,11 @@ public class Script_Roby : MonoBehaviour
         else if (angle > 180)
         {
             Roby_Animator.SetTrigger(Roby_AshAnimator_turnTrigger);
-            Roby_Animator.SetFloat("Angle", -( angle / 360 ));
+            Roby_Animator.SetFloat("Angle", -(angle / 360));
         }
         else
         {
             return;
         }
     }
-
 }
