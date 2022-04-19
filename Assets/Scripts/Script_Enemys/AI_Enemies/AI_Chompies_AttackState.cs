@@ -27,7 +27,7 @@ public class AI_Chompies_AttackState : AI_Enemies_IBaseState
             Attack(owner);
             return;
         }
-        if (Vector3.Distance(owner.transform.position, owner.PatrolCenter) > 20 && Vector3.Distance(owner.Target.position, owner.transform.position) > 11)
+        if (Vector3.Distance(owner.transform.position, owner.PatrolCenter) > 30 && Vector3.Distance(owner.Target.position, owner.transform.position) > 11)
         {
             owner.SwitchState(EnemyStates.Idle);
             return;
@@ -71,9 +71,10 @@ public class AI_Chompies_AttackState : AI_Enemies_IBaseState
 
         if (other.gameObject.CompareTag("Player") && owner.IsAttacking)
         {
-            Player_State_Machine.hit.Invoke(true);
+            Player_State_Machine.hit.Invoke();
+            Debug.Log("CESTODENTROOOOOOO");
         }
-        
+
     }
     
 }

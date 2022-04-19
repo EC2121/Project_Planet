@@ -97,16 +97,6 @@ public class AI_Chompies_IdleState : AI_Enemies_IBaseState
             return true;
         }
 
-        if (owner.Hologram.gameObject.activeInHierarchy)
-        {
-            float distanceFromHologram = Vector3.Distance(owner.transform.position, owner.Hologram.position);
-            if (distanceFromHologram <= 10)
-            {
-                owner.Target = owner.Hologram;
-                owner.IsAlerted = true;
-                return true;
-            }
-        }
 
 
 
