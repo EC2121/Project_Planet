@@ -1,4 +1,5 @@
 using Cinemachine.Utility;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
@@ -9,11 +10,14 @@ public class Player_State_Machine : MonoBehaviour
 {
     public static UnityEvent takeTheBox = new UnityEvent();
     public static UnityEvent canCrystal = new UnityEvent();
+    public static UnityEvent<GameObject> onBreakableWallFound = new UnityEvent<GameObject>();
     public static UnityEvent<GameObject> OnHologramDisable = new UnityEvent<GameObject>();
     public static UnityEvent OnHologramEnable = new UnityEvent();
     public static UnityEvent hit = new UnityEvent();
     public static UnityEvent gamePlayerFinalePhase = new UnityEvent();
 
+    [SerializeField] private Image PingImage;
+    [SerializeField] private LayerMask BreakableRayCastMask;
     [SerializeField] private Transform weapon;
     [SerializeField] private float jumpSpeed = 10f;
     [SerializeField] private float runSpeed = 2.65f;
@@ -172,6 +176,8 @@ public class Player_State_Machine : MonoBehaviour
 
     private float hologramTimer;
     private bool startHologramTimer;
+    private RaycastHit Hitinfo;
+    private bool canPing = true;
 
     private void Awake()
     {
@@ -303,9 +309,32 @@ public class Player_State_Machine : MonoBehaviour
         hologram.SetActive(false);
     }
 
+    IEnumerator PingCoroutine()
+    {
+        yield return new WaitForSeconds(3f);
+        PingImage.gameObject.SetActive(false);
+        canPing = true;
+    }
+
     private void Update()
     {
         _currentState.UpdateStates();
+
+        if (canPing && Keyboard.current.cKey.wasPressedThisFrame)
+        {
+            Ray ray = new Ray(Camera.main.transform.position, Camera.main.transform.forward);
+            if (Physics.Raycast(ray, out Hitinfo, 20, BreakableRayCastMask))
+            {
+                canPing = false;
+                PingImage.gameObject.SetActive(true);
+                PingImage.transform.position = Hitinfo.point + (Hitinfo.normal * 0.1f);
+                PingImage.transform.forward = Hitinfo.normal;
+                StartCoroutine(PingCoroutine());
+                onBreakableWallFound?.Invoke(Hitinfo.transform.gameObject);
+            }
+        }
+
+
 
         if (onHologram)
         {
@@ -368,12 +397,12 @@ public class Player_State_Machine : MonoBehaviour
     private void SetUpJumpVariables()
     {
         timeToApex = maxJumpTIme / 2f;
-        gravity = ( -2 * maxJumpHeight ) / Mathf.Pow(timeToApex, 2);
-        initialJumpVelocity = ( 2 * maxJumpHeight ) / timeToApex;
-        float secondJumpGravity = ( -2 * ( maxJumpHeight + 2 ) ) / Mathf.Pow(( timeToApex * 1.25f ), 2);
-        float secondJumpInitialVelocity = ( 2 * ( maxJumpHeight + 2 ) ) / ( timeToApex * 1.25f );
-        float thirdJumpGravity = ( -2 * ( maxJumpHeight + 4 ) ) / Mathf.Pow(( timeToApex * 1.5f ), 2);
-        float thirdJumpInitialVelocity = ( 2 * ( maxJumpHeight + 4 ) ) / ( timeToApex * 1.5f );
+        gravity = (-2 * maxJumpHeight) / Mathf.Pow(timeToApex, 2);
+        initialJumpVelocity = (2 * maxJumpHeight) / timeToApex;
+        float secondJumpGravity = (-2 * (maxJumpHeight + 2)) / Mathf.Pow((timeToApex * 1.25f), 2);
+        float secondJumpInitialVelocity = (2 * (maxJumpHeight + 2)) / (timeToApex * 1.25f);
+        float thirdJumpGravity = (-2 * (maxJumpHeight + 4)) / Mathf.Pow((timeToApex * 1.5f), 2);
+        float thirdJumpInitialVelocity = (2 * (maxJumpHeight + 4)) / (timeToApex * 1.5f);
 
         initialJumpVelocities.Add(1, initialJumpVelocity);
         initialJumpVelocities.Add(2, secondJumpInitialVelocity);

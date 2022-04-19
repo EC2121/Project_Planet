@@ -10,8 +10,6 @@ TagManager:
   - Box
   - Hologram
   - StairsExtension
-  - Crystal
-  - NotCameraObstacle
   layers:
   - Default
   - TransparentFX
@@ -28,8 +26,8 @@ TagManager:
   - Post_Process_Layer
   - CameraCollider
   - Layer_RubberDuck
-  - NewCameraLayerCollider
-  - 
+  - Breakable
+  - BrokenParts
   - 
   - 
   - 

@@ -4,7 +4,7 @@ using UnityEngine.AI;
 using UnityEngine.Events;
 using UnityEngine.UI;
 
-public enum RobyStates { Idle, Follow, Patroll, Battle, RangeAttack, MeleeAttack, ZoneAttack, Die, Hit }
+public enum RobyStates { Idle, Follow, Patroll, Battle, RangeAttack, MeleeAttack, ZoneAttack, Die, Hit,BreakWall }
 public class Script_Roby : MonoBehaviour
 {
     public static UnityEvent Roby_Dead = new UnityEvent();
@@ -51,7 +51,7 @@ public class Script_Roby : MonoBehaviour
     public Slider RobyHpSlider;
     private Script_AI_Roby_BaseState Roby_CurrentState;
     private NavMeshPath roby_NavMeshPath;
-
+    [HideInInspector]public GameObject wallToBreak;
     private void OnEnable()
     {
         Enemy.OnEnemyDeath.AddListener(SwitchTarget);
@@ -99,6 +99,7 @@ public class Script_Roby : MonoBehaviour
 
     protected virtual void Update()
     {
+        Debug.Log(Roby_CurrentState);
         Roby_CurrentState.UpdateState(this);
     }
 
@@ -123,9 +124,19 @@ public class Script_Roby : MonoBehaviour
 
 
 
+    public void OnBreakableWallFound(GameObject wall)
+    {
+        if (wallToBreak != null) return;
+        if (roby_EnemysInMyArea.Count < 1)
+        {
+            wallToBreak = wall;
+            SwitchState(RobyStates.BreakWall);
+        }
+    }
+
     private void Init()
     {
-
+        Player_State_Machine.onBreakableWallFound.AddListener(OnBreakableWallFound);
         Mai_PlayerNearZone = 3;
         Mai_PlayerNormalZone = 5;
         Mai_PlayerBattleZone = 10;
@@ -162,7 +173,8 @@ public class Script_Roby : MonoBehaviour
             [RobyStates.MeleeAttack] = new Script_AI_Roby_BattleState_MeleeAttack(),
             [RobyStates.RangeAttack] = new Script_AI_Roby_BattleState_RangedAttack(),
             [RobyStates.ZoneAttack] = new Script_Ai_Roby_BattleState_ZoneAttack(),
-            [RobyStates.Die] = new Script_AI_Roby_Dead()
+            [RobyStates.Die] = new Script_AI_Roby_Dead(),
+            [RobyStates.BreakWall] = new Script_AI_Roby_BreakWall()
         };
         Roby_CurrentState = Roby_StateDictionary[RobyStates.Idle];
     }
@@ -200,8 +212,13 @@ public class Script_Roby : MonoBehaviour
 
     public void OnAttackStart()
     {
+        
         IsAttacking = true;
-
+        Collider[] breakableWall = Physics.OverlapSphere(Roby_Hand.position, 2, 1 << 15);
+        if (breakableWall.Length > 0)
+        {
+            wallToBreak.GetComponentInParent<BreakableObject>().OnFragment();
+        }
         Collider[] chompys_Collider = Physics.OverlapSphere(Roby_Hand.position, 0.5f, 1 << 6);
 
         if (chompys_Collider.Length == 0) return;
