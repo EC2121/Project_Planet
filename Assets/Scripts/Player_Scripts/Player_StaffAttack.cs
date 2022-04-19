@@ -1,8 +1,4 @@
-using System.Collections;
-using System.Collections.Generic;
-using System.Timers;
 using UnityEngine;
-using UnityEngine.InputSystem;
 
 public class Player_StaffAttack : Player_BaseState
 {
@@ -11,39 +7,39 @@ public class Player_StaffAttack : Player_BaseState
     public Player_StaffAttack(Player_State_Machine currentContext, Player_StateFactory playerStateFactory) : base(
         currentContext, playerStateFactory)
     {
-   
+
     }
-    
+
     public override void EnterState()
     {
-        HandleCombo();
     }
 
     public override void UpdateState()
     {
         timer -= Time.deltaTime;
+        HandleCombo();
         CheckSwitchStates();
     }
 
     public override void ExitState()
     {
-        Context.Animator.SetBool(Context.IsAttacking,false);
-      
+        Context.Animator.SetBool(Context.IsAttacking, false);
+
         if (!Context.IsRunPressed)
         {
             Context.Animator.SetBool(Context.IsRunningHash, false);
-        
+
             Context.AppliedMovementX = Context.CurrentMovementInput.x;
             Context.AppliedMovementZ = Context.CurrentMovementInput.y;
         }
-        
+
         if (!Context.IsMovementPressed)
         {
             Context.Animator.SetBool(Context.IsWalkingHash, false);
             Context.AppliedMovementX = 0;
             Context.AppliedMovementZ = 0;
         }
-       
+
         if (Context.IsMousePressed)
         {
             Context.RequireNewAttack = true;
@@ -62,7 +58,7 @@ public class Player_StaffAttack : Player_BaseState
         {
             SwitchState(Factory.Idle());
         }
-        if ( Context.IsMovementPressed && timer <= 0)
+        if (Context.IsMovementPressed && timer <= 0)
         {
             SwitchState(Factory.Walk());
         }
@@ -81,29 +77,30 @@ public class Player_StaffAttack : Player_BaseState
         }
     }
 
-    void HandleCombo()
+    private void HandleCombo()
     {
         // if (Context.AttackCount < 4 && Context.CurrentAttackResetRoutine != null)
         // {
         //     Context.StopCoroutine(Context.CurrentAttackResetRoutine);
         // }
-         Context.Animator.SetBool(Context.IsAttacking,true);
+        Context.Animator.SetBool(Context.IsAttacking, true);
         //
         // Context.AttackCount += 1;
         // Context.IsAttack = true;
         // Context.Animator.SetInteger(Context.AttackIndexHash, Context.AttackCount);
-        
+
         if (Context.Animator.IsInTransition(0) || Context.Animator.GetCurrentAnimatorStateInfo(0).IsName("Ellen_Combo4")) return;
-        
-        if (/*Context.IsMousePressed && !Context.RequireNewAttack &&*/!Context.RequireNewAttack && Context.Animator.GetCurrentAnimatorStateInfo(0).normalizedTime >= 0.4f)
-        {   
+
+        if (Context.IsMousePressed && Context.Animator.GetCurrentAnimatorStateInfo(0).normalizedTime >= 0.2f)
+        {
             timer = 0.8f;
+            Context.Animator.SetBool("ComboInput", true);
         }
     }
     public override void InitializeSubState()
     {
     }
-    
+
     //IEnumerator IAttackResetRoutine()
     //{
     //    yield return new WaitForSeconds(0.6f);

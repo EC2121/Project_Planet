@@ -98,6 +98,15 @@ public partial class @Player_Controller : IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Menù"",
+                    ""type"": ""Button"",
+                    ""id"": ""19ac7f95-b086-4771-b47a-92f7670d0c8e"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -158,6 +167,17 @@ public partial class @Player_Controller : IInputActionCollection2, IDisposable
                 },
                 {
                     ""name"": """",
+                    ""id"": ""e70358c3-bdb0-469a-ac34-ddb9143200d2"",
+                    ""path"": ""<Gamepad>/leftStick"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Move"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
                     ""id"": ""7fb1d07c-1fda-43b2-8f71-987df17331c4"",
                     ""path"": ""<Keyboard>/leftShift"",
                     ""interactions"": """",
@@ -169,8 +189,30 @@ public partial class @Player_Controller : IInputActionCollection2, IDisposable
                 },
                 {
                     ""name"": """",
+                    ""id"": ""0ba045f6-40ac-48dd-8d2a-29f084549e65"",
+                    ""path"": ""<Gamepad>/leftTrigger"",
+                    ""interactions"": ""Hold"",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Run"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
                     ""id"": ""9df263c3-7123-4aa4-8434-f09fedc729ef"",
                     ""path"": ""<Keyboard>/space"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Jump"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""74940bd3-8a23-4f4f-a77e-d52b57906d56"",
+                    ""path"": ""<Gamepad>/buttonSouth"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
@@ -191,6 +233,17 @@ public partial class @Player_Controller : IInputActionCollection2, IDisposable
                 },
                 {
                     ""name"": """",
+                    ""id"": ""4507b938-2c34-40ac-9fd3-5166e88ab464"",
+                    ""path"": ""<Gamepad>/buttonNorth"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Switch"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
                     ""id"": ""450c3bc5-85a5-4446-908b-ec52ca46d16a"",
                     ""path"": ""<Mouse>/leftButton"",
                     ""interactions"": """",
@@ -202,8 +255,30 @@ public partial class @Player_Controller : IInputActionCollection2, IDisposable
                 },
                 {
                     ""name"": """",
+                    ""id"": ""e7538d69-121f-410b-b138-4d613079a82a"",
+                    ""path"": ""<Gamepad>/rightTrigger"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""L_MouseClick"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
                     ""id"": ""25fa9424-2628-4baa-bde3-94ec04d9e76b"",
                     ""path"": ""<Keyboard>/f"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""F_Interact"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""bdda8f34-65f4-40da-82a4-32dcc576f60c"",
+                    ""path"": ""<Gamepad>/buttonWest"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
@@ -246,12 +321,45 @@ public partial class @Player_Controller : IInputActionCollection2, IDisposable
                 },
                 {
                     ""name"": """",
+                    ""id"": ""fa6a67e5-2fa3-416c-93fe-4a3b0638438f"",
+                    ""path"": ""<Gamepad>/rightStick"",
+                    ""interactions"": """",
+                    ""processors"": ""ScaleVector2(x=20,y=20)"",
+                    ""groups"": """",
+                    ""action"": ""Look"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
                     ""id"": ""aacf73fc-0bff-430d-8c48-29b0506fccf4"",
                     ""path"": ""<Keyboard>/q"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
                     ""action"": ""Q"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""701a228f-f651-4152-a285-de8825dc67d2"",
+                    ""path"": ""<Gamepad>/leftShoulder"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Q"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""18c81898-9d8a-4983-a5b0-df0650d3e767"",
+                    ""path"": ""<Gamepad>/start"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Menù"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 }
@@ -270,6 +378,7 @@ public partial class @Player_Controller : IInputActionCollection2, IDisposable
         m_Player_L_MouseClick = m_Player.FindAction("L_MouseClick", throwIfNotFound: true);
         m_Player_F_Interact = m_Player.FindAction("F_Interact", throwIfNotFound: true);
         m_Player_Q = m_Player.FindAction("Q", throwIfNotFound: true);
+        m_Player_Menù = m_Player.FindAction("Menù", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -337,6 +446,7 @@ public partial class @Player_Controller : IInputActionCollection2, IDisposable
     private readonly InputAction m_Player_L_MouseClick;
     private readonly InputAction m_Player_F_Interact;
     private readonly InputAction m_Player_Q;
+    private readonly InputAction m_Player_Menù;
     public struct PlayerActions
     {
         private @Player_Controller m_Wrapper;
@@ -349,6 +459,7 @@ public partial class @Player_Controller : IInputActionCollection2, IDisposable
         public InputAction @L_MouseClick => m_Wrapper.m_Player_L_MouseClick;
         public InputAction @F_Interact => m_Wrapper.m_Player_F_Interact;
         public InputAction @Q => m_Wrapper.m_Player_Q;
+        public InputAction @Menù => m_Wrapper.m_Player_Menù;
         public InputActionMap Get() { return m_Wrapper.m_Player; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -382,6 +493,9 @@ public partial class @Player_Controller : IInputActionCollection2, IDisposable
                 @Q.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnQ;
                 @Q.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnQ;
                 @Q.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnQ;
+                @Menù.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnMenù;
+                @Menù.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnMenù;
+                @Menù.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnMenù;
             }
             m_Wrapper.m_PlayerActionsCallbackInterface = instance;
             if (instance != null)
@@ -410,6 +524,9 @@ public partial class @Player_Controller : IInputActionCollection2, IDisposable
                 @Q.started += instance.OnQ;
                 @Q.performed += instance.OnQ;
                 @Q.canceled += instance.OnQ;
+                @Menù.started += instance.OnMenù;
+                @Menù.performed += instance.OnMenù;
+                @Menù.canceled += instance.OnMenù;
             }
         }
     }
@@ -424,5 +541,6 @@ public partial class @Player_Controller : IInputActionCollection2, IDisposable
         void OnL_MouseClick(InputAction.CallbackContext context);
         void OnF_Interact(InputAction.CallbackContext context);
         void OnQ(InputAction.CallbackContext context);
+        void OnMenù(InputAction.CallbackContext context);
     }
 }

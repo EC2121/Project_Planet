@@ -69,8 +69,8 @@ public class Player_State_Machine : MonoBehaviour
     private Player_StateFactory _states;
     private bool requireNewWeaponSwitch = false;
     private bool requireNewAttack = false;
-    private readonly float groundGravity = -0.05f;
-    private readonly float fallingSpeed;
+    private float groundGravity = -0.05f;
+    private float fallingSpeed;
     private AnimatorStateInfo stateInfo;
     private int attackId = 0;
     private bool isInteract = false;
@@ -79,7 +79,7 @@ public class Player_State_Machine : MonoBehaviour
     private bool isJumping = false;
     private bool isAttack = false;
     private float maxJumpHeight = 2f;
-    private readonly float maxJumpTIme = 0.75f;
+    private float maxJumpTIme = 0.75f;
     private float gravity = -9.81f;
     private float timeToApex;
     private int jumpCount = 0;
@@ -160,8 +160,8 @@ public class Player_State_Machine : MonoBehaviour
     public Vector2 CurrentMovementInput { get { return currentMovementInput; } set { currentMovementInput = value; } }
     public float MaySliderValue { get { return mayHpSlider.value; } set { mayHpSlider.value = value; } }
 
-    
-    [SerializeField]private bool hasKey;
+
+    [SerializeField] private bool hasKey;
     private GameObject keyReference;
 
     public bool HasKey
@@ -238,8 +238,7 @@ public class Player_State_Machine : MonoBehaviour
 
         isWeaponAttached = false;
         hp = maxHp;
-        mayHpSlider = GameObject.FindGameObjectWithTag("MaySlider").GetComponent<Slider>();
-        mayHpSlider.maxValue = maxHp; 
+        mayHpSlider.maxValue = maxHp;
         mayHpSlider.value = hp;
         SetUpJumpVariables();
     }
@@ -309,7 +308,7 @@ public class Player_State_Machine : MonoBehaviour
         hologram.SetActive(false);
     }
 
-    IEnumerator PingCoroutine()
+    private IEnumerator PingCoroutine()
     {
         yield return new WaitForSeconds(3f);
         PingImage.gameObject.SetActive(false);
@@ -320,14 +319,14 @@ public class Player_State_Machine : MonoBehaviour
     {
         _currentState.UpdateStates();
 
-        if (canPing && Keyboard.current.cKey.wasPressedThisFrame)
+        if (canPing && isInteract)
         {
             Ray ray = new Ray(Camera.main.transform.position, Camera.main.transform.forward);
             if (Physics.Raycast(ray, out Hitinfo, 20, BreakableRayCastMask))
             {
                 canPing = false;
                 PingImage.gameObject.SetActive(true);
-                PingImage.transform.position = Hitinfo.point + (Hitinfo.normal * 0.1f);
+                PingImage.transform.position = Hitinfo.point + ( Hitinfo.normal * 0.1f );
                 PingImage.transform.forward = Hitinfo.normal;
                 StartCoroutine(PingCoroutine());
                 onBreakableWallFound?.Invoke(Hitinfo.transform.gameObject);
@@ -397,12 +396,12 @@ public class Player_State_Machine : MonoBehaviour
     private void SetUpJumpVariables()
     {
         timeToApex = maxJumpTIme / 2f;
-        gravity = (-2 * maxJumpHeight) / Mathf.Pow(timeToApex, 2);
-        initialJumpVelocity = (2 * maxJumpHeight) / timeToApex;
-        float secondJumpGravity = (-2 * (maxJumpHeight + 2)) / Mathf.Pow((timeToApex * 1.25f), 2);
-        float secondJumpInitialVelocity = (2 * (maxJumpHeight + 2)) / (timeToApex * 1.25f);
-        float thirdJumpGravity = (-2 * (maxJumpHeight + 4)) / Mathf.Pow((timeToApex * 1.5f), 2);
-        float thirdJumpInitialVelocity = (2 * (maxJumpHeight + 4)) / (timeToApex * 1.5f);
+        gravity = ( -2 * maxJumpHeight ) / Mathf.Pow(timeToApex, 2);
+        initialJumpVelocity = ( 2 * maxJumpHeight ) / timeToApex;
+        float secondJumpGravity = ( -2 * ( maxJumpHeight + 2 ) ) / Mathf.Pow(( timeToApex * 1.25f ), 2);
+        float secondJumpInitialVelocity = ( 2 * ( maxJumpHeight + 2 ) ) / ( timeToApex * 1.25f );
+        float thirdJumpGravity = ( -2 * ( maxJumpHeight + 4 ) ) / Mathf.Pow(( timeToApex * 1.5f ), 2);
+        float thirdJumpInitialVelocity = ( 2 * ( maxJumpHeight + 4 ) ) / ( timeToApex * 1.5f );
 
         initialJumpVelocities.Add(1, initialJumpVelocity);
         initialJumpVelocities.Add(2, secondJumpInitialVelocity);
@@ -498,5 +497,14 @@ public class Player_State_Machine : MonoBehaviour
         if (other.CompareTag("Crystal")) isCrystalActivable = false;
 
         if (other.CompareTag(boxString)) mai_BoxIsTakable = false;
+    }
+
+    public void OnJumpAttack()
+    {
+        Collider[] collidersHitted = Physics.OverlapSphere(transform.position + transform.forward * 0.1f + transform.up * 0.1f, 2, 1 << 6);
+        foreach (var item in collidersHitted)
+        {
+            item.GetComponentInParent<Enemy>().AddDamage(0, gameObject, true);
+        }
     }
 }

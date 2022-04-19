@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class Script_AlienTestInfo : MonoBehaviour
@@ -20,12 +18,12 @@ public class Script_AlienTestInfo : MonoBehaviour
 
     }
 
-    void Start()
+    private void Start()
     {
         DontDestroyOnLoad(gameObject);
     }
 
-    void Update()
+    private void Update()
     {
 
     }
