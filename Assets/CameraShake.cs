@@ -11,28 +11,19 @@ public class CameraShake : MonoBehaviour
     public static UnityEvent<float,float> OnCameraShake;
     public CinemachineVirtualCamera virutalCamera;
     private CinemachineBasicMultiChannelPerlin cinemachineBasicMultiChannelPerlin;
-    private float duration;
     void Start()
     {
         OnCameraShake = new UnityEvent<float,float>();
         cinemachineBasicMultiChannelPerlin = virutalCamera.GetCinemachineComponent<CinemachineBasicMultiChannelPerlin>();
         OnCameraShake.AddListener(StartCameraShake);
-        duration = 0;
     }
 
     // Update is called once per frame
     void Update()
     {
-        if (duration > 0)
-        {
-            CamShake();
-            duration -= Time.deltaTime;
-        }
+       
     }
 
-    private void CamShake()
-    {
-    }
 
     public void StartCameraShake(float duration,float ampl)
     {
