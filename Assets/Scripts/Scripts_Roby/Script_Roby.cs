@@ -4,7 +4,7 @@ using UnityEngine.AI;
 using UnityEngine.Events;
 using UnityEngine.UI;
 
-public enum RobyStates { Idle, Follow, Patroll, Battle, RangeAttack, MeleeAttack, ZoneAttack, Die, Hit }
+public enum RobyStates { Idle, Follow, Patroll, Battle, RangeAttack, MeleeAttack, ZoneAttack, Die, Hit,BreakWall }
 public class Script_Roby : MonoBehaviour
 {
     public static UnityEvent Roby_Dead = new UnityEvent();
@@ -21,6 +21,8 @@ public class Script_Roby : MonoBehaviour
     public bool GetDamage = false;
     public Transform Roby_Hand;
     public GameObject Mai_Player;
+
+    public CharacterController Mai_CharacterController;
 
     [HideInInspector] public int Roby_EnemyIndex;
     [HideInInspector] public bool Roby_IgnoreEnemy;
@@ -44,11 +46,12 @@ public class Script_Roby : MonoBehaviour
     public int Roby_AshAnimator_RangeDone { get; private set; }
     public int Roby_AshAnimator_Dead { get; private set; }
     public int Roby_AshAnimator_GetDamage { get; private set; }
+    public string Roby_String_Animator_SkyWalkToStop { get; private set; }
 
     public Slider RobyHpSlider;
     private Script_AI_Roby_BaseState Roby_CurrentState;
     private NavMeshPath roby_NavMeshPath;
-
+    [HideInInspector]public GameObject wallToBreak;
     private void OnEnable()
     {
         Enemy.OnEnemyDeath.AddListener(SwitchTarget);
@@ -96,7 +99,13 @@ public class Script_Roby : MonoBehaviour
 
     protected virtual void Update()
     {
+        Debug.Log(Roby_CurrentState);
         Roby_CurrentState.UpdateState(this);
+    }
+
+    private void OnBecameInvisible()
+    {
+        transform.position = Mai_Player.transform.position;
     }
 
     private void Awake()
@@ -105,6 +114,7 @@ public class Script_Roby : MonoBehaviour
         Roby_Animator = GetComponent<Animator>();
         //roby_RigidBody = GetComponent<Rigidbody>();
         Roby_Particle_Shoot = GetComponentInChildren<ParticleSystem>();
+        Mai_CharacterController = Mai_Player.GetComponent<CharacterController>();
     }
 
     private void Start()
@@ -112,9 +122,21 @@ public class Script_Roby : MonoBehaviour
         Init();
     }
 
+
+
+    public void OnBreakableWallFound(GameObject wall)
+    {
+        if (wallToBreak != null) return;
+        if (roby_EnemysInMyArea.Count < 1)
+        {
+            wallToBreak = wall;
+            SwitchState(RobyStates.BreakWall);
+        }
+    }
+
     private void Init()
     {
-
+        Player_State_Machine.onBreakableWallFound.AddListener(OnBreakableWallFound);
         Mai_PlayerNearZone = 3;
         Mai_PlayerNormalZone = 5;
         Mai_PlayerBattleZone = 10;
@@ -127,7 +149,6 @@ public class Script_Roby : MonoBehaviour
         roby_EnemysInMyArea = new List<GameObject>();
 
         Roby_NavAgent.updatePosition = false;
-        //Roby_NavAgent.updateRotation = false;
         Roby_Animator.applyRootMotion = true;
 
         Roby_AshAnimator_Dead = Animator.StringToHash("Death");
@@ -141,6 +162,8 @@ public class Script_Roby : MonoBehaviour
         Roby_AshAnimator_turnTrigger = Animator.StringToHash("TurnTrigger");
         Roby_AshAnimator_GetDamage = Animator.StringToHash("Hit");
 
+        Roby_String_Animator_SkyWalkToStop = "SkyWalkToStop";
+
         Roby_StateDictionary = new Dictionary<RobyStates, Script_AI_Roby_BaseState>
         {
             [RobyStates.Idle] = new Script_AI_Roby_Idle(),
@@ -150,7 +173,8 @@ public class Script_Roby : MonoBehaviour
             [RobyStates.MeleeAttack] = new Script_AI_Roby_BattleState_MeleeAttack(),
             [RobyStates.RangeAttack] = new Script_AI_Roby_BattleState_RangedAttack(),
             [RobyStates.ZoneAttack] = new Script_Ai_Roby_BattleState_ZoneAttack(),
-            [RobyStates.Die] = new Script_AI_Roby_Dead()
+            [RobyStates.Die] = new Script_AI_Roby_Dead(),
+            [RobyStates.BreakWall] = new Script_AI_Roby_BreakWall()
         };
         Roby_CurrentState = Roby_StateDictionary[RobyStates.Idle];
     }
@@ -188,8 +212,13 @@ public class Script_Roby : MonoBehaviour
 
     public void OnAttackStart()
     {
+        
         IsAttacking = true;
-
+        Collider[] breakableWall = Physics.OverlapSphere(Roby_Hand.position, 2, 1 << 15);
+        if (breakableWall.Length > 0)
+        {
+            wallToBreak.GetComponentInParent<BreakableObject>().OnFragment();
+        }
         Collider[] chompys_Collider = Physics.OverlapSphere(Roby_Hand.position, 0.5f, 1 << 6);
 
         if (chompys_Collider.Length == 0) return;

@@ -23,6 +23,9 @@ public class Script_AI_Roby_BattleState : Script_AI_Roby_BaseState
             }
             AIRoby.Roby_EnemyTarget = AIRoby.roby_EnemysInMyArea[AIRoby.Roby_EnemyIndex];
         }
+
+        AIRoby.Roby_Animator.SetTrigger(AIRoby.Roby_AshAnimator_RangeDone);
+
     }
 
     public void OnExit(Script_Roby AIRoby)

@@ -9,8 +9,7 @@ TagManager:
   - Chomp
   - Box
   - Hologram
-  - MaySlider
-  - Key
+  - StairsExtension
   layers:
   - Default
   - TransparentFX
@@ -24,11 +23,11 @@ TagManager:
   - ReciverColliders
   - AlliedActors
   - DeadBox
-  - 
-  - 
-  - 
-  - 
-  - 
+  - Post_Process_Layer
+  - CameraCollider
+  - Layer_RubberDuck
+  - Breakable
+  - BrokenParts
   - 
   - 
   - 

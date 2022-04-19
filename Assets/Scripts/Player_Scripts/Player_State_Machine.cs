@@ -1,4 +1,5 @@
 using Cinemachine.Utility;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
@@ -8,20 +9,25 @@ using UnityEngine.UI;
 public class Player_State_Machine : MonoBehaviour
 {
     public static UnityEvent takeTheBox = new UnityEvent();
+    public static UnityEvent canCrystal = new UnityEvent();
+    public static UnityEvent<GameObject> onBreakableWallFound = new UnityEvent<GameObject>();
     public static UnityEvent<GameObject> OnHologramDisable = new UnityEvent<GameObject>();
-    public static UnityEvent<bool> hit = new UnityEvent<bool>();
+    public static UnityEvent OnHologramEnable = new UnityEvent();
+    public static UnityEvent hit = new UnityEvent();
     public static UnityEvent gamePlayerFinalePhase = new UnityEvent();
 
+    [SerializeField] private Image PingImage;
+    [SerializeField] private LayerMask BreakableRayCastMask;
     [SerializeField] private Transform weapon;
     [SerializeField] private float jumpSpeed = 10f;
     [SerializeField] private float runSpeed = 2.65f;
     [SerializeField] private float rotationFactor = 0.5f;
-    [SerializeField] private float maxHp = 1000f;
+    [SerializeField] private float maxHp;
     [SerializeField] private Slider mayHpSlider;
     //OnlyFor Debug
     public static bool hasBox;
 
-
+    private bool isCrystalActivable;
     private bool mai_BoxIsTakable;
     private Animator anim;
     private int isWalkingHash;
@@ -37,7 +43,11 @@ public class Player_State_Machine : MonoBehaviour
     private int isRunAttackingHash;
     private int isJumpHittedHash;
     private int isHittedHash;
+    private int isJumpAttackHash;
     private string unEquipString;
+    private string attachWeaponString;
+    private string detachWeaponString;
+    private string boxString;
     private Player_Controller input;
     private CharacterController characterController;
     private Vector2 currentMovementInput;
@@ -59,8 +69,8 @@ public class Player_State_Machine : MonoBehaviour
     private Player_StateFactory _states;
     private bool requireNewWeaponSwitch = false;
     private bool requireNewAttack = false;
-    private readonly float groundGravity = -0.05f;
-    private readonly float fallingSpeed;
+    private float groundGravity = -0.05f;
+    private float fallingSpeed;
     private AnimatorStateInfo stateInfo;
     private int attackId = 0;
     private bool isInteract = false;
@@ -68,9 +78,10 @@ public class Player_State_Machine : MonoBehaviour
     private float initialJumpVelocity;
     private bool isJumping = false;
     private bool isAttack = false;
-    private readonly float maxJumpHeight = 2f;
-    private readonly float maxJumpTIme = 0.75f;
+    private float maxJumpHeight = 2f;
+    private float maxJumpTIme = 0.75f;
     private float gravity = -9.81f;
+    private float timeToApex;
     private int jumpCount = 0;
     private Dictionary<int, float> initialJumpVelocities = new Dictionary<int, float>();
     private Dictionary<int, float> jumpGravities = new Dictionary<int, float>();
@@ -87,8 +98,9 @@ public class Player_State_Machine : MonoBehaviour
     public Player_BaseState CurrentState { get { return _currentState; } set { _currentState = value; } }
     public CharacterController CharacterController { get { return characterController; } set { characterController = value; } }
     public UnityEvent TakeTheBox { get { return takeTheBox; } }
+    public UnityEvent CanCrystal { get { return canCrystal; } }
     public UnityEvent GamePlayerFinalePhase { get { return gamePlayerFinalePhase; } }
-    public UnityEvent<bool> Hit { get { return hit; } }
+    public UnityEvent Hit { get { return hit; } }
     public Coroutine CurrentJumpResetRoutine { get { return currentJumpResetRoutine; } set { currentJumpResetRoutine = value; } }
     public Coroutine CurrentAttackResetRoutine { get { return currentAttackResetRoutine; } set { currentAttackResetRoutine = value; } }
     public Dictionary<int, float> InitialJumpVelocities { get { return initialJumpVelocities; } set { initialJumpVelocities = value; } }
@@ -96,7 +108,9 @@ public class Player_State_Machine : MonoBehaviour
     public Animator Animator { get { return anim; } }
     public int IsJumpingHash { get { return isJumpingHash; } }
     public float JumpSpeed { get { return jumpSpeed; } }
+    public float TimeToApex { get { return timeToApex; } }
     public bool IsJumping { set { isJumping = value; } }
+    public float MaxJumpHeight { get { return maxJumpHeight; } set { maxJumpHeight = value; } }
     public bool IsAttack { set { isAttack = value; } }
     public bool IsJumpPressed { get { return isJumpPressed; } }
     public bool RequireNewWeaponSwitch { get { return requireNewWeaponSwitch; } set { requireNewWeaponSwitch = value; } }
@@ -115,6 +129,7 @@ public class Player_State_Machine : MonoBehaviour
     public bool IsRunPressed { get { return isRunPressed; } }
     public bool RequireNewJump { get { return requireNewJump; } set { requireNewJump = value; } }
     public int IsWalkingHash { get { return isWalkingHash; } }
+    public int IsJumpAttackHash { get { return isJumpAttackHash; } }
     public int IsJumpHittedHash { get { return isJumpHittedHash; } }
     public string UnEquipString { get { return unEquipString; } }
     public int IsAttacking { get { return isAttacking; } }
@@ -122,11 +137,13 @@ public class Player_State_Machine : MonoBehaviour
     public int IsRunAttackingHash { get { return isRunAttackingHash; } }
     public int JumpCountHash { get { return jumpCountHash; } }
     public float GroundGravity { get { return groundGravity; } }
+    public float Gravity { get { return gravity; } set { gravity = value; } }
     public float RunMultiplier { get { return runSpeed; } }
     public bool HasBox { get { return hasBox; } set { hasBox = value; } }
     public bool IsSwitchPressed { get { return switchWeapon; } }
     public bool IsIsHitted { get { return isHitted; } set { isHitted = value; } }
     public bool Mai_BoxIsTakable { get { return mai_BoxIsTakable; } }
+    public bool IsCrystalActivable { get { return isCrystalActivable; } }
     public bool IsWeaponAttached { get { return isWeaponAttached; } set { isWeaponAttached = value; } }
     public Handle_Mesh_Sockets Sockets { get { return sockets; } }
     public Transform Weapon { get { return weapon; } }
@@ -143,8 +160,8 @@ public class Player_State_Machine : MonoBehaviour
     public Vector2 CurrentMovementInput { get { return currentMovementInput; } set { currentMovementInput = value; } }
     public float MaySliderValue { get { return mayHpSlider.value; } set { mayHpSlider.value = value; } }
 
-    
-    [SerializeField]private bool hasKey;
+
+    [SerializeField] private bool hasKey;
     private GameObject keyReference;
 
     public bool HasKey
@@ -161,6 +178,8 @@ public class Player_State_Machine : MonoBehaviour
     private float hologramTimer;
     private bool startHologramTimer;
     private GameObject keySprite;
+    private RaycastHit Hitinfo;
+    private bool canPing = true;
 
     private void Awake()
     {
@@ -184,7 +203,11 @@ public class Player_State_Machine : MonoBehaviour
         isRunAttackingHash = Animator.StringToHash("isRunAttacking");
         isJumpHittedHash = Animator.StringToHash("isJumpHitted");
         isHittedHash = Animator.StringToHash("isHitted");
+        isJumpAttackHash = Animator.StringToHash("isJumpAttack");
         unEquipString = "Un_Equip";
+        attachWeaponString = "EquipWeapon";
+        detachWeaponString = "Detach";
+        boxString = "Box";
 
         sockets = GetComponent<Handle_Mesh_Sockets>();
         cameraMainTransform = Camera.main.transform;
@@ -218,8 +241,7 @@ public class Player_State_Machine : MonoBehaviour
 
         isWeaponAttached = false;
         hp = maxHp;
-        mayHpSlider = GameObject.FindGameObjectWithTag("MaySlider").GetComponent<Slider>();
-        mayHpSlider.maxValue = maxHp; 
+        mayHpSlider.maxValue = maxHp;
         mayHpSlider.value = hp;
         SetUpJumpVariables();
     }
@@ -279,8 +301,9 @@ public class Player_State_Machine : MonoBehaviour
         hologram.transform.rotation = transform.rotation;
         hologram.transform.position = transform.position + transform.forward * 2;
         Animator animator = hologram.GetComponent<Animator>();
-        animator.SetBool("isWalking", true);
-        animator.SetBool("isRunning", true);
+        animator.SetBool(isWalkingHash, true);
+        animator.SetBool(isRunningHash, true);
+        OnHologramEnable.Invoke();
     }
     private void DestroyHologram()
     {
@@ -288,8 +311,32 @@ public class Player_State_Machine : MonoBehaviour
         hologram.SetActive(false);
     }
 
+    private IEnumerator PingCoroutine()
+    {
+        yield return new WaitForSeconds(3f);
+        PingImage.gameObject.SetActive(false);
+        canPing = true;
+    }
+
     private void Update()
     {
+        _currentState.UpdateStates();
+
+        if (canPing && isInteract)
+        {
+            Ray ray = new Ray(Camera.main.transform.position, Camera.main.transform.forward);
+            if (Physics.Raycast(ray, out Hitinfo, 20, BreakableRayCastMask))
+            {
+                canPing = false;
+                PingImage.gameObject.SetActive(true);
+                PingImage.transform.position = Hitinfo.point + ( Hitinfo.normal * 0.1f );
+                PingImage.transform.forward = Hitinfo.normal;
+                StartCoroutine(PingCoroutine());
+                onBreakableWallFound?.Invoke(Hitinfo.transform.gameObject);
+            }
+        }
+
+
 
         if (onHologram)
         {
@@ -298,7 +345,7 @@ public class Player_State_Machine : MonoBehaviour
                 startHologramTimer = true;
                 CreateHologram();
                 hologramTimer = 10;
-                Invoke("DestroyHologram", 5);
+                Invoke(nameof(DestroyHologram), 5);
             }
         }
 
@@ -307,9 +354,17 @@ public class Player_State_Machine : MonoBehaviour
             hologramTimer -= Time.deltaTime;
             if (hologramTimer <= 0) startHologramTimer = false;
         }
+        HandleCameraRotation();
+        characterController.Move(appliedMovement * Time.deltaTime);
+        HandleRotation();
+        HandleGravity();
+        // Debug.Log(hp);
+        Debug.Log(isHitted);
 
-        _currentState.UpdateStates();
+    }
 
+    private void HandleCameraRotation()
+    {
         Vector3 forwardCam = cameraMainTransform.forward;
         forwardCam.y = 0;
         forwardCam = forwardCam.normalized;
@@ -317,37 +372,33 @@ public class Player_State_Machine : MonoBehaviour
             return;
         Quaternion inputFrame = Quaternion.LookRotation(forwardCam, Vector3.up);
         appliedMovement = inputFrame * currentMovement;
-        characterController.Move(appliedMovement * Time.deltaTime);
-        HandleRotation();
-        // Debug.Log(isHitted);
-        //   Debug.Log(hp + " HPPPPPPPPPPP");
+    }
 
+    private void HandleGravity()
+    {
+        if (!characterController.isGrounded && !isJumpPressed)
+        {
+            currentMovement.y += gravity * Time.deltaTime;
+            currentRunMovement.y += gravity * Time.deltaTime;
+        }
     }
     public void OnAnimationEvent(string eventName)
     {
-        if (eventName == "EquipWeapon")
+        //if (anim.IsInTransition(1) || anim.GetCurrentAnimatorStateInfo(1).IsName("UnEquip") || anim.GetCurrentAnimatorStateInfo(1).IsName("Equip")) return;
+
+        if (eventName == attachWeaponString /*&& anim.GetCurrentAnimatorStateInfo(1).normalizedTime >= 1.6f*/)
         {
             sockets.Attach(weapon.transform, Handle_Mesh_Sockets.SocketId.RightHand);
         }
 
-        if (eventName == "Detach")
+        if (eventName == detachWeaponString /*&& anim.GetCurrentAnimatorStateInfo(1).normalizedTime >=1.6f*/)
         {
             sockets.Attach(weapon.transform, Handle_Mesh_Sockets.SocketId.Spine);
         }
     }
-
-    // private void OnControllerColliderHit(ControllerColliderHit hit)
-    // {
-    //     if (hit.gameObject.tag =="Player")
-    //     {
-    //         Debug.Log("CIAoasdasdasd");
-    //
-    //     }
-    // }
-
     private void SetUpJumpVariables()
     {
-        float timeToApex = maxJumpTIme / 2f;
+        timeToApex = maxJumpTIme / 2f;
         gravity = ( -2 * maxJumpHeight ) / Mathf.Pow(timeToApex, 2);
         initialJumpVelocity = ( 2 * maxJumpHeight ) / timeToApex;
         float secondJumpGravity = ( -2 * ( maxJumpHeight + 2 ) ) / Mathf.Pow(( timeToApex * 1.25f ), 2);
@@ -383,9 +434,31 @@ public class Player_State_Machine : MonoBehaviour
         }
     }
 
+    private void OnCollisionEnter(Collision collision)
+    {
+        //characterController.enableOverlapRecovery = false;
+
+        if (collision.gameObject.CompareTag("Enemy"))
+        {
+            // Debug.Log("WWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWW");
+            //characterController.enabled = false;
+            isHitted = true;
+            characterController.stepOffset = 0.05f;
+            characterController.slopeLimit = 0f;
+        }
+    }
+    private void OnCollisionStay(Collision collision)
+    {
+
+    }
+    private void OnCollisionExit(Collision other)
+    {
+
+    }
+
     public void OnAttackStart()
     {
-        Collider[] collidersHitted = Physics.OverlapSphere(weapon.position, 0.5f, 1 << 6);
+        Collider[] collidersHitted = Physics.OverlapSphere(weapon.position, 1f, 1 << 6);
         foreach (var item in collidersHitted)
         {
             item.GetComponentInParent<Enemy>().AddDamage(40, gameObject, false);
@@ -395,30 +468,46 @@ public class Player_State_Machine : MonoBehaviour
     private void OnEnable()
     {
         input.Player.Enable();
-        hit.AddListener(arg0 => isHitted = true);
+        hit.AddListener(() => isHitted = true);
     }
 
     private void OnDisable()
     {
         input.Player.Disable();
-        hit.RemoveListener(arg0 => isHitted = false);
+        hit.RemoveListener(() => isHitted = true);
     }
     private void OnTriggerEnter(Collider other)
     {
-        if (other.CompareTag("Box"))
+        if (other.CompareTag(boxString))
             mai_BoxIsTakable = true;
-
+        if (other.CompareTag("Crystal"))
+        {
+            isCrystalActivable = true;
+        }
         if (other.gameObject.layer == 11)
         {
-            //anim.SetBool("isDead", true);
-            //anim.SetBool(IsWalkingHash, false);
-            //anim.SetBool(IsRunningHash, false);
             _currentState = _states.Dead();
             _currentState.EnterState();
         }
     }
     private void OnTriggerExit(Collider other)
     {
-        if (other.CompareTag("Box")) mai_BoxIsTakable = false;
+        if (other.gameObject.CompareTag("Enemy"))
+        {
+            characterController.stepOffset = 0.5f;
+            characterController.slopeLimit = 45;
+        }
+        if (other.CompareTag("Crystal")) isCrystalActivable = false;
+
+        if (other.CompareTag(boxString)) mai_BoxIsTakable = false;
+    }
+
+    public void OnJumpAttack()
+    {
+        Collider[] collidersHitted = Physics.OverlapSphere(transform.position + transform.forward * 0.1f + transform.up * 0.1f, 2, 1 << 6);
+        foreach (var item in collidersHitted)
+        {
+            item.GetComponentInParent<Enemy>().AddDamage(0, gameObject, true);
+        }
     }
 }

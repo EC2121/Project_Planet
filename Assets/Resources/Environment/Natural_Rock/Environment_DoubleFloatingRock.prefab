@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 7684245246244994369}
   - component: {fileID: 7684245246244224355}
   - component: {fileID: 7684245246243225507}
-  m_Layer: 0
+  m_Layer: 13
   m_Name: RockFloating01_LOD1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -92,7 +92,7 @@ GameObject:
   - component: {fileID: 7684245246244994371}
   - component: {fileID: 7684245246244224357}
   - component: {fileID: 7684245246243225509}
-  m_Layer: 0
+  m_Layer: 13
   m_Name: RockFloating01_LOD0
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -172,7 +172,7 @@ GameObject:
   m_Component:
   - component: {fileID: 7684245246244994373}
   - component: {fileID: 7684245246226754023}
-  m_Layer: 0
+  m_Layer: 13
   m_Name: Environment_DoubleFloatingRock
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -234,7 +234,7 @@ GameObject:
   - component: {fileID: 7684245246244994383}
   - component: {fileID: 7684245246244224353}
   - component: {fileID: 7684245246243225505}
-  m_Layer: 0
+  m_Layer: 13
   m_Name: RockFloating01_LOD2
   m_TagString: Untagged
   m_Icon: {fileID: 0}

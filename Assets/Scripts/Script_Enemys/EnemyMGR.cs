@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using Unity.Mathematics;
 using UnityEngine;
+using UnityEngine.AI;
 using UnityTemplateProjects.Saves_Scripts;
 using Random = UnityEngine.Random;
 
@@ -80,8 +81,16 @@ public class EnemyMGR : MonoBehaviour
     {
         if (!PerfectPosition)
         {
-            Go.transform.position = new Vector3(position.x + Random.insideUnitCircle.x * 10
-                , position.y, position.z + Random.insideUnitCircle.y * 10);
+            Vector3 randomPosition = Random.insideUnitSphere * Data.PatrolMaxDistance + position;
+            NavMeshHit navMeshHit;
+            int patrolableAreaMask = 1 << 3;
+            if (NavMesh.SamplePosition(randomPosition, out navMeshHit, Data.PatrolMaxDistance, patrolableAreaMask))
+            {
+                Go.transform.position = navMeshHit.position;
+            }
+
+            //Go.transform.position = new Vector3(position.x + Random.insideUnitCircle.x * 10
+            //    , position.y, position.z + Random.insideUnitCircle.y * 10);
         }
         else
         {

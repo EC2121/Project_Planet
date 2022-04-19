@@ -11,12 +11,12 @@ GameObject:
   - component: {fileID: 8385042265493012161}
   - component: {fileID: 8385042265477098081}
   - component: {fileID: 4188137436917016151}
-  m_Layer: 0
+  m_Layer: 13
   m_Name: VegetationLarge07
-  m_TagString: Untagged
+  m_TagString: NotCameraObstacle
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 4294967295
+  m_StaticEditorFlags: 126
   m_IsActive: 1
 --- !u!4 &8385042265493012161
 Transform:
@@ -88,12 +88,12 @@ GameObject:
   - component: {fileID: 8385042265493012163}
   - component: {fileID: 8385042265494306529}
   - component: {fileID: 8385042265495436321}
-  m_Layer: 0
+  m_Layer: 13
   m_Name: VegetationLarge07_LOD00
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 4294967295
+  m_StaticEditorFlags: 126
   m_IsActive: 1
 --- !u!4 &8385042265493012163
 Transform:
@@ -169,12 +169,12 @@ GameObject:
   - component: {fileID: 8385042265493012165}
   - component: {fileID: 8385042265494306531}
   - component: {fileID: 8385042265495436323}
-  m_Layer: 0
+  m_Layer: 13
   m_Name: VegetationLarge07_LOD01
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 4294967295
+  m_StaticEditorFlags: 126
   m_IsActive: 1
 --- !u!4 &8385042265493012165
 Transform:
@@ -250,12 +250,12 @@ GameObject:
   - component: {fileID: 8385042265493012167}
   - component: {fileID: 8385042265494306533}
   - component: {fileID: 8385042265495436325}
-  m_Layer: 0
+  m_Layer: 13
   m_Name: VegetationLarge07_LOD02
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 4294967295
+  m_StaticEditorFlags: 126
   m_IsActive: 1
 --- !u!4 &8385042265493012167
 Transform:
@@ -329,12 +329,12 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8385042265493012169}
-  m_Layer: 0
+  m_Layer: 13
   m_Name: top2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 4294967295
+  m_StaticEditorFlags: 126
   m_IsActive: 1
 --- !u!4 &8385042265493012169
 Transform:

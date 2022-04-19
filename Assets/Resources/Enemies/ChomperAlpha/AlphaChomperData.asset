@@ -14,12 +14,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   enemyType: 1
   VisionRange: 5
-  AttackRange: 4
+  VisionAngle: 60
+  AttackRange: 3
   AttackCD: 2
   PatrolCD: 2
-  AlertRange: 40
+  AlertRange: 60
   MaxHp: 200
-  AnimatorController: {fileID: 9100000, guid: eee661ff082b004488dea60aa9839a1c, type: 2}
   Avatar: {fileID: 9000000, guid: 3a3cea986292c2445a02c973a48c7e8b, type: 3}
   AgentSpeed: 1
   AgentStoppingDistance: 3
+  PatrolMaxDistance: 5

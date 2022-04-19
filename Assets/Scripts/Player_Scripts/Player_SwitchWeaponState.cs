@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class Player_SwitchWeaponState : Player_BaseState
@@ -25,15 +23,29 @@ public class Player_SwitchWeaponState : Player_BaseState
         timer -= Time.deltaTime;
         // Context.Animator.SetBool(Context.IsWalkingHash, false);
         // Context.Animator.SetBool(Context.IsRunningHash, false);
-       // Context.AppliedMovementX = 0;
-       // Context.AppliedMovementZ = 0;
+        // Context.AppliedMovementX = 0;
+        // Context.AppliedMovementZ = 0;
         CheckSwitchStates();
     }
 
     public override void ExitState()
     {
         canExit = false;
+        if (!Context.IsRunPressed)
+        {
+            Context.Animator.SetBool(Context.IsRunningHash, false);
 
+            Context.AppliedMovementX = Context.CurrentMovementInput.x;
+            Context.AppliedMovementZ = Context.CurrentMovementInput.y;
+        }
+
+        if (!Context.IsMovementPressed)
+        {
+            Context.Animator.SetBool(Context.IsRunningHash, false);
+            Context.Animator.SetBool(Context.IsWalkingHash, false);
+            Context.AppliedMovementX = 0;
+            Context.AppliedMovementZ = 0;
+        }
         if (Context.IsSwitchPressed)
         {
             Context.RequireNewWeaponSwitch = true;
@@ -46,17 +58,17 @@ public class Player_SwitchWeaponState : Player_BaseState
         // {
         //     SwitchState(Factory.Grounded());
         // }
-        if (!Context.IsMovementPressed && !Context.IsRunPressed && canExit)
+        if (!Context.IsMovementPressed && !Context.IsRunPressed && Context.Animator.IsInTransition(1))
         {
             SwitchState(Factory.Idle());
         }
 
-        if (Context.IsMovementPressed && !Context.IsRunPressed && canExit)
+        if (Context.IsMovementPressed && !Context.IsRunPressed && Context.Animator.IsInTransition(1))
         {
             SwitchState(Factory.Walk());
         }
 
-        if (Context.IsRunPressed && !Context.HasBox && canExit)
+        if (Context.IsRunPressed && !Context.HasBox && Context.Animator.IsInTransition(1))
         {
             SwitchState(Factory.Run());
         }

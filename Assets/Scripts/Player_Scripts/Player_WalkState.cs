@@ -12,6 +12,9 @@ public class Player_WalkState :  Player_BaseState
     {
         Context.Animator.SetBool(Context.IsWalkingHash,true);
         Context.Animator.SetBool(Context.IsRunningHash,false);
+        Context.Animator.SetBool(Context.IsHittedHash, false);
+
+
     }
 
     public override void UpdateState()

@@ -22,13 +22,13 @@ public class Player_Interactable : Player_BaseState
     public override void UpdateState()
     {
         CheckSwitchStates();
-       
+
     }
 
     public override void ExitState()
     {
         canExit = false;
-        
+
         if (Context.IsInteract)
         {
             Context.RequireNewInteraction = true;
@@ -49,20 +49,29 @@ public class Player_Interactable : Player_BaseState
 
     private void GotBox()
     {
-        Context.GamePlayerFinalePhase.Invoke();
-        if (!Context.HasBox)
+        if (Context.Mai_BoxIsTakable)
         {
-            Context.HasBox = true;
-            canExit = true;
-            Context.Animator.SetBool(Context.HasBoxHash, true);
-            Context.TakeTheBox.Invoke();
+            Context.GamePlayerFinalePhase.Invoke();
+            if (!Context.HasBox)
+            {
+                Context.HasBox = true;
+                canExit = true;
+                Context.Animator.SetBool(Context.HasBoxHash, true);
+                Context.TakeTheBox.Invoke();
+            }
+            else if (Context.HasBox)
+            {
+                Context.HasBox = false;
+                canExit = true;
+                Context.Animator.SetBool(Context.HasBoxHash, false);
+                Context.TakeTheBox.Invoke();
+            }
         }
-        else if (Context.HasBox)
+        if (Context.IsCrystalActivable)
         {
-            Context.HasBox = false;
+            Context.CanCrystal.Invoke();
             canExit = true;
-            Context.Animator.SetBool(Context.HasBoxHash, false);
-            Context.TakeTheBox.Invoke();
+
         }
     }
 }

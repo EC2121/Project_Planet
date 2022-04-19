@@ -6,7 +6,6 @@ using UnityTemplateProjects.Saves_Scripts;
 
 public class DoorHandler : MonoBehaviour
 {
-    // Start is called before the first frame update
     public GameObject DoorText;
 
     private void OnEnable()
@@ -50,10 +49,7 @@ public class DoorHandler : MonoBehaviour
                 SaveMGR.Save();
             }
             else
-            {
                 DoorText?.SetActive(true);
-            }
-
         }
     }
 

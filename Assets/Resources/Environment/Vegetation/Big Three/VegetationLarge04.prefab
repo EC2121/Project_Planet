@@ -11,12 +11,12 @@ GameObject:
   - component: {fileID: 7332741921126838025}
   - component: {fileID: 7332741921126035241}
   - component: {fileID: 7332741921124937193}
-  m_Layer: 0
+  m_Layer: 13
   m_Name: VegetationLarge04_LOD02
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 4294967295
+  m_StaticEditorFlags: 126
   m_IsActive: 1
 --- !u!4 &7332741921126838025
 Transform:
@@ -92,12 +92,12 @@ GameObject:
   - component: {fileID: 7332741921126838027}
   - component: {fileID: 7332741921126035243}
   - component: {fileID: 7332741921124937195}
-  m_Layer: 0
+  m_Layer: 13
   m_Name: VegetationLarge04_LOD01
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 4294967295
+  m_StaticEditorFlags: 126
   m_IsActive: 1
 --- !u!4 &7332741921126838027
 Transform:
@@ -173,12 +173,12 @@ GameObject:
   - component: {fileID: 7332741921126838029}
   - component: {fileID: 7332741921126035245}
   - component: {fileID: 7332741921124937197}
-  m_Layer: 0
+  m_Layer: 13
   m_Name: VegetationLarge04_LOD00
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 4294967295
+  m_StaticEditorFlags: 126
   m_IsActive: 1
 --- !u!4 &7332741921126838029
 Transform:
@@ -255,12 +255,12 @@ GameObject:
   - component: {fileID: 7332741921143503791}
   - component: {fileID: 7332741921127232909}
   - component: {fileID: 4709266426822883049}
-  m_Layer: 0
+  m_Layer: 13
   m_Name: VegetationLarge04
-  m_TagString: Untagged
+  m_TagString: NotCameraObstacle
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 4294967295
+  m_StaticEditorFlags: 126
   m_IsActive: 1
 --- !u!4 &7332741921126838031
 Transform:

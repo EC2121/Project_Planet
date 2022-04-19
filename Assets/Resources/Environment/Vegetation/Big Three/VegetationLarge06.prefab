@@ -11,9 +11,9 @@ GameObject:
   - component: {fileID: 6738308769781732736}
   - component: {fileID: 6738308769761165600}
   - component: {fileID: 6604481071511442696}
-  m_Layer: 0
+  m_Layer: 13
   m_Name: VegetationLarge06
-  m_TagString: Untagged
+  m_TagString: NotCameraObstacle
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 4294967295
@@ -87,7 +87,7 @@ GameObject:
   - component: {fileID: 6738308769781732738}
   - component: {fileID: 6738308769778308512}
   - component: {fileID: 6738308769779308384}
-  m_Layer: 0
+  m_Layer: 13
   m_Name: VegetationLarge06_LOD00
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -168,7 +168,7 @@ GameObject:
   - component: {fileID: 6738308769781732740}
   - component: {fileID: 6738308769778308514}
   - component: {fileID: 6738308769779308386}
-  m_Layer: 0
+  m_Layer: 13
   m_Name: VegetationLarge06_LOD01
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -249,7 +249,7 @@ GameObject:
   - component: {fileID: 6738308769781732742}
   - component: {fileID: 6738308769778308516}
   - component: {fileID: 6738308769779308388}
-  m_Layer: 0
+  m_Layer: 13
   m_Name: VegetationLarge06_LOD02
   m_TagString: Untagged
   m_Icon: {fileID: 0}

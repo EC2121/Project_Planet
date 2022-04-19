@@ -1,15 +1,22 @@
+using System.Collections;
 using UnityEngine;
 
 public class AI_Chompies_AlertState : AI_Enemies_IBaseState
 {
  
+    IEnumerator Alert(Enemy owner)
+    {
+        yield return new WaitForSeconds(0.35f);
+        owner.SwitchState(EnemyStates.Follow);
+    }
 
     public void OnEnter(Enemy owner)
     {
-        owner.Agent.destination = owner.transform.position;
         owner.Anim.SetBool("Spotted",true);
         owner.Anim.SetBool(owner.HasTargetHash, true);
+        owner.Agent.destination = owner.transform.position;
         AlertOthers(owner, owner.IsAlerted);
+        owner.StartCoroutine(Alert(owner));
     }
 
     
