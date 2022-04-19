@@ -1,9 +1,14 @@
 using System.Collections;
 using UnityEngine;
+using UnityEngine.Events;
 using UnityEngine.SceneManagement;
 
 public class Script_WorldSwap : MonoBehaviour
 {
+    public static UnityEvent AlienTest1Done = new UnityEvent();
+    public static UnityEvent AlienTest2Done = new UnityEvent();
+    public static UnityEvent AlienTest3Done = new UnityEvent();
+
     public GameObject ActiveGameOBj;
     public GameObject DeactiveGameOBj;
 
@@ -37,6 +42,19 @@ public class Script_WorldSwap : MonoBehaviour
             timer -= Time.deltaTime;
             if (timer <= 0)
             {
+                switch (SceneManager.GetActiveScene().name)
+                {
+                    case "Scene_AlienTest_1":
+                        AlienTest1Done.Invoke();
+                        break;
+                    case "Scene_AlienTest_2":
+                        AlienTest2Done.Invoke();
+                        break;
+                    case "Scene_AlienTest_3":
+                        AlienTest3Done.Invoke();
+                        break;
+                }
+
                 async.allowSceneActivation = true;
             }
         }
@@ -56,7 +74,10 @@ public class Script_WorldSwap : MonoBehaviour
             DeactiveGameOBj.SetActive(false);
             endProve = true;
         }
+
     }
+
+
 
     private IEnumerator LoadAsyncProcess()
     {
