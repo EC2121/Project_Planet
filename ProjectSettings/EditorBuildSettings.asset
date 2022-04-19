@@ -17,5 +17,14 @@ EditorBuildSettings:
   - enabled: 0
     path: Assets/Scenes/End_Game.unity
     guid: 8b8aacfaceb9ba546973155b80f262f6
+  - enabled: 1
+    path: Assets/Scenes/Scene_AlienTest/Scene_AlienTest_1.unity
+    guid: d39d5496e9b6151459973bbd94bd30f1
+  - enabled: 1
+    path: Assets/Scenes/Scene_AlienTest/Scene_AlienTest_2.unity
+    guid: 3e7f8aa4610aaad48bd45a29715c0d90
+  - enabled: 1
+    path: Assets/Scenes/Scene_AlienTest/Scene_AlienTest_3.unity
+    guid: c6e1834db9e42314cb855e7553dd4f35
   m_configObjects:
     com.unity.input.settings: {fileID: 11400000, guid: 70762d5ad88e254458448831d7340417, type: 2}

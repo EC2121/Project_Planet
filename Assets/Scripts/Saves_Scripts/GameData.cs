@@ -21,6 +21,13 @@ public class CustomDictionary
 }
 
 [System.Serializable]
+public class Trial
+{
+    public string TrialName;
+    public bool HasPassedTrial;
+}
+
+[System.Serializable]
 public class GameData
 {
     //Generic
@@ -48,7 +55,26 @@ public class GameData
     public List<CustomDictionary> CustomDictionaries = new List<CustomDictionary>();
 
     public TimerStats timer;
-  
+
+    public List<Trial> Trials = new List<Trial>()
+    {
+        new Trial()
+        {
+            TrialName = "trial1", 
+            HasPassedTrial = false
+        },
+        new Trial()
+        {
+            TrialName = "trial2", 
+            HasPassedTrial = false
+        },
+        new Trial()
+        {
+            TrialName = "trial3", 
+            HasPassedTrial = false
+        }
+    };
+    
     //PRIVATE FIELDS
     private bool firstTime;
 
@@ -164,6 +190,18 @@ public class GameData
             timer = new TimerStats();
             timer.Going = self.GetComponent<Timer_OClock>().Going;
             timer.CurrentTime = self.GetComponent<Timer_OClock>().CurrentTime;
+        }
+        else if (self.name == "Environment_Switch_Standing")//Environment_Switch_Standing
+        {
+            Trials[0].HasPassedTrial = SaveSystem.PassedTrials[0];
+        }
+        else if (self.name == "Environment_Switch_Standing (1)")//Environment_Switch_Standing (1)
+        {
+            Trials[1].HasPassedTrial = SaveSystem.PassedTrials[1];
+        }
+        else if (self.name == "Environment_Switch_Standing (2)")//Environment_Switch_Standing (2)
+        {
+            Trials[2].HasPassedTrial = SaveSystem.PassedTrials[2];
         }
     }
     //Environment data

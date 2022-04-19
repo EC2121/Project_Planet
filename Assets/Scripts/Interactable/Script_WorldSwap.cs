@@ -1,7 +1,9 @@
+using System;
 using System.Collections;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.SceneManagement;
+using UnityTemplateProjects.Saves_Scripts;
 
 public class Script_WorldSwap : MonoBehaviour
 {
@@ -42,16 +44,20 @@ public class Script_WorldSwap : MonoBehaviour
             timer -= Time.deltaTime;
             if (timer <= 0)
             {
+                SaveSystem.saveType = SaveSystem.SaveType.Load;
                 switch (SceneManager.GetActiveScene().name)
                 {
                     case "Scene_AlienTest_1":
                         AlienTest1Done.Invoke();
+                        SaveSystem.PassedTrials[0] = true;
                         break;
                     case "Scene_AlienTest_2":
                         AlienTest2Done.Invoke();
+                        SaveSystem.PassedTrials[1] = true;
                         break;
                     case "Scene_AlienTest_3":
                         AlienTest3Done.Invoke();
+                        SaveSystem.PassedTrials[2] = true;
                         break;
                 }
 
@@ -82,6 +88,7 @@ public class Script_WorldSwap : MonoBehaviour
     private IEnumerator LoadAsyncProcess()
     {
         async = SceneManager.LoadSceneAsync("Gameplay_Scene");
+        
         async.allowSceneActivation = false;
         while (!async.isDone)
         {

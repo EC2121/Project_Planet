@@ -11,13 +11,24 @@ public class SaveMGR : MonoBehaviour
 
     private void Awake()
     {
+        SceneManager.activeSceneChanged += SceneManagerOnactiveSceneChanged;
         SceneManager.sceneLoaded += SceneManagerOnsceneLoaded;
     }
 
     private void SceneManagerOnsceneLoaded(Scene arg0, LoadSceneMode arg1)
     {
-        //Load();
+        if (SaveSystem.saveType != SaveSystem.SaveType.None)
+        {
+            SaveSystem.InvokeOnSave();   
+        }
     }
+
+    private void SceneManagerOnactiveSceneChanged(Scene arg0, Scene arg1)
+    {
+        //SaveSystem.InvokeOnSave();
+        //SaveSystem.InvokeOnLoad();
+    }
+    
 
     private void Start()
     {
@@ -29,8 +40,10 @@ public class SaveMGR : MonoBehaviour
         }
         else if (SaveSystem.saveType == SaveSystem.SaveType.Load)
         {
-            Load();     
+            Load();  
         }
+
+        SaveSystem.saveType = SaveSystem.SaveType.None;
     }
 
     public static void Save()

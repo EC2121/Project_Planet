@@ -31,12 +31,15 @@ namespace UnityTemplateProjects.Saves_Scripts
 
         private static string path = Application.dataPath+"/Saves"; //DateTime.Now.ToString();
         private static bool isFirstInvoke; //Mi serve per sapere se resettare le strutture dati della GameData
-        
+
+        public static List<bool> PassedTrials = new List<bool>(3){false,false,false};
 
         public static void InvokeOnSave()
         {
+            SaveSystem.saveType = SaveSystem.SaveType.Load;
             isFirstInvoke = true;
             OnSave?.Invoke(null, EventArgs.Empty); //Invoca l'evento se non è null (nessun subscriber)
+            WriteOnFile();
         }
 
         public static void InvokeOnLoad()
@@ -95,8 +98,6 @@ namespace UnityTemplateProjects.Saves_Scripts
                 }   
             }
         }
-        
-        
         
         public static GameData LoadPlayer(bool JSON)
         {
