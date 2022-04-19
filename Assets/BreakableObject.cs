@@ -29,6 +29,8 @@ public class BreakableObject : MonoBehaviour
 
     public void OnFragment()
     {
+
+        CameraShake.OnCameraShake?.Invoke(0.7f, 4f);
         if (OcclusionPortal != null)
         {
             OcclusionPortal.GetComponent<OcclusionPortal>().open = true;

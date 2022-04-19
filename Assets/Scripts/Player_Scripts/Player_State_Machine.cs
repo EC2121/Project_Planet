@@ -501,6 +501,7 @@ public class Player_State_Machine : MonoBehaviour
 
     public void OnJumpAttack()
     {
+        CameraShake.OnCameraShake?.Invoke(0.4f,2f);
         Collider[] collidersHitted = Physics.OverlapSphere(transform.position + transform.forward * 0.1f + transform.up * 0.1f, 2, 1 << 6);
         foreach (var item in collidersHitted)
         {

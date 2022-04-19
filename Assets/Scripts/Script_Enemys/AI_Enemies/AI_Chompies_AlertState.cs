@@ -12,7 +12,7 @@ public class AI_Chompies_AlertState : AI_Enemies_IBaseState
 
     public void OnEnter(Enemy owner)
     {
-        owner.Anim.SetBool("Spotted",true);
+        owner.Anim.SetTrigger("Spotted");
         owner.Anim.SetBool(owner.HasTargetHash, true);
         owner.Agent.destination = owner.transform.position;
         AlertOthers(owner, owner.IsAlerted);
@@ -24,7 +24,6 @@ public class AI_Chompies_AlertState : AI_Enemies_IBaseState
     public void OnExit(Enemy owner)
     {
         owner.IsAlerted = false;
-        owner.Anim.SetBool("Spotted", false);
         //owner.Anim.SetBool(owner.SpottedHash, false);
     }
 
