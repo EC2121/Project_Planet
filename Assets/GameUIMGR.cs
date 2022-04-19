@@ -14,18 +14,32 @@ public class GameUIMGR : MonoBehaviour
     private FMOD.Studio.Bus music;
     private FMOD.Studio.Bus sfx;
 
-
+    private Player_Controller input;
+    private bool escapeButton = false;
+    private bool isEscapePressed = false;
     private void Awake()
     {
         mainMenu = Menu.transform.GetChild(0).gameObject;
         music = FMODUnity.RuntimeManager.GetBus("bus:/Music");
         sfx = FMODUnity.RuntimeManager.GetBus("bus:/SFX");
-    }
 
+        input = new Player_Controller();
+
+        input.Player.Menù.started += OnMenu;
+        input.Player.Menù.canceled += OnMenu;
+    }
+  
+    private void OnMenu(InputAction.CallbackContext context)
+    {
+        escapeButton = context.ReadValueAsButton();
+        isEscapePressed = false;
+    }
     private void Update()
     {
-        if (Keyboard.current.escapeKey.wasPressedThisFrame)
+        Debug.Log(escapeButton);
+        if (escapeButton && !isEscapePressed)
         {
+            isEscapePressed = true;
             if (currentMenu == null)
             {
                 mainMenu.SetActive(true);
@@ -39,6 +53,7 @@ public class GameUIMGR : MonoBehaviour
         }
     }
 
+ 
     public void OnVideoQualityChange(int value)
     {
         QualitySettings.SetQualityLevel(value);
@@ -111,4 +126,13 @@ public class GameUIMGR : MonoBehaviour
     //    }
     //    currentMenu.SetActive(true);
     //}
+    private void OnEnable()
+    {
+        input.Player.Enable();
+    }
+
+    private void OnDisable()
+    {
+        input.Player.Disable();
+    }
 }

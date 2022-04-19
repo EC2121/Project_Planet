@@ -399,9 +399,9 @@ public class Player_State_Machine : MonoBehaviour
         gravity = ( -2 * maxJumpHeight ) / Mathf.Pow(timeToApex, 2);
         initialJumpVelocity = ( 2 * maxJumpHeight ) / timeToApex;
         float secondJumpGravity = ( -2 * ( maxJumpHeight + 2 ) ) / Mathf.Pow(( timeToApex * 1.25f ), 2);
-        float secondJumpInitialVelocity = ( 2 * ( maxJumpHeight + 2 ) ) / ( timeToApex * 1.25f );
+        float secondJumpInitialVelocity = ( 2 * ( maxJumpHeight + 1 ) ) / ( timeToApex * 1.25f );
         float thirdJumpGravity = ( -2 * ( maxJumpHeight + 4 ) ) / Mathf.Pow(( timeToApex * 1.5f ), 2);
-        float thirdJumpInitialVelocity = ( 2 * ( maxJumpHeight + 4 ) ) / ( timeToApex * 1.5f );
+        float thirdJumpInitialVelocity = ( 2 * ( maxJumpHeight + 2 ) ) / ( timeToApex * 1.5f );
 
         initialJumpVelocities.Add(1, initialJumpVelocity);
         initialJumpVelocities.Add(2, secondJumpInitialVelocity);
