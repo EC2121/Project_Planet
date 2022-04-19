@@ -26,8 +26,8 @@ TagManager:
   - Post_Process_Layer
   - CameraCollider
   - Layer_RubberDuck
-  - 
-  - 
+  - Breakable
+  - BrokenParts
   - 
   - 
   - 
