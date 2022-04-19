@@ -339,6 +339,7 @@ public class Player_State_Machine : MonoBehaviour
     public void OnAnimationEvent(string eventName)
     {
         //if (anim.IsInTransition(1) || anim.GetCurrentAnimatorStateInfo(1).IsName("UnEquip") || anim.GetCurrentAnimatorStateInfo(1).IsName("Equip")) return;
+
         if (eventName == attachWeaponString /*&& anim.GetCurrentAnimatorStateInfo(1).normalizedTime >= 1.6f*/)
         {
             sockets.Attach(weapon.transform, Handle_Mesh_Sockets.SocketId.RightHand);
