@@ -13,18 +13,14 @@ public class GraphicsMenu : MonoBehaviour
     private Resolution[] reversedRes;
     void Start()
     {
-        // foreach (var display in Display.displays)
-        // {
-        //     Debug.Log(display.ToString());       
-        // }
+       
         
         
         //Preparo la Dropdown per le risoluzioni
         #region Risoluzioni
         
         reversedRes = Screen.resolutions.Reverse().ToArray();
-       /* reversedRes.Select(resolution => new Resolution {width = resolution.width, height = resolution.height})
-            .Distinct();*/
+      
         //Rigiro la lista delle risoluzioni altrimenti me le propone dalla più bassa
         foreach (var resolution in reversedRes)
         {
@@ -87,7 +83,6 @@ public class GraphicsMenu : MonoBehaviour
         if (VSync.isOn)
         {
             QualitySettings.vSyncCount = 1;
-            //Application.targetFrameRate = -1; //Default Framerate
             VSync.transform.GetChild(1).GetComponent<TMP_Text>().text = "On";
             //Sincronizzo con il framerate del monitor?
             
@@ -142,14 +137,12 @@ public class GraphicsMenu : MonoBehaviour
             HDR.transform.GetChild(1).GetComponent<TMP_Text>().text = "On";
             HDROutputSettings.displays[Display.activeEditorGameViewTarget].RequestHDRModeChange(true);
             
-            //Camera.main.allowHDR = true;   
         }
         else
         {
             HDR.transform.GetChild(1).GetComponent<TMP_Text>().text = "Off";
             HDROutputSettings.displays[Display.activeEditorGameViewTarget].RequestHDRModeChange(false);
             
-            //Camera.main.allowHDR = true;     
         }
     }
 }

@@ -89,8 +89,6 @@ public class EnemyMGR : MonoBehaviour
                 Go.transform.position = navMeshHit.position;
             }
 
-            //Go.transform.position = new Vector3(position.x + Random.insideUnitCircle.x * 10
-            //    , position.y, position.z + Random.insideUnitCircle.y * 10);
         }
         else
         {

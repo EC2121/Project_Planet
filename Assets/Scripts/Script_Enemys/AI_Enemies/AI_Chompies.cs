@@ -120,22 +120,4 @@ public class AI_Chompies : MonoBehaviour
         Debug.Log(ReferenceEquals(target, null));
 
     }
-
-
-
-
-
-    //private void OnDrawGizmos()
-    //{
-
-    //    if (DebugMode)
-    //    {
-    //        Handles.DrawWireDisc(transform.position, Vector3.up, visionRange);
-    //        if (patrolCenter != null) Handles.DrawWireDisc(patrolCenter, Vector3.up, 10);
-    //        Handles.DrawSolidArc(transform.position, Vector3.up, transform.forward, visionAngle, visionAngleRange);
-    //        Handles.DrawSolidArc(transform.position, Vector3.up, transform.forward, -visionAngle, visionAngleRange);
-    //    }
-
-    //}
-
 }

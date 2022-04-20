@@ -16,11 +16,6 @@ namespace UnityTemplateProjects.Saves_Scripts
         public static SaveType saveType = SaveType.None;
         public static event EventHandler OnSave, OnLoad;
         public static List<GameData> Saves = new List<GameData>();
-        // per specificare ulteriori parametri da passare all'evento (usare il generic <> sull'evento)
-        // public class OnSaveEventArgs : EventArgs
-        // {
-        //     public int CurrentSave;
-        // }
         public static bool IsFirstInvoke
         {
             get { return isFirstInvoke;}
@@ -29,7 +24,7 @@ namespace UnityTemplateProjects.Saves_Scripts
         
         public static int CurrentSave = 0;
 
-        private static string path = Application.dataPath+"/Saves"; //DateTime.Now.ToString();
+        private static string path = Application.dataPath+"/Saves"; 
         private static bool isFirstInvoke; //Mi serve per sapere se resettare le strutture dati della GameData
 
         public static List<bool> PassedTrials = new List<bool>(3){false,false,false};

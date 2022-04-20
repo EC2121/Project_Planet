@@ -78,30 +78,11 @@ public class Enemy : MonoBehaviour
         OnActorDeath.AddListener(SwitchTarget);
         OnDamageTaken.AddListener(AddDamage);
         SaveSystem.OnSave += SaveSystemOnOnSave;
-        //SaveSystem.OnLoad += SaveSystemOnOnLoad;
         IsDisabled = false;
         sphereCollider = GetComponent<SphereCollider>();
     }
 
-    // private void SaveSystemOnOnLoad(object sender, EventArgs e)
-    // {
-    //     GameData data = SaveSystem.LoadPlayer(true);
-    //
-    //     
-    //     //Se il nemico è disabilitato oppure non è più presente nella gerarchia?
-    //     foreach (var enemy in data.Enemies)
-    //     {
-    //         //creare una lista di GUID contentnte i vary EnemyStats
-    //         if (enemy.GUID == transform.GetInstanceID() && !IsDisabled) //??
-    //         {
-    //             Hp = enemy.hp;
-    //             transform.position = new Vector3(enemy.EnemyPosition[0], enemy.EnemyPosition[1], enemy.EnemyPosition[2]);
-    //             transform.rotation = new quaternion(enemy.EnemyRotation[0], enemy.EnemyRotation[1], 
-    //                 enemy.EnemyRotation[2], enemy.EnemyRotation[3]);    
-    //             return;
-    //         }
-    //     }
-    // }
+   
 
     private void SaveSystemOnOnSave(object sender, EventArgs e)
     {
@@ -113,7 +94,6 @@ public class Enemy : MonoBehaviour
         OnDamageTaken.RemoveListener(AddDamage);
         OnActorDeath.RemoveListener(SwitchTarget);
         SaveSystem.OnSave -= SaveSystemOnOnSave;
-        //SaveSystem.OnLoad -= SaveSystemOnOnLoad;
         IsDisabled = true;
     }
 
@@ -156,24 +136,14 @@ public class Enemy : MonoBehaviour
 
     protected virtual void Update()
     {
-        //Vector3 flockingVec = Flocking();
-        //transform.position = Agent.nextPosition;
-        //Agent.nextPosition = Vector3.Lerp(transform.position, Agent.nextPosition + flockingVec, Time.deltaTime);
+       
         currentState.UpdateState(this);
 
     }
 
     private void OnAnimatorMove()
     {
-        //if (ReferenceEquals(currentState, StatesDictionary[EnemyStates.Follow]))
-        //{
-        //    Vector3 flockingVec = Flocking();
-        //    position = Vector3.Lerp(Anim.rootPosition, Agent.nextPosition + flockingVec, Time.deltaTime);    //Anim.rootPosition;
-        //}
-        //else
-        //    position = Anim.rootPosition;
-
-        //Vector3 flockingVec = Flocking();
+       
         Vector3 position;
         position = Anim.rootPosition;
         position.y = Agent.nextPosition.y;
@@ -238,13 +208,7 @@ public class Enemy : MonoBehaviour
         Collider[] colliders = Physics.OverlapSphere(Tounge.position, 0.5f);
 
 
-        //foreach (var item in colliders)
-        //{
-        //    if (item.gameObject.CompareTag("Roby"))
-        //    {
-        //        Script_Roby.Roby_Hit.Invoke(20);
-        //    }
-        //}
+        
     }
 
     public void OnHologramDestroy(GameObject go)
@@ -305,19 +269,7 @@ public class Enemy : MonoBehaviour
     private void OnTriggerEnter(Collider other)
     {
 
-        //if (other.CompareTag("Player"))
-        //{
-        //    Target = Player;
-        //}
-
-        //if (other.CompareTag("Enemy"))
-        //{
-        //    Enemy enemy = other.GetComponent<Enemy>();
-        //    if (!nearEnemies.Contains(enemy))
-        //    {
-        //        nearEnemies.Add(enemy);
-        //    }
-
+      
 
         currentState.OnTrigEnter(this, other);
     }
@@ -330,13 +282,5 @@ public class Enemy : MonoBehaviour
 
     private void OnTriggerExit(Collider other)
     {
-        //if (other.CompareTag("Enemy"))
-        //{
-        //    Enemy enemy = other.GetComponent<Enemy>();
-        //    if (nearEnemies.Contains(enemy))
-        //    {
-        //        nearEnemies.Remove(enemy);
-        //    }
-        //}
     }
 }

@@ -44,12 +44,6 @@ public class Player_StaffAttack : Player_BaseState
         {
             Context.RequireNewAttack = true;
         }
-        //Context.CurrentAttackResetRoutine = Context.StartCoroutine(IAttackResetRoutine());
-        //if (Context.AttackCount == 4)
-        //{
-        //    Context.AttackCount = 0;
-        //    Context.Animator.SetInteger(Context.AttackIndexHash,Context.AttackCount);
-        //}
     }
 
     public override void CheckSwitchStates()
@@ -66,10 +60,6 @@ public class Player_StaffAttack : Player_BaseState
         {
             SwitchState(Factory.Run());
         }
-        //if (Context.IsJumpPressed && !Context.RequireNewJump && !Context.HasBox)
-        //{
-        //    SwitchState(Factory.Jump());
-        //}
 
         if (Context.IsIsHitted)
         {
@@ -79,15 +69,7 @@ public class Player_StaffAttack : Player_BaseState
 
     private void HandleCombo()
     {
-        // if (Context.AttackCount < 4 && Context.CurrentAttackResetRoutine != null)
-        // {
-        //     Context.StopCoroutine(Context.CurrentAttackResetRoutine);
-        // }
         Context.Animator.SetBool(Context.IsAttacking, true);
-        //
-        // Context.AttackCount += 1;
-        // Context.IsAttack = true;
-        // Context.Animator.SetInteger(Context.AttackIndexHash, Context.AttackCount);
 
         if (Context.Animator.IsInTransition(0) || Context.Animator.GetCurrentAnimatorStateInfo(0).IsName("Ellen_Combo4")) return;
 
@@ -100,10 +82,4 @@ public class Player_StaffAttack : Player_BaseState
     public override void InitializeSubState()
     {
     }
-
-    //IEnumerator IAttackResetRoutine()
-    //{
-    //    yield return new WaitForSeconds(0.6f);
-    //    Context.AttackCount = 0;
-    //}
 }

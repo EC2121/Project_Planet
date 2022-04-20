@@ -44,34 +44,11 @@ public class AI_Chompies_PatrolState : AI_Enemies_IBaseState
             owner.Agent.path = owner.AgentPath;
         }
       
-        //owner.Agent.CalculatePath(new Vector3(owner.PatrolCenter.x + Random.insideUnitCircle.x * 10
-        // , owner.transform.position.y, owner.PatrolCenter.z + Random.insideUnitCircle.y * 10), owner.AgentPath);
-        //owner.Agent.path = owner.AgentPath;
+      
     }
 
     public void OnTrigEnter(Enemy owner, Collider other)
     {
-        //if (owner.Target != null) return;
-
-        //if (ReferenceEquals(other.gameObject, owner.Player.gameObject))
-        //{
-        //    owner.Target = owner.Player;
-        //    owner.IsAlerted = true;
-        //    owner.SwitchState(EnemyStates.Alert);
-        //    owner.sphereCollider.enabled = false;
-
-        //    return;
-        //}
-        //if (ReferenceEquals(other.gameObject, owner.Roby.gameObject))
-        //{
-        //    owner.Target = owner.Roby;
-        //    owner.IsAlerted = true;
-        //    owner.SwitchState(EnemyStates.Alert);
-        //    owner.sphereCollider.enabled = false;
-
-        //    return;
-        //}
-
     }
 
     public void OnCollEnter(Enemy owner, Collision other)

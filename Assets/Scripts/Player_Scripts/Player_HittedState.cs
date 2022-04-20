@@ -27,10 +27,6 @@ public class Player_HittedState : Player_BaseState
         Context.Animator.SetBool(Context.IsRunAttackingHash, false);
 
 
-        // Context.Animator.SetBool(Context.IsWalkingHash,false);
-        // Context.Animator.SetBool(Context.IsRunningHash,false);
-        // Context.CurrentMovementX = 0;
-        // Context.CurrentMovementZ = 0;
         canExit = true;
         Context.IsIsHitted = false;
     }
@@ -69,10 +65,6 @@ public class Player_HittedState : Player_BaseState
     public override void CheckSwitchStates()
     {
 
-        // if (Context.IsMousePressed && Context.IsWeaponAttached && !Context.RequireNewAttack)
-        // {
-        //     SwitchState(Factory.StaffAttack());
-        // }
 
         if (!Context.IsMovementPressed && Context.Animator.GetCurrentAnimatorStateInfo(0).IsName("Hitted"))
         {

@@ -98,6 +98,5 @@ public class Script_Chest : MonoBehaviour
         Box_GuiInteractWrite.SetActive(false);
         transform.position = Player_Chest.position;
         transform.rotation = Player_Chest.rotation;
-        //transform.SetPositionAndRotation(Player_Chest.position, Player_Chest.rotation);
     }
 }

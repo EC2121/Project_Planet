@@ -16,7 +16,7 @@ namespace UnityTemplateProjects.Saves_Scripts
         public float CurrentHealth = 100f;
         public int CollectedCoins = 0;
         //Transform
-        public Vector3 Position; //public float[] Position = new float[3];
+        public Vector3 Position;
         public Quaternion Rotation;
 
         private void Start()

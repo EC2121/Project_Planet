@@ -62,9 +62,6 @@ public class Player_Controller_Move : MonoBehaviour
         
         isWeaponAttached = false;
         isJumped = false;
-        //characterController.detectCollisions = true;
-        // input.CharacterControls.Run.started += OnRun;
-       
     }
 
     void OnRun(InputAction.CallbackContext context)
@@ -210,10 +207,6 @@ public class Player_Controller_Move : MonoBehaviour
         if (isRunPressed)
         {
             characterController.Move(move * Time.deltaTime * PlayerSpeed * runSpeed);
-
-            // //RotatePlayerToCamera
-            // Quaternion targetRotation = Quaternion.Euler(0, cameraTransform.eulerAngles.y, 0);
-            // transform.rotation = Quaternion.Lerp(transform.rotation, targetRotation, rotationSpeed * Time.deltaTime);
         }
         else
         {
@@ -224,19 +217,14 @@ public class Player_Controller_Move : MonoBehaviour
         anim.SetFloat("VelocityZ", currentAnimationBlend.y);
     }
 
-    // Update is called once per frame
     void Update()
     {
         Vector3 verticalMovement = Vector3.up *  currentMovement.y;
 
         HandleGravity();
         ActivateWeapon();
-        //HandleRotation();
         HandleAnimation();
         HandleMovement(verticalMovement);
-
-        //Debug.Log(speedY);
-
     }
 
     private void OnEnable()

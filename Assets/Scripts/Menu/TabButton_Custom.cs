@@ -8,32 +8,15 @@ using UnityEngine.UIElements;
 
 
 public class TabButton_Custom : MonoBehaviour, 
-    //IPointerEnterHandler, IPointerClickHandler, IPointerExitHandler, 
     ISelectHandler, IDeselectHandler, ISubmitHandler
 {
     public TabGroup TabGroup;
-    //public Image Background;
     public UnityEvent onTabSelected;
     public UnityEvent onTabDeselected;
     void Start()
     {
         TabGroup.Subscribe(this);
     }
-
-    // public void OnPointerEnter(PointerEventData eventData)
-    // {
-    //     TabGroup.OnTabEnter(this);
-    // }
-    //
-    // public void OnPointerClick(PointerEventData eventData)
-    // {
-    //     //TabGroup.OnTabSelected(this);
-    // }
-    //
-    // public void OnPointerExit(PointerEventData eventData)
-    // {
-    //     //TabGroup.OnTabExit(this);
-    // }
 
     public void Select()
     {
@@ -63,6 +46,5 @@ public class TabButton_Custom : MonoBehaviour,
     //Utilizzare il submit per gestire l'hover e la pressione separatamente
     public void OnSubmit(BaseEventData eventData)
     {
-        //TabGroup.OnTabSelected(this);
     }
 }

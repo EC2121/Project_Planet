@@ -31,8 +31,6 @@ public class Script_AI_Roby_Patroll : Script_AI_Roby_BaseState
 
     public void CustomOnTriggerStay(Script_Roby AiRoby, Collider collider)
     {
-        //if (AiRoby.EnemysInArea(collider.gameObject))
-        //    AiRoby.SwitchState(RobyStates.Battle);
     }
 
     public void CustomOnTriggerExit(Script_Roby AiRoby, Collider collider)

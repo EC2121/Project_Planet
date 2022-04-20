@@ -1,7 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
-using System.Data.SqlTypes;
-using System.Timers;
 using UnityEngine;
 
 public class Player_JumpAttack : Player_BaseState
@@ -19,7 +15,6 @@ public class Player_JumpAttack : Player_BaseState
     public override void EnterState()
     {
         Context.Animator.SetBool(Context.IsJumpAttackHash, true);
-        //Context.Animator.SetBool(Context.IsJumpingHash, false);
         Context.CharacterController.enabled = false;
         
     }
@@ -28,7 +23,6 @@ public class Player_JumpAttack : Player_BaseState
     {
         timer -= Time.deltaTime;
         CheckSwitchStates();
-        //HandleGravity();
     }
 
     public override void ExitState()
@@ -63,10 +57,6 @@ public class Player_JumpAttack : Player_BaseState
             SwitchState(Factory.Dead());
         }
 
-        // if (Context.IsJumpPressed)
-        // {
-        //     SwitchState(Factory.Jump());
-        // }
         if (Context.Animator.GetCurrentAnimatorStateInfo(0).IsName("JumpAttack"))
             SwitchState(Factory.Grounded());
     }

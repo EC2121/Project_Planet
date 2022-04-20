@@ -44,7 +44,6 @@ public class AudioController : MonoBehaviour
 
 
     }
-    // Start is called before the first frame update
     void Start()
     {
         if (soundReferences.Count < 1) return;
@@ -62,7 +61,6 @@ public class AudioController : MonoBehaviour
 
     }
 
-    // Update is called once per frame
     void Update()
     {
 
@@ -77,7 +75,6 @@ public class AudioController : MonoBehaviour
         }
         catch
         {
-            //Debug.Log(Sound);
         }
 
 

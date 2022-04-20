@@ -24,12 +24,6 @@ public class Player_GroundState : Player_BaseState
             Context.Animator.SetBool(Context.IsRunningHash, true);
 
         }
-        //Context.CurrentMovementX = 0f;
-        //Context.AppliedMovementX = 0f;
-        //Context.CurrentMovementZ = 0f;
-        //Context.AppliedMovementZ = 0f;
-        //Context.AppliedMovementX = 0;
-        //Context.AppliedMovementZ = 0;
     }
 
     public override void UpdateState()
@@ -51,16 +45,10 @@ public class Player_GroundState : Player_BaseState
         if (Context.IsInteract && ( !Context.IsWeaponAttached && !Context.IsRunPressed &&
                                     !Context.Animator.GetCurrentAnimatorStateInfo(1).IsName(Context.UnEquipString) ) &&
             !Context.RequireNewWeaponSwitch && !Context.RequireNewInteraction &&
-           ( Context.Mai_BoxIsTakable || Context.IsCrystalActivable /*|| Context.CanReviveRoby)*/))
+           ( Context.Mai_BoxIsTakable || Context.IsCrystalActivable ))
         {
             SwitchState(Factory.Interactable());
         }
-        //Debug.Log(Context.Animator.GetCurrentAnimatorStateInfo(0).IsName("Jump"));
-        //if (Context.IsMousePressed && (Context.Animator.GetCurrentAnimatorStateInfo(0).IsName("Jump") || Context.Animator.GetCurrentAnimatorStateInfo(0).IsName("Jump 2")) && Context.Animator.IsInTransition(0))
-        //{
-        //    Debug.Log("CEPROVOOOO");
-        //    SwitchState(Factory.JumpAttack());
-        //}
         if (Context.Hp <= 0)
         {
             SwitchState(Factory.Dead());
@@ -100,11 +88,5 @@ public class Player_GroundState : Player_BaseState
         {
             SetSubState(Factory.StaffAttack());
         }
-        //if (Context.IsMousePressed && !Context.RequireNewAttack && Context.IsWeaponAttached && !Context.CharacterController.isGrounded &&
-        //    Context.JumpCount <= 2)
-        //{
-        //    Debug.Log("CEPROVOOOO");
-        //    SetSubState(Factory.JumpAttack());
-        //}
     }
 }

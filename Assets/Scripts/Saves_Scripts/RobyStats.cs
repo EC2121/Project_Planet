@@ -41,14 +41,11 @@ namespace UnityTemplateProjects.Saves_Scripts
             GameData data = SaveSystem.LoadPlayer(true);
             
             #region Apply Loaded Data to Transform
-            //transform.GetComponent<Script_Roby>().SwitchState(RobyStates.Idle);
-            //transform.GetComponent<Animator>().enabled = false;
             transform.gameObject.SetActive(false);
 
             transform.SetPositionAndRotation(new Vector3(data.RobyPosition[0], data.RobyPosition[1], data.RobyPosition[2]),
                                           new Quaternion(data.RobyRotation[0], data.RobyRotation[1],
                                                                 data.RobyRotation[2], data.RobyRotation[3]));
-           // transform.GetComponent<Animator>().enabled = true;
             transform.gameObject.SetActive(true);
             transform.GetComponent<Script_Roby>().SwitchState(RobyStates.Idle);
             
