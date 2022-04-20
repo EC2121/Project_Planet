@@ -1837,10 +1837,6 @@ PrefabInstance:
       propertyPath: CutScene
       value: 
       objectReference: {fileID: 786128572}
-    - target: {fileID: 1801898482, guid: 66067fd29c47b54409f49dcad60b6ec8, type: 3}
-      propertyPath: m_IsActive
-      value: 0
-      objectReference: {fileID: 0}
     - target: {fileID: 2029871264903509726, guid: 66067fd29c47b54409f49dcad60b6ec8, type: 3}
       propertyPath: m_AnchorMax.x
       value: 0
