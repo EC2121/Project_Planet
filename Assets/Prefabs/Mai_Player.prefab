@@ -729,15 +729,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4418037495464897194, guid: eab52cb580e77b140a613444ec060f03, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -6.6600037
+      value: -6.660005
       objectReference: {fileID: 0}
     - target: {fileID: 4418037495464897194, guid: eab52cb580e77b140a613444ec060f03, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -3.473999
+      value: -3.4739988
       objectReference: {fileID: 0}
     - target: {fileID: 4418037495464897194, guid: eab52cb580e77b140a613444ec060f03, type: 3}
       propertyPath: m_LocalPosition.z
-      value: -5.5949707
+      value: -5.594971
       objectReference: {fileID: 0}
     - target: {fileID: 4418037495464897194, guid: eab52cb580e77b140a613444ec060f03, type: 3}
       propertyPath: m_LocalRotation.w
@@ -1325,7 +1325,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4418037495464897806, guid: eab52cb580e77b140a613444ec060f03, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 0.0036201477
+      value: 0.0036200602
       objectReference: {fileID: 0}
     - target: {fileID: 4418037495464897806, guid: eab52cb580e77b140a613444ec060f03, type: 3}
       propertyPath: m_LocalPosition.y
@@ -1333,7 +1333,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4418037495464897806, guid: eab52cb580e77b140a613444ec060f03, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 0.018795013
+      value: 0.018794362
       objectReference: {fileID: 0}
     - target: {fileID: 4418037495464897806, guid: eab52cb580e77b140a613444ec060f03, type: 3}
       propertyPath: m_LocalRotation.w
@@ -3840,7 +3840,7 @@ PrefabInstance:
       objectReference: {fileID: 9100000, guid: e1f2492971cd3c842913bd27bb1cbc25, type: 2}
     - target: {fileID: 7873018164762728168, guid: c691a68c1cccb30458ccacc5e4556b41, type: 3}
       propertyPath: maxHp
-      value: 100
+      value: 500
       objectReference: {fileID: 0}
     - target: {fileID: 7873018164762728168, guid: c691a68c1cccb30458ccacc5e4556b41, type: 3}
       propertyPath: hologram
