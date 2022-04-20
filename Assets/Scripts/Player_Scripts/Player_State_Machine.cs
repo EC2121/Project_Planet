@@ -26,7 +26,6 @@ public class Player_State_Machine : MonoBehaviour
     [SerializeField] private float maxHp;
     [SerializeField] private Slider mayHpSlider;
 
-    //OnlyFor Debug
     public static bool hasBox;
     public Slider reviveSlider;
 
@@ -96,9 +95,8 @@ public class Player_State_Machine : MonoBehaviour
     private float hp;
     private bool isHitted = false;
     private bool requireNewHit = false;
-    private GameObject hologram;
+    public GameObject hologram;
 
-    //getters and setters
     public Player_BaseState CurrentState { get { return _currentState; } set { _currentState = value; } }
     public CharacterController CharacterController { get { return characterController; } set { characterController = value; } }
     public UnityEvent TakeTheBox { get { return takeTheBox; } }
@@ -169,6 +167,7 @@ public class Player_State_Machine : MonoBehaviour
     [SerializeField] private bool hasKey;
     private GameObject keyReference;
 
+    public GameObject keySprite;
     public bool HasKey
     {
         get => hasKey;
@@ -176,23 +175,20 @@ public class Player_State_Machine : MonoBehaviour
         {
             hasKey = value;
             keyReference.SetActive(!hasKey);
-            keySprite.GetComponent<Image>().enabled = hasKey;
+            keySprite.SetActive(hasKey);
         }
     }
 
     private float hologramTimer;
     private bool startHologramTimer;
-    private GameObject keySprite;
     private RaycastHit Hitinfo;
     private bool canPing = true;
     private float robyslidervalue = 0;
 
     private void Awake()
     {
-        keySprite = GameObject.Find("KeySprite");
         keyReference = GameObject.FindGameObjectWithTag("Key");
         Interactable.OnKeyTakenDel += () => HasKey = true;
-        hologram = GameObject.FindGameObjectWithTag("Hologram");
         input = new Player_Controller();
         characterController = GetComponent<CharacterController>();
         anim = GetComponent<Animator>();

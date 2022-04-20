@@ -41,7 +41,7 @@ namespace UnityTemplateProjects.Saves_Scripts
                 transform.GetComponentInChildren<Player_State_Machine>().CurrentState.Factory.Interactable().EnterState();     
             }
 
-            transform.position = new Vector3(data.MaiPosition[0], data.MaiPosition[1]+5, data.MaiPosition[2]);
+            transform.position = new Vector3(data.MaiPosition[0], data.MaiPosition[1], data.MaiPosition[2]);
             transform.rotation = new Quaternion(data.MaiRotation[0], data.MaiRotation[1],
                 data.MaiRotation[2], data.MaiRotation[3]);
             

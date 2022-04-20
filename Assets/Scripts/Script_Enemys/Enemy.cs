@@ -238,14 +238,13 @@ public class Enemy : MonoBehaviour
         Collider[] colliders = Physics.OverlapSphere(Tounge.position, 0.5f);
 
 
-        foreach (var item in colliders)
-        {
-            if (item.gameObject.CompareTag("Roby"))
-            {
-                Script_Roby.Roby_Hit.Invoke(20);
-            }
-
-        }
+        //foreach (var item in colliders)
+        //{
+        //    if (item.gameObject.CompareTag("Roby"))
+        //    {
+        //        Script_Roby.Roby_Hit.Invoke(20);
+        //    }
+        //}
     }
 
     public void OnHologramDestroy(GameObject go)

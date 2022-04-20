@@ -28,7 +28,7 @@ public class GameUIMGR : MonoBehaviour
         input.Player.Menù.started += OnMenu;
         input.Player.Menù.canceled += OnMenu;
     }
-  
+
     private void OnMenu(InputAction.CallbackContext context)
     {
         escapeButton = context.ReadValueAsButton();
@@ -44,16 +44,17 @@ public class GameUIMGR : MonoBehaviour
             {
                 mainMenu.SetActive(true);
                 currentMenu = mainMenu;
+                Time.timeScale = 0f;
             }
             else
             {
                 OnResume();
             }
-            
+
         }
     }
 
- 
+
     public void OnVideoQualityChange(int value)
     {
         QualitySettings.SetQualityLevel(value);
@@ -107,6 +108,7 @@ public class GameUIMGR : MonoBehaviour
             Menu.transform.GetChild(i).gameObject.SetActive(false);
         }
         currentMenu = null;
+        Time.timeScale = 1f;
     }
 
     public void OnQuit()

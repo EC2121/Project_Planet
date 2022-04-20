@@ -22,13 +22,13 @@ public class Script_Roby : MonoBehaviour
 
     public ParticleSystem LeftFoot;
     public ParticleSystem RightFoot;
+     public ParticleSystem Roby_Particle_Shoot;
 
 
     [HideInInspector] public GameObject wallToBreak;
     [HideInInspector] public NavMeshAgent Roby_NavAgent;
     [HideInInspector] public GameObject Roby_EnemyTarget;
     [HideInInspector] public List<GameObject> roby_EnemysInMyArea;
-    [HideInInspector] public ParticleSystem Roby_Particle_Shoot;
     [HideInInspector] public int Roby_EnemyIndex;
     [HideInInspector] public float Roby_Live;
     [HideInInspector] public bool Roby_IgnoreEnemy;
@@ -110,18 +110,12 @@ public class Script_Roby : MonoBehaviour
     protected virtual void Update()
     {
         Roby_CurrentState.UpdateState(this);
-        if (GetDamage)
-        {
-            Roby_Hit.Invoke(20);
-            GetDamage = false;
-        }
     }
 
     private void Awake()
     {
         Roby_NavAgent = GetComponent<NavMeshAgent>();
         Roby_Animator = GetComponent<Animator>();
-        Roby_Particle_Shoot = GetComponentInChildren<ParticleSystem>();
         Roby_BoxCollider_Alive = GetComponentInChildren<BoxCollider>();
         Roby_NavMeshObstacle = GetComponentInChildren<NavMeshObstacle>();
         Mai_CharacterController = Mai_Player.GetComponent<CharacterController>();
@@ -129,8 +123,6 @@ public class Script_Roby : MonoBehaviour
 
     public void OnParticleCollision(GameObject other)
     {
-        //Roby_Particle_Shoot.GetCollisionEvents();
-
         other.GetComponentInParent<Enemy>().AddDamage(20, gameObject, false);
 
         Roby_Particle_Shoot.Clear();
