@@ -12,9 +12,10 @@ public class Script_CrystalInteract : MonoBehaviour
 
     private bool crystal_IsActivaded;
     private BoxCollider crystal_Collider;
+    private bool playerCollideWithMe;
 
     private GameObject TempleArea1, TempleArea2, TempleArea3;
-    
+
     private void OnEnable()
     {
         SaveSystem.OnSave += SaveSystemOnOnSave;
@@ -36,7 +37,7 @@ public class Script_CrystalInteract : MonoBehaviour
 
     private void SaveSystemOnOnSave(object sender, EventArgs e)
     {
-        SaveSystem.SaveData(this.gameObject, true);    
+        SaveSystem.SaveData(this.gameObject, true);
     }
 
     private void OnDisable()
@@ -53,13 +54,19 @@ public class Script_CrystalInteract : MonoBehaviour
     private void OnTriggerEnter(Collider other)
     {
         if (other.CompareTag("Player"))
+        {
             Crystal_GuiInteractWrite.SetActive(true);
+            playerCollideWithMe = true;
+        }
     }
 
     private void OnTriggerExit(Collider other)
     {
         if (other.CompareTag("Player"))
+        {
             Crystal_GuiInteractWrite.SetActive(false);
+            playerCollideWithMe = false;
+        }
     }
 
     private void Awake()
@@ -80,27 +87,18 @@ public class Script_CrystalInteract : MonoBehaviour
     {
         if (Crystal_GuiInteractWrite.activeInHierarchy)
             Crystal_GuiInteractWrite.transform.position = Camera.main.WorldToScreenPoint(crystal_Collider.bounds.center + Vector3.up);
+
+        Debug.Log(this.alienTestNumber + "" + this.gameObject.name);
+
     }
 
     private void OnInteraction()
     {
-        SaveSystem.InvokeOnSave();
-        if (crystal_IsActivaded)
+        Debug.Log(gameObject.name);
+        if (crystal_IsActivaded && playerCollideWithMe)
         {
-            switch (alienTestNumber)
-            {
-                case 0:
-                    SceneManager.LoadScene("Scene_AlienTest_1");
-                    break;
-                case 1:
-                    SceneManager.LoadScene("Scene_AlienTest_2");
-                    break;
-                case 2:
-                    SceneManager.LoadScene("Scene_AlienTest_3");
-                    break;
-            }
-            
-            
+            SaveSystem.InvokeOnSave();
+            SceneManager.LoadScene(this.alienTestNumber);
             Crystal_GuiInteractWrite.SetActive(false);
             crystal_IsActivaded = false;
         }

@@ -2,6 +2,8 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityTemplateProjects.Saves_Scripts;
+
 
 
 public class Script_Repositioning : MonoBehaviour
@@ -15,6 +17,16 @@ public class Script_Repositioning : MonoBehaviour
     public Transform PointToRotate;
     private float fixCount = 0;
 
+    private void OnEnable()
+    {
+        SaveSystem.OnSave += SaveSystemOnOnSave;
+        SaveSystem.OnLoad += SaveSystemOnOnLoad;
+    }
+    private void OnDisable()
+    {
+        SaveSystem.OnSave -= SaveSystemOnOnSave;
+        SaveSystem.OnLoad -= SaveSystemOnOnLoad;
+    }
     private void Awake()
     {
         gameObjectID = new GameObject[gameObject.GetComponentsInChildren<Transform>().Length - 1];
@@ -44,7 +56,6 @@ public class Script_Repositioning : MonoBehaviour
             randomrotation[i] = UnityEngine.Random.Range(1, 6);
         }
     }
-
 
     private void Update()
     {
@@ -83,6 +94,35 @@ public class Script_Repositioning : MonoBehaviour
 
                 else
                     gameObjectID[i].transform.RotateAround(PointToRotate.position, Vector3.one, randomrotation[i] * Time.deltaTime);
+            }
+        }
+    }
+
+    private void SaveSystemOnOnLoad(object sender, EventArgs e)
+    {
+        GameData data = SaveSystem.LoadPlayer(true);
+        if (isCrystal)
+        {
+            for (int i = 0; i < gameObjectID.Length; i++)
+            {
+                templePiece.TryGetValue(gameObjectID[i], out Tuple<Vector3, Quaternion> value);
+                gameObjectID[i].transform.position = value.Item1;
+                gameObjectID[i].transform.rotation = value.Item2;
+            }
+        }
+    }
+
+    private void SaveSystemOnOnSave(object sender, EventArgs e)
+    {
+        SaveSystem.SaveData(this.gameObject, true);
+        if (isCrystal)
+        {
+            for (int i = 0; i < gameObjectID.Length; i++)
+            {
+                templePiece.TryGetValue(gameObjectID[i], out Tuple<Vector3, Quaternion> value);
+                gameObjectID[i].transform.position = value.Item1;
+                gameObjectID[i].transform.rotation = value.Item2;
+                SaveSystem.SaveData(gameObjectID[i], true);
             }
         }
     }
