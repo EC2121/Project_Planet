@@ -20,6 +20,10 @@ public class Script_Roby : MonoBehaviour
     public Slider RobyHpSlider;
     public GameObject Roby_Interact_TXT;
 
+    public ParticleSystem LeftFoot;
+    public ParticleSystem RightFoot;
+
+
     [HideInInspector] public GameObject wallToBreak;
     [HideInInspector] public NavMeshAgent Roby_NavAgent;
     [HideInInspector] public GameObject Roby_EnemyTarget;
