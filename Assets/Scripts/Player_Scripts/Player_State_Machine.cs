@@ -184,7 +184,7 @@ public class Player_State_Machine : MonoBehaviour
     private RaycastHit Hitinfo;
     private bool canPing = true;
     private float robyslidervalue = 0;
-
+    public float recovery = 0;
     private void Awake()
     {
         keyReference = GameObject.FindGameObjectWithTag("Key");
@@ -337,6 +337,15 @@ public class Player_State_Machine : MonoBehaviour
                 onBreakableWallFound?.Invoke(Hitinfo.transform.gameObject);
             }
         }
+        if (recovery <= 0)
+        {
+            hp = Mathf.Clamp(hp + ( Time.deltaTime * 3 ), 0, maxHp);
+            mayHpSlider.value = hp;
+        }
+        else
+        {
+            recovery -= Time.deltaTime;
+        }
 
         if (onHologram)
         {
@@ -460,16 +469,9 @@ public class Player_State_Machine : MonoBehaviour
 
         if (collision.gameObject.CompareTag("Enemy"))
         {
-
             isHitted = true;
-            characterController.stepOffset = 0.05f;
+            characterController.stepOffset = 0f;
             characterController.slopeLimit = 0f;
-        }
-
-        if (collision.gameObject.CompareTag("Untagged"))
-        {
-            characterController.stepOffset = 0.7f;
-            characterController.slopeLimit = 45;
         }
     }
     private void OnCollisionStay(Collision collision)

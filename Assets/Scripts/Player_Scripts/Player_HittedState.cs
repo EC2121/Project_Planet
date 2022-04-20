@@ -11,11 +11,12 @@ public class Player_HittedState : Player_BaseState
     public Player_HittedState(Player_State_Machine currentContext, Player_StateFactory playerStateFactory) : base(
         currentContext, playerStateFactory)
     {
-   
+
     }
 
     public override void EnterState()
     {
+        Context.recovery = 5f;
         if (Context.Hp > 0)
         {
             Context.Hp -= 33f;
@@ -56,7 +57,7 @@ public class Player_HittedState : Player_BaseState
     public override void ExitState()
     {
         Context.Animator.SetBool(Context.IsHittedHash, false);
-       
+
         if (Context.IsIsHitted)
         {
             Context.RequireNewHit = true;
@@ -67,7 +68,7 @@ public class Player_HittedState : Player_BaseState
 
     public override void CheckSwitchStates()
     {
-       
+
         // if (Context.IsMousePressed && Context.IsWeaponAttached && !Context.RequireNewAttack)
         // {
         //     SwitchState(Factory.StaffAttack());
