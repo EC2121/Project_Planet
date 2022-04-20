@@ -15902,6 +15902,8 @@ MonoBehaviour:
   Roby_SphereCollider_Dead: {fileID: 1395294220}
   RobyHpSlider: {fileID: 0}
   Roby_Interact_TXT: {fileID: 0}
+  LeftFoot: {fileID: 1186510139}
+  RightFoot: {fileID: 951698170}
   wallToBreak: {fileID: 0}
   Roby_NavAgent: {fileID: 0}
   Roby_EnemyTarget: {fileID: 0}
@@ -15911,10 +15913,6 @@ MonoBehaviour:
   Roby_Live: 0
   Roby_IgnoreEnemy: 0
   IsAttacking: 0
-  Roby_Particle_Shoot: {fileID: 0}
-  LeftFoot: {fileID: 1186510139}
-  RightFoot: {fileID: 951698170}
-  RobyHpSlider: {fileID: 0}
 --- !u!114 &1159518113781105222
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -16053,6 +16051,22 @@ MonoBehaviour:
   CurrentHealth: 100
   Position: {x: 0, y: 0, z: 0}
   Rotation: {x: 0, y: 0, z: 0, w: 0}
+--- !u!208 &1308776305
+NavMeshObstacle:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6248447185350112716}
+  m_Enabled: 0
+  serializedVersion: 3
+  m_Shape: 1
+  m_Extents: {x: 0.5, y: 0.5, z: 0.5}
+  m_MoveThreshold: 0.1
+  m_Carve: 1
+  m_CarveOnlyStationary: 1
+  m_Center: {x: 0, y: 0, z: 0}
+  m_TimeToStationary: 0.5
 --- !u!1001 &1483662777
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -16135,19 +16149,3 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 400004, guid: d8c41be67f41aa545ae053b0b927f821, type: 3}
   m_PrefabInstance: {fileID: 1483662777}
   m_PrefabAsset: {fileID: 0}
---- !u!208 &1308776305
-NavMeshObstacle:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6248447185350112716}
-  m_Enabled: 0
-  serializedVersion: 3
-  m_Shape: 1
-  m_Extents: {x: 0.5, y: 0.5, z: 0.5}
-  m_MoveThreshold: 0.1
-  m_Carve: 1
-  m_CarveOnlyStationary: 1
-  m_Center: {x: 0, y: 0, z: 0}
-  m_TimeToStationary: 0.5
