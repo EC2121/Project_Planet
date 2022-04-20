@@ -27,7 +27,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3806474350453033917}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 1.8544827, z: -6.6900024}
+  m_LocalPosition: {x: 0, y: 1.8544818, z: -6.6899986}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 3806474351813536301}
@@ -181,7 +181,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3806474350745275383}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 1.8544827, z: -6.6900024}
+  m_LocalPosition: {x: 0, y: 1.8544818, z: -6.6899986}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 3806474350530367421}
@@ -3845,6 +3845,10 @@ PrefabInstance:
       propertyPath: rotationFactor
       value: 0.5
       objectReference: {fileID: 0}
+    - target: {fileID: 7873018164762728168, guid: c691a68c1cccb30458ccacc5e4556b41, type: 3}
+      propertyPath: BreakableRayCastMask.m_Bits
+      value: 32768
+      objectReference: {fileID: 0}
     - target: {fileID: 7873018164762728174, guid: c691a68c1cccb30458ccacc5e4556b41, type: 3}
       propertyPath: m_Radius
       value: 0.65
@@ -3859,9 +3863,9 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: c691a68c1cccb30458ccacc5e4556b41, type: 3}
---- !u!4 &6454155313109652571 stripped
+--- !u!4 &6454155313109652915 stripped
 Transform:
-  m_CorrespondingSourceObject: {fileID: 7873018163916850117, guid: c691a68c1cccb30458ccacc5e4556b41, type: 3}
+  m_CorrespondingSourceObject: {fileID: 7873018163916849709, guid: c691a68c1cccb30458ccacc5e4556b41, type: 3}
   m_PrefabInstance: {fileID: 3806474351527565214}
   m_PrefabAsset: {fileID: 0}
 --- !u!114 &6454155312345563510 stripped
@@ -3890,9 +3894,9 @@ GameObject:
   m_CorrespondingSourceObject: {fileID: 7873018163916560823, guid: c691a68c1cccb30458ccacc5e4556b41, type: 3}
   m_PrefabInstance: {fileID: 3806474351527565214}
   m_PrefabAsset: {fileID: 0}
---- !u!4 &6454155313109652915 stripped
+--- !u!4 &6454155313109652571 stripped
 Transform:
-  m_CorrespondingSourceObject: {fileID: 7873018163916849709, guid: c691a68c1cccb30458ccacc5e4556b41, type: 3}
+  m_CorrespondingSourceObject: {fileID: 7873018163916850117, guid: c691a68c1cccb30458ccacc5e4556b41, type: 3}
   m_PrefabInstance: {fileID: 3806474351527565214}
   m_PrefabAsset: {fileID: 0}
 --- !u!208 &3806474352306027375
@@ -3902,7 +3906,7 @@ NavMeshObstacle:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6454155313109945897}
-  m_Enabled: 1
+  m_Enabled: 0
   serializedVersion: 3
   m_Shape: 0
   m_Extents: {x: 1.09, y: 1, z: 1.09}
@@ -4059,3 +4063,25 @@ MonoBehaviour:
             m_StringArgument: 
             m_BoolArgument: 1
           m_CallState: 2
+--- !u!195 &972284707
+NavMeshAgent:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6454155313109945897}
+  m_Enabled: 1
+  m_AgentTypeID: 0
+  m_Radius: 0.5
+  m_Speed: 3.5
+  m_Acceleration: 8
+  avoidancePriority: 50
+  m_AngularSpeed: 120
+  m_StoppingDistance: 0
+  m_AutoTraverseOffMeshLink: 1
+  m_AutoBraking: 1
+  m_AutoRepath: 1
+  m_Height: 2
+  m_BaseOffset: 0
+  m_WalkableMask: 4294967295
+  m_ObstacleAvoidanceType: 4

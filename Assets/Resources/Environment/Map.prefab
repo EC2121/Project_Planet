@@ -42044,6 +42044,14 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 4652055340650069937}
     m_Modifications:
+    - target: {fileID: 251681419, guid: da6f8618151a5404f943646242f96c48, type: 3}
+      propertyPath: alienTestNumber
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 251681419, guid: da6f8618151a5404f943646242f96c48, type: 3}
+      propertyPath: Crystal_ConnectedTemple
+      value: 
+      objectReference: {fileID: 3992365241096808033}
     - target: {fileID: 4128796147220982614, guid: da6f8618151a5404f943646242f96c48, type: 3}
       propertyPath: m_RootOrder
       value: 12
@@ -48558,6 +48566,14 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 6908630832438312265}
     m_Modifications:
+    - target: {fileID: 251681419, guid: da6f8618151a5404f943646242f96c48, type: 3}
+      propertyPath: alienTestNumber
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 251681419, guid: da6f8618151a5404f943646242f96c48, type: 3}
+      propertyPath: Crystal_ConnectedTemple
+      value: 
+      objectReference: {fileID: 8786984457640638116}
     - target: {fileID: 4128796147220982614, guid: da6f8618151a5404f943646242f96c48, type: 3}
       propertyPath: m_RootOrder
       value: 12
@@ -60387,6 +60403,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Crystal_GuiInteractWrite: {fileID: 0}
+  Crystal_ConnectedTemple: {fileID: 786725357540852956}
+  alienTestNumber: 0
 --- !u!1001 &4812308446709214020
 PrefabInstance:
   m_ObjectHideFlags: 0
