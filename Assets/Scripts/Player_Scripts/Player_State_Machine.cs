@@ -524,6 +524,9 @@ public class Player_State_Machine : MonoBehaviour
         }
         if (other.CompareTag("Crystal")) isCrystalActivable = false;
 
+        if (other.CompareTag("Finish"))
+            canReviveRoby = false;
+
         if (other.CompareTag(boxString)) mai_BoxIsTakable = false;
     }
 
