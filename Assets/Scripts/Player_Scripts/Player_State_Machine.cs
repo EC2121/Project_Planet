@@ -8,6 +8,7 @@ using UnityEngine.UI;
 
 public class Player_State_Machine : MonoBehaviour
 {
+    public static UnityEvent reviveRoby = new UnityEvent();
     public static UnityEvent takeTheBox = new UnityEvent();
     public static UnityEvent canCrystal = new UnityEvent();
     public static UnityEvent<GameObject> onBreakableWallFound = new UnityEvent<GameObject>();
@@ -24,10 +25,13 @@ public class Player_State_Machine : MonoBehaviour
     [SerializeField] private float rotationFactor = 0.5f;
     [SerializeField] private float maxHp;
     [SerializeField] private Slider mayHpSlider;
+
     //OnlyFor Debug
     public static bool hasBox;
+    public Slider reviveSlider;
 
     private bool isCrystalActivable;
+    private bool canReviveRoby;
     private bool mai_BoxIsTakable;
     private Animator anim;
     private int isWalkingHash;
@@ -99,6 +103,7 @@ public class Player_State_Machine : MonoBehaviour
     public CharacterController CharacterController { get { return characterController; } set { characterController = value; } }
     public UnityEvent TakeTheBox { get { return takeTheBox; } }
     public UnityEvent CanCrystal { get { return canCrystal; } }
+    public UnityEvent ReviveRoby { get { return reviveRoby; } }
     public UnityEvent GamePlayerFinalePhase { get { return gamePlayerFinalePhase; } }
     public UnityEvent Hit { get { return hit; } }
     public Coroutine CurrentJumpResetRoutine { get { return currentJumpResetRoutine; } set { currentJumpResetRoutine = value; } }
@@ -180,6 +185,7 @@ public class Player_State_Machine : MonoBehaviour
     private GameObject keySprite;
     private RaycastHit Hitinfo;
     private bool canPing = true;
+    private float robyslidervalue = 0;
 
     private void Awake()
     {
@@ -336,8 +342,6 @@ public class Player_State_Machine : MonoBehaviour
             }
         }
 
-
-
         if (onHologram)
         {
             if (hologramTimer <= 0)
@@ -358,9 +362,24 @@ public class Player_State_Machine : MonoBehaviour
         characterController.Move(appliedMovement * Time.deltaTime);
         HandleRotation();
         HandleGravity();
-        // Debug.Log(hp);
-        Debug.Log(isHitted);
 
+        if (canReviveRoby && isInteract)
+        {
+            reviveSlider.gameObject.SetActive(true);
+            robyslidervalue += Time.deltaTime;
+            reviveSlider.value = robyslidervalue;
+            if (reviveSlider.value == reviveSlider.maxValue)
+            {
+                reviveRoby.Invoke();
+                canReviveRoby = false;
+            }
+        }
+        else
+        {
+            reviveSlider.gameObject.SetActive(false);
+            reviveSlider.value = 0;
+            robyslidervalue = 0;
+        }
     }
 
     private void HandleCameraRotation()
@@ -402,9 +421,9 @@ public class Player_State_Machine : MonoBehaviour
         gravity = ( -2 * maxJumpHeight ) / Mathf.Pow(timeToApex, 2);
         initialJumpVelocity = ( 2 * maxJumpHeight ) / timeToApex;
         float secondJumpGravity = ( -2 * ( maxJumpHeight + 2 ) ) / Mathf.Pow(( timeToApex * 1.25f ), 2);
-        float secondJumpInitialVelocity = ( 2 * ( maxJumpHeight + 2 ) ) / ( timeToApex * 1.25f );
+        float secondJumpInitialVelocity = ( 2 * ( maxJumpHeight + 1 ) ) / ( timeToApex * 1.25f );
         float thirdJumpGravity = ( -2 * ( maxJumpHeight + 4 ) ) / Mathf.Pow(( timeToApex * 1.5f ), 2);
-        float thirdJumpInitialVelocity = ( 2 * ( maxJumpHeight + 4 ) ) / ( timeToApex * 1.5f );
+        float thirdJumpInitialVelocity = ( 2 * ( maxJumpHeight + 2 ) ) / ( timeToApex * 1.5f );
 
         initialJumpVelocities.Add(1, initialJumpVelocity);
         initialJumpVelocities.Add(2, secondJumpInitialVelocity);
@@ -479,7 +498,13 @@ public class Player_State_Machine : MonoBehaviour
     private void OnTriggerEnter(Collider other)
     {
         if (other.CompareTag(boxString))
+        {
             mai_BoxIsTakable = true;
+        }
+        if (other.CompareTag("Finish"))
+        {
+            canReviveRoby = true;
+        }
         if (other.CompareTag("Crystal"))
         {
             isCrystalActivable = true;

@@ -4,33 +4,36 @@ using UnityEngine.AI;
 using UnityEngine.Events;
 using UnityEngine.UI;
 
-public enum RobyStates { Idle, Follow, Patroll, Battle, RangeAttack, MeleeAttack, ZoneAttack, Die, Hit,BreakWall }
+public enum RobyStates { Idle, Follow, Patroll, Battle, RangeAttack, MeleeAttack, ZoneAttack, Die, Hit, BreakWall }
 public class Script_Roby : MonoBehaviour
 {
     public static UnityEvent Roby_Dead = new UnityEvent();
     public static UnityEvent<float> Roby_Hit = new UnityEvent<float>();
 
-    [HideInInspector] public NavMeshAgent Roby_NavAgent;
-    [HideInInspector] public GameObject Roby_EnemyTarget;
-    [HideInInspector] public List<GameObject> roby_EnemysInMyArea;
-
-
-    //Public solo per prova!
-    [HideInInspector] public float Roby_Live;
     public float roby_Life;
     public bool GetDamage = false;
     public Transform Roby_Hand;
     public GameObject Mai_Player;
-
     public CharacterController Mai_CharacterController;
+    public SphereCollider Roby_SphereCollider_Alive;
+    public SphereCollider Roby_SphereCollider_Dead;
+    public Slider RobyHpSlider;
+    public GameObject Roby_Interact_TXT;
 
+    [HideInInspector] public GameObject wallToBreak;
+    [HideInInspector] public NavMeshAgent Roby_NavAgent;
+    [HideInInspector] public GameObject Roby_EnemyTarget;
+    [HideInInspector] public List<GameObject> roby_EnemysInMyArea;
+    [HideInInspector] public ParticleSystem Roby_Particle_Shoot;
     [HideInInspector] public int Roby_EnemyIndex;
+    [HideInInspector] public float Roby_Live;
     [HideInInspector] public bool Roby_IgnoreEnemy;
     [HideInInspector] public bool IsAttacking;
-    [HideInInspector] public ParticleSystem Roby_Particle_Shoot;
 
     public Animator Roby_Animator { get; private set; }
     public Dictionary<RobyStates, Script_AI_Roby_BaseState> Roby_StateDictionary { get; private set; }
+    public NavMeshObstacle Roby_NavMeshObstacle { get; set; }
+    public BoxCollider Roby_BoxCollider_Alive { get; set; }
     public float Mai_MinDistance { get; private set; }
     public float Mai_PlayerNearZone { get; private set; }
     public float Mai_PlayerNormalZone { get; private set; }
@@ -46,17 +49,20 @@ public class Script_Roby : MonoBehaviour
     public int Roby_AshAnimator_RangeDone { get; private set; }
     public int Roby_AshAnimator_Dead { get; private set; }
     public int Roby_AshAnimator_GetDamage { get; private set; }
+    public int Roby_AshAnimator_StartRepair { get; private set; }
     public string Roby_String_Animator_SkyWalkToStop { get; private set; }
+    public bool roby_FullSlider { get; set; }
 
-    public Slider RobyHpSlider;
-    private Script_AI_Roby_BaseState Roby_CurrentState;
+
     private NavMeshPath roby_NavMeshPath;
-    [HideInInspector]public GameObject wallToBreak;
+    private Script_AI_Roby_BaseState Roby_CurrentState;
+
     private void OnEnable()
     {
         Enemy.OnEnemyDeath.AddListener(SwitchTarget);
         Roby_Hit.AddListener(OnRobyAddDamage);
         Roby_Dead.AddListener(OnRobyDie);
+        Player_State_Machine.reviveRoby.AddListener(() => roby_FullSlider = true);
     }
 
     private void OnDisable()
@@ -64,12 +70,12 @@ public class Script_Roby : MonoBehaviour
         Enemy.OnEnemyDeath.RemoveListener(SwitchTarget);
         Roby_Hit.RemoveListener(OnRobyAddDamage);
         Roby_Dead.RemoveListener(OnRobyDie);
+        Player_State_Machine.reviveRoby.RemoveListener(() => roby_FullSlider = false);
     }
 
     private void OnAnimatorMove()
     {
         Vector3 position = Roby_Animator.rootPosition;
-        //Quaternion rotation = Roby_Animator.rootRotation;
         transform.rotation = Roby_Animator.rootRotation;
 
         position.y = Roby_NavAgent.nextPosition.y;
@@ -99,30 +105,37 @@ public class Script_Roby : MonoBehaviour
 
     protected virtual void Update()
     {
-        Debug.Log(Roby_CurrentState);
         Roby_CurrentState.UpdateState(this);
-    }
-
-    private void OnBecameInvisible()
-    {
-        transform.position = Mai_Player.transform.position;
+        if (GetDamage)
+        {
+            Roby_Hit.Invoke(20);
+            GetDamage = false;
+        }
     }
 
     private void Awake()
     {
         Roby_NavAgent = GetComponent<NavMeshAgent>();
         Roby_Animator = GetComponent<Animator>();
-        //roby_RigidBody = GetComponent<Rigidbody>();
         Roby_Particle_Shoot = GetComponentInChildren<ParticleSystem>();
+        Roby_BoxCollider_Alive = GetComponentInChildren<BoxCollider>();
+        Roby_NavMeshObstacle = GetComponentInChildren<NavMeshObstacle>();
         Mai_CharacterController = Mai_Player.GetComponent<CharacterController>();
+    }
+
+    public void OnParticleCollision(GameObject other)
+    {
+        //Roby_Particle_Shoot.GetCollisionEvents();
+
+        other.GetComponentInParent<Enemy>().AddDamage(20, gameObject, false);
+
+        Roby_Particle_Shoot.Clear();
     }
 
     private void Start()
     {
         Init();
     }
-
-
 
     public void OnBreakableWallFound(GameObject wall)
     {
@@ -161,7 +174,7 @@ public class Script_Roby : MonoBehaviour
         Roby_AshAnimator_TurnValue = Animator.StringToHash("Angle");
         Roby_AshAnimator_turnTrigger = Animator.StringToHash("TurnTrigger");
         Roby_AshAnimator_GetDamage = Animator.StringToHash("Hit");
-
+        Roby_AshAnimator_StartRepair = Animator.StringToHash("StartRepair");
         Roby_String_Animator_SkyWalkToStop = "SkyWalkToStop";
 
         Roby_StateDictionary = new Dictionary<RobyStates, Script_AI_Roby_BaseState>
@@ -212,7 +225,7 @@ public class Script_Roby : MonoBehaviour
 
     public void OnAttackStart()
     {
-        
+
         IsAttacking = true;
         Collider[] breakableWall = Physics.OverlapSphere(Roby_Hand.position, 2, 1 << 15);
         if (breakableWall.Length > 0)
@@ -227,14 +240,6 @@ public class Script_Roby : MonoBehaviour
             item.gameObject.GetComponentInParent<Enemy>().AddDamage(20, gameObject, false);
     }
 
-    public void OnParticleCollision(GameObject other)
-    {
-        //Roby_Particle_Shoot.GetCollisionEvents();
-
-        other.GetComponentInParent<Enemy>().AddDamage(20, gameObject, false);
-
-        Roby_Particle_Shoot.Clear();
-    }
     public void OnAttackEnd()
     {
         IsAttacking = false;
@@ -300,7 +305,7 @@ public class Script_Roby : MonoBehaviour
 
     public bool IsMaITooFar(float zone)
     {
-        float distanceFromMai = Vector3.Distance(transform.position, Mai_Player.transform.position); 
+        float distanceFromMai = Vector3.Distance(transform.position, Mai_Player.transform.position);
         if (distanceFromMai > zone) return true;
         return false;
     }

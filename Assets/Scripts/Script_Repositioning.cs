@@ -1,5 +1,4 @@
 using System;
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityTemplateProjects.Saves_Scripts;
@@ -8,13 +7,14 @@ using UnityTemplateProjects.Saves_Scripts;
 
 public class Script_Repositioning : MonoBehaviour
 {
+    public bool isCrystalActive;
+    public Transform PointToRotate;
+
     private readonly Dictionary<GameObject, Tuple<Vector3, Quaternion>> templePiece = new Dictionary<GameObject, Tuple<Vector3, Quaternion>>();
     private bool isCrystal = false;
-    public bool isCrystalActive;
     private GameObject[] gameObjectID;
     private int[] randomrotation;
     private int count;
-    public Transform PointToRotate;
     private float fixCount = 0;
 
     private void OnEnable()
@@ -45,9 +45,11 @@ public class Script_Repositioning : MonoBehaviour
         for (int i = 0; i < gameObjectID.Length; i++)
         {
             if (gameObjectID[i].CompareTag("StairsExtension"))
+            {
                 gameObjectID[i].transform.position = new Vector3(UnityEngine.Random.onUnitSphere.x * 60 + PointToRotate.position.x,
                     PointToRotate.position.y + UnityEngine.Random.Range(0, 30),
                     UnityEngine.Random.onUnitSphere.z * 60 + PointToRotate.position.z);
+            }
             else
             {
                 gameObjectID[i].transform.position = UnityEngine.Random.insideUnitSphere * 30 + PointToRotate.position;

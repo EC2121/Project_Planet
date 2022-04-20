@@ -3161,6 +3161,9 @@ MonoBehaviour:
   AlertRange: 0
   AttackTimer: 0
   IdleTimer: 0
+  VisionRange: 0
+  VisionAngle: 0
+  PatrolMaxDist: 0
   Hp: 0
   HorizontalDot: 0
   IsAlerted: 0
@@ -3314,7 +3317,7 @@ SkinnedMeshRenderer:
   m_RendererPriority: 0
   m_Materials:
   - {fileID: 2100000, guid: 5aff759886aa7d849976bad12e337690, type: 2}
-  - {fileID: 0}
+  - {fileID: 2100000, guid: 15149bea900573b458dc6fa322f29136, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0

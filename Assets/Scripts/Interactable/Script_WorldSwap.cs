@@ -83,8 +83,6 @@ public class Script_WorldSwap : MonoBehaviour
 
     }
 
-
-
     private IEnumerator LoadAsyncProcess()
     {
         async = SceneManager.LoadSceneAsync("Gameplay_Scene");
