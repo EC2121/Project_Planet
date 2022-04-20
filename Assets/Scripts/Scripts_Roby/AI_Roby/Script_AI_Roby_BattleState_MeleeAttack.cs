@@ -20,6 +20,7 @@ public class Script_AI_Roby_BattleState_MeleeAttack : Script_AI_Roby_BaseState
     {
         AIRoby.SetPath(AIRoby.Roby_EnemyTarget.transform.position);
         AIRoby.Roby_Animator.SetBool(AIRoby.Roby_AshAnimator_walk, true);
+        AIRoby.Roby_Animator.SetFloat(AIRoby.Roby_AshAnimator_walkSpeed, 0);
 
         if (AIRoby.roby_EnemysInMyArea.Count == 0 || ReferenceEquals(AIRoby.Roby_EnemyTarget, null))
             AIRoby.SwitchState(RobyStates.Idle);

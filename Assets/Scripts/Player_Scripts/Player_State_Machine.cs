@@ -380,6 +380,12 @@ public class Player_State_Machine : MonoBehaviour
             reviveSlider.value = 0;
             robyslidervalue = 0;
         }
+
+        if (characterController.isGrounded)
+        {
+            characterController.stepOffset = 0.7f;
+            characterController.slopeLimit = 45;
+        }
     }
 
     private void HandleCameraRotation()
@@ -455,15 +461,19 @@ public class Player_State_Machine : MonoBehaviour
 
     private void OnCollisionEnter(Collision collision)
     {
-        //characterController.enableOverlapRecovery = false;
 
         if (collision.gameObject.CompareTag("Enemy"))
         {
-            // Debug.Log("WWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWW");
-            //characterController.enabled = false;
+
             isHitted = true;
             characterController.stepOffset = 0.05f;
             characterController.slopeLimit = 0f;
+        }
+
+        if (collision.gameObject.CompareTag("Untagged"))
+        {
+            characterController.stepOffset = 0.7f;
+            characterController.slopeLimit = 45;
         }
     }
     private void OnCollisionStay(Collision collision)
@@ -519,7 +529,7 @@ public class Player_State_Machine : MonoBehaviour
     {
         if (other.gameObject.CompareTag("Enemy"))
         {
-            characterController.stepOffset = 0.5f;
+            characterController.stepOffset = 0.7f;
             characterController.slopeLimit = 45;
         }
         if (other.CompareTag("Crystal")) isCrystalActivable = false;
