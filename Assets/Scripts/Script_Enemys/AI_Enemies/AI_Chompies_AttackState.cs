@@ -56,11 +56,6 @@ public class AI_Chompies_AttackState : AI_Enemies_IBaseState
 
     public void OnCollEnter(Enemy owner, Collision other)
     {
-        if (other.gameObject.CompareTag("Roby") && owner.IsAttacking)
-        {
-            Script_Roby.Roby_Hit.Invoke(20);
-        }
-
         if (other.gameObject.CompareTag("Player") && owner.IsAttacking)
         {
             Player_State_Machine.hit.Invoke();

@@ -2,6 +2,10 @@ using UnityEngine;
 
 public class AI_Chompies_IdleState : AI_Enemies_IBaseState
 {
+    //public override void OnEnter(AI_Chompies_MGR AI)
+    //{
+    //    AI.Owner.Idle();
+    //}
 
     public void OnEnter(Enemy owner)
     {
@@ -47,6 +51,27 @@ public class AI_Chompies_IdleState : AI_Enemies_IBaseState
 
     public void OnTrigEnter(Enemy owner, Collider other)
     {
+        //if (owner.Target != null) return;
+
+
+        //if (ReferenceEquals(other.gameObject, owner.Player.gameObject))
+        //{
+        //    owner.Target = owner.Player;
+        //    owner.IsAlerted = true;
+        //    owner.SwitchState(EnemyStates.Alert);
+        //    owner.sphereCollider.enabled = false;
+        //    return;
+        //}
+
+
+        //if (ReferenceEquals(other.gameObject, owner.Roby.gameObject))
+        //{
+        //    owner.Target = owner.Roby;
+        //    owner.IsAlerted = true;
+        //    owner.SwitchState(EnemyStates.Alert);
+        //    owner.sphereCollider.enabled = false;
+        //    return;
+        //}
     }
 
     public bool CheckForTarget(Enemy owner)

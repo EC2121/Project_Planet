@@ -7,12 +7,15 @@ public class Camera_AvoidObstacle : MonoBehaviour
     [SerializeField] private Transform _cameraTransform;
     private RaycastHit hit;
     private Vector3 cameraOffset;
+    //Ray ray;
+    // Start is called before the first frame update
     void Start()
     {
         cameraOffset = _cameraTransform.localPosition;
 
     }
 
+    // Update is called once per frame
     void Update()
     {
         Ray ray = new Ray(transform.position, transform.position + cameraOffset);

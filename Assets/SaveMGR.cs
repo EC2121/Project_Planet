@@ -25,6 +25,8 @@ public class SaveMGR : MonoBehaviour
 
     private void SceneManagerOnactiveSceneChanged(Scene arg0, Scene arg1)
     {
+        //SaveSystem.InvokeOnSave();
+        //SaveSystem.InvokeOnLoad();
     }
     
 

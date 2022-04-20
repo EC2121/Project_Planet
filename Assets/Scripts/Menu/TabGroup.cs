@@ -7,7 +7,11 @@ using UnityEngine.UI;
 public class TabGroup : MonoBehaviour
 {
     public List<TabButton_Custom> tabButtons;
-  
+    /*
+    public Sprite tabIdle;
+    public Sprite tabHover;
+    public Sprite tabActive;
+    */
     public Color tabIdle;
     public Color tabHover;
     public Color tabActive;

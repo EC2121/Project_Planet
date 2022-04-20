@@ -35,6 +35,7 @@ public class MainMenu : MonoBehaviour
     
     public void LoadScene()
     {
+        //StartCoroutine(_LoadScene());
         SaveSystem.saveType = SaveSystem.SaveType.Load;
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
     }

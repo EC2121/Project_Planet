@@ -17,6 +17,8 @@ public class SoundReference
 [ExecuteInEditMode]
 public class AudioController : MonoBehaviour
 {
+
+
     [Header("List of all sounds the object can play")]
     [SerializeField] List<SoundReference> soundReferences;
 
@@ -32,11 +34,17 @@ public class AudioController : MonoBehaviour
         }
 
     }
-   
+    /// <summary>
+    /// in the awake the dictionary is populated
+    /// </summary>
     private void Awake()
     {
+
         eventDict = new Dictionary<int, Action>();
+
+
     }
+    // Start is called before the first frame update
     void Start()
     {
         if (soundReferences.Count < 1) return;
@@ -54,6 +62,12 @@ public class AudioController : MonoBehaviour
 
     }
 
+    // Update is called once per frame
+    void Update()
+    {
+
+    }
+
     public void PlaySound(string Sound)
     {
 
@@ -63,7 +77,10 @@ public class AudioController : MonoBehaviour
         }
         catch
         {
+            //Debug.Log(Sound);
         }
+
+
     }
 
 }

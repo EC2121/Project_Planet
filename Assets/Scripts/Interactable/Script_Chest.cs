@@ -9,7 +9,7 @@ public class Script_Chest : MonoBehaviour
 
     private bool box_IsTaken;
     private BoxCollider box_Collider;
-    private readonly string player = "Player";
+    private Rigidbody rb;
 
     private void OnEnable()
     {
@@ -37,24 +37,25 @@ public class Script_Chest : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.CompareTag(player))
+        if (other.CompareTag("Player"))
             Box_GuiInteractWrite.SetActive(true);
     }
 
     private void OnTriggerExit(Collider other)
     {
-        if (other.CompareTag(player))
+        if (other.CompareTag("Player"))
             Box_GuiInteractWrite.SetActive(false);
     }
 
     private void OnTriggerStay(Collider other)
     {
-        if (other.CompareTag(player) && !Box_GuiInteractWrite.activeInHierarchy) Box_GuiInteractWrite.SetActive(true);
+        if (other.CompareTag("Player") && !Box_GuiInteractWrite.activeInHierarchy) Box_GuiInteractWrite.SetActive(true);
     }
 
     private void Awake()
     {
         box_Collider = GetComponent<BoxCollider>();
+        rb = GetComponent<Rigidbody>();
     }
 
     private void Start()
@@ -71,12 +72,16 @@ public class Script_Chest : MonoBehaviour
             OnInteraction();
     }
 
+    /// <summary>
+    /// Se non è presa dal giocatore (nel salvataggio) riposiziono la scatola dov'era
+    /// </summary>
     private void SaveSystemOnOnLoad(object sender, EventArgs e)
     {
         GameData data = SaveSystem.LoadPlayer(true);
 
         if (!data.HasBox)
         {
+            // posiziona la box
             transform.position = new Vector3(data.CratePosition[0], data.CratePosition[1], data.CratePosition[2]);
             transform.rotation = new Quaternion(data.CrateRotation[0], data.CrateRotation[1],
                 data.CrateRotation[2], data.CrateRotation[3]);
@@ -93,5 +98,6 @@ public class Script_Chest : MonoBehaviour
         Box_GuiInteractWrite.SetActive(false);
         transform.position = Player_Chest.position;
         transform.rotation = Player_Chest.rotation;
+        //transform.SetPositionAndRotation(Player_Chest.position, Player_Chest.rotation);
     }
 }

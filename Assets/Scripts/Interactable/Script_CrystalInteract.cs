@@ -16,11 +16,6 @@ public class Script_CrystalInteract : MonoBehaviour
 
     private GameObject TempleArea1, TempleArea2, TempleArea3;
 
-    private readonly string player = "Player";
-    private readonly string Templescne1 = "Environment_TempleArea_1";
-    private readonly string Templescne2 = "Environment_TempleArea_2";
-    private readonly string Templescne3 = "Environment_TempleArea_3";
-
     private void OnEnable()
     {
         SaveSystem.OnSave += SaveSystemOnOnSave;
@@ -42,7 +37,7 @@ public class Script_CrystalInteract : MonoBehaviour
 
     private void SaveSystemOnOnSave(object sender, EventArgs e)
     {
-        SaveSystem.SaveData(gameObject, true);
+        SaveSystem.SaveData(this.gameObject, true);
     }
 
     private void OnDisable()
@@ -58,7 +53,7 @@ public class Script_CrystalInteract : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.CompareTag(player))
+        if (other.CompareTag("Player"))
         {
             Crystal_GuiInteractWrite.SetActive(true);
             playerCollideWithMe = true;
@@ -67,7 +62,7 @@ public class Script_CrystalInteract : MonoBehaviour
 
     private void OnTriggerExit(Collider other)
     {
-        if (other.CompareTag(player))
+        if (other.CompareTag("Player"))
         {
             Crystal_GuiInteractWrite.SetActive(false);
             playerCollideWithMe = false;
@@ -77,9 +72,9 @@ public class Script_CrystalInteract : MonoBehaviour
     private void Awake()
     {
         crystal_Collider = GetComponent<BoxCollider>();
-        TempleArea1 = GameObject.Find(Templescne1);
-        TempleArea2 = GameObject.Find(Templescne2);
-        TempleArea3 = GameObject.Find(Templescne3);
+        TempleArea1 = GameObject.Find("Environment_TempleArea_1");
+        TempleArea2 = GameObject.Find("Environment_TempleArea_2");
+        TempleArea3 = GameObject.Find("Environment_TempleArea_3");
     }
 
     private void Start()
@@ -92,14 +87,18 @@ public class Script_CrystalInteract : MonoBehaviour
     {
         if (Crystal_GuiInteractWrite.activeInHierarchy)
             Crystal_GuiInteractWrite.transform.position = Camera.main.WorldToScreenPoint(crystal_Collider.bounds.center + Vector3.up);
+
+        Debug.Log(this.alienTestNumber + "" + this.gameObject.name);
+
     }
 
     private void OnInteraction()
     {
+        Debug.Log(gameObject.name);
         if (crystal_IsActivaded && playerCollideWithMe)
         {
             SaveSystem.InvokeOnSave();
-            SceneManager.LoadScene(alienTestNumber);
+            SceneManager.LoadScene(this.alienTestNumber);
             Crystal_GuiInteractWrite.SetActive(false);
             crystal_IsActivaded = false;
         }

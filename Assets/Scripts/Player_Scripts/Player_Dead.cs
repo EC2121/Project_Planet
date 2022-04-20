@@ -9,6 +9,7 @@ public class Player_Dead : Player_BaseState
         currentContext, playerStateFactory)
     {
         IsRootState = true;
+        //  InitializeSubState();
     }
 
     public override void EnterState()
@@ -19,6 +20,8 @@ public class Player_Dead : Player_BaseState
         Context.CharacterController.enabled = false;
         Context.CharacterController.radius = 0;
         Context.CharacterController.height = 0;
+
+        //Context.AppliedMovementY = 0;
     }
 
     public override void UpdateState()
@@ -28,6 +31,11 @@ public class Player_Dead : Player_BaseState
         Context.CurrentMovementX = 0;
         Context.CurrentMovementZ = 0;
         Context.CurrentMovementY = 0;
+        // Context.AppliedMovementX = 0;
+        //Context.AppliedMovementZ = 0;
+
+
+
         CheckSwitchStates();
     }
 
@@ -38,6 +46,10 @@ public class Player_Dead : Player_BaseState
 
     public override void CheckSwitchStates()
     {
+        //if (Context.Hp > 0)
+        //{
+        //    SwitchState(Factory.Grounded());
+        //}
         if (timeToEnd <= 0)
         {
             SceneManager.LoadScene("UI_MenuScene");

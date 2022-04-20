@@ -21,12 +21,10 @@ public class Script_WorldSwap : MonoBehaviour
     private BoxCollider worldTrigger;
     private bool scene_Alien2;
 
-    private string alienScene2 = "Scene_AlienTest_2";
-    private string alienScene3 = "Scene_AlienTest_3";
     private void Awake()
     {
         worldTrigger = GetComponent<BoxCollider>();
-        if (SceneManager.GetActiveScene().name == alienScene2)
+        if (SceneManager.GetActiveScene().name == "Scene_AlienTest_2")
         {
             worldTrigger.enabled = false;
             scene_Alien2 = true;

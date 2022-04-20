@@ -84,10 +84,18 @@ public class Timer_OClock : MonoBehaviour
             timer.SetText($"{time.ToString(@"mm\:ss\:fff")}");
             if (currentTime <= 0)
             {
+                //currentTime = 0f;
                 CutScene.SetActive(true);
                 gameObject.SetActive(false);
+                //Ship.SetActive(true);
             }
-         
+            // if (currentTime <= 0) //<= altrimenti riparte
+            // {
+            //    // CutScene.gameObject.SetActive(false);
+            //     //StartTime = 0f;
+            //     time = TimeSpan.FromSeconds(0);
+            //     //SceneManager.LoadScene("UI_MenuScene");
+            // }
         }
     }
 }
