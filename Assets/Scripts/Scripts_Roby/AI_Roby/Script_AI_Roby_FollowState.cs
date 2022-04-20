@@ -3,10 +3,15 @@ using UnityEngine;
 public class Script_AI_Roby_FollowState : Script_AI_Roby_BaseState
 {
     private Vector3 roby_NearestpointOnEdge;
+    
+    
     public void OnEnter(Script_Roby AIRoby)
     {
         AIRoby.Roby_Animator.SetBool(AIRoby.Roby_AshAnimator_walk, true);
         AIRoby.Roby_Animator.SetFloat(AIRoby.Roby_AshAnimator_walkSpeed, 1);
+
+        AIRoby.LeftFoot.Play();
+        AIRoby.RightFoot.Play();
 
         AIRoby.Roby_NavAgent.updatePosition = true;
         AIRoby.Roby_Animator.applyRootMotion = false;
@@ -16,6 +21,10 @@ public class Script_AI_Roby_FollowState : Script_AI_Roby_BaseState
     {
         AIRoby.Roby_IgnoreEnemy = false;
         AIRoby.Roby_Animator.SetBool(AIRoby.Roby_AshAnimator_walk, false);
+        AIRoby.LeftFoot.Stop();
+        AIRoby.RightFoot.Stop();
+        
+        AIRoby.Roby_Animator.SetFloat(AIRoby.Roby_AshAnimator_walkSpeed, 0);
         AIRoby.Roby_NavAgent.ResetPath();
         AIRoby.Roby_NavAgent.updatePosition = false;
         AIRoby.Roby_Animator.applyRootMotion = true;
