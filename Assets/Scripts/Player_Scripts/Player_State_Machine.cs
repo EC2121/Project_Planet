@@ -8,6 +8,8 @@ using UnityEngine.UI;
 
 public class Player_State_Machine : MonoBehaviour
 {
+    [HideInInspector] public float recovery = 0;
+
     public static UnityEvent reviveRoby = new UnityEvent();
     public static UnityEvent takeTheBox = new UnityEvent();
     public static UnityEvent canCrystal = new UnityEvent();
@@ -323,6 +325,14 @@ public class Player_State_Machine : MonoBehaviour
     private void Update()
     {
         _currentState.UpdateStates();
+        if (recovery <= 0)
+        {
+            hp = Mathf.Clamp(hp + ( Time.deltaTime * 3 ), 0, maxHp);
+        }
+        else
+        {
+            recovery-=Time.deltaTime;
+        }
 
         if (canPing && isInteract)
         {
@@ -405,14 +415,14 @@ public class Player_State_Machine : MonoBehaviour
     }
     public void OnAnimationEvent(string eventName)
     {
-        //if (anim.IsInTransition(1) || anim.GetCurrentAnimatorStateInfo(1).IsName("UnEquip") || anim.GetCurrentAnimatorStateInfo(1).IsName("Equip")) return;
 
-        if (eventName == attachWeaponString /*&& anim.GetCurrentAnimatorStateInfo(1).normalizedTime >= 1.6f*/)
+
+        if (eventName == attachWeaponString)
         {
             sockets.Attach(weapon.transform, Handle_Mesh_Sockets.SocketId.RightHand);
         }
 
-        if (eventName == detachWeaponString /*&& anim.GetCurrentAnimatorStateInfo(1).normalizedTime >=1.6f*/)
+        if (eventName == detachWeaponString)
         {
             sockets.Attach(weapon.transform, Handle_Mesh_Sockets.SocketId.Spine);
         }

@@ -78,15 +78,6 @@ public class Player_Interactable : Player_BaseState
             canExit = true;
 
         }
-        //if (Context.CanReviveRoby)
-        //{
-        //    Context.ReviveSliderValue = timer;
-        //    if (timer > 1)
-        //    {
-        //        Context.ReviveRoby.Invoke();
-        //    }
-        //    canExit = true;
-        //}
     }
 
 }

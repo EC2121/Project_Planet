@@ -11,7 +11,7 @@ public class Player_HittedState : Player_BaseState
     public Player_HittedState(Player_State_Machine currentContext, Player_StateFactory playerStateFactory) : base(
         currentContext, playerStateFactory)
     {
-   
+
     }
 
     public override void EnterState()
@@ -21,15 +21,10 @@ public class Player_HittedState : Player_BaseState
             Context.Hp -= 33f;
             Context.MaySliderValue = Context.Hp;
         }
+        Context.recovery = 5;
         Context.Animator.SetBool(Context.IsHittedHash, true);
         Context.Animator.SetBool(Context.IsAttacking, false);
         Context.Animator.SetBool(Context.IsRunAttackingHash, false);
-
-
-        // Context.Animator.SetBool(Context.IsWalkingHash,false);
-        // Context.Animator.SetBool(Context.IsRunningHash,false);
-        // Context.CurrentMovementX = 0;
-        // Context.CurrentMovementZ = 0;
         canExit = true;
         Context.IsIsHitted = false;
     }
@@ -56,7 +51,7 @@ public class Player_HittedState : Player_BaseState
     public override void ExitState()
     {
         Context.Animator.SetBool(Context.IsHittedHash, false);
-       
+
         if (Context.IsIsHitted)
         {
             Context.RequireNewHit = true;
@@ -67,12 +62,6 @@ public class Player_HittedState : Player_BaseState
 
     public override void CheckSwitchStates()
     {
-       
-        // if (Context.IsMousePressed && Context.IsWeaponAttached && !Context.RequireNewAttack)
-        // {
-        //     SwitchState(Factory.StaffAttack());
-        // }
-
         if (!Context.IsMovementPressed && Context.Animator.GetCurrentAnimatorStateInfo(0).IsName("Hitted"))
         {
             SwitchState(Factory.Idle());

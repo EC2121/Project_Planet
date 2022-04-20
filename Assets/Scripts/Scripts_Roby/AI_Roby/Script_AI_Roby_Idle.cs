@@ -8,7 +8,6 @@ public class Script_AI_Roby_Idle : Script_AI_Roby_BaseState
 
     public  void OnEnter(Script_Roby AIRoby)
     {
-        //AIRoby.Owner.StopRoby();
         AIRoby.Roby_IgnoreEnemy = false;
     }
 

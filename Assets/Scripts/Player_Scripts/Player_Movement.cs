@@ -12,7 +12,6 @@ public class Player_Movement : MonoBehaviour
 
     [SerializeField] private float gravityValue = -9.81f;
 
-    //[SerializeField] private float rotationSpeed = 5;
     [SerializeField] private float animSmoothTime = 0.1f;
     [SerializeField] private Transform weapon;
 
@@ -134,15 +133,12 @@ public class Player_Movement : MonoBehaviour
 
     void Update()
     {
-        //transform.position = new Vector3(0, 0, 0);
 
         ActivateWeapon();
         OnMovementInput();
         HandleAnimation();
-        //GravityHandle
-        //SetJump();
+       
         groundedPlayer = controller.isGrounded;
-        //isGrounded = Physics.CheckSphere(,);
         if (playerVelocity.y > 0)
         {
             groundedPlayer = false;
@@ -162,28 +158,12 @@ public class Player_Movement : MonoBehaviour
             playerVelocity.y += Mathf.Sqrt(jumpHeight * -3.0f * gravityValue);
             anim.CrossFade(jumpHash, animPlayTransition, 0);
 
-            //anim.Play(jumpHash);
-            // Debug.Log(initialJumpVelocity);
+           
         }
-        // if (!groundedPlayer)
-        // {
-        //     playerVelocity.y = -5f;
-        //
-        // }
-        // float timeToApex = maxJumpTime / 2; 
-        // gravityValue = (-2 * maxJumpHeight) / Mathf.Pow(timeToApex, 2);
-        // initialJumpVelocity = (2 * maxJumpHeight) / timeToApex;
-        //JumpDistance
-
 
         playerVelocity.y += gravityValue * Time.deltaTime;
 
         controller.Move(playerVelocity * Time.deltaTime);
-
-
-        // //RotatePlayerToCamera
-        // Quaternion targetRotation = Quaternion.Euler(0, cameraTransform.eulerAngles.y, 0);
-        // transform.rotation = Quaternion.Lerp(transform.rotation, targetRotation, rotationSpeed * Time.deltaTime);
     }
     
 }

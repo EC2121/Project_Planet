@@ -25,7 +25,6 @@ public class AI_Chompies_AlertState : AI_Enemies_IBaseState
     {
         owner.IsAlerted = false;
         owner.Anim.SetBool("Spotted", false);
-        //owner.Anim.SetBool(owner.SpottedHash, false);
     }
 
     public void UpdateState(Enemy owner)

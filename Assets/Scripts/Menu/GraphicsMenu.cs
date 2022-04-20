@@ -13,19 +13,10 @@ public class GraphicsMenu : MonoBehaviour
     private Resolution[] reversedRes;
     void Start()
     {
-        // foreach (var display in Display.displays)
-        // {
-        //     Debug.Log(display.ToString());       
-        // }
-        
-        
-        //Preparo la Dropdown per le risoluzioni
+       
         #region Risoluzioni
         
         reversedRes = Screen.resolutions.Reverse().ToArray();
-       /* reversedRes.Select(resolution => new Resolution {width = resolution.width, height = resolution.height})
-            .Distinct();*/
-        //Rigiro la lista delle risoluzioni altrimenti me le propone dalla più bassa
         foreach (var resolution in reversedRes)
         {
             resDropdown.options.Add((new TMP_Dropdown.OptionData() {text=resolution.ToString()}));
@@ -34,7 +25,6 @@ public class GraphicsMenu : MonoBehaviour
         resDropdown.RefreshShownValue();
         #endregion
 
-        //Preparo la Dropdown per le ombre
         #region Ombre
             foreach (var resolution in Enum.GetValues(typeof(ShadowResolution)))
             {
@@ -45,7 +35,6 @@ public class GraphicsMenu : MonoBehaviour
             Shadows.RefreshShownValue();
         #endregion
 
-        //Controllo se l'HDR è disponibile
         #region HDR
 
         try
@@ -63,17 +52,12 @@ public class GraphicsMenu : MonoBehaviour
         }
         catch (InvalidOperationException e)
         {
-            //hdr è disabilitato dalle impostazioni del progetto
             HDR.interactable = false;
             HDR.transform.GetChild(1).GetComponent<TMP_Text>().faceColor = new Color32(39, 39, 39, 255);
         }
 
         #endregion
-        //Mi assicuro d'impostare il vsync, che ci sia o meno
         OnVSyncChange();
-        
-        
-        
     }
 
     public void SetResolution()
@@ -87,9 +71,7 @@ public class GraphicsMenu : MonoBehaviour
         if (VSync.isOn)
         {
             QualitySettings.vSyncCount = 1;
-            //Application.targetFrameRate = -1; //Default Framerate
             VSync.transform.GetChild(1).GetComponent<TMP_Text>().text = "On";
-            //Sincronizzo con il framerate del monitor?
             
             Framerate.interactable = false;
             Framerate.transform.GetChild(0).GetComponent<TMP_Text>().text = String.Empty;;
@@ -101,7 +83,6 @@ public class GraphicsMenu : MonoBehaviour
             
             Framerate.interactable = true;
             Framerate.transform.GetChild(0).GetComponent<TMP_Text>().text = ((int)Framerate.value).ToString(); 
-            //richiamo il metodo per settare il framerate altrimenti schizza alle stelle
             OnFramerateChange();
         }
     }
@@ -110,7 +91,6 @@ public class GraphicsMenu : MonoBehaviour
     {
         Framerate.transform.GetChild(0).GetComponent<TMP_Text>().text = Framerate.value.ToString();
         Application.targetFrameRate = (int)Framerate.value;
-        //Per sicurezza tolgo il vsync
         QualitySettings.vSyncCount = 0;
     }
     
@@ -141,15 +121,11 @@ public class GraphicsMenu : MonoBehaviour
         {
             HDR.transform.GetChild(1).GetComponent<TMP_Text>().text = "On";
             HDROutputSettings.displays[Display.activeEditorGameViewTarget].RequestHDRModeChange(true);
-            
-            //Camera.main.allowHDR = true;   
         }
         else
         {
             HDR.transform.GetChild(1).GetComponent<TMP_Text>().text = "Off";
             HDROutputSettings.displays[Display.activeEditorGameViewTarget].RequestHDRModeChange(false);
-            
-            //Camera.main.allowHDR = true;     
         }
     }
 }

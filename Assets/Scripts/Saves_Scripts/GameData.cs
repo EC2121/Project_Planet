@@ -5,7 +5,6 @@ using UnityTemplateProjects.Saves_Scripts;
 [System.Serializable]
 public class EnemyStats
 {
-    //enum enemytype
     public EnemyType EnemyType;
     public float hp;
     public int GUID;
@@ -34,7 +33,6 @@ public class GameData
     public bool IsEnabled, IsVisible, IsAlive;
     
     //MAI
-    //Utilizzare una lista di enum per tenere traccia delle abilità sbloccate?
     public List<MaiStats.Abilities> CurrentAbilities;
     public float MaiMaxHealth, MaiCurrentHealth;
     public int CollectedCoins;

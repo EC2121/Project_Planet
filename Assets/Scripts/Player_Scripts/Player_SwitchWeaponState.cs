@@ -8,9 +8,7 @@ public class Player_SwitchWeaponState : Player_BaseState
     public Player_SwitchWeaponState(Player_State_Machine currentContext, Player_StateFactory playerStateFactory) : base(
         currentContext, playerStateFactory)
     {
-        // IsRootState = true;
-
-        // InitializeSubState();
+       
     }
 
     public override void EnterState()
@@ -21,10 +19,7 @@ public class Player_SwitchWeaponState : Player_BaseState
     public override void UpdateState()
     {
         timer -= Time.deltaTime;
-        // Context.Animator.SetBool(Context.IsWalkingHash, false);
-        // Context.Animator.SetBool(Context.IsRunningHash, false);
-        // Context.AppliedMovementX = 0;
-        // Context.AppliedMovementZ = 0;
+       
         CheckSwitchStates();
     }
 
@@ -54,10 +49,6 @@ public class Player_SwitchWeaponState : Player_BaseState
 
     public override void CheckSwitchStates()
     {
-        // if (canExit)
-        // {
-        //     SwitchState(Factory.Grounded());
-        // }
         if (!Context.IsMovementPressed && !Context.IsRunPressed && Context.Animator.IsInTransition(1))
         {
             SwitchState(Factory.Idle());

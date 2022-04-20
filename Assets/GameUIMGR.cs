@@ -80,26 +80,7 @@ public class GameUIMGR : MonoBehaviour
         SaveMGR.Load();
     }
 
-    //public void OnOptionsPressed()
-    //{
-    //    currentMenu.SetActive(false);
-    //    currentMenu = optionsMenu;
-    //    currentMenu.SetActive(true);
-    //}
-
-    //public void OnAudioPressed()
-    //{
-
-    //    currentMenu.SetActive(false);
-    //    currentMenu = audioMenu;
-    //    currentMenu.SetActive(true);
-    //}
-    //public void OnVideoPressed()
-    //{
-    //    currentMenu.SetActive(false);
-    //    currentMenu = videoMenu;
-    //    currentMenu.SetActive(true);
-    //}
+   
 
     public void OnResume()
     {
@@ -115,19 +96,7 @@ public class GameUIMGR : MonoBehaviour
     {
         SceneManager.LoadScene("UI_MenuScene");
     }
-    //public void OnBackPressed()
-    //{
-    //    currentMenu.SetActive(false);
-    //    if (currentMenu == optionsMenu)
-    //    {
-    //        currentMenu = mainMenu;
-    //    }
-    //    else if (currentMenu == audioMenu || currentMenu == videoMenu)
-    //    {
-    //        currentMenu = optionsMenu;
-    //    }
-    //    currentMenu.SetActive(true);
-    //}
+
     private void OnEnable()
     {
         input.Player.Enable();
