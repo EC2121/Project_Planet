@@ -10,6 +10,11 @@ TagManager:
   - Box
   - Hologram
   - StairsExtension
+  - Crystal
+  - NotCameraObstacle
+  - MaySlider
+  - Key
+  - SceneMGR
   layers:
   - Default
   - TransparentFX

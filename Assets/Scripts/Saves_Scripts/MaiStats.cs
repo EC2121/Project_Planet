@@ -22,6 +22,11 @@ namespace UnityTemplateProjects.Saves_Scripts
         private void Start()
         {
             IsEnabled = IsAlive = IsVisible =  true;
+            
+        }
+
+        private void OnEnable()
+        {
             SaveSystem.OnSave += SaveSystemOnOnSave;
             SaveSystem.OnLoad += SaveSystemOnOnLoad;
         }
@@ -92,7 +97,12 @@ namespace UnityTemplateProjects.Saves_Scripts
         }
 
         //Add OnDisable - OnEnable ?
-        private void OnDestroy()
+        // private void OnDestroy()
+        // {
+        //     SaveSystem.OnSave -= SaveSystemOnOnSave;
+        //     SaveSystem.OnLoad -= SaveSystemOnOnLoad;
+        // }
+        private void OnDisable()
         {
             SaveSystem.OnSave -= SaveSystemOnOnSave;
             SaveSystem.OnLoad -= SaveSystemOnOnLoad;

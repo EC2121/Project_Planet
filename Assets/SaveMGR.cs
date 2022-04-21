@@ -8,27 +8,43 @@ public class SaveMGR : MonoBehaviour
     //TODO remove
     //Editor test bools
     public bool SaveData = false, LoadData = false;
+    public GameObject sceneMGR ;
 
     private void Awake()
     {
-        SceneManager.activeSceneChanged += SceneManagerOnactiveSceneChanged;
         SceneManager.sceneLoaded += SceneManagerOnsceneLoaded;
+        if (GameObject.FindGameObjectWithTag("SceneMGR") is null)
+        {
+            sceneMGR = GameObject.Instantiate(Resources.Load("sceneMGR") as GameObject);
+            sceneMGR.name = sceneMGR.scene.name;
+        }
     }
 
     private void SceneManagerOnsceneLoaded(Scene arg0, LoadSceneMode arg1)
     {
-        if (SaveSystem.saveType != SaveSystem.SaveType.None)
+        //UI_MenuScene
+        //Debug.Log("OnSceneLoaded: "+ GameObject.FindGameObjectWithTag("SceneMGR").name);
+        if (//arg0.name =="Scene_AlienTest_1" ||arg0.name =="Scene_AlienTest_2" ||arg0.name =="Scene_AlienTest_3"  ||
+            sceneMGR.name == "Scene_AlienTest_1" || sceneMGR.name =="Scene_AlienTest_2" || sceneMGR.name =="Scene_AlienTest_3") //se sto andando in una di queste scene o se sto tornando
+            // GameObject.FindGameObjectWithTag("SceneMGR") != null &&
+            // GameObject.FindGameObjectWithTag("SceneMGR").name != "UI_MenuScene" ||
+            // SaveSystem.saveType == SaveSystem.SaveType.SaveOnNewGame ||
+            // SaveSystem.saveType == SaveSystem.SaveType.Save) 
         {
-            SaveSystem.InvokeOnSave();   
+            //SaveSystem.InvokeOnSave(); //se sto andando    //todo
+            if (arg0.name == "Gameplay_Scene") //se sto tornando per abilitare
+            {
+                
+                SaveSystem.InvokeOnLoad();
+                //SaveSystem.InvokeOnSave();
+            }
+            Time.timeScale = 1f;
+            print("SceneManagerOnsceneLoaded");
+            GameObject.FindGameObjectWithTag("SceneMGR").name = arg0.name;
         }
+        Time.timeScale = 1f;
+        
     }
-
-    private void SceneManagerOnactiveSceneChanged(Scene arg0, Scene arg1)
-    {
-        //SaveSystem.InvokeOnSave();
-        //SaveSystem.InvokeOnLoad();
-    }
-    
 
     private void Start()
     {
@@ -38,7 +54,7 @@ public class SaveMGR : MonoBehaviour
         {
             Save();        
         }
-        else if (SaveSystem.saveType == SaveSystem.SaveType.Load)
+        else if (SaveSystem.saveType == SaveSystem.SaveType.Load ) //|| GameObject.FindGameObjectWithTag("SceneMGR").name.Contains("AlienTest")
         {
             Load();  
         }

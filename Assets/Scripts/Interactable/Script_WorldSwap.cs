@@ -30,6 +30,8 @@ public class Script_WorldSwap : MonoBehaviour
             scene_Alien2 = true;
         }
 
+        GameObject.FindGameObjectWithTag("SceneMGR").name = SceneManager.GetActiveScene().name;
+
     }
 
     private void Start()

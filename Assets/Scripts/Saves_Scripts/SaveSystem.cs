@@ -4,6 +4,7 @@ using UnityEngine;
 using System.IO;
 using System.Linq;
 using System.Runtime.Serialization.Formatters.Binary;
+using UnityEngine.SceneManagement;
 using EventHandler = System.EventHandler;
 
 namespace UnityTemplateProjects.Saves_Scripts
@@ -11,6 +12,7 @@ namespace UnityTemplateProjects.Saves_Scripts
     
     public static class SaveSystem
     {
+        public static Scene CurrentScene;
         public enum SaveType {None, Save, SaveOnNewGame, Load}
 
         public static SaveType saveType = SaveType.None;

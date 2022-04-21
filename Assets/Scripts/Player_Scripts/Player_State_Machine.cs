@@ -167,7 +167,7 @@ public class Player_State_Machine : MonoBehaviour
     [SerializeField] private bool hasKey;
     private GameObject keyReference;
 
-    public GameObject keySprite;
+    public GameObject Inventory;
     public bool HasKey
     {
         get => hasKey;
@@ -175,10 +175,12 @@ public class Player_State_Machine : MonoBehaviour
         {
             hasKey = value;
             keyReference.SetActive(!hasKey);
-            keySprite.SetActive(hasKey);
+            Inventory.transform.GetChild(0).gameObject.SetActive(hasKey);
+            //Inventory.GetComponent<Image>().enabled = hasKey;
         }
     }
 
+    
     private float hologramTimer;
     private bool startHologramTimer;
     private RaycastHit Hitinfo;
@@ -187,6 +189,7 @@ public class Player_State_Machine : MonoBehaviour
     public float recovery = 0;
     private void Awake()
     {
+        Inventory = GameObject.Find("Inventory");
         keyReference = GameObject.FindGameObjectWithTag("Key");
         Interactable.OnKeyTakenDel += () => HasKey = true;
         input = new Player_Controller();
