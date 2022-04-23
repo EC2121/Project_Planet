@@ -54,6 +54,10 @@ public class Timer_OClock : MonoBehaviour
 
         currentTime = data.timer.CurrentTime;
         going = data.timer.Going;
+        if (!data.timer.Going)
+        {
+            timer.SetText("");
+        }
     }
 
     private void OnDisable()
