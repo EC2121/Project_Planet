@@ -36,7 +36,7 @@ public class SaveMGR : MonoBehaviour
             {
                 
                 SaveSystem.InvokeOnLoad();
-                //SaveSystem.InvokeOnSave();
+                //SaveSystem.InvokeOnSave(); NO
             }
             Time.timeScale = 1f;
             print("SceneManagerOnsceneLoaded");

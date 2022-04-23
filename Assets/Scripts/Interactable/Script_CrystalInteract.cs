@@ -30,11 +30,25 @@ public class Script_CrystalInteract : MonoBehaviour
     private void SaveSystemOnOnLoad(object sender, EventArgs e)
     {
         GameData data = SaveSystem.LoadPlayer(true);
-        TempleArea1.GetComponent<Script_Repositioning>().isCrystalActive = data.Trials[0].HasPassedTrial;
-        TempleArea2.GetComponent<Script_Repositioning>().isCrystalActive = data.Trials[1].HasPassedTrial;
-        TempleArea3.GetComponent<Script_Repositioning>().isCrystalActive = data.Trials[2].HasPassedTrial;
-    }
 
+        if (data.Trials[0].HasPassedTrial)
+        {
+            SaveSystem.PassedTrials[0] = true;
+        }
+        if (data.Trials[1].HasPassedTrial)
+        {
+            SaveSystem.PassedTrials[1] = true;
+        }
+        if (data.Trials[2].HasPassedTrial)
+        {
+            SaveSystem.PassedTrials[2] = true;
+        }
+        
+        TempleArea1.GetComponent<Script_Repositioning>().isCrystalActive = SaveSystem.PassedTrials[0];
+        TempleArea2.GetComponent<Script_Repositioning>().isCrystalActive = SaveSystem.PassedTrials[1];
+        TempleArea3.GetComponent<Script_Repositioning>().isCrystalActive = SaveSystem.PassedTrials[2];
+        
+    }
     private void SaveSystemOnOnSave(object sender, EventArgs e)
     {
         SaveSystem.SaveData(this.gameObject, true);

@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
@@ -190,9 +191,17 @@ public class Script_Roby : MonoBehaviour
 
     public virtual void SwitchState(RobyStates state)
     {
-        Roby_CurrentState.OnExit(this);
-        Roby_CurrentState = Roby_StateDictionary[state];
-        Roby_CurrentState.OnEnter(this);
+        try
+        {
+            Roby_CurrentState.OnExit(this);
+            Roby_CurrentState = Roby_StateDictionary[state];
+            Roby_CurrentState.OnEnter(this);
+        }
+        catch (Exception e)
+        {
+            Debug.Log("Exception: "+ e.Message);
+        }
+       
     }
 
     public void SwitchTarget(GameObject enemy)
