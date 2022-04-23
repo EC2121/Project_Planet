@@ -33,15 +33,16 @@ public class Script_AI_Roby_BattleState_MeleeAttack : Script_AI_Roby_BaseState
 
     public void UpdateState(Script_Roby AIRoby)
     {
-        if (AIRoby.roby_EnemysInMyArea.Count == 0 || ReferenceEquals(AIRoby.Roby_EnemyTarget, null))
+        if (AIRoby.roby_EnemysInMyArea.Count <= 0 || ReferenceEquals(AIRoby.Roby_EnemyTarget, null))
         {
             AIRoby.SwitchState(RobyStates.Idle);
             return;
         }
+        AIRoby.printme(AIRoby.roby_EnemysInMyArea.Count.ToString());
+        AIRoby.printme(ReferenceEquals(AIRoby.Roby_EnemyTarget, null).ToString());
 
-        if (AIRoby.Roby_NavAgent.remainingDistance < AIRoby.Roby_NavAgent.stoppingDistance)
+        if (AIRoby.Roby_NavAgent.remainingDistance < AIRoby.Roby_NavAgent.stoppingDistance && AIRoby.roby_EnemysInMyArea.Count > 1 || !ReferenceEquals(AIRoby.Roby_EnemyTarget, null))
         {
-
             AIRoby.Roby_Animator.SetBool(AIRoby.Roby_AshAnimator_walk, false);
             TurnTowardsEnemy(AIRoby);
 

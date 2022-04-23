@@ -117,7 +117,7 @@ public class AI_Chompies : MonoBehaviour
         if (!targetNull && !isAttacking) transform.rotation = Quaternion.Slerp(transform.rotation,
             Quaternion.LookRotation((target.position - transform.position).normalized, Vector3.up), Time.deltaTime * 5f);
 
-        Debug.Log(ReferenceEquals(target, null));
+        //Debug.Log(ReferenceEquals(target, null));
 
     }
 }

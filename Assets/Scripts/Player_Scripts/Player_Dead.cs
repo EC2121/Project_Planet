@@ -37,7 +37,7 @@ public class Player_Dead : Player_BaseState
 
     public override void ExitState()
     {
-        Debug.Log("TEESTTTTTTTTTTTTT");
+        //Debug.Log("TEESTTTTTTTTTTTTT");
     }
 
     public override void CheckSwitchStates()

@@ -184,11 +184,9 @@ public class Player_Controller_Move : MonoBehaviour
         anim.SetFloat("VelocityY", currentMovement.y/jumpSpeed);
 
        
-        Debug.Log(speedY);
+        //Debug.Log(speedY);
         if (isJumped &&  currentMovement.y < 0)
         {
-            Debug.Log("ciaooo");
-
             RaycastHit hit;
             if (Physics.Raycast(transform.position, Vector3.down, out hit, 0.5f,LayerMask.GetMask("Default")))
             {

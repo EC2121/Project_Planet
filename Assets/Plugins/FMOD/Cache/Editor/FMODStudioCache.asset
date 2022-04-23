@@ -350,7 +350,7 @@ MonoBehaviour:
   - {fileID: 3207437188147491387}
   StringsBanks:
   - {fileID: -5875961408373103097}
-  cacheTime: 637860609674234530
+  cacheTime: 637863296955660799
   cacheVersion: 10
 --- !u!114 &1362681287030100461
 MonoBehaviour:
@@ -421,7 +421,7 @@ MonoBehaviour:
   Path: Assets/Desktop/Master.bank
   Name: Master
   StudioPath: bank:/Master
-  lastModified: 637860609674234530
+  lastModified: 637863296955660799
   FileSizes: []
   Exists: 1
 --- !u!114 &4011796111563345978

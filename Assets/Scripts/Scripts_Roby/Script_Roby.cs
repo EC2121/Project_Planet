@@ -22,7 +22,7 @@ public class Script_Roby : MonoBehaviour
 
     public ParticleSystem LeftFoot;
     public ParticleSystem RightFoot;
-     public ParticleSystem Roby_Particle_Shoot;
+    public ParticleSystem Roby_Particle_Shoot;
 
 
     [HideInInspector] public GameObject wallToBreak;
@@ -124,7 +124,6 @@ public class Script_Roby : MonoBehaviour
     public void OnParticleCollision(GameObject other)
     {
         other.GetComponentInParent<Enemy>().AddDamage(20, gameObject, false);
-
         Roby_Particle_Shoot.Clear();
     }
 
@@ -199,7 +198,10 @@ public class Script_Roby : MonoBehaviour
     {
         if (roby_EnemysInMyArea.Contains(enemy))
         {
+            Debug.Log("La lista è grande" + roby_EnemysInMyArea.Count);
             roby_EnemysInMyArea.Remove(enemy);
+            Roby_EnemyTarget = null;
+            Debug.Log("La lista è adesso invece" + roby_EnemysInMyArea.Count);
             if (roby_EnemysInMyArea.Count > 0)
             {
                 Roby_EnemyTarget = roby_EnemysInMyArea[0];
@@ -258,7 +260,7 @@ public class Script_Roby : MonoBehaviour
     {
         foreach (GameObject enemys in roby_EnemysInMyArea)
         {
-            enemys.GetComponent<Rigidbody>().AddExplosionForce(30, transform.position, 5, 1, ForceMode.Impulse);
+            enemys.GetComponentInParent<Enemy>().AddDamage(0, gameObject, true);
         }
         Roby_IgnoreEnemy = true;
         SwitchState(RobyStates.Follow);
@@ -346,6 +348,11 @@ public class Script_Roby : MonoBehaviour
         {
             return;
         }
+    }
+
+    public void printme(string prova)
+    {
+        Debug.Log(prova);
     }
 
 }

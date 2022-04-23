@@ -67,7 +67,7 @@ namespace UnityTemplateProjects.Saves_Scripts
             }
             catch (Exception e)
             {
-                Debug.Log(e.ToString());
+                //Debug.Log(e.ToString());
             }
         }    
         
@@ -105,7 +105,7 @@ namespace UnityTemplateProjects.Saves_Scripts
                 }
                 else
                 {
-                    Debug.Log("JSONSaveFile not found!");
+                    //Debug.Log("JSONSaveFile not found!");
                     return null;    
                 }
             }
@@ -113,7 +113,7 @@ namespace UnityTemplateProjects.Saves_Scripts
             {
                 if (File.Exists(path+"/SaveTest1.txt"))
                 {
-                    Debug.Log(path+"/SaveTest1.txt");
+                    //Debug.Log(path+"/SaveTest1.txt");
                     BinaryFormatter formatter = new BinaryFormatter();
                     using (FileStream stream = new FileStream(path+"/SaveTest1.txt", FileMode.Open))
                     {
@@ -123,7 +123,7 @@ namespace UnityTemplateProjects.Saves_Scripts
                 }
                 else
                 {
-                    Debug.Log("SaveFile not found!");
+                    //Debug.Log("SaveFile not found!");
                     return null;
                 }    
             }

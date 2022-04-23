@@ -32,7 +32,7 @@ namespace UnityTemplateProjects.Saves_Scripts
             }
             catch (Exception ex)
             {
-                Debug.Log(e.ToString());
+                //Debug.Log(e.ToString());
                 return;
             }
         }

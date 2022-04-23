@@ -36,7 +36,6 @@ public class GameUIMGR : MonoBehaviour
     }
     private void Update()
     {
-        Debug.Log(escapeButton);
         if (escapeButton && !isEscapePressed)
         {
             isEscapePressed = true;

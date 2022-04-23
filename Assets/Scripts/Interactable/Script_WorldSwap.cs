@@ -90,11 +90,11 @@ public class Script_WorldSwap : MonoBehaviour
         async.allowSceneActivation = false;
         while (!async.isDone)
         {
-            Debug.Log("Loading progress: " + ( async.progress * 100 ) + "%");
+            //Debug.Log("Loading progress: " + ( async.progress * 100 ) + "%");
 
             if (async.progress >= 0.9f)
             {
-                Debug.Log("EndAsync");
+                //Debug.Log("EndAsync");
             }
 
             yield return null;

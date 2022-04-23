@@ -36,12 +36,10 @@ public class GraphicsMenu : MonoBehaviour
             {
                 Shadows.options.Add((new TMP_Dropdown.OptionData() {text=resolution.ToString()}));
             }
-            Debug.Log((int)QualitySettings.shadowResolution);
             Shadows.value = (int)QualitySettings.shadowResolution;
             Shadows.RefreshShownValue();
         #endregion
 
-        //Controllo se l'HDR è disponibile
         #region HDR
 
         try

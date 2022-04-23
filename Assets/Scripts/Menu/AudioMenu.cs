@@ -20,7 +20,7 @@ namespace UnityTemplateProjects.Menu
             }
             catch (Exception e)
             {
-                Debug.Log(e.ToString());
+                //Debug.Log(e.ToString());
             }
             
         }
@@ -38,7 +38,6 @@ namespace UnityTemplateProjects.Menu
             }
             catch (Exception e)
             {
-                Debug.Log(e.ToString());
             }
         }
 

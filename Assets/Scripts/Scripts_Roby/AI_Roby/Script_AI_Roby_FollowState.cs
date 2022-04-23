@@ -15,6 +15,9 @@ public class Script_AI_Roby_FollowState : Script_AI_Roby_BaseState
 
         AIRoby.Roby_NavAgent.updatePosition = true;
         AIRoby.Roby_Animator.applyRootMotion = false;
+
+        roby_NearestpointOnEdge = AIRoby.Mai_Player.transform.position + ( AIRoby.Mai_PlayerNearZone ) * ( Vector3.Normalize(AIRoby.transform.position - AIRoby.Mai_Player.transform.position) );
+        AIRoby.SetPath(roby_NearestpointOnEdge);
     }
 
     public void OnExit(Script_Roby AIRoby)

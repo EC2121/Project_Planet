@@ -48,12 +48,13 @@ public class Script_AI_Roby_BattleState : Script_AI_Roby_BaseState
 
     public void UpdateState(Script_Roby AIRoby)
     {
-        if (AIRoby.roby_EnemysInMyArea.Count == 0 || ReferenceEquals(AIRoby.Roby_EnemyTarget, null))
+        if (AIRoby.roby_EnemysInMyArea.Count <= 1 || ReferenceEquals(AIRoby.Roby_EnemyTarget, null))
         {
             AIRoby.SwitchState(RobyStates.Idle);
             return;
         }
 
+        
         if (Vector3.Distance(AIRoby.transform.position, AIRoby.Roby_EnemyTarget.transform.position) < AIRoby.Roby_RobyNearZone)
         {
             if (AIRoby.IsMaITooFar(AIRoby.Mai_PlayerBattleZone))
