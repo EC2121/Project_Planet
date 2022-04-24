@@ -174,7 +174,7 @@ public class Player_State_Machine : MonoBehaviour
         set
         {
             hasKey = value;
-            keyReference.SetActive(!hasKey);
+            GameObject.FindGameObjectWithTag("Key").SetActive(!hasKey);
             Inventory.transform.GetChild(0).gameObject.SetActive(hasKey);
             //Inventory.GetComponent<Image>().enabled = hasKey;
         }

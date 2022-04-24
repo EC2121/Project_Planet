@@ -4,9 +4,7 @@
     <list default="true" id="602c179c-419d-446c-b8ea-27c52ae9895b" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/.idea.Project_Planet/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.Project_Planet/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/Saves/NEWSaveTest.json" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Saves/NEWSaveTest.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scenes/Gameplay_Scene.unity" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scenes/Gameplay_Scene.unity" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Interactable/Script_Chest.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Interactable/Script_Chest.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Timer_OClock.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Timer_OClock.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Player_Scripts/Player_State_Machine.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Player_Scripts/Player_State_Machine.cs" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -66,6 +64,7 @@
     <setting file="file://$PROJECT_DIR$/Library/PackageCache/com.unity.ugui@1.0.0/Runtime/UI/Core/Button.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="mock:///Dummy.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="mock:///Dummy.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="mock:///Dummy.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Library/PackageCache/com.unity.cinemachine@2.6.11/Runtime/Core/CinemachineVirtualCameraBase.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="mock:///Dummy.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="mock:///Dummy.cs" root0="SKIP_HIGHLIGHTING" />
@@ -84,6 +83,7 @@
     <setting file="file://$PROJECT_DIR$/Library/PackageCache/com.unity.ugui@1.0.0/Runtime/EventSystem/EventSystem.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="mock:///Dummy.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Library/PackageCache/com.unity.burst@1.3.4/Tests/Runtime/Shared/060-TestEnums.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="mock:///Dummy.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="mock:///Dummy.cs" root0="SKIP_HIGHLIGHTING" />
   </component>
   <component name="MarkdownSettingsMigration">
@@ -170,7 +170,7 @@
       <workItem from="1650129416595" duration="56000" />
       <workItem from="1650389513752" duration="15390000" />
       <workItem from="1650474406377" duration="24875000" />
-      <workItem from="1650715966529" duration="7629000" />
+      <workItem from="1650715966529" duration="10283000" />
     </task>
     <servers />
   </component>
